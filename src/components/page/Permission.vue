@@ -50,7 +50,7 @@ export default {
       let vm = this;
       vm.popshow=data.popstatus
       if(data[0].status&&data[0].status=='refresh'){
-        console.log('此处需要刷新数据')
+        console.log('此处需要刷新数据ssss')
       }
     },
     adminevent(...data){
