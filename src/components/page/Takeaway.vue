@@ -56,19 +56,19 @@
     <!-- 添加商品 -->
     <add-goods v-if="isTakeawayAddShow"></add-goods>
     <!-- 查看商品 -->
-    <dialog v-if="isTakeawayShow"></dialog>
+    <!--<dialog v-if="isTakeawayShow"></dialog>-->
 
   </div>
 </template>
 
 <script>
 import addGoods from './TakeawayAddGoods.vue'
-import dialog from './TakeawayDialog.vue'
+/*import dialog from './TakeawayDialog.vue'*/
 
 export default {
   components:{
     addGoods,
-    dialog
+/*    dialog*/
   },
   name: 'takeaway',
   data () {
