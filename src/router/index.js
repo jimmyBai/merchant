@@ -131,6 +131,17 @@ export default new Router({
                 component:resolve=>require(['../components/page/Takeaway.vue'],resolve)
             },
             {
+              path:'/takeawayAddGoods',
+              meta:{keepAlive:true},
+              component:resolve=>require(['../components/page/takeawayAddGoods.vue'],resolve)
+            },
+            {
+              path:'/takeawayDialog',
+              meta:{keepAlive:true},
+              component:resolve=>require(['../components/page/TakeawayDialog.vue'],resolve)
+            },
+
+            {
                 path:'/permission',
                 meta:{keepAlive:true},
                 component:resolve=>require(['../components/page/Permission.vue'],resolve),
