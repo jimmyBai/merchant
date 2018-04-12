@@ -141,8 +141,8 @@ export default {
       });
     },
     changetabs(way){
-        this.activenum=way
-        this.$router.push('/'+way)
+      this.activenum=way
+      this.$router.push('/'+way)
     }
   }
 }

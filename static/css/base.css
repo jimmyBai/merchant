@@ -52,7 +52,6 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .tdbtn-box{ display: flex; display: -webkit-flex; justify-content: flex-end; -webkit-justify-content: flex-end}
 .tdbtn-box>div{ cursor: pointer}
 .tdbtn-view{ background: #7a6fbe; padding: 0 8px; border-radius: 2px}
-.tdBtn-view{ background: rgb(161,64,22); padding: 0 8px; border-radius: 2px; margin: 0 5px;}
 .tdbtn-edit{ background:#4d2e57; }
 .tdbtn-add{ background:#f25657;padding: 0 8px; border-radius: 2px}
 .list-bottm{height: 20px}
@@ -111,7 +110,6 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .adduser-item>div textarea{ width: 100%;resize: none; border: none; margin: 0; }
 .popsaveline{ margin:10px 20px 10px 10px }
 .popsaveline span{ display: block; background:#ac5397; font-size: 12px;color: #fff; height: 30px; line-height: 30px}
-
   /**修改分页**/
 .pagination{  text-align: right; margin-top: 20px}
 .el-pagination.is-background .btn-next, .el-pagination.is-background .btn-prev, .el-pagination.is-background .el-pager li{background-color:#412849; color: #98829f; font-weight: normal}
@@ -155,75 +153,12 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 /**tabs**/
 .tabslist{ margin-top: 20px;}
 .tabslist-head{ display: flex; display: -webkit-flex; border-bottom: 1px solid #48344d;margin-top: -1px; position: relative}
-.tabslist-head .tabtar-item{height: 30px; line-height: 30px; padding: 0 20px;box-sizing: border-box;display: inline-block; list-style: none; font-size: 12px; font-weight: 500; color: #aa96b1; border:1px solid #48344d; border-radius: 2px 2px 0 0; margin-right: 2px; border-bottom: none ;
+.tabslist-head .tabtar-item{ cursor: pointer; height: 30px; line-height: 30px; padding: 0 20px;box-sizing: border-box;display: inline-block; list-style: none; font-size: 12px; font-weight: 500; color: #aa96b1; border:1px solid #48344d; border-radius: 2px 2px 0 0; margin-right: 2px; border-bottom: none ;
   position: relative; background: #38213e}
 .tabslist-head .is-active{background:#724480;color: #fff; border-color:#724480 }
 
+
+
+
 .unshow{display: none}
 .isshow{display: block}
-
-
-
-/* Andy */
-.selectbox{
-  width: 100%;
-  height: 24px;
-  outline: none;
-  background: #2e1c34;
-  border: 1px solid #3d2b43;
-  margin-right: 10px;
-  color: #fff;
-  margin: 0;
-}
-.itemline-iy{
-  width: 100%;
-  height: 49px;
-  position: relative;
-}
-.itemcontent-iy{
-  width: 50%;
-  height: 24px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-.itemcontent-switch{
-  width: 30%;
-  height: 24px;
-  position: absolute;
-  bottom: 0;
-  right: 20px;
-}
-.switch-lf{
-  width: 50%;
-  height: 24px;
-  float: left;
-  background: rgb(96,58,109);
-  border-top-left-radius: 0.2rem;
-  border-bottom-left-radius: 0.2rem;
-}
-.switch-rt{
-  width: 50%;
-  height: 24px;
-  float: right;
-  background: #ffffff;
-  border-top-right-radius: 0.2rem;
-  border-bottom-right-radius: 0.2rem;
-}
-
-.itemcontent-lf{
-  width: 60%;
-  height: 24px;
-  float: left;
-}
-.itemcontent-rt{
-  width: 30%;
-  height: 24px;
-  float: right;
-  padding-right: 20px;
-}
-
-.addpop .down{
-  margin: 20px 20px 10px 10px;
-}
-

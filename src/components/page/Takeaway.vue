@@ -137,6 +137,10 @@ export default {
     },
     vieweditor(){
       this.isTakeawayShow = true;
+    },
+    handleCurrentChange(val){
+      this.page=val
+      this.getlistData(this.page)
     }
 
   }
