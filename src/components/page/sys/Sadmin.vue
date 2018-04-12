@@ -4,7 +4,7 @@
       <div class="list-search">
         <div class="ls-left">
           <div class="form-tabel">
-            <div class="td-title">权限列表</div>
+            <div class="td-title">管理员列表</div>
             <div class="td-content"><input type="text" /><span class="search-icon"><i class="el-icon-search"></i></span></div>
           </div>
         </div>
@@ -12,13 +12,13 @@
 
         </div>
       </div>
-      <el-table stripe  :data="ListData">
+      <el-table stripe :data="ListData">
         <el-table-column label="姓名" prop="username"></el-table-column>
         <el-table-column label="手机号" prop="phone"></el-table-column>
-        <el-table-column label="职务" prop="role_name"></el-table-column>
-        <el-table-column label="职务" prop="role_name"></el-table-column>
-        <el-table-column label="添加时间" prop="create_time.date"></el-table-column>
-        <el-table-column label="修改时间" prop="update_time.date"></el-table-column>
+        <el-table-column label="电子邮箱" prop="email"></el-table-column>
+        <el-table-column label="职务角色" prop="role_name"></el-table-column>
+        <el-table-column label="添加时间" prop="create_time"></el-table-column>
+        <el-table-column label="修改时间" prop="update_time"></el-table-column>
         <el-table-column>
           <template slot-scope="scope">
             <div class="tdbtn-box">
@@ -32,14 +32,18 @@
     <div class="pagination">
       <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
+    <v-admin v-if="popadmin" :fromParent="roleid" @adminevent = "adminevent"></v-admin>
   </div>
 </template>
 
 <script>
+  import vAdmin from './Addadmin'
   export default {
     name: 'Member',
+    components:{vAdmin},
     data () {
       return {
+        popadmin:false,
         total:0,  //总条数
         pages:0,  //总页数
         page:0,   //当前页
@@ -55,6 +59,10 @@
       this.getlistData(1)
     },
     methods:{
+      adminevent(...data){
+        let vm = this;
+        vm.popadmin=data.popadmin
+      },
       getlistData(page){
         let vm =this,url='/api/web/authority/user/list',params={page:page};
         vm.$axios.get(url,{params}).then((res)=>{
@@ -83,12 +91,8 @@
         this.getlistData(this.page)
       },
       viewMore(scope){
-        /*if(this.expands.toString().indexOf(scope.id)>=0){
-          this.expands=[]
-        }else{
-          this.expands=[]
-          this.expands.push(scope.id);
-        }*/
+        this.roleid=scope.id.toString()
+        this.popadmin=!this.popadmin
       }
     }
   }
@@ -97,7 +101,7 @@
   .list-search{ padding:0 10px; display: flex;display: -webkit-flex; justify-content: space-between;-webkit-justify-content: space-between}
   .ls-right .ls-r-btn{ color: #fff; font-size: 12px; background:#22baa0; padding: 3px 8px; border-radius: 2px; cursor: pointer}
   .ls-right .ls-r-btn span{ margin-left: 5px}
-  .ls-left .form-tabel{ display: flex;display: -webkit-flex; align-items: center; -webkit-align-items: center; }
+  .ls-left .form-tabel{ display: flex;display: -webkit-flex; align-items: center; -webkit-align-items: center; padding-bottom: 10px}
   .form-tabel .td-title{ margin-right: 5px; color: #f8e2ff}
   .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
   .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center; margin-left: 1px}

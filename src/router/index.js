@@ -16,6 +16,7 @@ export default new Router({
     },
     {
       path:'/changepwd',
+      name:'changepwd',
       meta:{keepAlive:true},
       component:resolve=>require(['../components/Changepwd.vue'],resolve)
     },
@@ -62,28 +63,28 @@ export default new Router({
                   path:'/',
                   name:'mdetail',
                   meta:{keepAlive:true},
-                  component:resolve=>require(['../components/common/Orderlist.vue'],resolve),
+                  component:resolve=>require(['../components/page/order/Orderlist.vue'],resolve),
                 },
                 {
                   path:'/orderlist',
                   meta:{keepAlive:true},
-                  component:resolve=>require(['../components/common/Orderlist.vue'],resolve),
+                  component:resolve=>require(['../components/page/order/Orderlist.vue'],resolve),
                 },
                 {
                   path:'/reservatiolist',
                   meta:{keepAlive:true},
-                  component:resolve=>require(['../components/common/Reservatiolist.vue'],resolve),
+                  component:resolve=>require(['../components/page/order/Reservatiolist.vue'],resolve),
                 },
                 {
                   path:'/livelist',
                   meta:{keepAlive:true},
-                  component:resolve=>require(['../components/common/Livelist.vue'],resolve),
+                  component:resolve=>require(['../components/page/order/Livelist.vue'],resolve),
                 },
                 {
                   path:'/paylist',
                   name:'paylist',
                   meta:{keepAlive:true},
-                  component:resolve=>require(['../components/common/Paylist.vue'],resolve),
+                  component:resolve=>require(['../components/page/order/Paylist.vue'],resolve),
                 }
               ]
             },
@@ -95,22 +96,22 @@ export default new Router({
                   {
                     path:'/',
                     meta:{keepAlive:true},
-                    component:resolve=>require(['../components/common/Orderlist.vue'],resolve),
+                    component:resolve=>require(['../components/page/order/Orderlist.vue'],resolve),
                   },
                   {
                     path:'/orderitem1',
                     meta:{keepAlive:true},
-                    component:resolve=>require(['../components/common/Orderlist.vue'],resolve),
+                    component:resolve=>require(['../components/page/order/Orderlist.vue'],resolve),
                   },
                   {
                     path:'/orderitem2',
                     meta:{keepAlive:true},
-                    component:resolve=>require(['../components/common/Reservatiolist.vue'],resolve),
+                    component:resolve=>require(['../components/page/order/Reservatiolist.vue'],resolve),
                   },
                   {
                     path:'/orderitem3',
                     meta:{keepAlive:true},
-                    component:resolve=>require(['../components/common/Livelist.vue'],resolve),
+                    component:resolve=>require(['../components/page/order/Livelist.vue'],resolve),
                   }
                 ]
             },
@@ -137,22 +138,17 @@ export default new Router({
                   {
                     path:'/',
                     meta:{keepAlive:true},
-                    component:resolve=>require(['../components/common/Srole.vue'],resolve),
+                    component:resolve=>require(['../components/page/sys/Srole.vue'],resolve),
                   },
                   {
                     path:'/srole',
                     meta:{keepAlive:true},
-                    component:resolve=>require(['../components/common/Srole.vue'],resolve),
-                  },
-                  {
-                    path:'/sacess',
-                    meta:{keepAlive:true},
-                    component:resolve=>require(['../components/common/Sacess.vue'],resolve),
+                    component:resolve=>require(['../components/page/sys/Srole.vue'],resolve),
                   },
                   {
                     path:'/sadmin',
                     meta:{keepAlive:true},
-                    component:resolve=>require(['../components/common/Sadmin.vue'],resolve),
+                    component:resolve=>require(['../components/page/sys/Sadmin.vue'],resolve),
                   }
                 ]
             },

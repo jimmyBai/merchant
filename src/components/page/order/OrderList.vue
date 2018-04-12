@@ -13,14 +13,14 @@
         </div>
       </div>
       <el-table stripe :row-key="getRowKeys" :expand-row-keys="expands" :data="ListData">
-        <el-table-column label="下单时间" prop="id"></el-table-column>
-        <el-table-column label="订单编号" prop="name"></el-table-column>
+        <el-table-column label="下单时间" prop="create_time"></el-table-column>
+        <el-table-column label="订单编号" prop="order_sn"></el-table-column>
+        <el-table-column label="用户名" prop="username"></el-table-column>
+        <el-table-column label="手机号" prop="phone"></el-table-column>
         <el-table-column label="商品数量" prop="id"></el-table-column>
-        <el-table-column label="积分" prop="id"></el-table-column>
-        <el-table-column label="服务费" prop="shop"></el-table-column>
-        <el-table-column label="付款金额" prop="address"></el-table-column>
-        <el-table-column label="支付方式" prop="shop"></el-table-column>
-        <el-table-column label="订单状态" prop="id"></el-table-column>
+        <el-table-column label="配送费" prop="delivery_fee"></el-table-column>
+        <el-table-column label="付款金额" prop="order_paid_price"></el-table-column>
+        <el-table-column label="订单状态" prop="order_status_name"></el-table-column>
         <el-table-column>
           <template slot-scope="scope">
             <div class="tdbtn-box">
@@ -35,15 +35,15 @@
                 <span>商品信息</span>
               </div>
               <div class="expandgoodslist">
-                <div class="linetr" v-for="n in 3">
+                <div class="linetr" v-for="items in props.row.products">
                   <div class="goodslistitem">
-                    <div class="goodsimg"></div>
+                    <div class="goodsimg" v-text="items.num"></div>
                     <div class="goodsname">
-                      <span v-text="props.row.desc"></span>
+                      <span v-text="items.name"></span>
                     </div>
                   </div>
                   <div class="goodslistitem">
-                    <span class="goodsprice" v-text="props.row.id"></span>
+                    <span class="goodsprice" v-text="items.num"></span>
                   </div>
 
                 </div>
@@ -100,7 +100,7 @@
         }).then((res)=>{
           if(res.data.error_code=='0'){
             if(res.data.data.list) {
-              vm.userObj = res.data.data
+              vm.ListData = res.data.data.list
             }
             vm.total=Number(res.data.data.total);
             vm.pages=Number(res.data.data.pages);
@@ -116,15 +116,17 @@
         });
       },
       viewMore(scope){
-        if(this.expands.toString().indexOf(scope.id)>=0){
+        console.log(scope)
+        console.log(this.expands)
+        if(this.expands.toString().indexOf(scope.order_sn)>=0){
           this.expands=[]
         }else{
           this.expands=[]
-          this.expands.push(scope.id);
+          this.expands.push(scope.products);
         }
       },
       //分页
-      handleCurrentChange(val){
+      handleCurrentChange(val){9
         this.page=val
         this.getlistData(this.page)
       }

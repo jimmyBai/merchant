@@ -10,11 +10,11 @@
           <!--重置密码-->
             <h2 class="log-title">重置密码</h2>
             <div class="loginput log-userName">
-              <input type="password" v-model="newpwd1" placeholder="请设置6-15位的数字和和字母的混合密码">
+              <input type="password" v-model="newpwd1" maxlength="15" placeholder="请设置6-15位的数字和和字母的混合密码">
             </div>
             <div class="errortips"></div>
             <div class="loginput log-userName">
-              <input type="password" v-model="newpwd2" placeholder="请再输入你的密码">
+              <input type="password" v-model="newpwd2" maxlength="15" placeholder="请再输入你的密码">
             </div>
             <div class="errortips" v-text="setpwdtips"></div>
             <div class="savepwd" @click="ischeck=!ischeck" :class="{'checkactive':ischeck}">
@@ -34,12 +34,16 @@ export default {
       newpwd1:'',
       newpwd2:'',
       setpwdtips:'',
-      ischeck:''
+      ischeck:'',
+      phone:''
     }
   },
   watch:{
   },
   mounted: function() {
+    if(this.$route.params&&this.$route.params.phone){
+      this.phone=this.$route.params.phone
+    }
   },
   methods:{
     backlogin(){
@@ -47,15 +51,54 @@ export default {
     },
     //提交新密码
     postnepwd(){
-  	  if(this.newpwd1.toLowerCase()==this.newpwd2.toLowerCase()){
-  	    //发送请求返回登录
-        this.backlogin()
+      let vm =this,url='/api/web/reset-pwd',params={
+        'phone':vm.phone,
+        'password':vm.newpwd1
+      };
+      if(!this.newpwd1||!this.newpwd2){
+        //密码为空
+        return
       }else{
-        this.setpwdtips='密码与第一次输入的不一致，请重新输入'
-        setTimeout(()=>{
-          this.setpwdtips=''
-        },2000)
+        if(this.newpwd1.length<6){
+          //密码长度
+          vm.setpwdtips='密码长度至少6位'
+          setTimeout(()=>{
+            vm.setpwdtips=''
+          },2000)
+        }else{
+          var regx=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,15}$/
+          //密码格式
+          if(regx.test(this.newpwd1)){
+            if(this.newpwd1.toLowerCase()==this.newpwd2.toLowerCase()){
+              //发送请求返回登录
+              vm.$axios({
+                method:'post',
+                url:url,
+                data: params
+              }).then((res)=>{
+                if(res.data.error_code=='0'){
+                  this.backlogin()
+                }else{
+                  vm.$message.error(res.data.message);
+                }
+              }).catch(err => {
+                console.log(err);
+              });
+            }else{
+              vm.setpwdtips='密码与第一次输入的不一致，请重新输入'
+              setTimeout(()=>{
+                vm.setpwdtips=''
+              },2000)
+            }
+          }else{
+            vm.setpwdtips='密码格式不对'
+            setTimeout(()=>{
+              vm.setpwdtips=''
+            },2000)
+          }
+        }
       }
+
     }
   }
 }

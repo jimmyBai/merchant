@@ -153,7 +153,7 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 /**tabs**/
 .tabslist{ margin-top: 20px;}
 .tabslist-head{ display: flex; display: -webkit-flex; border-bottom: 1px solid #48344d;margin-top: -1px; position: relative}
-.tabslist-head .tabtar-item{height: 30px; line-height: 30px; padding: 0 20px;box-sizing: border-box;display: inline-block; list-style: none; font-size: 12px; font-weight: 500; color: #aa96b1; border:1px solid #48344d; border-radius: 2px 2px 0 0; margin-right: 2px; border-bottom: none ;
+.tabslist-head .tabtar-item{ cursor: pointer; height: 30px; line-height: 30px; padding: 0 20px;box-sizing: border-box;display: inline-block; list-style: none; font-size: 12px; font-weight: 500; color: #aa96b1; border:1px solid #48344d; border-radius: 2px 2px 0 0; margin-right: 2px; border-bottom: none ;
   position: relative; background: #38213e}
 .tabslist-head .is-active{background:#724480;color: #fff; border-color:#724480 }
 
