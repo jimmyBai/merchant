@@ -1,5 +1,5 @@
 <template>
-  
+
   <div class="main" v-show="displayShow">
     <div class="main-title">
         <span class="title-lf">添加商品</span>
@@ -11,50 +11,50 @@
     <div class="main-body">
         <div class="body-goodsName public">
             <span>商品名称</span>
-            <input type="text" v-model="product.name">
+            <input type="text">
         </div>
         <div class="body-goodsDescribe public">
             <span>商品描述</span>
-            <input type="text" v-model="product.describe">
+            <input type="text">
         </div>
 
         <div class="body-lr public">
             <div class="lr-left sharing">
                 <span>分类</span>
-                <select class="" v-model="product.type">
+                <select class="">
                     <option value=""></option>
                 </select>
             </div>
             <div class="lr-right sharings">
                 <span>产地</span>
-                <input type="text" v-model="product.place">
+                <input type="text">
             </div>
         </div>
 
         <div class="body-year public">
             <span>年份</span>
-            <input type="text" v-model="product.years">
+            <input type="text">
         </div>
         <div class="body-brand public">
             <span>品牌</span>
-            <input type="text" v-model="product.brand">
+            <input type="text">
         </div>
 
         <div class="body-km public">
             <div class="km-left sharing">
                 <span>重量(KG)</span>
-                <input type="text" v-model="product.weight">
+                <input type="text">
             </div>
             <div class="km-right sharings">
                 <span>容量(ML)</span>
-                <input type="text" v-model="">
+                <input type="text">
             </div>
         </div>
 
         <div class="body-dt public">
             <div class="dt-left sharing">
                 <span>单价</span>
-                <input type="text" v-model="product.price">
+                <input type="text">
             </div>
             <div class="dt-right special">
                 <span>特价</span>
@@ -66,7 +66,7 @@
                     inactive-color="#ff4949">
                     </el-switch>
                 </span>
-                
+
             </div>
         </div>
 
@@ -79,12 +79,12 @@
                     active-color="#13ce66"
                     inactive-color="#ff4949">
                     </el-switch>
-                </span>    
+                </span>
             </div>
             <div class="kk-right sharings">
                 <span>库存数量</span>
-                <input type="text" v-model="product.inventory">
-                
+                <input type="text">
+
             </div>
         </div>
 
@@ -109,12 +109,12 @@
         }
     },
     mounted:function(){
-        this.getlistData()
+       this.getlistData()
     },
     methods:{
         getlistData(){
             let vm = this,url='/api/web/product/create'
-            
+
             vm.$axios({
                 method:'post',
                 url:url
@@ -228,9 +228,9 @@
         display: block;
     }
     .sharings input{
-        
+
     }
-        
+
 
     .special{
         position: absolute;
@@ -266,7 +266,7 @@
         width: 100%;
         height: 30px;
         line-height: 30px;
-        margin: 20px 0;   
+        margin: 20px 0;
     }
     .bottom-btn input{
         width: 100%;

@@ -1,5 +1,5 @@
 <template>
-  
+
   <div class="main" v-show="displayShow">
     <div class="main-title">
         <span class="title-lf">查看/编辑商品</span>
@@ -66,7 +66,7 @@
                     inactive-color="#ff4949">
                     </el-switch>
                 </span>
-                
+
             </div>
         </div>
 
@@ -79,12 +79,12 @@
                     active-color="#13ce66"
                     inactive-color="#ff4949">
                     </el-switch>
-                </span>    
+                </span>
             </div>
             <div class="kk-right sharings">
                 <span>库存数量</span>
                 <input type="text">
-                
+
             </div>
         </div>
 
@@ -109,7 +109,7 @@
         }
     },
     methods:{
-      
+
       clickDialogHide () {
         this.displayShow = false
       }
@@ -206,9 +206,9 @@
         display: block;
     }
     .sharings input{
-        
+
     }
-        
+
 
     .special{
         position: absolute;
@@ -244,7 +244,7 @@
         width: 100%;
         height: 30px;
         line-height: 30px;
-        margin: 20px 0;   
+        margin: 20px 0;
     }
     .bottom-btn input{
         width: 100%;
