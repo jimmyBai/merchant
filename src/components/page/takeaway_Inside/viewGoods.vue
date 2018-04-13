@@ -1,6 +1,8 @@
-<template><div class="container" v-show="displayShow">
+<template>
+
+  <div class="main" v-show="displayShow">
     <div class="main-title">
-        <span class="title-lf">添加商品</span>
+        <span class="title-lf">查看/编辑商品</span>
         <span class="title-rt" @click="clickDialogHide">
           <i class="el-message-box__close el-icon-close"></i>
         </span>
@@ -9,7 +11,7 @@
     <div class="main-body">
         <div class="body-goodsName public">
             <span>商品名称</span>
-            <input type="text">
+            <input type="text" value="">
         </div>
         <div class="body-goodsDescribe public">
             <span>商品描述</span>
@@ -52,7 +54,7 @@
         <div class="body-dt public">
             <div class="dt-left sharing">
                 <span>单价</span>
-                <input type="text">
+                <input type="text" >
             </div>
             <div class="dt-right special">
                 <span>特价</span>
@@ -82,7 +84,7 @@
             <div class="kk-right sharings">
                 <span>库存数量</span>
                 <input type="text">
-                
+
             </div>
         </div>
 
@@ -106,39 +108,17 @@
             displayShow: true
         }
     },
-    mounted:function(){
-       this.getlistData()
-    },
     methods:{
-        getlistData(){
-            let vm = this,url='/api/web/product/create'
 
-            vm.$axios({
-                method:'post',
-                url:url
-            }).then((res)=>{
-                if(res.data.error_code=='0'){
-                if(res.data.data){
-                    vm.ListData=res.data.data
-                }
-                console.log(res.data.data)
-                }else{
-                vm.$message.error(res.data.message);
-                console.log(res.data.message)
-                }
-            }).catch(err => {
-                console.log(err);
-            });
-        },
-        clickDialogHide () {
-            this.displayShow = false
-        }
+      clickDialogHide () {
+        this.displayShow = false
+      }
     }
   }
 </script>
 
 <style scoped>
-    .container{
+    .main{
         width: 420px;
         margin: 0 auto;
         color: #606266;
@@ -159,7 +139,7 @@
     .title-lf{
         color: #ffffff;
         font-size: 14px;
-        line-height: 1;
+        line-height: 1
     }
     .title-rt{
         font-size: 20px;
