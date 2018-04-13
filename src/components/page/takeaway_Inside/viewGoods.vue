@@ -1,98 +1,111 @@
 <template>
-
-  <div class="main" v-show="displayShow">
-    <div class="main-title">
-        <span class="title-lf">查看/编辑商品</span>
-        <span class="title-rt" @click="clickDialogHide">
-          <i class="el-message-box__close el-icon-close"></i>
-        </span>
-    </div>
-
-    <div class="main-body">
-        <div class="body-goodsName public">
-            <span>商品名称</span>
-            <input type="text" value="">
+  <div class="viewgoods-andy">
+    <div class="el-message-box__wrapper">
+      <div class="el-message-box">
+        <div class="message-box_header">
+          <div class="message-box_title"><span v-text='msgtitle'></span></div>
+          <div class="message-box_closebtn" @click="closepop"><i class="el-message-box__close el-icon-close"></i></div>
         </div>
-        <div class="body-goodsDescribe public">
-            <span>商品描述</span>
-            <input type="text">
-        </div>
-
-        <div class="body-lr public">
-            <div class="lr-left sharing">
-                <span>分类</span>
-                <select class="">
-                    <option value=""></option>
-                </select>
+        <div class="message-box_content">
+          <div class="addpop">
+            <!-- 商品名称 -->
+            <div class="adduser-item">
+              <div class="itemline">
+                <div class="itemtitle"><em>*</em>商品名称</div>
+                <div class="itemcontent"><input type="text" v-model="product_name"></div>
+              </div>
             </div>
-            <div class="lr-right sharings">
-                <span>产地</span>
-                <input type="text">
+            <!-- 商品描述 -->
+            <div class="adduser-item">
+              <div class="itemline">
+                <div class="itemtitle">商品描述</div>
+                <div class="itemcontent"><input type="text" v-model="describe"></div>
+              </div>
             </div>
-        </div>
-
-        <div class="body-year public">
-            <span>年份</span>
-            <input type="text">
-        </div>
-        <div class="body-brand public">
-            <span>品牌</span>
-            <input type="text">
-        </div>
-
-        <div class="body-km public">
-            <div class="km-left sharing">
-                <span>重量(KG)</span>
-                <input type="text">
+            <!-- collection -->
+            <div class="adduser-itemBox">
+              <div class="adduser-class">
+                <div class="classtitle">分类</div>
+                <div class="classcontent"><el-select v-model="wine_type" value-key="id" placeholder="请选择">
+                  <el-option v-for="item in usertions" :key="item.id" :label="item.class_name" :value='item'>
+                  </el-option>
+                </el-select></div>
+              </div>
+              <div class="adduser-producer">
+                  <div class="producertitle"><em>*</em>产地</div>
+                  <div class="producercontent"><input type="text" v-model="place"></div>
+                </div>
             </div>
-            <div class="km-right sharings">
-                <span>容量(ML)</span>
-                <input type="text">
+            <!-- 年份 -->
+            <div class="adduser-item">
+              <div class="itemline">
+                <div class="itemtitle"><em>*</em>年份</div>
+                <div class="itemcontent"><input type="tel" v-model="years"></div>
+              </div>
             </div>
-        </div>
-
-        <div class="body-dt public">
-            <div class="dt-left sharing">
-                <span>单价</span>
-                <input type="text" >
+            <!-- 品牌 -->
+            <div class="adduser-item">
+              <div class="itemline">
+                <div class="itemtitle">品牌</div>
+                <div class="itemcontent"><input type="text" v-model="brand"></div>
+              </div>
             </div>
-            <div class="dt-right special">
-                <span>特价</span>
-                <input type="text">
-                <span class="el_span">
-                    <el-switch
+            <!-- collection -->
+            <div class="adduser-itemBox">
+              <div class="adduser-class">
+                <div class="classtitle" >重量&nbsp;(KG)</div>
+                <div class="classcontent"><input type="text" v-model="weight"></div>
+              </div>
+              <div class="adduser-producer">
+                  <div class="producertitle">容量&nbsp;(ML)</div>
+                  <div class="producercontent"><input type="text" v-model="capacity"></div>
+                </div>
+            </div>
+            <!-- collection -->
+            <div class="adduser-itemBox">
+              <div class="adduser-class">
+                <div class="classtitle" ><em>*</em>单价</div>
+                <div class="classcontent"><input type="text" placeholder="￥" v-model="market_price"></div>
+              </div>
+              <div class="adduser-producer">
+                  <div class="producertitle"><em>*</em>特价</div>
+                  <div class="producercontent changeInput"><input type="text" placeholder="￥" v-model="special_price"></div>
+                  <el-switch
                     v-model="value1"
-                    active-color="#13ce66"
-                    inactive-color="#ff4949">
-                    </el-switch>
-                </span>
-
+                    active-color="rgb(96,58,108)"
+                    inactive-color="rgb(96,58,108)">
+                  </el-switch>
+              </div>
             </div>
-        </div>
-
-        <div class="body-kk public">
-            <div class="kk-left inventory">
-                <span style="display:inline;float:left;">库存跟踪</span>
-                <span class="el_spans">
-                    <el-switch
+            <!-- collection -->
+            <div class="adduser-itemBox">
+              <div class="adduser-class notSame">
+                <div class="notSametitle" v-model="track"><em>*</em>库存跟踪</div>
+                <el-switch
                     v-model="value2"
-                    active-color="#13ce66"
-                    inactive-color="#ff4949">
-                    </el-switch>
-                </span>
+                    active-color="rgb(96,58,108)"
+                    inactive-color="rgb(96,58,108)"
+                    class="el_switch">
+                </el-switch>
+              </div>
+              <div class="adduser-producer">
+                  <div class="producertitle"><em>*</em>库存数量</div>
+                  <div class="producercontent"><input type="text" v-model="inventory"></div>
+                </div>
             </div>
-            <div class="kk-right sharings">
-                <span>库存数量</span>
-                <input type="text">
-
+            <!-- 保存 -->
+            <div class="popsaveline" @click="clickSaveInfo">
+              <span>保存</span>
             </div>
-        </div>
 
-        <div class="bottom-btn">
-            <input type="text" value="保存">
+          </div>
         </div>
+        <div class="message-box_btns">
 
+        </div>
+      </div>
     </div>
+    <div class="v-modal" style="z-index: 99;"></div>
   </div>
 
 
@@ -100,160 +113,167 @@
 
 <script>
   export default {
-    name: 'takeawayDialog',
+    name: 'viewGoods',
     data () {
         return {
+            msgtitle: '查看/编辑商品',
             value1: true,
             value2: true,
-            displayShow: true
+            usertions: [],
+            product_name: '',
+            describe: '',
+            wine_type: '',
+            place: '',
+            years: '',
+            brand: '',
+            weight: '',
+            market_price: '',
+            special_price: '',
+            inventory: '',
+            track: '',
+            capacity: ''
         }
     },
-    methods:{
+    props: {
+      fromParent: String
+    },
+    mounted:function(){
+      this.getGoodsInfo();
 
-      clickDialogHide () {
-        this.displayShow = false
+      this.getclassinfo();
+    },
+    methods:{
+      //获取修改信息
+      getGoodsInfo(){
+        let vm =this,url='/api/web/product/edit/product_id',params={'id':this.fromParent};
+        vm.$axios.get(url,{params}).then((res)=>{
+          if(res.data.error_code=='0'){
+            vm.product_name=res.data.data.product_name
+            vm.describe=res.data.data.describe
+            vm.wine_type=res.data.data.wine_type
+            vm.place=res.data.data.place
+            vm.years=res.data.data.years
+            vm.brand=res.data.data.brand
+            vm.weight=res.data.data.weight
+            vm.market_price=res.data.data.market_price
+            vm.special_price=res.data.data.special_price
+            vm.inventory=res.data.data.inventory
+            vm.track=res.data.data.track
+            vm.capacity=res.data.data.capacity
+          }else{
+            vm.$message.error(res.data.message);
+          }
+        }).catch(err => {
+          console.log(err);
+        });
+      },
+      //获取商户分类   
+      getclassinfo(){
+        let vm =this,url='/api/web/product/type_list',params={};
+        vm.$axios.get(url,{params}).then((res)=>{
+          if(res.data.error_code=='0'){
+            vm.usertions=res.data.data
+          }else{
+            vm.$message.error(res.data.message);
+          }
+        }).catch(err => {
+          console.log(err);
+        });
+      },
+      clickSaveInfo(){
+        let vm =this,url='/api/web/product/update',params={};
+        vm.$axios({
+          method:'post',
+          url:url,
+          data: params
+        }).then((res)=>{
+          if(res.data.error_code=='0'){
+
+          }else{
+            vm.$message.error(res.data.message);
+
+          }
+        }).catch(err => {
+          console.log(err);
+        });
+      },
+
+      closepop(){
+        //执行父组件关闭方法
+        let data = {
+          isTakeawayStatus:false
+        };
+        //执行父组件方法
+        this.$emit('viewevent',data,'');
       }
+     
     }
   }
 </script>
 
 <style scoped>
-    .main{
-        width: 420px;
-        margin: 0 auto;
-        color: #606266;
-        background: rgb(52,32,59);
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
-    .main-title{
-        background: -webkit-gradient(linear, 0 0, 0 bottom, from(#433249), to(#38293d));
-        width: 100%;
-        height: 44px;
-        line-height: 44px;
-        text-align: center;
-        position: relative;
-    }
-    .title-lf{
-        color: #ffffff;
-        font-size: 14px;
-        line-height: 1
-    }
-    .title-rt{
-        font-size: 20px;
-        position: absolute;
-        right: 10px;
-    }
-    .main-body{
-
-        position: relative;
-        padding: 10px 27px;
-        color: #606266;
-        font-size: 14px;
-    }
-
-    .public{
-        width: 100%;
-        height: 50px;
-        position: relative;
-        margin: 10px 0;
-    }
-    .public span{
-        display: block;
-    }
-    .public input{
-        outline: none;
-        background: #2e1c34;
-        border: 1px solid #3d2b43;
-        margin-right: 10px;
-        color: #fff;
-        margin: 5px 0;
-        height: 23px;
-        line-height: 23px;
-        width: 100%;
-        text-indent: 8px;
-    }
-    .sharing{
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 45%;
-    }
-    .sharing span{
-        display: block;
-    }
-    .sharing select{
-        outline: none;
-        background: #2e1c34;
-        border: 1px solid #3d2b43;
-        margin-right: 10px;
-        color: #fff;
-        margin: 5px 0;
-        height: 23px;
-        line-height: 23px;
-        width: 100%;
-        text-indent: 8px;
-    }
-    .sharings{
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 45%;
-    }
-    .sharings span{
-        display: block;
-    }
-    .sharings input{
-
-    }
+  em{ font-style: normal; margin-right: 5px; color: #ac5397}
+  .itemtitle{ height: 20px; line-height: 20px; margin-bottom: 5px;}
+  .itemcontent input { height: 30px; line-height: 30px; }
+  .el-message-box__wrapper{ z-index: 100}
+  .message-box_header{ position: relative; height: 40px;justify-content: center; -webkit-justify-content: center; line-height: 40px; display: flex; display: -webkit-flex; background: -webkit-gradient(linear, 0 0, 0 bottom, from(#433249), to(#38293d));}
+  .message-box_closebtn{ position: absolute; right: 0; display: inline-block; height: 40px; width: 40px; text-align: center; cursor: pointer}
+  .message-box_title{ font-size: 16px;}
+  .message-box_content{ padding: 20px}
+  .popsaveline{ width: 80%; margin: 0 auto; margin-top: 20px}
+  .popsaveline span{ text-align: center}
 
 
-    .special{
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 45%;
-    }
-    .special input{
-        width: 70%;
-    }
+  .adduser-itemBox{
+    display: -webkit-flex;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+  .classtitle{
+    height: 20px;
+    line-height: 20px;
+    margin-bottom: 5px;
+  }
+  .adduser-class{
+      width: 45%;
+      float: left;
+  }
+  .adduser-producer{
+      width: 45%;
+      float: right;
+      margin-left: 5%;
+  }
+  .producertitle{
+    height: 20px;
+    line-height: 20px;
+    margin-bottom: 5px;
+  }
 
-    .inventory{
-        width: 45%;
-        height: 50px;
-        line-height: 50px;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        position: relative;
-    }
-    .el_span{
-        position: absolute;
-        right: 0;
-        bottom: 8px;
-    }
-    .el_spans{
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
+  .changeInput{
+      width: 70%;
+      float: left;
+  }
+  .el-switch{
+    float: right;
+  }
+  .notSametitle{
+      float: left;
+  }
+  .notSametitle{
+      float: left;
+      position: absolute;
+      left: 0;
+      bottom: 5px;
+  }
+  .notSame{
+      height: 50px;
+      position: relative;
+  }
+  .el_switch{
+      position: absolute;
+      right: 0;
+      bottom: 5px;
+  }
 
-    .bottom-btn{
-        width: 100%;
-        height: 30px;
-        line-height: 30px;
-        margin: 20px 0;
-    }
-    .bottom-btn input{
-        width: 100%;
-        height: 30px;
-        font-size: 12px;
-        color: #fff;
-        background: #ac5397;
-        text-align: center;
-        border: 0;
-        outline: none;
-    }
 </style>

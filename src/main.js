@@ -16,6 +16,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 import "../static/css/base.css"
+// andy
+import "../static/css/newStyle.css"
 
 Vue.use(Vuex);
 Vue.use(ElementUI);

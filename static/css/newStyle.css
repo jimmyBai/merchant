@@ -1,0 +1,14 @@
+.adduser-itemBox>div input{
+    height: 23px;
+    line-height: 23px;
+    width: 100%;
+    text-indent: 8px;
+}
+.adduser-itemBox>div input,.adduser-itemBox>div textarea{
+    outline: none;
+    background: #2e1c34;
+    border: 1px solid #3d2b43;
+    margin-right: 10px;
+    color: #fff;
+    margin: 0;
+}

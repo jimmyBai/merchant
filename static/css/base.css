@@ -158,7 +158,9 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .tabslist-head .is-active{background:#724480;color: #fff; border-color:#724480 }
 
 
-
-
 .unshow{display: none}
 .isshow{display: block}
+
+
+/* andy */
+.tdBtn-view{ background: #7a6fbe; padding: 0 8px; border-radius: 2px; margin-left: 5px;}
