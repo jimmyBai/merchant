@@ -1,11 +1,6 @@
 <template>
-<<<<<<< HEAD
   
   <div class="container" v-show="displayShow">
-=======
-
-  <div class="main" v-show="displayShow">
->>>>>>> dev
     <div class="main-title">
         <span class="title-lf">添加商品</span>
         <span class="title-rt" @click="clickDialogHide">
@@ -117,7 +112,6 @@
         this.getlistData()
     },
     methods:{
-<<<<<<< HEAD
         getlistData(){
             let vm = this,url='/api/web/product/create'
             
@@ -141,12 +135,6 @@
         clickDialogHide () {
             this.displayShow = false
         }
-=======
-
-      clickDialogHide () {
-        this.displayShow = false
-      }
->>>>>>> dev
     }
   }
 </script>
