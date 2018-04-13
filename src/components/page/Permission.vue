@@ -20,7 +20,7 @@
           <router-view></router-view>
         </div>
       </div>
-      <v-role v-if="popshow" @ievent = "ievent"></v-role>
+      <v-role v-if="popshow" @sievent="pievent"></v-role>
       <v-admin v-if="popadmin" @adminevent = "adminevent"></v-admin>
     </div>
 </template>
@@ -46,11 +46,10 @@ export default {
   },
   methods:{
     //接受子组件传参
-    ievent(...data){
+    pievent(...data){
       let vm = this;
       vm.popshow=data.popstatus
       if(data[0].status&&data[0].status=='refresh'){
-        console.log('此处需要刷新数据ssss')
       }
     },
     adminevent(...data){

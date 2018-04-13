@@ -95,7 +95,7 @@
       closepop(){
         //执行父组件方法
         let data = {
-          popstatus:false
+          popstatus:false,
         };
         this.$emit('sievent',data,'');
 

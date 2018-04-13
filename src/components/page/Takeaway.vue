@@ -54,21 +54,21 @@
 
 
     <!-- 添加商品 -->
-    <add-goods v-if="isTakeawayAddShow"></add-goods>
+    <!--<add-goods v-if="isAddGoodsShow"></add-goods>-->
     <!-- 查看商品 -->
-    <!--<dialog v-if="isTakeawayShow"></dialog>-->
+    <!-- <view-goods v-if="isTakeawayShow"></view-goods> -->
 
   </div>
 </template>
 
 <script>
-import addGoods from './TakeawayAddGoods.vue'
-/*import dialog from './TakeawayDialog.vue'*/
+//import addGoods from './takeaway_lnside/addGoods'
+// import viewGoods from './takeaway_lnside/viewGoods'
 
 export default {
   components:{
-    addGoods,
-/*    dialog*/
+    addGoods
+    // viewGoods
   },
   name: 'takeaway',
   data () {
@@ -85,8 +85,8 @@ export default {
       total_page:0,
       value1: true,
       value2: true,
-      isTakeawayShow: false,
-      isTakeawayAddShow: false
+      isAddGoodsShow: false
+      // isTakeawayShow: false
     }
   },
   mounted:function(){

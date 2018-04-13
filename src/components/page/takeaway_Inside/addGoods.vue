@@ -1,99 +1,67 @@
 <template>
+  <div class="goods_andy">
+    <div class="el-message-box__wrapper">
+      <div class="el-message-box">
+        <div class="message-box_header">
+          <div class="message-box_title"><span v-text='msgtitle'></span></div>
+          <div class="message-box_closebtn" @click="closepop"><i class="el-message-box__close el-icon-close"></i></div>
+        </div>
+        <div class="message-box_content">
+          <div class="addpop">
+            <div class="adduser-item">
+              <div class="itemline">
+                <div class="itemtitle"><em>*</em>姓名</div>
+                <div class="itemcontent"><input type="text" v-model="real_name"></div>
+              </div>
+            </div>
+            <div class="adduser-item">
+              <div class="itemline">
+                <div class="itemtitle"><em>*</em>手机号码</div>
+                <div class="itemcontent"><input type="tel" v-model="phone"></div>
+              </div>
+            </div>
+            <div class="adduser-item">
+              <div class="itemline">
+                <div class="itemtitle"><em>*</em>电子邮箱</div>
+                <div class="itemcontent"><input type="email" v-model="email"></div>
+              </div>
+            </div>
+            <div class="adduser-item">
+              <div class="itemline">
+                <div class="itemtitle" >角色名称</div>
+                <div class="itemcontent"><el-select v-model="usevalue" value-key="id" placeholder="请选择">
+                  <el-option v-for="item in useoptions" :key="item.id" :label="item.role_name" :value="item">
+                  </el-option>
+                </el-select></div>
+              </div>
+            </div>
+            <div class="adduser-item">
+              <div class="itemline">
+                <div class="itemtitle">角色描述</div>
+                <div class="itemcontent">
+                  <div class="mytextarea"><textarea v-model="username"></textarea></div>
+                </div>
+              </div>
+            </div>
+            <div class="adduser-item">
+              <div class="itemline">
+                <div class="itemtitle"><em>*</em>登录密码</div>
+                <div class="itemcontent"><input type="text" v-model="password"></div>
+              </div>
+            </div>
+            <div class="popsaveline" @click="addroleFn">
+              <span>保存</span>
+            </div>
+          </div>
+        </div>
+        <div class="message-box_btns">
 
-  <div class="main" v-show="displayShow">
-    <div class="main-title">
-        <span class="title-lf">添加商品</span>
-        <span class="title-rt" @click="clickDialogHide">
-          <i class="el-message-box__close el-icon-close"></i>
-        </span>
+        </div>
+      </div>
     </div>
-
-    <div class="main-body">
-        <div class="body-goodsName public">
-            <span>商品名称</span>
-            <input type="text">
-        </div>
-        <div class="body-goodsDescribe public">
-            <span>商品描述</span>
-            <input type="text">
-        </div>
-
-        <div class="body-lr public">
-            <div class="lr-left sharing">
-                <span>分类</span>
-                <select class="">
-                    <option value=""></option>
-                </select>
-            </div>
-            <div class="lr-right sharings">
-                <span>产地</span>
-                <input type="text">
-            </div>
-        </div>
-
-        <div class="body-year public">
-            <span>年份</span>
-            <input type="text">
-        </div>
-        <div class="body-brand public">
-            <span>品牌</span>
-            <input type="text">
-        </div>
-
-        <div class="body-km public">
-            <div class="km-left sharing">
-                <span>重量(KG)</span>
-                <input type="text">
-            </div>
-            <div class="km-right sharings">
-                <span>容量(ML)</span>
-                <input type="text">
-            </div>
-        </div>
-
-        <div class="body-dt public">
-            <div class="dt-left sharing">
-                <span>单价</span>
-                <input type="text">
-            </div>
-            <div class="dt-right special">
-                <span>特价</span>
-                <input type="text">
-                <span class="el_span">
-                    <el-switch
-                    v-model="value1"
-                    active-color="#13ce66"
-                    inactive-color="#ff4949">
-                    </el-switch>
-                </span>
-
-            </div>
-        </div>
-
-        <div class="body-kk public">
-            <div class="kk-left inventory">
-                <span style="display:inline;float:left;">库存跟踪</span>
-                <span class="el_spans">
-                    <el-switch
-                    v-model="value2"
-                    active-color="#13ce66"
-                    inactive-color="#ff4949">
-                    </el-switch>
-                </span>
-            </div>
-            <div class="kk-right sharings">
-                <span>库存数量</span>
-                <input type="text">
-
-            </div>
-        </div>
-
-        <div class="bottom-btn">
-            <input type="text" value="保存">
-        </div>
-
-    </div>
+    <div class="v-modal" tabindex="0" style="z-index: 99;"></div>
   </div>
+  
 
 
 </template>
