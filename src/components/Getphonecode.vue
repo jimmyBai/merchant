@@ -57,7 +57,7 @@ export default {
           data: params
         }).then((res)=>{
           if(res.data.error_code=='0'){
-            vm.$router.push('/changepwd')
+            vm.$router.push({name:'changepwd',params:{phone:vm.userphone}});
           }else{
             vm.$message.error(res.data.message);
           }

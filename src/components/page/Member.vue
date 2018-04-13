@@ -20,7 +20,7 @@
         <el-table-column prop="name" label="用户名"></el-table-column>
         <el-table-column prop="phone" label="手机号码"></el-table-column>
         <el-table-column prop="balance" label="余额"></el-table-column>
-        <el-table-column prop="credit" label="店铺现金"></el-table-column>
+        <el-table-column prop="cash" label="店铺现金"></el-table-column>
         <el-table-column prop="create_time" label="加入时间"></el-table-column>
         <el-table-column>
           <template slot-scope="scope">
@@ -51,14 +51,14 @@
               <el-col :span="4"><div class="res-title">加入</br>时间段：</div></el-col>
               <el-col :span="7">
                 <div class="res-input">
-                  <el-date-picker v-model="search.create_start" clear-icon  type="date" placeholder="选择日期">
+                  <el-date-picker v-model="search.create_start"  :editable="false" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期">
                   </el-date-picker>
                 </div>
               </el-col>
               <el-col :span="1"><div class="res-line">~</div></el-col>
               <el-col :span="7">
                 <div class="res-input">
-                  <el-date-picker clear-icon v-model="search.create_end" type="date" placeholder="选择日期">
+                  <el-date-picker clear-icon :editable="false"  v-model="search.create_end" value-format="yyyy-MM-dd" type="date" placeholder="选择日期">
                   </el-date-picker>
                 </div>
               </el-col>
@@ -66,7 +66,7 @@
             </el-row>
         </div>
         <div class="res-bottom">
-          <span>恢复默认</span>
+          <span @click="clearststus">恢复默认</span>
         </div>
       </div>
     </div>
@@ -106,7 +106,10 @@ export default {
     getlistData(){
       //请求前先清空数据
       this.ListData=[]
-      let vm =this,url='/api/web/user/list',
+      let vm =this;
+      vm.search.create_start?(vm.search.create_start).substr(0,10):''
+      vm.search.create_end?(vm.search.create_end).substr(0,10):''
+      let url='/api/web/user/list',
         params={
           "search": vm.search,
           "page": vm.page,
@@ -128,7 +131,6 @@ export default {
           vm.total_page=Number(res.data.data.total_page);
         }else{
           vm.$message.error(res.data.message);
-          console.log(res.data.message)
         }
       }).catch(err => {
         console.log(err);
@@ -142,6 +144,14 @@ export default {
         this.getlistData()
       }
     },
+    //恢复默认
+    clearststus(){
+      let vm =this;
+      vm.search.min_balance= "";
+      vm.search.max_balance= "";
+      vm.search.create_start= "";
+      vm.search.create_end="";
+    },
     refresh(){
       this.search={ content: "", min_balance: "", max_balance: "", create_start: "", create_end: "" };
       this.page= "1";
@@ -149,7 +159,6 @@ export default {
       this.getlistData()
     },
     searchFn(){
-      this.search.content="";
       this.page= "1";
       this.length= "10";
       this.getlistData()

@@ -14,16 +14,15 @@
         </div>
       </div>
       <el-table stripe  :data="ListData">
-        <el-table-column label="姓名" prop="username"></el-table-column>
-        <el-table-column label="手机号" prop="phone"></el-table-column>
+        <!--<el-table-column label="姓名" prop="username"></el-table-column>
+        <el-table-column label="手机号" prop="phone"></el-table-column>-->
         <el-table-column label="职务" prop="role_name"></el-table-column>
-        <el-table-column label="职务" prop="role_name"></el-table-column>
-        <el-table-column label="添加时间" prop="create_time.date"></el-table-column>
-        <el-table-column label="修改时间" prop="update_time.date"></el-table-column>
+        <el-table-column label="添加时间" prop="create_time"></el-table-column>
+        <el-table-column label="修改时间" prop="update_time"></el-table-column>
         <el-table-column>
           <template slot-scope="scope">
             <div class="tdbtn-box">
-              <div class="tdbtn-view" @click="viewMore(scope.row)"><i class="el-icon-view"></i> <span>查看</span></div>
+              <div class="tdbtn-view" @click="viewMore(scope.row)"><i class="el-icon-view"></i> <span>查看/编辑</span></div>
             </div>
           </template>
         </el-table-column>
@@ -33,14 +32,19 @@
     <div class="pagination">
       <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
+    <v-role v-if="popdiv" :fromParent="roleid" @sievent = "pievent"></v-role>
   </div>
 </template>
 
 <script>
+  import vRole from './Addsrole'
   export default {
-    name: 'Member',
+    name: 'sys',
+    components:{vRole},
     data () {
       return {
+        roleid:'',
+        popdiv:false,
         total:0,  //总条数
         pages:0,  //总页数
         page:0,   //当前页
@@ -56,6 +60,13 @@
       this.getlistData(1)
     },
     methods:{
+      pievent(...data){
+        let vm = this;
+        vm.popdiv=data.popstatus
+        if(data[0].status&&data[0].status=='refresh'){
+          console.log('此处需要刷新数据')
+        }
+      },
       getlistData(page){
         let vm =this,url='/api/web/authority/user/list',params={page:page};
         vm.$axios.get(url,{params}).then((res)=>{
@@ -84,12 +95,8 @@
         this.getlistData(this.page)
       },
       viewMore(scope){
-        /*if(this.expands.toString().indexOf(scope.id)>=0){
-          this.expands=[]
-        }else{
-          this.expands=[]
-          this.expands.push(scope.id);
-        }*/
+        this.roleid=scope.id.toString()
+        this.popdiv=!this.popdiv
       }
     }
   }

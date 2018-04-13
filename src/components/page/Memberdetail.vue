@@ -55,17 +55,17 @@
           <div class="b-datainfo">
             <el-row>
               <el-col :span="8">
-                <el-progress type="circle" class="memberbar" :show-text="false" :stroke-width="10" :width="100" :percentage="35"></el-progress>
+                <el-progress type="circle" class="memberbar" :show-text="false" :stroke-width="10" :width="100" :percentage="preOrder"></el-progress>
                 <div class="num" v-text="totalObj.takeout"></div>
                 <div class="numname">本月外卖订单数</div>
               </el-col>
               <el-col :span="8">
-                <el-progress type="circle" class="memberbar" :show-text="false" :stroke-width="10" :width="100" :percentage="25"></el-progress>
+                <el-progress type="circle" class="memberbar" :show-text="false" :stroke-width="10" :width="100" :percentage="preSeat"></el-progress>
                 <div class="num" v-text="totalObj.seat"></div>
                 <div class="numname">本月订座订单数</div>
               </el-col>
               <el-col :span="8">
-                <el-progress type="circle" class="memberbar" :show-text="false" :stroke-width="10" :width="100" :percentage="25"></el-progress>
+                <el-progress type="circle" class="memberbar" :show-text="false" :stroke-width="10" :width="100" :percentage="preLive"></el-progress>
                 <div class="num" v-text="totalObj.vip"></div>
                 <div class="numname">本月直播订单数</div>
               </el-col>
@@ -93,6 +93,9 @@ export default {
   name: 'Member',
   data () {
     return {
+      preOrder:0,
+      preSeat:0,
+      preLive:0,
       userObj:'',
       totalObj:'',
       activenum:'orderlist',
@@ -132,6 +135,15 @@ export default {
       }).then((res)=>{
         if(res.data.error_code=='0'){
           vm.totalObj=res.data.data
+          if(vm.totalObj.total==0){
+            vm.preOrder=0;
+            vm.preSeat=0;
+            vm.preLive=0;
+          }else{
+            vm.preOrder=vm.totalObj.takeout/vm.totalObj.total*100;
+            vm.preSeat=vm.totalObj.seat/vm.totalObj.total*100;
+            vm.preLive=vm.totalObj.vip/vm.totalObj.total*100;
+          }
         }else{
           vm.$message.error(res.data.message);
         }

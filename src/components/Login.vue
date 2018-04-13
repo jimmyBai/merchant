@@ -9,7 +9,7 @@
           <!--登录-->
             <h2 class="log-title">请登录你的账号</h2>
             <div class="loginput log-userName">
-              <input type="text" v-model="username" placeholder="请输入你的用户名">
+              <input type="text" v-model="phone" placeholder="请输入你的用户名">
             </div>
             <div class="errortips"></div>
             <div class="loginput log-userName">
@@ -32,7 +32,7 @@ export default {
   data () {
     return {
       ischeck:false,
-      username:'13800138222',
+      phone:'13800138222',
       password:'123456',
       canLogin:false,
     }
@@ -41,7 +41,7 @@ export default {
   },
   mounted: function() {
     if(localStorage.getItem('LOGININFO')){
-      this.username=JSON.parse(localStorage.getItem('LOGININFO')).username
+      this.phone=JSON.parse(localStorage.getItem('LOGININFO')).phone
       this.password=JSON.parse(localStorage.getItem('LOGININFO')).password
     }
   },
@@ -49,14 +49,14 @@ export default {
   	goin(){
   		let vm =this,url='/api/web/login';
   		let params={
-        'phone':vm.username,
+        'phone':vm.phone,
         'password':vm.password
   		}
       if(vm.ischeck){
         localStorage.setItem("LOGININFO",JSON.stringify(params))
       }
       //为空不能请求
-      if(vm.username==''||vm.username==''){
+      if(vm.phone==''||vm.password==''){
         vm.$message('用户名和密码不能为空');
   		  return false
       }

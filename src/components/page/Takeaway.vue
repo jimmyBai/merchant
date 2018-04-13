@@ -2,7 +2,7 @@
   <div class="main">
     <!-- title -->
     <div class="navbar">
-      <h1 class="nav-bar-title">外卖<small> | 外卖商品信息设置</small></h1>  
+      <h1 class="nav-bar-title">外卖<small> | 外卖商品信息设置</small></h1>
     </div>
     <!-- infoList -->
     <div class="listtable">
@@ -35,11 +35,11 @@
           <template slot-scope="scope">
             <div class="tdbtn-box">
               <div class="tdbtn-view" @click="vieweditor">
-                <i class="el-icon-view"></i><span>查看/编辑</span>               
+                <i class="el-icon-view"></i><span>查看/编辑</span>
               </div>
               <div class="tdBtn-view">
                 <i class="el-icon-view"></i><span>删除</span>
-              </div>  
+              </div>
             </div>
           </template>
         </el-table-column>
@@ -51,24 +51,24 @@
     <div class="pagination">
       <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
-    
 
-    <!-- 添加商品Dialog -->
-    <takeaway-add-goods v-show="isTakeawayAddShow"></takeaway-add-goods>
-    <!-- 查看商品Dialog -->
-    <takeaway-dialog v-show="isTakeawayShow"></takeaway-dialog>
+
+    <!-- 添加商品 -->
+    <add-goods v-if="isTakeawayAddShow"></add-goods>
+    <!-- 查看商品 -->
+    <!--<dialog v-if="isTakeawayShow"></dialog>-->
 
   </div>
 </template>
 
 <script>
-import takeawayAddGoods from './takeawayAddGoods'
-import takeawayDialog from './takeawayDialog'
+import addGoods from './TakeawayAddGoods.vue'
+/*import dialog from './TakeawayDialog.vue'*/
 
 export default {
   components:{
-    takeawayDialog,
-    takeawayAddGoods
+    addGoods,
+/*    dialog*/
   },
   name: 'takeaway',
   data () {
@@ -132,6 +132,11 @@ export default {
         // this.getlistData()
       }
     },
+
+    handleCurrentChange(val){
+      this.page=val
+      this.getlistData(this.page)
+    },
     clickadd(){
       this.isTakeawayAddShow = true
     },
@@ -156,6 +161,6 @@ export default {
   .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center; margin-left: 1px}
   .td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
 
-  
-  
+
+
 </style>

@@ -12,13 +12,13 @@
 
         </div>
       </div>
-      <el-table stripe :row-key="getRowKeys" :expand-row-keys="expands" :data="ListData">
-        <el-table-column label="姓名" prop="name"></el-table-column>
+      <el-table stripe :data="ListData">
+        <el-table-column label="姓名" prop="username"></el-table-column>
         <el-table-column label="手机号" prop="phone"></el-table-column>
         <el-table-column label="电子邮箱" prop="email"></el-table-column>
-        <el-table-column label="职务角色" prop="duty"></el-table-column>
-        <el-table-column label="添加时间" prop="addtime"></el-table-column>
-        <el-table-column label="修改时间" prop="edittime"></el-table-column>
+        <el-table-column label="职务角色" prop="role_name"></el-table-column>
+        <el-table-column label="添加时间" prop="create_time"></el-table-column>
+        <el-table-column label="修改时间" prop="update_time"></el-table-column>
         <el-table-column>
           <template slot-scope="scope">
             <div class="tdbtn-box">
@@ -30,68 +30,51 @@
       <div class="list-bottm"></div>
     </div>
     <div class="pagination">
-      <el-pagination background small layout="prev, pager, next" :total="110"> </el-pagination>
+      <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
+    <v-admin v-if="popadmin" :fromParent="roleid" @adminevent = "adminevent"></v-admin>
   </div>
 </template>
 
 <script>
+  import vAdmin from './Addadmin'
   export default {
     name: 'Member',
+    components:{vAdmin},
     data () {
       return {
-        getRowKeys(row) {
-          return row.id;
-        },
-        expands: [],
-        ListData:[{
-          name: '张三',
-          phone: '13534535345',
-          email: '123@018.com',
-          duty: '总经理',
-          addtime: '2018-3-26 16:29:30',
-          edittime: '2018-3-26 16:29:44'
-        }, {
-          name: '张三',
-          phone: '13534535345',
-          email: '123@018.com',
-          duty: '总经理',
-          addtime: '2018-3-26 16:29:30',
-          edittime: '2018-3-26 16:29:44'
-        },{
-          name: '张三',
-          phone: '13534535345',
-          email: '123@018.com',
-          duty: '总经理',
-          addtime: '2018-3-26 16:29:30',
-          edittime: '2018-3-26 16:29:44'
-        },{
-          name: '张三',
-          phone: '13534535345',
-          email: '123@018.com',
-          duty: '总经理',
-          addtime: '2018-3-26 16:29:30',
-          edittime: '2018-3-26 16:29:44'
-        }]
+        popadmin:false,
+        total:0,  //总条数
+        pages:0,  //总页数
+        page:0,   //当前页
+        per_page:0, //每页条数
+        total_page:0, //总页数
+        ListData:[]
       }
     },
     created(){
 
     },
     mounted:function(){
-
-      //this.getlistData()
+      this.getlistData(1)
     },
     methods:{
-      getlistData(){
-        let vm =this,url='/api/api/member/list',params={};
-        vm.$axios({
-          method:'post',
-          url:url,
-          data: params
-        }).then((res)=>{
-          if(res.data.error_code=='10000'||res.data.error_code=='200'){
-            vm.ListData=res.data.data
+      adminevent(...data){
+        let vm = this;
+        vm.popadmin=data.popadmin
+      },
+      getlistData(page){
+        let vm =this,url='/api/web/authority/user/list',params={page:page};
+        vm.$axios.get(url,{params}).then((res)=>{
+          if(res.data.error_code=='0'){
+            if(res.data.data.list){
+              vm.ListData=res.data.data.list
+            }
+            vm.total=res.data.data.total;
+            vm.pages=res.data.data.pages;
+            vm.page=res.data.data.page;
+            vm.per_page=res.data.data.per_page;
+            vm.total_page=res.data.data.total_page;
           }else{
             vm.$message.error(res.data.message);
             console.log(res.data.message)
@@ -100,13 +83,16 @@
           console.log(err);
         });
       },
+      handleCurrentChange(val){
+        this.page=val
+        this.getlistData(this.page)
+      },
+      changepage(){
+        this.getlistData(this.page)
+      },
       viewMore(scope){
-        /*if(this.expands.toString().indexOf(scope.id)>=0){
-          this.expands=[]
-        }else{
-          this.expands=[]
-          this.expands.push(scope.id);
-        }*/
+        this.roleid=scope.id.toString()
+        this.popadmin=!this.popadmin
       }
     }
   }

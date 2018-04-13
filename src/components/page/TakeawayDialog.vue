@@ -1,6 +1,11 @@
 <template>
+<<<<<<< HEAD
   
   <div class="container" v-show="displayShow">
+=======
+
+  <div class="main" v-show="displayShow">
+>>>>>>> dev
     <div class="main-title">
         <span class="title-lf">添加商品</span>
         <span class="title-rt" @click="clickDialogHide">
@@ -66,7 +71,7 @@
                     inactive-color="#ff4949">
                     </el-switch>
                 </span>
-                
+
             </div>
         </div>
 
@@ -79,12 +84,12 @@
                     active-color="#13ce66"
                     inactive-color="#ff4949">
                     </el-switch>
-                </span>    
+                </span>
             </div>
             <div class="kk-right sharings">
                 <span>库存数量</span>
                 <input type="text">
-                
+
             </div>
         </div>
 
@@ -112,6 +117,7 @@
         this.getlistData()
     },
     methods:{
+<<<<<<< HEAD
         getlistData(){
             let vm = this,url='/api/web/product/create'
             
@@ -135,6 +141,12 @@
         clickDialogHide () {
             this.displayShow = false
         }
+=======
+
+      clickDialogHide () {
+        this.displayShow = false
+      }
+>>>>>>> dev
     }
   }
 </script>
@@ -228,9 +240,9 @@
         display: block;
     }
     .sharings input{
-        
+
     }
-        
+
 
     .special{
         position: absolute;
@@ -266,7 +278,7 @@
         width: 100%;
         height: 30px;
         line-height: 30px;
-        margin: 20px 0;   
+        margin: 20px 0;
     }
     .bottom-btn input{
         width: 100%;

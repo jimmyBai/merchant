@@ -7,7 +7,6 @@
         <div class="lineflex">
           <div class="tabslist-head">
             <div :class="{'is-active':activenum=='srole'}" @click="changetabs('srole')" class="tabtar-item ">角色</div>
-            <div :class="{'is-active':activenum=='sacess'}" @click="changetabs('sacess')" class="tabtar-item">权限</div>
             <div :class="{'is-active':activenum=='sadmin'}" @click="changetabs('sadmin')" class="tabtar-item">管理员</div>
           </div>
           <div class="nav-rbtn">
@@ -21,14 +20,20 @@
           <router-view></router-view>
         </div>
       </div>
+      <v-role v-if="popshow" @ievent = "ievent"></v-role>
+      <v-admin v-if="popadmin" @adminevent = "adminevent"></v-admin>
     </div>
 </template>
-
 <script>
+import vRole from './sys/Addsrole'
+import vAdmin from './sys/Addadmin'
 export default {
   name: 'sys',
+  components:{vRole,vAdmin},
   data () {
     return {
+      popshow:false,
+      popadmin:false,
       ListData:[],
       activenum:'srole'
     }
@@ -37,72 +42,33 @@ export default {
 
   },
   mounted:function(){
+
   },
   methods:{
-    viewMore(scope){
-     /* this.$router.push({
-        name:"mdetail",
-        params:{
-          user_id:scope.id
-        }
-      })*/
+    //接受子组件传参
+    ievent(...data){
+      let vm = this;
+      vm.popshow=data.popstatus
+      if(data[0].status&&data[0].status=='refresh'){
+        console.log('此处需要刷新数据ssss')
+      }
+    },
+    adminevent(...data){
+      let vm = this;
+      vm.popadmin=data.popadmin
     },
     changetabs(way){
       this.activenum=way
       this.$router.push('/'+way)
     },
     adduser(){
-        let phonepop=`<div class="addpop">
-          <div class="adduser-item">
-            <div class="itemline">
-              <span>名</span>
-              <div class="itemcontent"><input type="text"></div>
-            </div>
-            <div class="itemline">
-              <span>姓</span>
-              <div class="itemcontent"><input type="text"></div>
-            </div>
-           </div>
-          <div class="adduser-item">
-            <div class="itemline">
-              <span>手机号码</span>
-              <div class="itemcontent"><input type="tel"></div>
-            </div>
-          </div>
-          <div class="adduser-item">
-            <div class="itemline">
-              <span>电子邮箱</span>
-              <div class="itemcontent"><input type="email"></div>
-            </div>
-          </div>
-          <div class="adduser-item">
-            <div class="itemline">
-              <span>职务名称</span>
-              <div class="itemcontent"><input type="email"></div>
-            </div>
-          </div>
-          <div class="adduser-item">
-            <div class="itemline">
-              <span>职务描述</span>
-              <div class="itemcontent">
-                <div class="mytextarea"><textarea></textarea></div>
-              </div>
-            </div>
-          </div>
-          <div class="popsaveline">
-            <span>保存</span>
-          </div>
-        </div>`
-        this.$alert(phonepop,'添加管理员', {
-          dangerouslyUseHTMLString: true,
-          center: true,
-          showConfirmButton:false
-        }).then(()=>{
-
-        }).catch(()=>{
-
-        });
+      //判断当前是角色还是管理员tabs
+      if(this.activenum=='srole'){
+        this.popshow=!this.popshow
+      }else{
+        this.popadmin=!this.popadmin
       }
+    }
   }
 }
 </script>

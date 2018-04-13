@@ -1,6 +1,4 @@
-<template>
-  
-  <div class="container" v-show="displayShow">
+<template><div class="container" v-show="displayShow">
     <div class="main-title">
         <span class="title-lf">添加商品</span>
         <span class="title-rt" @click="clickDialogHide">
@@ -66,7 +64,7 @@
                     inactive-color="#ff4949">
                     </el-switch>
                 </span>
-                
+
             </div>
         </div>
 
@@ -79,7 +77,7 @@
                     active-color="#13ce66"
                     inactive-color="#ff4949">
                     </el-switch>
-                </span>    
+                </span>
             </div>
             <div class="kk-right sharings">
                 <span>库存数量</span>
@@ -109,12 +107,12 @@
         }
     },
     mounted:function(){
-        this.getlistData()
+       this.getlistData()
     },
     methods:{
         getlistData(){
             let vm = this,url='/api/web/product/create'
-            
+
             vm.$axios({
                 method:'post',
                 url:url
@@ -228,9 +226,9 @@
         display: block;
     }
     .sharings input{
-        
+
     }
-        
+
 
     .special{
         position: absolute;
@@ -266,7 +264,7 @@
         width: 100%;
         height: 30px;
         line-height: 30px;
-        margin: 20px 0;   
+        margin: 20px 0;
     }
     .bottom-btn input{
         width: 100%;
