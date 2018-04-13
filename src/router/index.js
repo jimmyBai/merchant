@@ -63,28 +63,28 @@ export default new Router({
                   path:'/',
                   name:'mdetail',
                   meta:{keepAlive:true},
-                  component:resolve=>require(['../components/page/order/Orderlist.vue'],resolve),
+                  component:resolve=>require(['../components/page/memberorder/Orderlist.vue'],resolve),
                 },
                 {
                   path:'/orderlist',
                   meta:{keepAlive:true},
-                  component:resolve=>require(['../components/page/order/Orderlist.vue'],resolve),
+                  component:resolve=>require(['../components/page/memberorder/Orderlist.vue'],resolve),
                 },
                 {
                   path:'/reservatiolist',
                   meta:{keepAlive:true},
-                  component:resolve=>require(['../components/page/order/Reservatiolist.vue'],resolve),
+                  component:resolve=>require(['../components/page/memberorder/Reservatiolist.vue'],resolve),
                 },
                 {
                   path:'/livelist',
                   meta:{keepAlive:true},
-                  component:resolve=>require(['../components/page/order/Livelist.vue'],resolve),
+                  component:resolve=>require(['../components/page/memberorder/Livelist.vue'],resolve),
                 },
                 {
                   path:'/paylist',
                   name:'paylist',
                   meta:{keepAlive:true},
-                  component:resolve=>require(['../components/page/order/Paylist.vue'],resolve),
+                  component:resolve=>require(['../components/page/memberorder/Paylist.vue'],resolve),
                 }
               ]
             },

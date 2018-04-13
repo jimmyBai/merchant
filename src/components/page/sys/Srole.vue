@@ -5,12 +5,14 @@
         <div class="ls-left">
           <div class="form-tabel">
             <div class="td-title">权限列表</div>
-            <div class="td-content"><input type="text" /><span class="search-icon"><i class="el-icon-search"></i></span></div>
+            <div class="td-content">
+              <input type="text" v-model="name" />
+              <span class="search-icon" @click="searchfn"><i class="el-icon-search"></i></span></div>
           </div>
         </div>
         <div class="ls-right">
-          
-          
+
+
         </div>
       </div>
       <el-table stripe  :data="ListData">
@@ -23,6 +25,7 @@
           <template slot-scope="scope">
             <div class="tdbtn-box">
               <div class="tdbtn-view" @click="viewMore(scope.row)"><i class="el-icon-view"></i> <span>查看/编辑</span></div>
+              <div class="tdbtn-del" @click="delrole(scope.row)"><i class="el-icon-delete"></i> <span>删除</span></div>
             </div>
           </template>
         </el-table-column>
@@ -32,7 +35,7 @@
     <div class="pagination">
       <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
-    <v-role v-if="popdiv" :fromParent="roleid" @sievent = "pievent"></v-role>
+    <v-role v-if="popdiv" :fromParent="roleobj" @sievent = "pievent"></v-role>
   </div>
 </template>
 
@@ -43,32 +46,39 @@
     components:{vRole},
     data () {
       return {
-        roleid:'',
+        roleobj:'',
         popdiv:false,
         total:0,  //总条数
         pages:0,  //总页数
-        page:0,   //当前页
+        page:1,   //当前页
         per_page:0, //每页条数
         total_page:0, //总页数
-        ListData:[]
+        ListData:[],
+        name:''
       }
     },
     created(){
 
     },
     mounted:function(){
-      this.getlistData(1)
+      this.getlistData()
     },
     methods:{
       pievent(...data){
         let vm = this;
         vm.popdiv=data.popstatus
         if(data[0].status&&data[0].status=='refresh'){
-          console.log('此处需要刷新数据')
+          this.getlistData()
         }
       },
-      getlistData(page){
-        let vm =this,url='/api/web/authority/user/list',params={page:page};
+      getlistData(){
+        this.ListData=[]
+        let vm =this,url='/api/web/authority/role/list',params={page:this.page,name:this.name};
+        /*if(!this.page){
+          params={name:this.name}
+        }else{
+          params={page:this.page,name:this.name}
+        }*/
         vm.$axios.get(url,{params}).then((res)=>{
           if(res.data.error_code=='0'){
             if(res.data.data.list){
@@ -89,14 +99,35 @@
       },
       handleCurrentChange(val){
         this.page=val
-        this.getlistData(this.page)
-      },
-      changepage(){
-        this.getlistData(this.page)
+        this.getlistData()
       },
       viewMore(scope){
-        this.roleid=scope.id.toString()
+        this.roleobj={
+          roleid:scope.id.toString(),
+          rolename:scope.role_name,
+        }
         this.popdiv=!this.popdiv
+      },
+      searchfn(){
+        this.getlistData()
+      },
+      //删除角色
+      delrole(scope){
+        let vm =this,url='/api/web/authority/role/del',params={'role_id':scope.id};
+        vm.$axios({
+          method:'post',
+          url:url,
+          data: params
+        }).then((res)=>{
+          if(res.data.error_code=='0'){
+              vm.getlistData()
+          }else{
+            vm.$message.error(res.data.message);
+          }
+
+        }).catch(err => {
+          console.log(err);
+        });
       }
     }
   }

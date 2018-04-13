@@ -5,30 +5,25 @@
         <div class="ls-left">
           <div class="form-tabel">
             <div class="td-title">订单信息表</div>
-            <div class="td-content">
-              <input type="text" v-model="content" />
-              <span @click="searchFn" class="search-icon"><i class="el-icon-search"></i></span>
-            </div></div>
+            <div class="td-content"><input type="text" /><span class="search-icon"><i class="el-icon-search"></i></span></div>
+          </div>
         </div>
         <div class="ls-right">
-          <!--<div class="ls-r-btn"><i class="el-icon-refresh"></i><span>刷新</span></div>-->
+          <div class="ls-r-btn"><i class="el-icon-refresh"></i><span>刷新</span></div>
         </div>
       </div>
       <el-table stripe :data="ListData">
-        <el-table-column prop="create_time" label="下单时间"></el-table-column>
+        <el-table-column prop="id" label="下单时间"></el-table-column>
         <el-table-column prop="username" label="订单编号"></el-table-column>
-        <el-table-column prop="phone" label="用户名"></el-table-column>
-        <el-table-column prop="seat_num" label="手机号码"></el-table-column>
-        <el-table-column prop="takeout_num" label="订台类型"></el-table-column>
-        <el-table-column prop="booking_time" label="预定时间"></el-table-column>
-        <el-table-column prop="address" label="预定座位号"></el-table-column>
-        <el-table-column prop="booking_price" label="订座费"></el-table-column>
-        <el-table-column prop="phone" label="店铺现金"></el-table-column>
-        <el-table-column prop="payment_method" label="付款方式"></el-table-column>
+        <el-table-column prop="phone" label="预定时间"></el-table-column>
+        <el-table-column prop="seat_num" label="预定座位号"></el-table-column>
+        <el-table-column prop="takeout_num" label="订座费"></el-table-column>
+        <el-table-column prop="address" label="付款金额"></el-table-column>
+        <el-table-column prop="phone" label="付款方式"></el-table-column>
         <el-table-column>
           <template slot-scope="scope">
             <div class="tdbtn-box">
-              <div class="tdbtn-view" :class="'btn-color-'+scope.row.order_status" @click="viewMore(scope.row)"><span v-text="scope.row.order_status_name"></span></div>
+              <div class="tdbtn-view" @click="viewMore(scope.row)"><i class="el-icon-view"></i> <span>查看</span></div>
             </div>
           </template>
         </el-table-column>
@@ -47,12 +42,7 @@
     data () {
       return {
         ListData:[],
-        content:'',
-        min_price:'',
-        max_price:'',
-        create_start:'',
-        create_end:'',
-        page:1,
+        page:0,
         per_page:0,
         total:0,
         total_page:0
@@ -67,16 +57,13 @@
     methods:{
       getlistData(){
         let vm =this,url='/api/web/order/list',params={
-          user_id:"",    //为空表示所有
-          type: "2",      //订单类型 1[外卖] 2[订座] 3[店铺消费] 4[直播会员]
-          search: {
-            content: vm.content,
-            min_price:vm.min_price,
-            max_price:vm.max_price,
-            create_start:vm.create_start,
-            create_end:vm.create_end
+          "user_id": sessionStorage.getItem('user_id')||"",    //为空表示所有
+          "type": "2",      //订单类型 1[外卖] 2[订座] 3[店铺消费] 4[直播会员]
+          "search": {
+            "order_sn": ""
           },
-          page: vm.page,
+          "page": "1",
+          "length": "10"
         };
         vm.$axios({
           method:'post',
@@ -104,10 +91,6 @@
       handleCurrentChange(val){
         this.page=val
         this.getlistData(this.page)
-      },
-      //查询
-      searchFn(){
-        this.getlistData()
       },
       viewMore(scope){
         /*this.$router.push({

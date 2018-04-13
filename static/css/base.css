@@ -50,13 +50,23 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .expandgoodslist .linetr>div{ padding: 10px; }
 /*.el-table .cell, .el-table th div{ padding-right: 0}*/
 .tdbtn-box{ display: flex; display: -webkit-flex; justify-content: flex-end; -webkit-justify-content: flex-end}
-.tdbtn-box>div{ cursor: pointer}
+.tdbtn-box>div{ cursor: pointer;margin: 0 3px;}
 .tdbtn-view{ background: #7a6fbe; padding: 0 8px; border-radius: 2px}
+.tdbtn-del{ background: #f25657; padding: 0 8px; border-radius: 2px;}
 .tdBtn-view{ background: rgb(161,64,22); padding: 0 8px; border-radius: 2px; margin: 0 5px;}
 .tdbtn-edit{ background:#4d2e57; }
 .tdbtn-add{ background:#f25657;padding: 0 8px; border-radius: 2px}
 .list-bottm{height: 20px}
 .middbtn{ justify-content: center}
+/**订单列表按钮颜色**/
+.btn-color-1{background: #ecac11;}
+.btn-color-2{background: #fe7f17;}
+.btn-color-3{background: #f44b2a;}
+.btn-color-4{background: #22baa1;}
+.btn-color-5{background: #11afcc;}
+.btn-color-6{background: #b03182;}
+
+
 /**按钮状态**/
 .btn-c-error{ background:#f25657}
 .btn-c-success{background:#22baa1}
@@ -86,7 +96,7 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .el-checkbox__input.is-disabled.is-checked .el-checkbox__inner{background-color: #38213e;  border-color: #48344f;}
 .el-checkbox__inner::after{ border-width: 2px; width: 5px; height: 10px; top:-2px}
 .el-checkbox__input.is-disabled.is-checked .el-checkbox__inner::after{border-color:#746578 }
-
+.el-select-dropdown__item.hover, .el-select-dropdown__item:hover{background: none}
 /*.yo-checkbox{ position:relative;background: #2e1c34; border: 1px solid #48344f; width: 20px; height: 20px; margin: 0 auto; border-radius: 3px}
 .yo-checkbox .el-icon-check{ font-size: 16px; position: absolute; left: 50%; margin-left: -8px; margin-top: 1px}
 .yo-checkbox.is-checked {background: #724580; border: 1px solid #48344f}
@@ -106,11 +116,18 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .adduser-item>div{ flex: 1;-webkit-flex: 1; text-align: left;}
 .adduser-item>div input,.adduser-item>div textarea{ outline: none; background:#2e1c34; border: 1px solid #3d2b43; margin-right:10px;color: #fff; margin: 0}
 .adduser-item>div input{ height: 23px; line-height: 23px; width: 100%; text-indent: 8px}
+.adduser-item .itemcontent input.el-input__inner{ padding-left: 0px; font-size: 12px; border-radius: 0; height: 30px; line-height: 30px; width: 100%; text-indent: 8px}
 .adduser-item .itemcontent{ padding-right: 20px}
 .mytextarea{ border:1px solid #3d2b43;background:#2e1c34; padding: 10px }
 .adduser-item>div textarea{ width: 100%;resize: none; border: none; margin: 0; }
 .popsaveline{ margin:10px 20px 10px 10px }
 .popsaveline span{ display: block; background:#ac5397; font-size: 12px;color: #fff; height: 30px; line-height: 30px}
+.el-select .el-input.is-focus .el-input__inner , .el-select .el-input__inner:focus{ border-color:#3d2b43 }
+
+
+.el-select-dropdown{ background:#2e1c34;border:none }
+.el-select-dropdown__item{ color:#999; font-size: 12px; }
+.el-select-dropdown__item.selected{ background:none; font-size: 12px; font-weight: normal }
 
   /**修改分页**/
 .pagination{  text-align: right; margin-top: 20px}
