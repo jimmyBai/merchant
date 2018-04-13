@@ -23,12 +23,12 @@
       </div>
 
       <el-table stripe :data="ListData">
-        <el-table-column prop="id" label="ID"></el-table-column>
+        <el-table-column prop="product_id" label="ID"></el-table-column>
         <el-table-column prop="product_name" label="商户名称"></el-table-column>
         <el-table-column prop="name" label="分类"></el-table-column>
         <el-table-column prop="sale_price" label="单价"></el-table-column>
         <el-table-column prop="inventory" label="库存"></el-table-column>
-        <el-table-column prop="weight " label="重量"></el-table-column>
+        <el-table-column prop="weight" label="重量"></el-table-column>
         <el-table-column prop="capacity" label="容量"></el-table-column>
         <el-table-column prop="status" label="产品状态"></el-table-column>
         <el-table-column>
@@ -37,7 +37,7 @@
               <div class="tdbtn-view" @click="vieweditor">
                 <i class="el-icon-view"></i><span>查看/编辑</span>
               </div>
-              <div class="tdBtn-view">
+              <div class="tdBtn-view" @click="removeThis(index)">
                 <i class="el-icon-view"></i><span>删除</span>
               </div>
             </div>
@@ -55,26 +55,27 @@
 
     <!-- 添加商品 -->
     <!--<add-goods v-if="isAddGoodsShow"></add-goods>-->
+    <add-goods v-if="isAddGoodsShow" @addevent="addevent"></add-goods>
     <!-- 查看商品 -->
-    <!-- <view-goods v-if="isTakeawayShow"></view-goods> -->
+    <view-goods v-if="isTakeawayShow" @viewevent="viewevent"></view-goods>
 
   </div>
 </template>
 
 <script>
-//import addGoods from './takeaway_lnside/addGoods'
-// import viewGoods from './takeaway_lnside/viewGoods'
+import addGoods from './takeaway_Inside/addGoods'
+import viewGoods from './takeaway_Inside/viewGoods'
 
 export default {
+  name: 'takeaway_Inside',
   components:{
-    addGoods
-    // viewGoods
+    addGoods,
+    viewGoods
   },
-  name: 'takeaway',
   data () {
     return {
       search:{
-        content: ""  //模糊搜索的内容，默认为空，可搜索用户名和手机号码
+        product_name: ""  //搜索的产品名称
       },
       page: "1", //页码，默认为1
       length: "10",//每页记录数，默认为10
@@ -85,14 +86,24 @@ export default {
       total_page:0,
       value1: true,
       value2: true,
-      isAddGoodsShow: false
-      // isTakeawayShow: false
+      isAddGoodsShow: false,
+      isTakeawayShow: false,
+      index: ''
     }
   },
   mounted:function(){
     this.getlistData()
   },
   methods:{
+    //子组件传参地
+    addevent(...data){
+      let vm = this;
+      vm.isAddGoodsShow=data.isAddGoodsStatus
+    },
+    viewevent(...data){
+      let vm = this;
+      vm.isTakeawayShow=data.isTakeawayStatus
+    },
     getlistData(){
       this.ListData = []
       let vm = this,url='/api/web/product/list',
@@ -126,10 +137,10 @@ export default {
     },
     searchlist(){
       let vm =this;
-      if(!vm.search.content){
-        vm.$message.error('请输入要搜索的手机号或用户名');
+      if(!vm.search.product_name){
+        vm.$message.error('请输入要搜索的产品名称');
       }else{
-        // this.getlistData()
+        this.getlistData()
       }
     },
 
@@ -138,10 +149,22 @@ export default {
       this.getlistData(this.page)
     },
     clickadd(){
-      this.isTakeawayAddShow = true
+      this.isAddGoodsShow = true;
     },
     vieweditor(){
       this.isTakeawayShow = true;
+    },
+    removeThis(ListData,index){
+      let vm = this,
+      url='/api/web/product/delete'
+      vm.$axios({
+        method:'post',
+        url:url
+      }).then((res)=>{
+        vm.ListData.splice(index,1);
+      }).catch(err => {
+        console.log(err);
+      });
     }
 
   }
