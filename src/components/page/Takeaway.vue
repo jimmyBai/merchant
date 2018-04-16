@@ -11,7 +11,7 @@
         <div class="ls-left">
           <div class="form-tabel">
             <div class="td-title">外卖商品表</div>
-            <div class="td-content"><input type="text" v-model="search.content" /><span class="search-icon" @click="searchlist"><i class="el-icon-search"></i></span></div>
+            <div class="td-content"><input type="text" v-model="search.product_name" /><span class="search-icon" @click="searchlist"><i class="el-icon-search"></i></span></div>
           </div>
         </div>
         <div class="ls-right">
@@ -33,8 +33,8 @@
         <el-table-column prop="status" label="产品状态"></el-table-column>
         <el-table-column>
           <template slot-scope="scope">
-            <div class="tdbtn-box">
-              <div class="tdbtn-view" @click="vieweditor">
+            <div class="tdBtn-box">
+              <div class="tdbtn-view newView" @click="vieweditor(scope.row.product_id)">
                 <i class="el-icon-view"></i><span>查看/编辑</span>
               </div>
               <div class="tdBtn-view" @click="removeThis(index)">
@@ -56,7 +56,7 @@
     <!-- 添加商品 -->
     <add-goods v-if="isAddGoodsShow" @addevent="addevent"></add-goods>
     <!-- 查看商品 -->
-    <view-goods v-if="isTakeawayShow" @viewevent="viewevent"></view-goods>
+    <view-goods v-if="isTakeawayShow" :fromParent="fromParent" @viewevent="viewevent"></view-goods>
 
   </div>
 </template>
@@ -87,7 +87,8 @@ export default {
       value2: true,
       isAddGoodsShow: false,
       isTakeawayShow: false,
-      index: ''
+      index: '',
+      fromParent:''
     }
   },
   mounted:function(){
@@ -98,10 +99,12 @@ export default {
     addevent(...data){
       let vm = this;
       vm.isAddGoodsShow=data.isAddGoodsStatus
+      this.getlistData()
     },
     viewevent(...data){
       let vm = this;
       vm.isTakeawayShow=data.isTakeawayStatus
+      this.getlistData()
     },
     getlistData(){
       this.ListData = []
@@ -134,25 +137,29 @@ export default {
         console.log(err);
       });
     },
+    // 搜索
     searchlist(){
       let vm =this;
       if(!vm.search.product_name){
         vm.$message.error('请输入要搜索的产品名称');
       }else{
         this.getlistData()
+        console.log(123);
       }
     },
-
+    // 分页
     handleCurrentChange(val){
       this.page=val
-      this.getlistData(this.page)
+      this.getlistData(this.page);
     },
     clickadd(){
       this.isAddGoodsShow = true;
     },
-    vieweditor(){
+    vieweditor(id){
+      this.fromParent=id.toString()
       this.isTakeawayShow = true;
     },
+    // 删除
     removeThis(ListData,index){
       let vm = this,
       url='/api/web/product/delete'
@@ -178,7 +185,6 @@ export default {
   .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
   .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center; margin-left: 1px}
   .td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
-
 
 
 </style>

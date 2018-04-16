@@ -1,3 +1,4 @@
+/* andy */
 .adduser-itemBox>div input{
     height: 23px;
     line-height: 23px;
@@ -12,3 +13,8 @@
     color: #fff;
     margin: 0;
 }
+
+
+.tdBtn-box>div{ cursor: pointer}
+.tdBtn-view{ background: rgb(161,64,22); padding: 0 5px; border-radius: 2px; text-align: center; margin-top: 5px;}
+.newView{ background: #7a6fbe; padding: 0 5px; border-radius: 2px}

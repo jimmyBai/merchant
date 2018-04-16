@@ -16,6 +16,13 @@
                 <div class="itemcontent"><input type="text" v-model="name"></div>
               </div>
             </div>
+            <!-- 商品英文名称 -->
+            <div class="adduser-item">
+              <div class="itemline">
+                <div class="itemtitle"><em>*</em>商品英文名称</div>
+                <div class="itemcontent"><input type="text" v-model="name_en"></div>
+              </div>
+            </div>
             <!-- 商品描述 -->
             <div class="adduser-item">
               <div class="itemline">
@@ -27,15 +34,15 @@
             <div class="adduser-itemBox">
               <div class="adduser-class">
                 <div class="classtitle" >分类</div>
-                <div class="classcontent"><el-select v-model="type" value-key="id" placeholder="请选择">
-                  <el-option v-for="item in usertions" :key="item.id" :label="item.class_name" :value='item'>
+                <div class="classcontent"><el-select v-model="typelist" value-key='id' placeholder="请选择">
+                  <el-option v-for="item in usertions" :key="item.id" :label="item.name" :value='item'>
                   </el-option>
                 </el-select></div>
               </div>
               <div class="adduser-producer">
-                  <div class="producertitle"><em>*</em>产地</div>
-                  <div class="producercontent"><input type="text" v-model="place"></div>
-                </div>
+                <div class="producertitle"><em>*</em>产地</div>
+                <div class="producercontent"><input type="text" v-model="place"></div>
+              </div>
             </div>
             <!-- 年份 -->
             <div class="adduser-item">
@@ -58,9 +65,9 @@
                 <div class="classcontent"><input type="text" v-model="weight"></div>
               </div>
               <div class="adduser-producer">
-                  <div class="producertitle">容量&nbsp;(ML)</div>
-                  <div class="producercontent"><input type="text" v-model="capacity"></div>
-                </div>
+                <div class="producertitle">容量&nbsp;(ML)</div>
+                <div class="producercontent"><input type="text" v-model="capacity"></div>
+              </div>
             </div>
             <!-- collection -->
             <div class="adduser-itemBox">
@@ -70,29 +77,33 @@
               </div>
               <div class="adduser-producer">
                   <div class="producertitle"><em>*</em>特价</div>
-                  <div class="producercontent changeInput"><input type="text" placeholder="￥" v-model="special_price"></div>
+                  <div class="producercontent changeInput"><input type="text" placeholder="￥" v-model="special_price" v-if="value1"></div>
+                  <div v-model="is_use_special_price">
                   <el-switch
                     v-model="value1"
                     active-color="rgb(96,58,108)"
-                    inactive-color="rgb(96,58,108)">
+                    inactive-color="#ff4949"
+                    >
                   </el-switch>
+                  </div>
               </div>
             </div>
             <!-- collection -->
             <div class="adduser-itemBox">
               <div class="adduser-class notSame">
-                <div class="notSametitle" ><em>*</em>库存跟踪</div>
+                <div class="notSametitle" v-model="inventory_track"><em>*</em>库存跟踪</div>
                 <el-switch
-                    v-model="value2"
-                    active-color="rgb(96,58,108)"
-                    inactive-color="rgb(96,58,108)"
-                    class="el_switch">
+                  v-model="value2"
+                  active-color="rgb(96,58,108)"
+                  inactive-color="#ff4949"
+                  class="el_switch"
+                  >
                 </el-switch>
               </div>
               <div class="adduser-producer">
-                  <div class="producertitle"><em>*</em>库存数量</div>
-                  <div class="producercontent"><input type="text" v-model="inventory"></div>
-                </div>
+                <div class="producertitle"><em>*</em>库存数量</div>
+                <div class="producercontent"><input type="text" v-model="inventory"></div>
+              </div>
             </div>
             <!-- 保存 -->
             <div class="popsaveline" @click="clickSaveInfo">
@@ -118,21 +129,25 @@
     name: 'addGoods',
     data () {
         return {
-            msgtitle: '添加商品',
-            value1: true,
-            value2: true,
-            usertions: [],
-            name: '',
-            describe: '',
-            type: '',
-            place: '',
-            years: '',
-            brand: '',
-            weight: '',
-            price: '',
-            special_price: '',
-            inventory: '',
-            capacity: ''
+          msgtitle: '添加商品',
+          value1: false,
+          value2: false,
+          usertions: [],
+          name: '',
+          name_en: '',
+          describe: '',
+          typelist:'',
+          place: '',
+          years: '',
+          brand: '',
+          weight: '',
+          price: '',
+          special_price: '',
+          inventory: '',
+          capacity: '',
+          is_use_special_price:'',
+          inventory_track: ''
+         
         }
     },
     mounted:function(){
@@ -140,7 +155,7 @@
       this.getclassinfo();
     },
     methods:{
-      
+      // 获取分类
       getclassinfo(){
         let vm =this,url='/api/web/product/type_list',params={};
         vm.$axios.get(url,{params}).then((res)=>{
@@ -153,32 +168,54 @@
           console.log(err);
         });
       },
+      // 保存信息
       clickSaveInfo(){
         let vm =this,url='/api/web/product/create',params={
-          name:vm.name||'new',
-          describe:vm.describe||'dog',
-          type:vm.type||'beer',
-          place:vm.place||'hengzhou',
-          years:vm.years||'1994',
-          brand:vm.brand||'big',
-          weight:vm.weight||'100',
-          price:vm.price||'100',
-          special_price:vm.special_price||'88',
-          inventory:vm.inventory||'250',
-          capacity:vm.capacity||'250'
+          product:{
+            name:vm.name,
+            name_en:vm.name_en,
+            describe:vm.describe,
+            type:vm.typelist.id,
+            place:vm.place,
+            years:vm.years,
+            brand:vm.brand,
+            weight:vm.weight,
+            price:vm.price,
+            special_price:vm.special_price,
+            inventory:vm.inventory,
+            capacity:vm.capacity,
+            is_use_special_price:vm.is_use_special_price,
+            inventory_track:vm.inventory_track
+          }
         };
+
+        // var arr = [];
+        // var i = 0;
+        // for (var item in vm.usertions) {
+        //     arr[i] = vm.usertions[item];
+        //     i++;
+        // }
+        // console.log(arr.indexOf(vm.typelist))
+        // console.log(vm.typelist)
+        // return
+
         vm.$axios({
           method:'post',
           url:url,
           data: params
         }).then((res)=>{
           if(res.data.error_code=='0'){
+            let data = {
+              isAddGoodsStatus:false
+            };
+            //执行父组件方法
+            this.$emit('addevent',data,'');
           }else{
             vm.$message.error(res.data.message);
           }
         }).catch(err => {
           console.log(err);
-        });
+        })
       },
       closepop(){
         //执行父组件关闭方法
@@ -218,13 +255,13 @@
     margin-bottom: 5px;
   }
   .adduser-class{
-      width: 45%;
-      float: left;
+    width: 45%;
+    float: left;
   }
   .adduser-producer{
-      width: 45%;
-      float: right;
-      margin-left: 5%;
+    width: 45%;
+    float: right;
+    margin-left: 5%;
   }
   .producertitle{
     height: 20px;
@@ -233,26 +270,26 @@
   }
 
   .changeInput{
-      width: 70%;
-      float: left;
+    width: 70%;
+    float: left;
   }
   .el-switch{
     float: right;
   }
   .notSametitle{
-      float: left;
-      position: absolute;
-      left: 0;
-      bottom: 5px;
+    float: left;
+    position: absolute;
+    left: 0;
+    bottom: 5px;
   }
   .notSame{
-      height: 50px;
-      position: relative;
+    height: 50px;
+    position: relative;
   }
   .el_switch{
-      position: absolute;
-      right: 0;
-      bottom: 5px;
+    position: absolute;
+    right: 0;
+    bottom: 5px;
   }
 
 </style>
