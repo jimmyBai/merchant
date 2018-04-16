@@ -52,7 +52,8 @@ axios.interceptors.request.use(config=>{
   if(store.state.token){
     Object.assign(config.headers, {'token': store.state.token,'uid': store.state.uid});
   }
-  /*if(config.method === 'post') {
+  /*if(config.method === 'post'&&(config.url.indexOf('/api/web/setting/upload')>=0)) {
+   // console.log(config)
     config.data = qs.stringify(config.data)
   }else{
   }*/

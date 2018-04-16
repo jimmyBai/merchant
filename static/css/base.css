@@ -52,11 +52,8 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .tdbtn-box{ display: flex; display: -webkit-flex; justify-content: flex-end; -webkit-justify-content: flex-end}
 .tdbtn-box>div{ cursor: pointer;margin: 0 3px;}
 .tdbtn-view{ background: #7a6fbe; padding: 0 8px; border-radius: 2px}
-<<<<<<< HEAD
 .tdbtn-del{ background: #f25657; padding: 0 8px; border-radius: 2px;}
 .tdBtn-view{ background: rgb(161,64,22); padding: 0 8px; border-radius: 2px; margin: 0 5px;}
-=======
->>>>>>> 20b7e698e5aeb8b17750408734c4993d785ad43a
 .tdbtn-edit{ background:#4d2e57; }
 .tdbtn-add{ background:#f25657;padding: 0 8px; border-radius: 2px}
 .list-bottm{height: 20px}
@@ -125,7 +122,6 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .adduser-item>div textarea{ width: 100%;resize: none; border: none; margin: 0; }
 .popsaveline{ margin:10px 20px 10px 10px }
 .popsaveline span{ display: block; background:#ac5397; font-size: 12px;color: #fff; height: 30px; line-height: 30px}
-<<<<<<< HEAD
 .el-select .el-input.is-focus .el-input__inner , .el-select .el-input__inner:focus{ border-color:#3d2b43 }
 
 
@@ -133,8 +129,6 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .el-select-dropdown__item{ color:#999; font-size: 12px; }
 .el-select-dropdown__item.selected{ background:none; font-size: 12px; font-weight: normal }
 
-=======
->>>>>>> 20b7e698e5aeb8b17750408734c4993d785ad43a
   /**修改分页**/
 .pagination{  text-align: right; margin-top: 20px}
 .el-pagination.is-background .btn-next, .el-pagination.is-background .btn-prev, .el-pagination.is-background .el-pager li{background-color:#412849; color: #98829f; font-weight: normal}
@@ -186,6 +180,11 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .unshow{display: none}
 .isshow{display: block}
 
+
+/*店铺营业时间*/
+.shopline .el-input__inner{ height: 30px;line-height: 30px;border-radius: 3px; background: none; border: 1px solid #706375; color: #fff;}
+.shopline .el-select .el-input.is-focus .el-input__inner ,.shopline .el-select .el-input__inner:focus{ border-color: #706375;}
+.shopline .el-date-editor.el-input,.shopline  .el-date-editor.el-input__inner{width: 100%}
 
 /* andy */
 .tdBtn-view{ background: #7a6fbe; padding: 0 8px; border-radius: 2px; margin-left: 5px;}
