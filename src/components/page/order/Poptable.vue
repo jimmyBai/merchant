@@ -108,10 +108,7 @@
               vm.real_name=res.data.data.real_name
               vm.email=res.data.data.email
               vm.describe=res.data.data.describe
-              vm.usevalue={
-                id:res.data.data.role_id,
-                role_name:res.data.data.role_name
-              }
+              /*vm.usevalue.id=*/
           }else{
             vm.$message.error(res.data.message);
 
@@ -134,6 +131,18 @@
         vm.$axios.get(url,{params}).then((res)=>{
           if(res.data.error_code=='0'){
             vm.useoptions=res.data.data
+          }else{
+            vm.$message.error(res.data.message);
+
+          }
+        }).catch(err => {
+          console.log(err);
+        });
+      },
+      getlistData(page){
+        let vm =this,url='/api/web/authority/user/list',params={page:page};
+        vm.$axios.get(url,{params}).then((res)=>{
+          if(res.data.error_code=='0'){
 
           }else{
             vm.$message.error(res.data.message);
@@ -175,11 +184,7 @@
           data: params
         }).then((res)=>{
           if(res.data.error_code=='0'){
-            let data = {
-              popstatus:false,
-              status:'refresh'
-            };
-            this.$emit('adminevent',data,'');
+
           }else{
             vm.$message.error(res.data.message);
 

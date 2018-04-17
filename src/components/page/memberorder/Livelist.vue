@@ -9,23 +9,20 @@
           </div>
         </div>
         <div class="ls-right">
-
+          <div class="ls-r-btn"><i class="el-icon-refresh"></i><span>刷新</span></div>
         </div>
       </div>
-      <el-table stripe :row-key="getRowKeys" :expand-row-keys="expands" :data="ListData">
-        <el-table-column label="下单时间" prop="create_time"></el-table-column>
-        <el-table-column label="订单编号" prop="order_sn"></el-table-column>
-        <el-table-column label="数量" prop="num"></el-table-column>
-        <el-table-column label="积分" prop="total"></el-table-column>
-        <el-table-column label="服务费" prop="service_fee"></el-table-column>
-        <el-table-column label="付款金额" prop="order_paid_price"></el-table-column>
-        <el-table-column label="订单状态">
+      <el-table stripe :data="ListData">
+        <el-table-column prop="create_time" label="下单时间"></el-table-column>
+        <el-table-column prop="order_sn" label="订单编号"></el-table-column>
+        <el-table-column prop="name" label="商品信息"></el-table-column>
+        <el-table-column prop="package_fee" label="套餐费"></el-table-column>
+        <el-table-column prop="order_paid_price" label="付款金额"></el-table-column>
+        <el-table-column prop="payment_method" label="付款方式"></el-table-column>
+        <el-table-column>
           <template slot-scope="scope">
             <div class="tdbtn-box">
-              <div v-if="scope.row.status==1" class="tdbtn-view btn-c-error" @click="viewMore(scope.row)"><span>待接单</span></div>
-              <div v-if="scope.row.status==2" class="tdbtn-view btn-c-success" @click="viewMore(scope.row)"><span>派送中</span></div>
-              <div v-if="scope.row.status==3" class="tdbtn-view btn-c-waring" @click="viewMore(scope.row)"><span>待派送</span></div>
-              <div v-if="scope.row.status==4" class="tdbtn-view btn-c-waring" @click="viewMore(scope.row)"><span>待派送</span></div>
+              <div class="tdbtn-view" @click="viewMore(scope.row)"><i class="el-icon-view"></i> <span>查看</span></div>
             </div>
           </template>
         </el-table-column>
@@ -33,7 +30,7 @@
       <div class="list-bottm"></div>
     </div>
     <div class="pagination">
-      <el-pagination background small layout="prev, pager, next" :total="110"> </el-pagination>
+      <el-pagination v-if="total_page" @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
   </div>
 </template>
@@ -43,11 +40,11 @@
     name: 'Member',
     data () {
       return {
-        getRowKeys(row) {
-          return row.id;
-        },
-        expands: [],
-        ListData:[]
+        ListData:[],
+        page:0,
+        per_page:0,
+        total:0,
+        total_page:0
       }
     },
     created(){
@@ -59,9 +56,9 @@
     },
     methods:{
       getlistData(){
-        let vm =this,url='/api/web/user/order-list',params={
-          "user_id": "",    //为空表示所有
-          "type": "1",      //订单类型 1[外卖] 2[订座] 3[店铺消费] 4[直播会员]
+        let vm =this,url='/api/web/order/list',params={
+          "user_id": sessionStorage.getItem('user_id')||"",    //为空表示所有
+          "type": "4",      //订单类型 1[外卖] 2[订座] 3[店铺消费] 4[直播会员]
           "search": {
             "order_sn": ""
           },
@@ -74,18 +71,34 @@
           data: params
         }).then((res)=>{
           if(res.data.error_code=='0'){
-            if(res.data.data.list){
-              vm.ListData=res.data.data.list
+            if(res.data.data.list) {
+              vm.ListData = res.data.data.list
             }
+            vm.total=Number(res.data.data.total);
+            vm.pages=Number(res.data.data.pages);
+            vm.page=Number(res.data.data.page);
+            vm.per_page=Number(res.data.data.per_page);
+            vm.total_page=Number(res.data.data.total_page);
           }else{
             vm.$message.error(res.data.message);
-            console.log(res.data.message)
           }
+
         }).catch(err => {
           console.log(err);
         });
       },
+      //分页
+      handleCurrentChange(val){
+        this.page=val
+        this.getlistData(this.page)
+      },
       viewMore(scope){
+        /*this.$router.push({
+          name:"mdetail",
+          params:{
+            user_id:scope.id
+          }
+        })*/
       }
     }
   }

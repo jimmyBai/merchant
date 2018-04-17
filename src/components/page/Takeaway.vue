@@ -54,6 +54,7 @@
 
 
     <!-- 添加商品 -->
+    <!--<add-goods v-if="isAddGoodsShow"></add-goods>-->
     <add-goods v-if="isAddGoodsShow" @addevent="addevent"></add-goods>
     <!-- 查看商品 -->
     <view-goods v-if="isTakeawayShow" :fromParent="fromParent" @viewevent="viewevent"></view-goods>

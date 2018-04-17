@@ -54,7 +54,7 @@ export default {
     return {
       showinfoBox:false,
       num:'0',
-      menuArray:[{'name':'首页','userid':0,'icon':'00'},{'name':'会员','userid':1,'icon':'01'},{'name':'订单','userid':2,'icon':'02'},{'name':'外卖','userid':3,'icon':'03'},{'name':'店铺','userid':4,'icon':'04'},{'name':'报表','userid':5,'icon':'05'},{'name':'权限','userid':6,'icon':'06'},{'name':'订座','userid':7,'icon':'07'}]
+      menuArray:[{'name':'首页','userid':0,'icon':'00'},{'name':'会员','userid':1,'icon':'01'},{'name':'订单','userid':2,'icon':'02'},{'name':'外卖','userid':3,'icon':'03'},{'name':'店铺','userid':5,'icon':'05'},{'name':'报表','userid':4,'icon':'04'},{'name':'权限','userid':6,'icon':'06'},{'name':'订座','userid':7,'icon':'07'}]
     }
   },
   methods:{
@@ -70,9 +70,9 @@ export default {
        vm.$router.push('/order')
       }else if(id==3){
        vm.$router.push('/takeaway')
-      }else if(id==4){
-       vm.$router.push('/shop')
       }else if(id==5){
+       vm.$router.push('/shop')
+      }else if(id==4){
        vm.$router.push('/export')
       }else if(id==6){
        vm.$router.push('/permission')

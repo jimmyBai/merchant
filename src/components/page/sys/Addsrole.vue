@@ -4,7 +4,7 @@
       <div class="el-message-box">
         <div class="message-box_header">
           <div class="message-box_title"><span v-text='msgtitle'></span></div>
-          <div class="message-box_closebtn" @click="closepop"><i class="el-message-box__close el-icon-close"></i></div>
+          <div class="message-box_closebtn" @click="closepop"><i class="el-icon-circle-close-outline"></i></div>
         </div>
         <div class="message-box_content">
           <div class="addpop">
@@ -75,7 +75,7 @@
       }
     },
     props: {
-      fromParent: String
+      fromParent: Object
     },
     created(){
 
@@ -85,48 +85,32 @@
       if(this.fromParent){
         this.msgtitle='查看角色'
         //获取详情信息
-        this.geteditInfo()
+        this.role_name=this.fromParent.rolename
       }else{
       }
       //获取权限列表枚举
       this.getpermission()
     },
     methods:{
-      //获取修改信息
-      geteditInfo(){
-        let vm =this,url='/api/web/authority/user/info',params={'id':this.fromParent};
-        vm.$axios.get(url,{params}).then((res)=>{
-          if(res.data.error_code=='0'){
-            vm.role_name=res.data.data.role_name
-          }else{
-            vm.$message.error(res.data.message);
-
-          }
-        }).catch(err => {
-          console.log(err);
-        });
-      },
       closepop(){
         //执行父组件方法
-        if(this.fromParent){
-          let data = {
-            popstatus:false
-          };
-          this.$emit('sievent',data,'');
-        }else{
-          let data = {
-            popstatus:false
-          };
-          this.$emit('ievent',data,'');
-        }
+        let data = {
+          popstatus:false,
+        };
+        this.$emit('sievent',data,'');
 
       },
       getpermission(){
-        let vm =this,url='/api/web/authority/node/list',params={'role_id':this.fromParent||''};
+        let vm =this,url='/api/web/authority/node/list',params;
+        if(this.fromParent){
+          params={'role_id':this.fromParent.roleid};
+        }else{
+          params={}
+        }
         vm.$axios.get(url,{params}).then((res)=>{
           if(res.data.error_code=='0'){
             vm.ListData=res.data.data
-            if(vm.ListData&&vm.ListData.length>0){
+            if(vm.ListData&&vm.ListData.length>0&&!vm.fromParent){
               vm.ListData.forEach(item=>{
                 vm.$set(item,'create',0)
                 vm.$set(item,'update',0)
@@ -144,7 +128,8 @@
       },
       //添加角色
       addroleFn(){
-        let vm =this,roleArray=[];
+        let vm =this,roleArray=[],url,params;
+        //区分是保存还是新增权限
         vm.ListData.forEach(item=>{
           let roleData={}
           if(item.create||item.update||item.read||item.delete){
@@ -155,10 +140,20 @@
             roleArray.push(roleData)
           }
         })
-        let url='/api/web/authority/role/add',params={
-          role_name:vm.role_name,
-          data:roleArray
-        };
+        if(vm.fromParent){
+          params={
+            role_id:vm.fromParent.roleid,
+            role_name:vm.role_name,
+            data:roleArray
+          }
+          url='/api/web/authority/role/save';
+        }else{
+          params={
+            role_name:vm.role_name,
+            data:roleArray
+          }
+          url='/api/web/authority/role/add';
+        }
         vm.$axios({
           method:'post',
           url:url,
@@ -169,7 +164,7 @@
               popstatus:false,
               status:'refresh'
             };
-            vm.$emit('ievent',data,'');
+            this.$emit('sievent',data,'');
           }else{
             vm.$message.error(res.data.message);
 
