@@ -65,6 +65,7 @@ import popView from './Poptakeout'
     },
     mounted:function(){
       this.getMemberOrder()
+      //orderstatus:0未付款,1已付款,2待派送，3派送中，4座位使用中，5已完成，6已取消，7超时未付款，8待退款，9已退款
     },
     methods:{
       getMemberOrder(){
@@ -80,6 +81,7 @@ import popView from './Poptakeout'
           },
           page: vm.page,
         };
+        vm.ListData=[];
         vm.$axios({
           method:'post',
           url:url,
@@ -124,9 +126,9 @@ import popView from './Poptakeout'
       },
       frompop(...data){
         let vm = this;
-        vm.popdiv=data.popstatus
+        vm.popdiv=data[0].popstatus
         if(data[0].status&&data[0].status=='refresh'){
-          console.log('此处需要刷新数据')
+          vm.getMemberOrder()
         }
       },
       //分页

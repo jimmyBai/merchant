@@ -116,17 +116,17 @@
                     </el-select>
                   </el-col>
                   <el-col :span="8">
-                    <el-time-select v-model="item.am_begin" :picker-options="{ start: '00:00', step: '00:15', end: '14:00'}">
+                    <el-time-select v-model="item.am_begin" :editable="false" :picker-options="{ start: '00:00', step: '00:15', end: '14:00'}">
                     </el-time-select>
                     <div class="fromto">至</div>
-                    <el-time-select v-model="item.am_end" :picker-options="{ start: '00:00', step: '00:15', end: '14:00',minTime: item.am_begin}">
+                    <el-time-select v-model="item.am_end" :editable="false" :picker-options="{ start: '00:00', step: '00:15', end: '14:00',minTime: item.am_begin}">
                     </el-time-select>
                   </el-col>
                   <el-col :span="8">
-                    <el-time-select v-model="item.pm_begin" :picker-options="{ start: '14:00', step: '00:15', end: '23:45'}">
+                    <el-time-select v-model="item.pm_begin" :editable="false" :picker-options="{ start: '14:00', step: '00:15', end: '23:45'}">
                     </el-time-select>
                     <div class="fromto">至</div>
-                    <el-time-select v-model="item.pm_end" :picker-options="{ start: '14:00', step: '00:15', end: '23:45',minTime: item.pm_begin}">
+                    <el-time-select v-model="item.pm_end" :editable="false" :picker-options="{ start: '14:00', step: '00:15', end: '23:45',minTime: item.pm_begin}">
                     </el-time-select>
                   </el-col>
                 </el-row>
@@ -392,11 +392,6 @@
       },
       upshop(){
           let vm =this, url='/api/web/setting/save',params,banners=[],recommend=[],business=[],logoarray=[];
-
-          /*console.log(vm.ListData)
-          console.log(vm.imgVO)
-          console.log(vm.recommend)*/
-          console.log(vm.business_time)
           //封装Logo图片数组
           if(vm.ListData.logo){
             logoarray.push(vm.ListData.logo)
@@ -452,6 +447,7 @@
               message: '店铺信息修改成功！',
               type: 'success'
             });
+            sessionStorage.setItem('INDEXNUM',1)
             setTimeout(()=>{
               vm.$router.push('/member')
             })

@@ -57,10 +57,23 @@ export default {
       menuArray:[{'name':'首页','userid':0,'icon':'00'},{'name':'会员','userid':1,'icon':'01'},{'name':'订单','userid':2,'icon':'02'},{'name':'外卖','userid':3,'icon':'03'},{'name':'店铺','userid':5,'icon':'05'},{'name':'报表','userid':4,'icon':'04'},{'name':'权限','userid':6,'icon':'06'},{'name':'订座','userid':7,'icon':'07'}]
     }
   },
+  mounted:function(){
+    //判断是选中的那个选项
+    if(sessionStorage.getItem('INDEXNUM')){
+      this.num=sessionStorage.getItem('INDEXNUM')
+    }
+  },
+  watch:{
+    num(cVal,oVal){
+      return this.num= sessionStorage.getItem('INDEXNUM')
+      console.log(3333)
+    }
+  },
   methods:{
     gopage(id,index){
       let vm =this;
       vm.num=index
+      sessionStorage.setItem('INDEXNUM',index)
       if(id==0){
         vm.$router.push('/main')
       }else if(id==1){

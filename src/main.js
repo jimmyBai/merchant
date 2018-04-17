@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 
 import axios from 'axios';
 import qs from 'qs';
-
+/*import {Loading} from 'element-ui'*/
 
 import App from './App';
 
@@ -57,17 +57,31 @@ axios.interceptors.request.use(config=>{
     config.data = qs.stringify(config.data)
   }else{
   }*/
+  /*let loading = Loading.service({
+    fullscreen: true,
+    text: '拼命加载中...',
+  });*/
   return config;
 },error=>{
+ /* let loading = Loading.service({});
+  loading.close();*/
   return Promise.reject(error);
 })
 
+axios.interceptors.response.use(function (response) {
+  /*let loading = Loading.service({});
+  loading.close();*/
+
+  return response;
+}, function (error) {
+
+  loadinginstace.close()
 
 
-
-
-
-
+  return Promise.reject(error);
+});
+//关闭生产模式下给出的提示
+Vue.config.productionTip = false;
 
 
 //生命周期路由拦截
