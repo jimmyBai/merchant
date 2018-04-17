@@ -58,14 +58,36 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .list-bottm{height: 20px}
 .middbtn{ justify-content: center}
 /**订单列表按钮颜色**/
-.btn-color-1{background: #ecac11;}
-.btn-color-2{background: #fe7f17;}
-.btn-color-3{background: #f44b2a;}
-.btn-color-4{background: #22baa1;}
-.btn-color-5{background: #11afcc;}
-.btn-color-6{background: #b03182;}
+.btn-color-0{background: #f34b2a;} /*未付款*/
+.btn-color-1{background: #efae12;} /*已付款*/
+.btn-color-2{background: #ff7f17;} /*待派送*/
+.btn-color-3{background: #22baa0;} /*派送中*/
+.btn-color-4{background: #2291ba;} /*座位使用中*/
+.btn-color-5{background: #22ba5b;} /*已完成*/
+.btn-color-6{background: #af3181;} /*已取消*/
+.btn-color-7{background: #a1732c;} /*超时未付款*/
+.btn-color-8{background: #79a12c;} /*待退款*/
+.btn-color-9{background: #b03182;} /*已退款*/
+
+/**订单状态颜色**/
+.status-0{color: #f34b2a;} /*未付款*/
+.status-1{color: #efae12;} /*已付款*/
+.status-2{color: #ff7f17;} /*待派送*/
+.status-3{color: #22baa0;} /*派送中*/
+.status-4{color: #2291ba;} /*座位使用中*/
+.status-5{color: #22ba5b;} /*已完成*/
+.status-6{color: #af3181;} /*已取消*/
+.status-7{color: #a1732c;} /*超时未付款*/
+.status-8{color: #79a12c;} /*待退款*/
+.status-9{color: #b03182;} /*已退款*/
 
 
+.itemline-1 li{ background:#c48f0f;}
+.itemline-1 li.savebtn{background:#c48f0f }
+.itemline-2 li{ background:#e0741c;}
+.itemline-2 li.savebtn{background:#b95e15 }
+.itemline-3 li{ background:#1ea28b;}
+.itemline-3 li.savebtn{background:#177c6a }
 /**按钮状态**/
 .btn-c-error{ background:#f25657}
 .btn-c-success{background:#22baa1}
@@ -184,3 +206,9 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .shopline .el-input__inner{ height: 30px;line-height: 30px;border-radius: 3px; background: none; border: 1px solid #706375; color: #fff;}
 .shopline .el-select .el-input.is-focus .el-input__inner ,.shopline .el-select .el-input__inner:focus{ border-color: #706375;}
 .shopline .el-date-editor.el-input,.shopline  .el-date-editor.el-input__inner{width: 100%}
+/*订单详情*/
+.deliverItem .el-input__inner{ border-radius: 0; background: none; border: none; color: #fff; font-size: 12px;}
+.deliverItem input.el-input__inner::-webkit-input-placeholder{  color:#fff;}
+.deliverItem .el-select .el-input.is-focus .el-input__inner ,.deliverItem .el-select .el-input__inner:focus{ border-color: #706375;}
+.deliverItem .el-date-editor.el-input,.deliverItem  .el-date-editor.el-input__inner{width: 100%}
+.deliverItem .el-input__icon{ color: #fff}

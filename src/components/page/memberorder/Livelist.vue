@@ -9,7 +9,7 @@
           </div>
         </div>
         <div class="ls-right">
-          <div class="ls-r-btn"><i class="el-icon-refresh"></i><span>刷新</span></div>
+          <div class="ls-r-btn" @click="refresh"><i class="el-icon-refresh"></i><span>刷新</span></div>
         </div>
       </div>
       <el-table stripe :data="ListData">
@@ -22,7 +22,7 @@
         <el-table-column>
           <template slot-scope="scope">
             <div class="tdbtn-box">
-              <div class="tdbtn-view" @click="viewMore(scope.row)"><i class="el-icon-view"></i> <span>查看</span></div>
+              <div class="tdbtn-view" :class="'btn-color-'+scope.row.order_status" @click="viewMore(scope.row)"><span v-text="scope.row.order_status_name"></span></div>
             </div>
           </template>
         </el-table-column>
@@ -41,7 +41,12 @@
     data () {
       return {
         ListData:[],
-        page:0,
+        content:'',
+        min_price:'',
+        max_price:'',
+        create_start:'',
+        create_end:'',
+        page:1,
         per_page:0,
         total:0,
         total_page:0
@@ -57,14 +62,18 @@
     methods:{
       getlistData(){
         let vm =this,url='/api/web/order/list',params={
-          "user_id": sessionStorage.getItem('user_id')||"",    //为空表示所有
-          "type": "4",      //订单类型 1[外卖] 2[订座] 3[店铺消费] 4[直播会员]
-          "search": {
-            "order_sn": ""
+          user_id: sessionStorage.getItem('user_id'),    //为空表示所有
+          type: "4",      //订单类型 1[外卖] 2[订座] 3[店铺消费] 4[直播会员]
+          search: {
+            content: vm.content,
+            min_price:vm.min_price,
+            max_price:vm.max_price,
+            create_start:vm.create_start,
+            create_end:vm.create_end
           },
-          "page": "1",
-          "length": "10"
+          page: vm.page,
         };
+        vm.ListData=[];
         vm.$axios({
           method:'post',
           url:url,
@@ -93,12 +102,10 @@
         this.getlistData(this.page)
       },
       viewMore(scope){
-        /*this.$router.push({
-          name:"mdetail",
-          params:{
-            user_id:scope.id
-          }
-        })*/
+
+      },
+      refresh(){
+        this.getlistData()
       }
     }
   }

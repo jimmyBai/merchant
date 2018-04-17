@@ -14,7 +14,7 @@
 
         </div>
       </div>
-      <el-table stripe :row-key="getRowKeys" :expand-row-keys="expands"  :data="ListData">
+      <el-table stripe :row-key="getRowKeys" :expand-row-keys="expands" :data="ListData">
         <el-table-column label="下单时间" prop="create_time"></el-table-column>
         <el-table-column label="订单编号" prop="order_sn"></el-table-column>
         <!--<el-table-column label="用户名" prop="username"></el-table-column>
@@ -22,7 +22,11 @@
         <el-table-column label="商品数量" prop="totalnum"></el-table-column>
         <el-table-column label="配送费" prop="delivery_fee"></el-table-column>
         <el-table-column label="付款金额" prop="order_paid_price"></el-table-column>
-        <el-table-column label="订单状态" prop="order_status_name"></el-table-column>
+        <el-table-column label="订单状态">
+          <template slot-scope="scope">
+            <span :class="'status-'+scope.row.order_status" v-text="scope.row.order_status_name"></span>
+          </template>
+        </el-table-column>
         <el-table-column>
           <template slot-scope="scope">
             <div class="tdbtn-box">
@@ -37,7 +41,7 @@
                 <span>商品信息</span>
               </div>
               <div class="expandgoodslist">
-                <div class="linetr" v-for="items in props.row.products">
+                <div class="linetr" v-for="(items,line) in props.row.products" :key="line">
                   <div class="goodslistitem">
                     <div class="goodsimg">
                       <div class="img"><img src="../../../../static/img/goodsimg.jpg" /> </div>
