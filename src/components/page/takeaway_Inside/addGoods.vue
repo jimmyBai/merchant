@@ -77,23 +77,21 @@
               </div>
               <div class="adduser-producer">
                   <div class="producertitle"><em>*</em>特价</div>
-                  <div class="producercontent changeInput"><input type="text" placeholder="￥" v-model="special_price" v-if="value1"></div>
-                  <div v-model="is_use_special_price">
+                  <div class="producercontent changeInput"><input type="text" placeholder="￥" v-model="special_price" :disabled="!is_use_special_price"></div>
                   <el-switch
-                    v-model="value1"
+                    v-model="is_use_special_price"
                     active-color="rgb(96,58,108)"
                     inactive-color="#ff4949"
                     >
                   </el-switch>
-                  </div>
               </div>
             </div>
             <!-- collection -->
             <div class="adduser-itemBox">
               <div class="adduser-class notSame">
-                <div class="notSametitle" v-model="inventory_track"><em>*</em>库存跟踪</div>
+                <div class="notSametitle"><em>*</em>库存跟踪</div>
                 <el-switch
-                  v-model="value2"
+                  v-model="inventory_track"
                   active-color="rgb(96,58,108)"
                   inactive-color="#ff4949"
                   class="el_switch"
@@ -125,13 +123,14 @@
 </template>
 
 <script>
+// andy
+import "../../../../static/css/newStyle.css"
+
   export default {
     name: 'addGoods',
     data () {
         return {
           msgtitle: '添加商品',
-          value1: false,
-          value2: false,
           usertions: [],
           name: '',
           name_en: '',
@@ -170,6 +169,25 @@
       },
       // 保存信息
       clickSaveInfo(){
+        if(!this.typelist){
+          this.$message.error('请选择分类');
+          return false
+        }else if(!this.name){
+          this.$message.error("商品名称不能为空!");
+          return false
+        }else if(!this.name_en){
+          this.$message.error("商品英文名称不能为空!");
+          return false
+        }else if(!this.place){
+          this.$message.error("产地不能为空!");
+          return false
+        }else if(!this.years){
+          this.$message.error("年份不能为空!");
+          return false
+        }else if(!this.price){
+          this.$message.error("单价不能为空!");
+          return false
+        }
         let vm =this,url='/api/web/product/create',params={
           product:{
             name:vm.name,
@@ -184,8 +202,8 @@
             special_price:vm.special_price,
             inventory:vm.inventory,
             capacity:vm.capacity,
-            is_use_special_price:vm.is_use_special_price,
-            inventory_track:vm.inventory_track
+            is_use_special_price:vm.is_use_special_price?'on':'off',
+            inventory_track:vm.inventory_track?'on':'off'
           }
         };
 

@@ -7,11 +7,11 @@
     <!-- infoList -->
     <div class="listtable">
       <div class="list-search">
-
+        
         <div class="ls-left">
           <div class="form-tabel">
             <div class="td-title">外卖商品表</div>
-            <div class="td-content"><input type="text" v-model="search.product_name" /><span class="search-icon" @click="searchlist"><i class="el-icon-search"></i></span></div>
+            <div class="td-content"><input type="text" v-model="product_name" /><span class="search-icon" @click="searchlist"><i class="el-icon-search"></i></span></div>
           </div>
         </div>
         <div class="ls-right">
@@ -52,9 +52,7 @@
       <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
 
-
     <!-- 添加商品 -->
-    <!--<add-goods v-if="isAddGoodsShow"></add-goods>-->
     <add-goods v-if="isAddGoodsShow" @addevent="addevent"></add-goods>
     <!-- 查看商品 -->
     <view-goods v-if="isTakeawayShow" :fromParent="fromParent" @viewevent="viewevent"></view-goods>
@@ -74,9 +72,7 @@ export default {
   },
   data () {
     return {
-      search:{
-        product_name: ""  //搜索的产品名称
-      },
+      product_name: "",  //搜索的产品名称
       page: "1", //页码，默认为1
       length: "10",//每页记录数，默认为10
       ListData:[],
@@ -107,24 +103,20 @@ export default {
       vm.isTakeawayShow=data.isTakeawayStatus
       this.getlistData()
     },
+    // 获取数据
     getlistData(){
       this.ListData = []
       let vm = this,url='/api/web/product/list',
       params={
-          "search": vm.search,
-          "page": vm.page,
-          "length":vm.length
-        };
-      vm.$axios({
-        method:'get',
-        url:url,
-        data: params
-      }).then((res)=>{
+        product_name: vm.product_name,
+        page: vm.page,
+        length:vm.length
+      };
+      vm.$axios.get(url,{params}).then((res)=>{
         if(res.data.error_code=='0'){
           if(res.data.data.list){
             vm.ListData=res.data.data.list
           }
-          console.log(res.data.data)
           vm.total=Number(res.data.data.total);
           vm.pages=Number(res.data.data.pages);
           vm.page=Number(res.data.data.page);
@@ -132,21 +124,14 @@ export default {
           vm.total_page=Number(res.data.data.total_page);
         }else{
           vm.$message.error(res.data.message);
-          console.log(res.data.message)
         }
       }).catch(err => {
         console.log(err);
       });
     },
     // 搜索
-    searchlist(){
-      let vm =this;
-      if(!vm.search.product_name){
-        vm.$message.error('请输入要搜索的产品名称');
-      }else{
-        this.getlistData()
-        console.log(123);
-      }
+    searchlist(data){
+      this.getlistData()
     },
     // 分页
     handleCurrentChange(val){

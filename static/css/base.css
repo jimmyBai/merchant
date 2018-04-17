@@ -53,7 +53,6 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .tdbtn-box>div{ cursor: pointer;margin: 0 3px;}
 .tdbtn-view{ background: #7a6fbe; padding: 0 8px; border-radius: 2px}
 .tdbtn-del{ background: #f25657; padding: 0 8px; border-radius: 2px;}
-.tdBtn-view{ background: rgb(161,64,22); padding: 0 8px; border-radius: 2px; margin: 0 5px;}
 .tdbtn-edit{ background:#4d2e57; }
 .tdbtn-add{ background:#f25657;padding: 0 8px; border-radius: 2px}
 .list-bottm{height: 20px}
