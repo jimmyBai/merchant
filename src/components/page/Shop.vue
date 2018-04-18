@@ -132,8 +132,8 @@
                 </el-row>
               </el-col>
               <el-col :span="2" class="addlinbtn">
-                <div class="addicon" @click="addweekline(item,index)"><i class="el-icon-circle-plus"></i></div>
-                <div class="delicon" v-if="business_time.length>1" @click="delweekline(item,index)"><i class="el-icon-error"></i></div>
+                <div class="addicon" v-if="index==0" @click="addweekline(item,index)"><i class="el-icon-circle-plus"></i></div>
+                <div class="delicon" v-if="business_time.length>1&&index>0" @click="delweekline(item,index)"><i class="el-icon-error"></i></div>
               </el-col>
             </el-row>
           </div>
@@ -476,7 +476,7 @@
 .content dl dd{ margin-bottom: 10px}
 .filebtn{ margin-left: 10px; cursor: pointer; background:#ac5397; color: #fff; display: inline-block; height: 31px; line-height: 31px; width: 80px; text-align: center; border-radius: 3px}
 .imglist ul { display: flex; display: -webkit-flex; flex-direction: row; -webkit-flex-direction: row; align-items: center; flex-wrap: wrap;-webkit-flex-wrap: wrap}
-.imglist ul li{width: 25%}
+.imglist ul li{width: 25%; min-width: 150px;}
 .imglist ul li .imgbox{ margin:10px 15px 10px 0; position: relative;}
 .imglist ul li .imgbox>div{ background:#462d4d; width:135px; height: 100px; cursor: pointer}
 .imglist ul li .imgbox img{width: 100%; height: 100%; background-size: contain;border: none}
@@ -509,5 +509,5 @@
 .logobox i{ font-size: 24px;}
 .logobox>div{ position: relative; height: 100%; display: flex; display: -webkit-flex; align-items: center; -webkit-align-items: center;justify-content: center;-webkit-justify-content: center}
 .line .title{ min-width: 80px; text-align: right}
-.logobox>div img{width: 100%}
+.logobox>div img{width: 100%;min-width:135px}
 </style>

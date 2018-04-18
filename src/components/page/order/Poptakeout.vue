@@ -9,60 +9,63 @@
         <div class="message-box_content">
             <!--订单状态操作-->
             <div class="orderstatusbar">
-              <div class="mainbtn">
+              <div class="mainbtn" @click="ishow=!ishow">
                 <span :class="'btn-color-'+detailinfo.order_status" v-text="detailinfo.order_status_name"></span>
               </div>
               <!--order_status==2 待派送   3派送中--->
-              <div v-if="detailinfo.order_status==2||detailinfo.order_status==3" class="deliverItem">
-                <ul :class="'itemline-'+detailinfo.order_status">
-                  <li>
-                    <div class="itemtitle">
-                      <span>配送员：</span>
-                    </div>
-                    <div class="itemcontent">
-                      <span><input type="text" :disabled="detailinfo.order_status==3"  v-model="deliver_man" placeholder="填写配送员" /></span>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="itemtitle">
-                      <span>联系电话：</span>
-                    </div>
-                    <div class="itemcontent">
-                      <span><input type="text" :disabled="detailinfo.order_status==3" v-model="delivery_phone" maxlength="11" placeholder="配送员电话" /></span>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="itemtitle">
-                      <span>配送时间：</span>
-                    </div>
-                    <div class="itemcontent">
-                      <el-time-select v-if="detailinfo.order_status==2" v-model="estimated_time" :editable="false" :picker-options="{ start: '00:05',step: '00:05',end: '02:30'}" placeholder="选择时间">
-                      </el-time-select>
-                      <span v-if="detailinfo.order_status==3" v-text="estimated_time"></span>
-                    </div>
-                  </li>
-                  <li class="savebtn">
-                    <div @click="deliverfn">
-                      <span v-if="detailinfo.order_status==2">保存并开始配送</span>
-                      <span v-if="detailinfo.order_status==3">确认送达</span>
-                    </div>
-                  </li>
-                </ul>
+              <div v-if="ishow">
+                <div v-if="detailinfo.order_status==2||detailinfo.order_status==3" class="deliverItem">
+                  <ul :class="'itemline-'+detailinfo.order_status">
+                    <li>
+                      <div class="itemtitle">
+                        <span>配送员：</span>
+                      </div>
+                      <div class="itemcontent">
+                        <span><input type="text" :disabled="detailinfo.order_status==3"  v-model="deliver_man" placeholder="填写配送员" /></span>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="itemtitle">
+                        <span>联系电话：</span>
+                      </div>
+                      <div class="itemcontent">
+                        <span><input type="text" :disabled="detailinfo.order_status==3" v-model="delivery_phone" maxlength="11" placeholder="配送员电话" /></span>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="itemtitle">
+                        <span>配送时间：</span>
+                      </div>
+                      <div class="itemcontent">
+                        <el-time-select v-if="detailinfo.order_status==2" v-model="estimated_time" :editable="false" :picker-options="{ start: '00:05',step: '00:05',end: '02:30'}" placeholder="选择时间">
+                        </el-time-select>
+                        <span v-if="detailinfo.order_status==3" v-text="estimated_time"></span>
+                      </div>
+                    </li>
+                    <li class="savebtn">
+                      <div @click="deliverfn">
+                        <span v-if="detailinfo.order_status==2">保存并开始配送</span>
+                        <span v-if="detailinfo.order_status==3">确认送达</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div v-if="detailinfo.order_status==1" class="deliverItem">
+                  <ul :class="'itemline-'+detailinfo.order_status">
+                    <li class="savebtn">
+                      <div @click="orderFn(1)">
+                        <span>确认接单</span>
+                      </div>
+                    </li>
+                    <li class="savebtn">
+                      <div @click="orderFn(0)">
+                        <span>取消订单</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
               </div>
-              <div v-if="detailinfo.order_status==1" class="deliverItem">
-                <ul :class="'itemline-'+detailinfo.order_status">
-                  <li class="savebtn">
-                    <div @click="orderFn(1)">
-                      <span>确认接单</span>
-                    </div>
-                  </li>
-                  <li class="savebtn">
-                    <div @click="orderFn(0)">
-                      <span>取消订单</span>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+
             </div>
           <!---viewSTART--->
             <div class="baseinfo">
@@ -144,10 +147,10 @@
         msgtitle:"",
         detailinfo:"",
         productList:'',
-
         estimated_time:'',
         deliver_man:'',
-        delivery_phone:''
+        delivery_phone:'',
+        ishow:false
       }
     },
     props: {
