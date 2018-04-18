@@ -7,6 +7,7 @@ const state=new Vuex.Store({
 	state:{
 		token:localStorage.getItem("token") || "",
     uid:localStorage.getItem("uid") || "",
+    menuIndex:sessionStorage.getItem("INDEXNUM") || 0,
 	},
 	mutations:{
     setToken(state,apptoken){
@@ -14,7 +15,10 @@ const state=new Vuex.Store({
     },
     setUID(state,appuid){
       state.uid=appuid
-    }
+    },
+    setIndex(state,tabs){
+      state.menuIndex=tabs
+    },
 	},
 	actions:{
     addToken({commit},token){
@@ -23,6 +27,9 @@ const state=new Vuex.Store({
     addUID({commit},uid){
       commit("setUID",uid)
     },
+    changetabs({commit},num){
+      commit("setIndex",num)
+    }
 	}
 })
 

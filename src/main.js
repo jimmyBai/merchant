@@ -42,40 +42,28 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.defaults.timeout = 30000;
 //返回数据类型
 axios.defaults.responseType = 'json';
-/*if(store.state.uid){
-  axios.defaults.headers.common['uid'] = store.state.uid
-}*/
 //全局请求配置
 axios.interceptors.request.use(config=>{
   if(store.state.token){
     Object.assign(config.headers, {'token': store.state.token,'uid': store.state.uid});
   }
-  /*if(config.method === 'post'&&(config.url.indexOf('/api/web/setting/upload')>=0)) {
-   // console.log(config)
-    config.data = qs.stringify(config.data)
-  }else{
-  }*/
-  /*let loading = Loading.service({
-    fullscreen: true,
-    text: '拼命加载中...',
-  });*/
   return config;
 },error=>{
- /* let loading = Loading.service({});
-  loading.close();*/
   return Promise.reject(error);
 })
 
 axios.interceptors.response.use(function (response) {
-  /*let loading = Loading.service({});
-  loading.close();*/
-
+  //code=100005 令牌错误
+  if(response.request.response.error_code=='100005'){
+    localStorage.clear()
+    sessionStorage.clear()
+    store.state.token=''
+    store.state.uid=''
+    store.state.menuIndex='0'
+    router.push('/login');
+  }
   return response;
 }, function (error) {
-
-  loadinginstace.close()
-
-
   return Promise.reject(error);
 });
 //关闭生产模式下给出的提示
@@ -84,9 +72,6 @@ Vue.config.productionTip = false;
 
 //生命周期路由拦截
 router.beforeEach(({meta,path},from,next)=>{
-
-	//doSomeThings
-
 	next();
 })
 

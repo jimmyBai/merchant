@@ -7,7 +7,7 @@
     <!-- infoList -->
     <div class="listtable">
       <div class="list-search">
-        
+
         <div class="ls-left">
           <div class="form-tabel">
             <div class="td-title">外卖商品表</div>
@@ -139,6 +139,7 @@ export default {
       this.getlistData(this.page);
     },
     clickadd(){
+      this.fromParent=''
       this.isTakeawayShow = true;
     },
     vieweditor(id){

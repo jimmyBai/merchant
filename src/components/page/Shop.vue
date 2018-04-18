@@ -448,6 +448,7 @@
               type: 'success'
             });
             sessionStorage.setItem('INDEXNUM',1)
+            vm.$store.dispatch('changetabs',1);
             setTimeout(()=>{
               vm.$router.push('/member')
             })

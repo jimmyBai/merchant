@@ -33,7 +33,7 @@ export default {
     return {
       ischeck:false,
       phone:'13800138222',
-      password:'123456',
+      password:'admin123',
       canLogin:false,
     }
   },
