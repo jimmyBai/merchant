@@ -131,14 +131,20 @@ import "../../../../static/css/newStyle.css"
         msgtitle: '查看/编辑商品',
         priceStatus: true,
         usertions: [],
-        baseInfo:''
+        // baseInfo:''
+        name: '',
+        name_en:'',
+        describe: ''
+
       }
     },
     props: {
       fromParent: String
     },
     mounted:function(){
-      if(this.fromParent){
+      // 。。。
+      if(!this.fromParent){
+        this.msgtitle = '添加'
         this.getGoodsInfo();
       }
       
@@ -158,6 +164,14 @@ import "../../../../static/css/newStyle.css"
           console.log(err);
         });
       },
+      closepop(){
+        //执行父组件关闭方法
+        let data = {
+          isTakeawayStatus:false
+        };
+        //执行父组件方法
+        this.$emit('viewevent',data,'');
+      },
       //获取商户分类
       getclassinfo(){
         let vm =this,url='/api/web/product/type_list',params={};
@@ -173,47 +187,90 @@ import "../../../../static/css/newStyle.css"
       },
       //修改保存
       clickSaveInfo(){
-        if(!this.baseInfo.typelist){
-          this.$message.error('请选择分类');
-          return false
-        }else if(!this.baseInfo.name){
-          this.$message.error("商品名称不能为空!");
-          return false
-        }else if(!this.baseInfo.name_en){
-          this.$message.error("商品英文名称不能为空!");
-          return false
-        }else if(!this.baseInfo.place){
-          this.$message.error("产地不能为空!");
-          return false
-        }else if(!this.baseInfo.years){
-          this.$message.error("年份不能为空!");
-          return false
-        }else if(!this.baseInfo.price){
-          this.$message.error("单价不能为空!");
-          return false
-        }else if(!this.baseInfo.inventory_track){
-          this.$message.error("请开启库存追踪!");
-          return false
-        }
-        let vm =this,url='/api/web/product/update',params={
-          product:{
-            name:vm.baseInfo.name,
-            name_en:vm.baseInfo.name_en,
-            describe:vm.baseInfo.describe,
-            type:vm.baseInfo.typelist.id,
-            place:vm.baseInfo.place,
-            years:vm.baseInfo.years,
-            brand:vm.baseInfo.brand,
-            weight:vm.baseInfo.weight,
-            price:vm.baseInfo.price,
-            special_price:vm.baseInfo.special_price,
-            inventory:vm.baseInfo.inventory,
-            capacity:vm.baseInfo.capacity,
-            is_use_special_price:vm.baseInfo.is_use_special_price?'on':'off',
-            inventory_track:vm.baseInfo.inventory_track?'on':'off',
-            product_id:vm.fromParent
+        let vm =this,url,params;
+        if(!this.fromParent){
+          if(!this.baseInfo.typelist){
+            this.$message.error('请选择分类');
+            return false
+          }else if(!this.baseInfo.name){
+            this.$message.error("商品名称不能为空!");
+            return false
+          }else if(!this.baseInfo.name_en){
+            this.$message.error("商品英文名称不能为空!");
+            return false
+          }else if(!this.baseInfo.place){
+            this.$message.error("产地不能为空!");
+            return false
+          }else if(!this.baseInfo.years){
+            this.$message.error("年份不能为空!");
+            return false
+          }else if(!this.baseInfo.price){
+            this.$message.error("单价不能为空!");
+            return false
+          }else if(!this.baseInfo.inventory_track){
+            this.$message.error("请开启库存追踪!");
+            return false
           }
-        };
+          url='/api/web/product/update',
+          params={
+            product:{
+              name:vm.baseInfo.name,
+              name_en:vm.baseInfo.name_en,
+              describe:vm.baseInfo.describe,
+              type:vm.baseInfo.typelist.id,
+              place:vm.baseInfo.place,
+              years:vm.baseInfo.years,
+              brand:vm.baseInfo.brand,
+              weight:vm.baseInfo.weight,
+              price:vm.baseInfo.price,
+              special_price:vm.baseInfo.special_price,
+              inventory:vm.baseInfo.inventory,
+              capacity:vm.baseInfo.capacity,
+              is_use_special_price:vm.baseInfo.is_use_special_price?'on':'off',
+              inventory_track:vm.baseInfo.inventory_track?'on':'off',
+              product_id:vm.fromParent
+            }
+          };
+        }else{
+          if(!this.typelist){
+            this.$message.error('请选择分类');
+            return false
+          }else if(!this.name){
+            this.$message.error("商品名称不能为空!");
+            return false
+          }else if(!this.name_en){
+            this.$message.error("商品英文名称不能为空!");
+            return false
+          }else if(!this.place){
+            this.$message.error("产地不能为空!");
+            return false
+          }else if(!this.years){
+            this.$message.error("年份不能为空!");
+            return false
+          }else if(!this.price){
+            this.$message.error("单价不能为空!");
+            return false
+          }
+          url='/api/web/product/create',
+          params={
+            product:{
+              name:vm.name,
+              name_en:vm.name_en,
+              describe:vm.describe,
+              type:vm.typelist.id,
+              place:vm.place,
+              years:vm.years,
+              brand:vm.brand,
+              weight:vm.weight,
+              price:vm.price,
+              special_price:vm.special_price,
+              inventory:vm.inventory,
+              capacity:vm.capacity,
+              is_use_special_price:vm.is_use_special_price?'on':'off',
+              inventory_track:vm.inventory_track?'on':'off'
+            }
+          };
+        }
         vm.$axios({
           method:'post',
           url:url,
@@ -234,14 +291,7 @@ import "../../../../static/css/newStyle.css"
         });
       },
       
-      closepop(){
-        //执行父组件关闭方法
-        let data = {
-          isTakeawayStatus:false
-        };
-        //执行父组件方法
-        this.$emit('viewevent',data,'');
-      }
+      
      
     }
   }

@@ -53,7 +53,7 @@
     </div>
 
     <!-- 添加商品 -->
-    <add-goods v-if="isAddGoodsShow" @addevent="addevent"></add-goods>
+    <!-- <add-goods v-if="isAddGoodsShow" @addevent="addevent"></add-goods> -->
     <!-- 查看商品 -->
     <view-goods v-if="isTakeawayShow" :fromParent="fromParent" @viewevent="viewevent"></view-goods>
 
@@ -61,13 +61,13 @@
 </template>
 
 <script>
-import addGoods from './takeaway_Inside/addGoods'
+// import addGoods from './takeaway_Inside/addGoods'
 import viewGoods from './takeaway_Inside/viewGoods'
 
 export default {
   name: 'takeaway_Inside',
   components:{
-    addGoods,
+    // addGoods,
     viewGoods
   },
   data () {
@@ -82,7 +82,7 @@ export default {
       total_page:0,
       value1: true,
       value2: true,
-      isAddGoodsShow: false,
+      // isAddGoodsShow: false,
       isTakeawayShow: false,
       index: '',
       fromParent:''
@@ -93,11 +93,11 @@ export default {
   },
   methods:{
     //子组件传参地
-    addevent(...data){
-      let vm = this;
-      vm.isAddGoodsShow=data.isAddGoodsStatus
-      this.getlistData()
-    },
+    // addevent(...data){
+    //   let vm = this;
+    //   vm.isAddGoodsShow=data.isAddGoodsStatus
+    //   this.getlistData()
+    // },
     viewevent(...data){
       let vm = this;
       vm.isTakeawayShow=data.isTakeawayStatus
@@ -139,7 +139,7 @@ export default {
       this.getlistData(this.page);
     },
     clickadd(){
-      this.isAddGoodsShow = true;
+      this.isTakeawayShow = true;
     },
     vieweditor(id){
       this.fromParent=id.toString()
