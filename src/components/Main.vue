@@ -102,6 +102,13 @@ export default {
     goview(way){
       let vm =this;
       vm.showinfoBox=!vm.showinfoBox
+      //如果是登出登录
+      if(way=='login'){
+        localStorage.clear()
+        sessionStorage.clear()
+        vm.$store.state.token=''
+        vm.$store.state.uid=''
+      }
       vm.$router.push('/'+way)
     },
     //联系客服
