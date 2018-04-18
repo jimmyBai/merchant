@@ -59,6 +59,7 @@ axios.interceptors.response.use(function (response) {
     sessionStorage.clear()
     store.state.token=''
     store.state.uid=''
+    store.state.menuIndex='0'
     router.push('/login');
   }
   return response;
