@@ -1,20 +1,34 @@
 /* andy */
 .adduser-itemBox>div input{
-    height: 23px;
-    line-height: 23px;
-    width: 100%;
-    text-indent: 8px;
+  height: 23px;
+  line-height: 23px;
+  width: 100%;
+  text-indent: 8px;
 }
 .adduser-itemBox>div input,.adduser-itemBox>div textarea{
-    outline: none;
-    background: #2e1c34;
-    border: 1px solid #3d2b43;
-    margin-right: 10px;
-    color: #fff;
-    margin: 0;
+  outline: none;
+  background: #2e1c34;
+  border: 1px solid #3d2b43;
+  margin-right: 10px;
+  color: #fff;
+  margin: 0;
 }
+.tdBtn-box>div{ 
+  cursor: pointer;
 
-
-.tdBtn-box>div{ cursor: pointer}
-.tdBtn-view{ background: #e65c20; padding: 0 5px; border-radius: 2px; text-align: center; margin-top: 5px;}
-.newView{ background: #7a6fbe; padding: 0 5px; border-radius: 2px}
+}
+.tdBtn-view{ 
+  background: #e65c20; 
+  padding: 0 5px; 
+  border-radius: 2px; 
+  text-align: center; 
+  width: 45%;
+  float: right;
+}
+.newView{ 
+  background: #7a6fbe; 
+  padding: 0 5px;
+  border-radius: 2px;
+  width: 48%;
+  float: left;
+}

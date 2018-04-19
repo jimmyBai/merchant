@@ -21,7 +21,7 @@
         </div>
 
       </div>
-
+  
       <el-table stripe :data="ListData">
         <el-table-column prop="product_id" label="ID"></el-table-column>
         <el-table-column prop="product_name" label="商户名称"></el-table-column>
@@ -31,7 +31,7 @@
         <el-table-column prop="weight" label="重量"></el-table-column>
         <el-table-column prop="capacity" label="容量"></el-table-column>
         <el-table-column prop="status" label="产品状态"></el-table-column>
-        <el-table-column>
+        <el-table-column width="180">
           <template slot-scope="scope">
             <div class="tdBtn-box">
               <div class="tdbtn-view newView" @click="vieweditor(scope.row.product_id)">
@@ -163,6 +163,4 @@ export default {
   .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
   .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center; margin-left: 1px}
   .td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
-
-
 </style>
