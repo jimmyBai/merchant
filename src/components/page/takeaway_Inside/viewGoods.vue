@@ -80,7 +80,7 @@
                 <el-switch
                   v-model="is_use_special_price"
                   active-color="rgb(96,58,108)"
-                  inactive-color="#ff4949"
+                  inactive-color="#7e7c7c"
                   >
                 </el-switch>
               </div>
@@ -92,7 +92,7 @@
                   <el-switch
                     v-model="inventory_track"
                     active-color="rgb(96,58,108)"
-                    inactive-color="#ff4949"
+                    inactive-color="#7e7c7c"
                     class="el_switch"
                     >
                   </el-switch>
@@ -212,8 +212,6 @@ import "../../../../static/css/newStyle.css"
                   this.typelist = element
                 }
               });
-
-              
             }
           }else{
             vm.$message.error(res.data.message);
@@ -297,7 +295,8 @@ import "../../../../static/css/newStyle.css"
           if(res.data.error_code=='0'){
             //执行父组件关闭方法
             let data = {
-              isTakeawayStatus: false
+              isTakeawayStatus: false,
+              status: 'refresh'
             };
             //执行父组件方法
             this.$emit('viewevent',data,'');

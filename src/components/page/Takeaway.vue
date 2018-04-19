@@ -16,7 +16,7 @@
         </div>
         <div class="ls-right">
           <div class="ls-r-btn" @click="clickadd">
-            <i class="el-icon-refresh"></i><span>添加</span>
+            <i class="el-icon-circle-plus-outline"></i><span>添加</span>
           </div>
         </div>
 
@@ -38,7 +38,7 @@
                 <i class="el-icon-view"></i><span>查看/编辑</span>
               </div>
               <div class="tdBtn-view" @click="removeThis(index)">
-                <i class="el-icon-view"></i><span>删除</span>
+                <i class="el-icon-delete"></i>&nbsp;&nbsp;<span>删除</span>
               </div>
             </div>
           </template>
@@ -52,22 +52,18 @@
       <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
 
-    <!-- 添加商品 -->
-    <!-- <add-goods v-if="isAddGoodsShow" @addevent="addevent"></add-goods> -->
-    <!-- 查看商品 -->
+    <!-- 添加/查看商品 -->
     <view-goods v-if="isTakeawayShow" :fromParent="fromParent" @viewevent="viewevent"></view-goods>
 
   </div>
 </template>
 
 <script>
-// import addGoods from './takeaway_Inside/addGoods'
 import viewGoods from './takeaway_Inside/viewGoods'
 
 export default {
   name: 'takeaway_Inside',
   components:{
-    // addGoods,
     viewGoods
   },
   data () {
@@ -82,7 +78,6 @@ export default {
       total_page:0,
       value1: true,
       value2: true,
-      // isAddGoodsShow: false,
       isTakeawayShow: false,
       index: '',
       fromParent:''
@@ -92,16 +87,12 @@ export default {
     this.getlistData()
   },
   methods:{
-    //子组件传参地
-    // addevent(...data){
-    //   let vm = this;
-    //   vm.isAddGoodsShow=data.isAddGoodsStatus
-    //   this.getlistData()
-    // },
     viewevent(...data){
       let vm = this;
-      vm.isTakeawayShow=data.isTakeawayStatus
-      this.getlistData()
+      vm.isTakeawayShow=data.isTakeawayStatus;
+      if(data[0].status&&data[0].status=='refresh'){
+        this.getlistData()
+      }
     },
     // 获取数据
     getlistData(){

@@ -25,7 +25,12 @@ let api;
 if (process.env.NODE_ENV === 'development') {
   api = '/api/'
 } else {
-  api = 'http://dev.merchant.api.018eighteen.com'
+  if(window.location.host.indexOf('dev.'>=0)){
+    api = 'http://dev.merchant.api.018eighteen.com'
+  }else if(window.location.host.indexOf('dev.'>=0)){
+    api = 'http:/uat.merchant.api.018eighteen.com'
+  }
+  
 }
 /*if(window.location.origin.indexOf('localhost')>=0){
   api = 'http://dev.merchant.api.018eighteen.com'
