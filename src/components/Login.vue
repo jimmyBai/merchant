@@ -27,6 +27,7 @@
   </div>
 </template>
 <script>
+import md5 from 'js-md5'
 export default {
   name: 'Login',
   data () {
@@ -47,10 +48,10 @@ export default {
   },
   methods:{
   	goin(){
-  		let vm =this,url='/api/web/login';
+  		let vm =this,url='/api/web/login',KEY = '018server_user_1234567890';
   		let params={
         'phone':vm.phone,
-        'password':vm.password
+        'password':md5(md5(vm.password)+KEY)
   		}
       if(vm.ischeck){
         localStorage.setItem("LOGININFO",JSON.stringify(params))
