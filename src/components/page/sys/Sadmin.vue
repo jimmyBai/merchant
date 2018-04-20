@@ -72,6 +72,7 @@
       },
       getlistData(){
         let vm =this,url='/api/web/authority/user/list',params={page:this.page,name:this.name};
+        vm.ListData=[]
         vm.$axios.get(url,{params}).then((res)=>{
           if(res.data.error_code=='0'){
             if(res.data.data.list){

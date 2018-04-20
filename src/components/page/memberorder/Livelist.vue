@@ -5,7 +5,9 @@
         <div class="ls-left">
           <div class="form-tabel">
             <div class="td-title">订单信息表</div>
-            <div class="td-content"><input type="text" /><span class="search-icon"><i class="el-icon-search"></i></span></div>
+            <div class="td-content">
+              <input type="text" v-model="content" />
+              <span class="search-icon" @click="searchfn"><i class="el-icon-search"></i></span></div>
           </div>
         </div>
         <div class="ls-right">
@@ -73,7 +75,7 @@
           },
           page: vm.page,
         };
-        vm.ListData=[];
+        vm.ListData=[]
         vm.$axios({
           method:'post',
           url:url,
@@ -106,6 +108,9 @@
       },
       refresh(){
         this.getlistData()
+      },
+      searchfn(searchfn){
+        this.getlistData(this.content)
       }
     }
   }

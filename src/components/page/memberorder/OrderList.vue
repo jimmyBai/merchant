@@ -102,6 +102,7 @@
           "page": vm.page,
           "length": "10"
         };
+        vm.ListData=[]
         vm.$axios({
           method:'post',
           url:url,
