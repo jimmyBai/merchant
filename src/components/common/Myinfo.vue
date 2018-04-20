@@ -47,7 +47,7 @@
           </div>
         </el-col>
         <el-col :span="14" class="bright">
-          <div class="moneyline">
+          <!--<div class="moneyline">
             <div class="rhead">
               <i class="mtitle"></i>
               <span>我的余额</span>
@@ -79,7 +79,7 @@
                 <span>总经办-行政部-总经理</span>
               </div>
             </div>
-          </div>
+          </div>-->
         </el-col>
       </el-row>
     </div>
@@ -98,10 +98,11 @@
 
     },
     mounted:function(){
+      this.getlistData()
     },
     methods:{
       getlistData(){
-        let vm =this,url='/api/api/member/list',params={};
+        let vm =this,url='/api/web/user/detail',params={'user_id':''};
         vm.$axios({
           method:'post',
           url:url,

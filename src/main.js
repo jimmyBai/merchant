@@ -21,25 +21,22 @@ Vue.use(Vuex);
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
-let api;
-if (process.env.NODE_ENV === 'development') {
-  api = '/api/'
-} else {
-  if(window.location.host.indexOf('dev.'>=0)){
-    api = 'http://dev.merchant.api.018eighteen.com'
-  }else if(window.location.host.indexOf('dev.'>=0)){
-    api = 'http:/uat.merchant.api.018eighteen.com'
-  }
-  
-}
-/*if(window.location.origin.indexOf('localhost')>=0){
-  api = 'http://dev.merchant.api.018eighteen.com'
-}*/
+
 
 //配置全局axios
 Vue.prototype.$axios = axios;
 // 基础url前缀
-axios.defaults.baseURL = api;
+if (process.env.NODE_ENV === 'development') {
+ axios.defaults.baseURL  = '/api/'
+} else {
+  if(window.location.host.indexOf('dev.')>=0){
+    axios.defaults.baseURL  = 'http://dev.merchant.api.018eighteen.com/'
+  }else if(window.location.host.indexOf('uat.')>=0){
+    axios.defaults.baseURL = 'http://uat.merchant.api.018eighteen.com/'
+  }
+
+}
+
 // 请求头信息
 // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';

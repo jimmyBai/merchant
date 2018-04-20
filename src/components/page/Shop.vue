@@ -365,6 +365,8 @@
                 vm.$set(item,'startWeek',startWeek)
                 vm.$set(item,'endWeek',endWeek)
               })
+            }else{
+              vm.business_time=[{intervals: "", am_begin: "", am_end: "", pm_begin: "", pm_end: "",startWeek:'',endWeek:''}]
             }
             vm.startTime=vm.ListData.start_time
             vm.endTime=vm.ListData.end_time
