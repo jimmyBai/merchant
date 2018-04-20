@@ -153,6 +153,7 @@ export default {
 
   }
 }
+
 </script>
 <style scoped>
   .list-search{ padding:0 10px; display: flex;display: -webkit-flex; justify-content: space-between;-webkit-justify-content: space-between}
