@@ -34,7 +34,7 @@
         <el-table-column width="180">
           <template slot-scope="scope">
             <div class="tdBtn-box">
-              <div class="tdbtn-view newView" @click="vieweditor(scope.row.product_id)">
+              <div class="tdbtn-view newView" style="padding:0 5px" @click="vieweditor(scope.row.product_id)">
                 <i class="el-icon-view"></i><span>查看/编辑</span>
               </div>
               <div class="tdBtn-view" @click="removeThis(index)">
