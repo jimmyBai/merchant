@@ -310,6 +310,7 @@ import "../../../../static/css/newStyle.css"
 
     }
   }
+  
 </script>
 
 <style scoped>
