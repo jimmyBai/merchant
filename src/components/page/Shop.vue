@@ -116,17 +116,17 @@
                     </el-select>
                   </el-col>
                   <el-col :span="8">
-                    <el-time-select v-model="item.am_begin" :editable="false" :picker-options="{ start: '00:00', step: '00:15', end: '14:00'}">
+                    <el-time-select v-model="item.am_begin" :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '14:00'}">
                     </el-time-select>
                     <div class="fromto">至</div>
-                    <el-time-select v-model="item.am_end" :editable="false" :picker-options="{ start: '00:00', step: '00:15', end: '14:00',minTime: item.am_begin}">
+                    <el-time-select v-model="item.am_end" :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '14:00'}">
                     </el-time-select>
                   </el-col>
                   <el-col :span="8">
-                    <el-time-select v-model="item.pm_begin" :editable="false" :picker-options="{ start: '14:00', step: '00:15', end: '23:45'}">
+                    <el-time-select v-model="item.pm_begin" :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '23:30'}">
                     </el-time-select>
                     <div class="fromto">至</div>
-                    <el-time-select v-model="item.pm_end" :editable="false" :picker-options="{ start: '14:00', step: '00:15', end: '23:45',minTime: item.pm_begin}">
+                    <el-time-select v-model="item.pm_end" :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '23:30'}">
                     </el-time-select>
                   </el-col>
                 </el-row>

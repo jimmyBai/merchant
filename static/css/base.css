@@ -107,6 +107,7 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .el-popper[x-placement^=top] .popper__arrow::after{border-top-color:#2e1c34}
 .el-time-panel__content::after, .el-time-panel__content::before{ border-top:1px solid #48344f; border-bottom: 1px solid #48344f}
 .el-popper[x-placement^=top] .popper__arrow{border-top-color:#706375}
+.time-select-item:hover{background:#38213e; color: #aa96b1; font-weight: normal}
 /***checkbox**/
 .el-checkbox__inner{background: #2e1c34; border: 1px solid #48344f}
 .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner{
