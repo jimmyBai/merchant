@@ -233,18 +233,21 @@ import "../../../../static/css/newStyle.css"
           this.$message.error("商品英文名称不能为空!");
           return false
         }else if(!this.place){
-          this.$message.error("产地不能为空!");
+          this.$message.error("产品产地不能为空!");
           return false
         }else if(!this.years){
-          this.$message.error("年份不能为空!");
+          this.$message.error("产品年份不能为空!");
+          return false
+        }else if(!this.weight){
+          this.$message.error("产品重量不能为空!");
+          return false
+        }else if(!this.capacity){
+          this.$message.error("产品容量不能为空!");
           return false
         }else if(!this.price){
-          this.$message.error("单价不能为空!");
+          this.$message.error("产品单价不能为空!");
           return false
-        }else if(!this.inventory_track){
-          this.$message.error("请开启库存追踪!");
-          return false
-        }
+        }  
         if(this.fromParent){
           url='/api/web/product/update',
           params={
@@ -306,11 +309,11 @@ import "../../../../static/css/newStyle.css"
         }).catch(err => {
           console.log(err);
         });
-      },
+      }
 
     }
   }
-  
+
 </script>
 
 <style scoped>
