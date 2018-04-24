@@ -21,7 +21,7 @@
         <el-table-column label="商品数量" prop="totalnum"></el-table-column>
         <el-table-column label="配送费" prop="delivery_fee"></el-table-column>
         <el-table-column label="付款金额" prop="order_paid_price"></el-table-column>
-        <el-table-column>
+        <el-table-column label="订单状态">
           <template slot-scope="scope">
             <div class="tdbtn-box">
               <div class="tdbtn-view" :class="'btn-color-'+scope.row.order_status" @click="viewMore(scope.row)"><span v-text="scope.row.order_status_name"></span></div>

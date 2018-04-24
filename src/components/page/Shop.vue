@@ -7,7 +7,11 @@
       <div class="title">一般设置</div>
       <div class="formbox">
         <div class="line">
-          <div class="title">店铺logo图片：</div>
+          <div class="title">店铺名称：</div>
+          <div class="content"><input v-model="ListData.name" type="text" /></div>
+        </div>
+        <div class="line">
+          <div class="title">店铺logo：</div>
           <div class="content">
             <div class="imgbox logobox">
               <div>
@@ -17,10 +21,6 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="line">
-          <div class="title">店铺名称：</div>
-          <div class="content"><input v-model="ListData.name" type="text" /></div>
         </div>
         <div class="line photobox">
           <div class="title">店铺图片：</div>
@@ -88,7 +88,7 @@
                   </li>
                 </ul>
               </dd>
-              <dd>最多可上传2张图片，每张图片上传不可大于1M,请上传每张为750px*330px规格的图片</dd>
+              <dd>最多可上传10张图片，每张图片上传不可大于1M,请上传每张为750px*330px规格的图片</dd>
             </dl>
           </div>
         </div>
@@ -140,7 +140,7 @@
         </div>
       </div>
       <div class="saveshop">
-        <span @click="upshop">保存</span>
+        <span @click="upshop()">保存</span>
       </div>
     </div>
   </div>
@@ -180,6 +180,7 @@
           value: '7',
           label: '周末'
         }],
+        dosave:true,
       }
     },
     created(){
@@ -190,7 +191,7 @@
     },
     methods:{
       addimg(way,item){
-        let vm=this,maxbannernum=8,maximg=2,
+        let vm=this,maxbannernum=8,maximg=10,
           imgobj=event.target.files[0],
           maxSize=1024*1024*2,
           maxWidth=400,
@@ -314,6 +315,7 @@
       imgupload(type,img,way,item){
         let vm =this,imgarray=[img],
             url='/api/web/setting/upload',params={type:type,files:imgarray};
+        vm.dosave=false
         vm.$axios({
           method:'post',
           url:url,
@@ -335,8 +337,10 @@
                   // vm.$set(vm.recommend[vm.recommend.length-1],'ossUrl',res.data.data[0])
                 }
               }
+              vm.dosave=true
             }
           }else{
+            vm.dosave=true
             vm.$message.error(res.data.message);
 
           }
@@ -393,6 +397,12 @@
         this.business_time.splice(index,1)
       },
       upshop(){
+        //图片上传成功之后才能保存
+        if(!this.dosave){
+          this.$message.error('图片上传完成之后才能保存！');
+          return
+        }
+
           let vm =this, url='/api/web/setting/save',params,banners=[],recommend=[],business=[],logoarray=[];
           //封装Logo图片数组
           if(vm.ListData.logo){

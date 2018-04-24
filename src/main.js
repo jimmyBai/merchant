@@ -64,6 +64,8 @@ axios.interceptors.response.use(function (response) {
     store.state.menuIndex='0'
     router.push('/login');
   }
+  //超时处理
+
   return response;
 }, function (error) {
   return Promise.reject(error);
