@@ -134,8 +134,8 @@ export default {
       this.isTakeawayShow = true;
     },
     vieweditor(id){
-      this.fromParent=id.toString()
       this.isTakeawayShow = true;
+      this.fromParent=id.toString();
     },
     // 删除
     removeThis(ListData,index){

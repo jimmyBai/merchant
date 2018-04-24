@@ -131,11 +131,10 @@ import "../../../../static/css/newStyle.css"
         msgtitle: '添加',
         priceStatus: true,
         usertions: [],
-        // baseInfo:''
-        name: '',
-        name_en:'',
-        describe: '',
         typelist: '',
+        name: '',
+        name_en: '',
+        describe: '',
         place: '',
         years: '',
         brand: '',
@@ -147,7 +146,7 @@ import "../../../../static/css/newStyle.css"
         track: '',
         inventory_track: '',
         inventory: '',
-        baseinfo: ''
+        listdata:''
       }
     },
     props: {
@@ -155,22 +154,21 @@ import "../../../../static/css/newStyle.css"
     },
     mounted:function(){
       // 判断页面
+      this.getclassinfo();
       if(this.fromParent){
         this.msgtitle = '查看/编辑商品'
         this.getGoodsInfo();
       }else{}
-      
-      this.getclassinfo();
     },
     methods:{
-      //获取修改信息
+      // 获取修改信息
       getGoodsInfo(){
         let vm =this,
         url='/api/web/product/edit',
         params={'id':this.fromParent};
         vm.$axios.get(url,{params}).then((res)=>{
           if(res.data.error_code=='0'){
-            vm.baseinfo=res.data.data
+            vm.listdata=res.data.data
             vm.name=res.data.data.name
             vm.name_en=res.data.data.name_en
             vm.describe=res.data.data.describe
@@ -185,11 +183,21 @@ import "../../../../static/css/newStyle.css"
             vm.track=res.data.data.track
             vm.inventory_track=res.data.data.inventory_track
             vm.inventory=res.data.data.inventory
+            if(vm.usertions){vm.settypelist()}
           }else{
             vm.$message.error(res.data.message);
           }
         }).catch(err => {
           console.log(err);
+        });
+      },
+      // 获取下拉列表的值
+      settypelist(){
+        let vm=this;
+         vm.usertions.forEach(ele => {
+          if(ele.id==vm.listdata.type){
+            vm.typelist=ele
+          }
         });
       },
       closepop(){
@@ -200,19 +208,21 @@ import "../../../../static/css/newStyle.css"
         //执行父组件方法
         this.$emit('viewevent',data,'');
       },
-      //获取商户分类
+      // 获取商户分类
       getclassinfo(){
         let vm =this,url='/api/web/product/type_list',params={};
         vm.$axios.get(url,{params}).then((res)=>{
           if(res.data.error_code=='0'){
             vm.usertions=res.data.data
-            if(this.fromParent){
-              vm.usertions.forEach(element => {
-                if(element.id==vm.baseinfo.type){
-                  this.typelist = element
-                }
-              });
-            }
+            // if(vm.fromParent&&vm.typelist){
+            //   console.log(vm.typelist.type)
+            //   vm.usertions.forEach(ele => {
+            //     if(ele.id==vm.typelist.type){
+            //       vm.typelist = ele
+            //     }
+            //   });
+            // }
+            if(vm.listdata){vm.settypelist()}
           }else{
             vm.$message.error(res.data.message);
           }
@@ -220,7 +230,7 @@ import "../../../../static/css/newStyle.css"
           console.log(err);
         });
       },
-      //修改保存
+      // 修改保存
       clickSaveInfo(){
         let vm =this,url,params;
         if(!this.typelist){
