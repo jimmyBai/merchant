@@ -157,6 +157,11 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .el-pagination.is-background .el-pager li:not(.disabled).active{ background: #412849}
 .el-pagination.is-background .el-pager li:not(.disabled):hover {  color: #fff;}
 
+/**外卖订单状态**/
+.osselect .el-input--suffix .el-input__inner{ font-size: 12px; border-radius: 1px;  background: #2e1c34; padding: 3px;border: 1px solid #48344e; height: 26px; line-height: 26px; text-indent: 5px; color: #f8e2ff;  width: 150px; }
+.el-popper[x-placement^=bottom] .popper__arrow::after{border-bottom-color: #2e1c34;}
+.el-popper[x-placement^=bottom] .popper__arrow{border-bottom-color: #2e1c34;}
+
 /**常用头像**/
 .userinfo{ margin-left: 20px;border-top: 1px solid #48344d;}
 .userinfo ul li{ display: flex; display: -webkit-flex;align-items: center; -webkit-align-items: center; height: 32px; line-height: 32px;  border-bottom: 1px solid #48344d;}

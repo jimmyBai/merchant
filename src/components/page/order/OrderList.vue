@@ -7,6 +7,10 @@
             <div class="td-title">订单信息表</div>
             <div class="td-content">
               <input type="text" v-model="content" />
+              <el-select v-model="order_status" placeholder="全部" class="osselect">
+                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
               <span @click="searchFn" class="search-icon"><i class="el-icon-search"></i></span>
             </div>
           </div>
@@ -58,6 +62,16 @@ import popView from './Poptakeout'
         total_page:0,
         popdiv:false,
         orderinfo:{},
+        options: [{
+          value: '-1',label: '全部'}, {
+          value: '0',label: '待付款'}, {
+          value: '1',label: '待接单'}, {
+          value: '2',label: '待配送'}, {
+          value: '3',label: '派送中'}, {
+          value: '5',label: '已完成'}, {
+          value: '6',label: '已取消'}
+          ],
+        order_status: ''
       }
     },
     created(){
@@ -73,6 +87,7 @@ import popView from './Poptakeout'
           user_id: "",    //为空表示所有
           type: "1",      //订单类型 1[外卖] 2[订座] 3[店铺消费] 4[直播会员]
           search: {
+            order_status:vm.order_status,
             content: vm.content,
             min_price:vm.min_price,
             max_price:vm.max_price,
