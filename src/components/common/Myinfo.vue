@@ -12,36 +12,36 @@
       <el-row>
         <el-col :span="10" class="left">
           <div class="nameline">
-            <span class="name">钟德伟</span>
-            <span class="line">|</span>
-            <span class="duty">总经理</span>
+            <span class="name" v-text="ListData.username"></span>
+            <!--<span class="line">|</span>
+            <span class="duty">总经理</span>-->
           </div>
           <div class="userinfo memberviewinfo">
             <ul>
               <li>
                 <i class="i-time"></i>
                 <span>创建时间：</span>
-                <span>2018年3月24日11:38:29</span>
+                <span v-text="ListData.create_time"></span>
               </li>
               <li>
                 <i class="i-realname"></i>
                 <span>真实姓名：</span>
-                <span>白愿</span>
+                <span v-text="ListData.real_name"></span>
               </li>
               <li>
                 <i class="i-nikename"></i>
                 <span>用户名：</span>
-                <span>白愿</span>
+                <span v-text="ListData.role_name"></span>
               </li>
               <li>
                 <i class="i-phone"></i>
                 <span>联系电话：</span>
-                <span>13686844254</span>
+                <span v-text="ListData.phone"></span>
               </li>
               <li>
                 <i class="i-email"></i>
                 <span>邮箱：</span>
-                <span>admin@018.com</span>
+                <span v-text="ListData.email"></span>
               </li>
             </ul>
           </div>
@@ -102,29 +102,17 @@
     },
     methods:{
       getlistData(){
-        let vm =this,url='/api/web/user/detail',params={'user_id':''};
-        vm.$axios({
-          method:'post',
-          url:url,
-          data: params
-        }).then((res)=>{
-          if(res.data.error_code=='10000'||res.data.error_code=='200'){
+        let vm =this,url='/api/web/authority/user/info',params={'id':''};
+        vm.$axios.get(url,{params}).then((res)=>{
+          if(res.data.error_code=='0'){
             vm.ListData=res.data.data
           }else{
             vm.$message.error(res.data.message);
             console.log(res.data.message)
           }
         }).catch(err => {
-          console.log(err);
+          vm.$message.error(err);
         });
-      },
-      viewMore(scope){
-        this.$router.push({
-          name:"mdetail",
-          params:{
-            user_id:scope.id
-          }
-        })
       }
     }
   }

@@ -22,7 +22,7 @@
             </div>
             <div class="adduser-item">
               <div class="itemline">
-                <div class="itemtitle"><em>*</em>电子邮箱</div>
+                <div class="itemtitle">电子邮箱</div>
                 <div class="itemcontent"><input type="email" v-model="email"></div>
               </div>
             </div>
@@ -134,7 +134,6 @@
         vm.$axios.get(url,{params}).then((res)=>{
           if(res.data.error_code=='0'){
             vm.useoptions=res.data.data
-
           }else{
             vm.$message.error(res.data.message);
 
@@ -168,6 +167,13 @@
             email:vm.email,
             role_id:vm.usevalue.id
           };
+        }
+        //必填操作
+        if(params.username&&params.phone&&params.real_name&&params.role_id){
+
+        }else{
+          vm.$message.error('请完善信息');
+          return
         }
         vm.$axios({
           method:'post',

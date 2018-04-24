@@ -74,6 +74,9 @@ export default {
             this.$store.dispatch('addToken',res.data.data.token);
             localStorage.setItem("uid",res.data.data.uid)
             this.$store.dispatch('addUID',res.data.data.uid);
+
+            sessionStorage.setItem('USERNAME',res.data.data.name)
+            this.$store.dispatch('addusername',res.data.data.name);
           }
           vm.$router.push('/main')
         }else{

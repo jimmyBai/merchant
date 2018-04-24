@@ -9,7 +9,7 @@
           <li>
             <div class="userbar" @click="showpop">
               <div class="topimg userimg"></div>
-              <p>白愿</p>
+              <p v-text="username"></p>
             </div>
             <div class="popmyinfo unshow" :class="{'isshow':showinfoBox}">
               <div class="popperarrow"><i></i></div>
@@ -64,6 +64,11 @@ export default {
     $route(){
       this.num=this.$store.state.menuIndex
     },
+  },
+  computed:{
+    username(){
+      return this.$store.state.username
+    }
   },
   methods:{
     gopage(id,index){
@@ -149,6 +154,7 @@ export default {
 .menuul{}
 .menuul li span{ display: block}
 .menuul li i{ background: url("../../static/img/menuicon.png") no-repeat; margin: 0 auto; display: inline-block; content: ''}
+.menuul li .icon-menu00{background-position: 0px -175px;width: 25px; height: 25px; background-size: cover;}
 .menuul li .icon-menu01{background-position: 0px 0px;width: 25px; height: 25px; background-size: cover;}
 .menuul li .icon-menu02{background-position: 0px -25px;width: 25px; height: 25px; background-size: cover;}
 .menuul li .icon-menu03{background-position: 0px -50px;width: 25px; height: 25px; background-size: cover;}

@@ -21,7 +21,7 @@
         <el-table-column label="职务" prop="role_name"></el-table-column>
         <el-table-column label="添加时间" prop="create_time"></el-table-column>
         <el-table-column label="修改时间" prop="update_time"></el-table-column>
-        <el-table-column>
+        <el-table-column width="240">
           <template slot-scope="scope">
             <div class="tdbtn-box">
               <div class="tdbtn-view" @click="viewMore(scope.row)"><i class="el-icon-view"></i> <span>查看/编辑</span></div>

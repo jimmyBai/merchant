@@ -22,10 +22,11 @@
         <el-table-column label="职务角色" prop="role_name"></el-table-column>
         <el-table-column label="添加时间" prop="create_time"></el-table-column>
         <el-table-column label="修改时间" prop="update_time"></el-table-column>
-        <el-table-column>
+        <el-table-column width="180">
           <template slot-scope="scope">
             <div class="tdbtn-box">
               <div class="tdbtn-view" @click="viewMore(scope.row)"><i class="el-icon-view"></i> <span>查看</span></div>
+              <div class="tdbtn-del" @click="del(scope.row)"><i class="el-icon-delete"></i> <span>删除</span></div>
             </div>
           </template>
         </el-table-column>
@@ -102,6 +103,26 @@
         this.roleid=scope.id.toString()
         this.popadmin=!this.popadmin
       },
+      //删除管理员
+      del(scope){
+        this.$message.error('API 接口开发中');
+        return
+        let vm =this,url='/api/web/authority/role/del',params={'role_id':scope.id};
+        vm.$axios({
+          method:'post',
+          url:url,
+          data: params
+        }).then((res)=>{
+          if(res.data.error_code=='0'){
+          vm.getlistData()
+        }else{
+          vm.$message.error(res.data.message);
+        }
+
+      }).catch(err => {
+          console.log(err);
+      });
+      }
     }
   }
 </script>
