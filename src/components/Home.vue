@@ -57,14 +57,14 @@
           <div class="grid-content bg-purple fourGrid">
             <img src="/static/img/take_out1.png" class="orderStatusImg" alt="">
             <span class="orderStatusText">待接单</span>
-            <span class="prompt">12</span>
+            <span class="prompt">1222</span>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="grid-content bg-purple fourGrid">
             <img src="/static/img/take_out2.png" class="orderStatusImg" alt="">
             <span class="orderStatusText">待配送</span>
-            <span class="prompt">32</span>
+            <span class="prompt">322</span>
           </div>
         </el-col>
         <el-col :span="6">
@@ -184,8 +184,6 @@ export default {
     transform: translateY(-50%);
   }
 
-
-
   .fourGrid{
     height: 80px;
     padding: 10px;
@@ -203,13 +201,15 @@ export default {
   }
   .prompt{
     position: absolute;
-    top: 5px;
+    top: 2px;
     right: 70px;
     width: auto;
+    min-width: 14px;
     height: 20px;
     padding: 2px 5px;
     background: rgb(216,9,38);
     color: #ffffff;
     border-radius: 50%;
+    text-align: left;
   }
 </style>
