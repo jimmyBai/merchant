@@ -151,7 +151,8 @@
           params={
             uid:vm.fromParent,
             username:vm.username,
-            password:vm.password,
+            real_name:vm.username,
+            password:vm.password||'',
             phone:vm.phone,
             role_id:vm.usevalue.id,
             email:vm.email,
@@ -168,12 +169,9 @@
             role_id:vm.usevalue.id
           };
         }
-        //必填操作
-        if(!this.fromParent){
-          if(!vm.real_name){
-            vm.$message.error('请完善信息');
-            return
-          }
+        if(!this.fromParent&&params.password){
+          vm.$message.error('请完善信息');
+          return
         }
         if(params.username&&params.phone&&params.role_id){
 
