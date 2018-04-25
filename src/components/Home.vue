@@ -57,6 +57,7 @@
           <div class="grid-content bg-purple fourGrid">
             <img src="/static/img/take_out1.png" class="orderStatusImg" alt="">
             <span class="orderStatusText">待接单</span>
+            <span class="baffle"></span>
             <span class="prompt">1222</span>
           </div>
         </el-col>
@@ -64,6 +65,7 @@
           <div class="grid-content bg-purple fourGrid">
             <img src="/static/img/take_out2.png" class="orderStatusImg" alt="">
             <span class="orderStatusText">待配送</span>
+            <span class="baffle"></span>
             <span class="prompt">322</span>
           </div>
         </el-col>
@@ -71,14 +73,16 @@
           <div class="grid-content bg-purple fourGrid">
             <img src="/static/img/take_out3.png" class="orderStatusImg" alt="">
             <span class="orderStatusText">配送中</span>
-            <span class="prompt">12</span>
+            <span class="baffle"></span>
+            <span class="prompt">82</span>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="grid-content bg-purple fourGrid">
             <img src="/static/img/take_out4.png" class="orderStatusImg" alt="">
             <span class="orderStatusText">待退款</span>
-            <span class="prompt">22</span>
+            <span class="baffle"></span>
+            <span class="prompt">1</span>
           </div>
         </el-col>
       </el-row>  
@@ -199,17 +203,29 @@ export default {
     margin-top: 5px;
     color: #ffffff;
   }
+
+  .baffle{
+    width: 50%;
+    height: 100px;
+    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
   .prompt{
     position: absolute;
-    top: 2px;
-    right: 70px;
+    top: 5px;
+    left: 52%;
     width: auto;
-    min-width: 14px;
     height: 20px;
-    padding: 2px 5px;
+    line-height: 18px;
+    padding: 0 7px;
     background: rgb(216,9,38);
     color: #ffffff;
-    border-radius: 50%;
-    text-align: left;
+    /* border-radius: 50%;*/
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
   }
 </style>
