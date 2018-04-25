@@ -173,6 +173,8 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .userinfo i.i-email{ background-position: 0px -80px;}
 .userinfo i.i-member{ background-position: 0px -100px;}
 
+.el-checkbox__input{line-height:normal}
+.adduser-item .el-table .cell{line-height: normal}
 /**右侧公共查询***/
 .right_seachBar{ position: absolute; top:27px; right: 0; display: flex}
 
