@@ -98,7 +98,7 @@ export default {
       }
   },
   methods:{
-
+    
   }
 }
 </script>
