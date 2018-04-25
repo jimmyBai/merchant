@@ -105,16 +105,20 @@
       },
       //删除管理员
       del(scope){
-        this.$message.error('API 接口开发中');
-        return
-        let vm =this,url='/api/web/authority/role/del',params={'role_id':scope.id};
+        let vm =this,url='/api/web/authority/user/del',params={'uid':scope.id};
         vm.$axios({
           method:'post',
           url:url,
           data: params
         }).then((res)=>{
           if(res.data.error_code=='0'){
-          vm.getlistData()
+            vm.$message({
+              message: '刪除成功！',
+              type: 'success'
+            });
+            setTimeout(()=>{
+              vm.getlistData()
+            },1000)
         }else{
           vm.$message.error(res.data.message);
         }
