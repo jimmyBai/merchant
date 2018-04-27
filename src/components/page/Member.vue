@@ -36,7 +36,7 @@
       <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
     <div class="right_seachBar">
-      <div class="arrorbox" @click="ishowSearch=!ishowSearch"><span>展开</span></div>
+      <div class="arrorbox" @click="ishowSearch=!ishowSearch"><span><i class="icon-toogle"></i></span></div>
       <div class="rsea-box" v-show="ishowSearch">
         <div class="res-head">筛选条件</div>
         <div class="res-content">

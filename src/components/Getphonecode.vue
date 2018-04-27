@@ -94,8 +94,14 @@ export default {
         data: params
       }).then((res)=>{
         if(res.data.error_code=='0'){
+          vm.$message({
+            message: '验证码已发送成功！',
+            type: 'success'
+          });
           vm.timeCut(60)
-          vm.phonecard='123456'
+          if(window.location.href.indexOf('uat.')>=0||window.location.href.indexOf('dev.')>=0){
+            vm.phonecard='123456'
+          }
         }else{
           vm.$message.error(res.data.message);
           vm.candotime=true;

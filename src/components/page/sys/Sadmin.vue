@@ -26,7 +26,8 @@
           <template slot-scope="scope">
             <div class="tdbtn-box">
               <div class="tdbtn-view" @click="viewMore(scope.row)"><i class="el-icon-view"></i> <span>查看</span></div>
-              <div class="tdbtn-del" @click="del(scope.row)"><i class="el-icon-delete"></i> <span>删除</span></div>
+              <!--1-超级管理员 0-普通用户-->
+              <div v-if="scope.row.administrator!=1" class="tdbtn-del" @click="del(scope.row)"><i class="el-icon-delete"></i> <span>删除</span></div>
             </div>
           </template>
         </el-table-column>
