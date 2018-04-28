@@ -258,7 +258,7 @@ import {MP} from '../../../newMap.js'
       //创建一个Icon
       createIcon(json){
         //本地图标图片
-        var tubiao=require("static/img/positioning.png")
+        var tubiao=require("/static/img/positioning.png")
         var icon = new BMap.Icon(tubiao, new BMap.Size(json.w,json.h),{imageOffset: new BMap.Size(-json.l,-json.t),infoWindowOffset:new BMap.Size(json.lb+5,1),offset:new BMap.Size(json.x,json.h)})
         return icon;
       },
