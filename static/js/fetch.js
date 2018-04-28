@@ -9,6 +9,7 @@ export function fetchPost(opt){
   opt.data = opt.data || null;
   opt.dataType = opt.dataType || "json";
   opt.success = opt.success || function () {};
+
   var xmlHttp = null;
   if (window.ActiveXObject) {
     xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");

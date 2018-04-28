@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import messages from './modules/message';
 Vue.use(Vuex)
 
 const state=new Vuex.Store({
+  modules: {
+    messages
+  },
 	state:{
 		token:localStorage.getItem("token") || "",
     uid:localStorage.getItem("uid") || "",
