@@ -55,8 +55,12 @@
           <div class="title">店铺地址：</div>
           <div class="content"><input type="text" :conter="conter" :zoom="zoom" @ready="ranady" v-model="ListData.address" /></div>
           <!-- andy -->
-          <div class="baidumap">
+          <!-- <div class="baidumap">
             <img src="/static/img/take_out2.png" @click="openMap" alt="">
+          </div> -->
+          <div class="baidumap">
+            <!-- <img src="/static/img/take_out2.png" @click="openMap" alt=""> -->
+            <input type="button" class="baidubtn" value="打开地图" @click="openMap">
           </div>
         </div>
         <div class="line">
@@ -149,7 +153,7 @@
     </div>
     
     <!-- 百度地图 -->
-    <my-map v-if="mapShow" @viewMap='viewMap'></my-map>
+    <my-map v-if="mapShow" :pcityMap="cityMap" @viewMap='pviewMap'></my-map>
 
   </div>
 </template>
@@ -166,7 +170,7 @@ import myMap from './mapPages/myMap'
     },
     data () {
       return {
-        ListData:'',
+        ListData:{},
         imgVO:[],
         recommend:[],
         business_time:[],
@@ -198,7 +202,8 @@ import myMap from './mapPages/myMap'
         dosave: true,
         mapShow: false,
         conter: {lng:0,lat:0},
-        zoom: 3
+        zoom: 3,
+        cityMap:{}
       }
     },
     created(){
@@ -208,9 +213,14 @@ import myMap from './mapPages/myMap'
       this.getlistData()
     },
     methods:{
-      viewMap(...data){
+      pviewMap(...data){
         let vm = this;
-        vm.mapShow=data.mapShowStatus;
+      vm.cityMap=data[0]
+       vm.$set(vm.ListData,'address',data[0].title)
+     //  vm.ListData.address=data[0].title
+       vm.mapShow=data[1];
+      console.log( vm.mapShow)
+        //console.log("alldata:",data);
       },
       ranady({BMap, map}){
         console.log(BMap, map);
@@ -219,7 +229,8 @@ import myMap from './mapPages/myMap'
         this.zomm = 15
       },
       // 打开百度地图
-      openMap(){
+      openMap(data){
+        this.cityMap=this.cityMap
         this.mapShow = true;
       },
       addimg(way,item){
@@ -555,4 +566,9 @@ import myMap from './mapPages/myMap'
 .logobox>div{ position: relative; height: 100%; display: flex; display: -webkit-flex; align-items: center; -webkit-align-items: center;justify-content: center;-webkit-justify-content: center}
 .line .title{ min-width: 80px; text-align: right}
 .logobox>div img{width: 100%;min-width:135px}
+
+
+.baidubtn{
+  width: 74px!important;
+}
 </style>

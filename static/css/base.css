@@ -177,8 +177,9 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .adduser-item .el-table .cell{line-height: normal}
 /**右侧公共查询***/
 .right_seachBar{ position: absolute; top:27px; right: 0; display: flex}
-
-.right_seachBar .arrorbox>span{ display: inline-block; background:#4d2e57; padding: 5px 10px; }
+.right_seachBar .arrorbox>span{ display: inline-block; background:#4d2e57; padding: 5px 10px;width:15px; height:20px; text-align: center;line-height: 20px; }
+.right_seachBar .arrorbox>span>i.icon-toogle{background:url("../../static/img/toggle.png") no-repeat; background-size:contain
+; display: inline-block; width: 15px; height: 20px;}
 .rsea-box{ width: 460px; background: #4d2e57; padding: 10px 5px;border: 1px solid #48344f; border-radius: 0 0 0 3px}
 .res-head{ height: 30px; line-height: 30px; text-align: center; font-weight: bold;}
 .res-content{ padding: 10px 0;}

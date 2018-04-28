@@ -33,8 +33,8 @@ export default {
   data () {
     return {
       ischeck:false,
-      phone:'13800138222',
-      password:'admin123',
+      phone:'',
+      password:'',
       canLogin:false,
     }
   },
@@ -45,6 +45,10 @@ export default {
       this.phone=JSON.parse(localStorage.getItem('LOGININFO')).phone
       this.password=JSON.parse(localStorage.getItem('LOGININFO')).password
     }
+    //如果是DEV或者UAT环境默认一个登录账号
+    if(window.location.href.indexOf('uat.')>=0||window.location.href.indexOf('dev.')>=0){
+      this.phone='13800138222'
+    }
   },
   methods:{
   	goin(){
@@ -54,7 +58,11 @@ export default {
         'password':md5(md5(vm.password)+KEY)
   		}
       if(vm.ischeck){
-        localStorage.setItem("LOGININFO",JSON.stringify(params))
+  		  let savecookie={
+          'phone':vm.phone,
+          'password':vm.password
+        }
+        localStorage.setItem("LOGININFO",JSON.stringify(savecookie))
       }
       //为空不能请求
       if(vm.phone==''||vm.password==''){
@@ -74,14 +82,12 @@ export default {
             this.$store.dispatch('addToken',res.data.data.token);
             localStorage.setItem("uid",res.data.data.uid)
             this.$store.dispatch('addUID',res.data.data.uid);
-
             sessionStorage.setItem('USERNAME',res.data.data.name||'')
             this.$store.dispatch('addusername',res.data.data.name||'');
           }
           vm.$router.push('/main')
         }else{
           vm.$message.error(res.data.message);
-          console.log(res.data.message)
         }
 
       }).catch(err => {

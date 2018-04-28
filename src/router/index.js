@@ -16,6 +16,11 @@ export default new Router({
         component:resolve=>require(['../components/Login.vue'],resolve)
     },
     {
+      path:'/print',
+      meta:{keepAlive:true},
+      component:resolve=>require(['../components/Print.vue'],resolve)
+    },
+    {
       path:'/changepwd',
       name:'changepwd',
       meta:{keepAlive:true},

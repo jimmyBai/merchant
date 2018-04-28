@@ -6,7 +6,7 @@
           <div class="form-tabel">
             <div class="td-title">订单信息表</div>
             <div class="td-content">
-              <input type="text" v-model="content" />
+              <input type="text" v-model="search.content" />
               <el-select v-model="order_status" placeholder="全部" class="osselect">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
@@ -25,7 +25,7 @@
         <el-table-column label="商品数量" prop="totalnum"></el-table-column>
         <el-table-column label="配送费" prop="delivery_fee"></el-table-column>
         <el-table-column label="付款金额" prop="order_paid_price"></el-table-column>
-        <el-table-column label="订单状态">
+        <el-table-column label="订单状态" align="right">
           <template slot-scope="scope">
             <div class="tdbtn-box">
               <div class="tdbtn-view" :class="'btn-color-'+scope.row.order_status" @click="viewMore(scope.row)"><span v-text="scope.row.order_status_name"></span></div>
@@ -40,22 +40,30 @@
     </div>
     <!--详情-->
     <pop-view  v-if="popdiv" :orderinfo="orderinfo" @sievent = "frompop"></pop-view>
+    <!--更多查询-->
+    <div class="right_seachBar">
+      <div class="arrorbox" @click="ishowSearch=!ishowSearch"><span><i class="icon-toogle"></i></span></div>
+      <search-view v-if="ishowSearch" :searchinfo="search" @tievent = "fromtip"></search-view>
+    </div>
   </div>
 </template>
 
 <script>
 import popView from './Poptakeout'
+import searchView from './Seacrhtips'
   export default {
     name: 'Member',
-    components:{popView},
+    components:{popView,searchView},
     data () {
       return {
         ListData:[],
-        content:'',
-        min_price:'',
-        max_price:'',
-        create_start:'',
-        create_end:'',
+        search:{
+          content: "",  //模糊搜索的内容，默认为空，可搜索用户名和手机号码
+          min_balance: "",//余额最小值，默认为空，不能小于0
+          max_balance: "",//余额最大值，默认为空，不能小于0
+          create_start: "",//加入开始时间，默认为空，格式为'xxxx-xx-xx'，具体看详细说明
+          create_end: ""  //加入结束时间，默认为空，格式为'xxxx-xx-xx'，具体看详细说明
+        },
         page:1,
         per_page:0,
         total:0,
@@ -71,7 +79,8 @@ import popView from './Poptakeout'
           value: '5',label: '已完成'}, {
           value: '6',label: '已取消'}
           ],
-        order_status: ''
+        order_status: '',
+        ishowSearch:false
       }
     },
     created(){
@@ -87,12 +96,12 @@ import popView from './Poptakeout'
           user_id: "",    //为空表示所有
           type: "1",      //订单类型 1[外卖] 2[订座] 3[店铺消费] 4[直播会员]
           search: {
-            order_status:vm.order_status,
-            content: vm.content,
-            min_price:vm.min_price,
-            max_price:vm.max_price,
-            create_start:vm.create_start,
-            create_end:vm.create_end
+            order_status:vm.order_status=='-1'?'':vm.order_status,
+            content: vm.search.content,
+            min_price:vm.search.min_price,
+            max_price:vm.search.max_price,
+            create_start:vm.search.create_start,
+            create_end:vm.search.create_end
           },
           page: vm.page,
         };
@@ -154,8 +163,17 @@ import popView from './Poptakeout'
       //查询
       searchFn(){
         this.getMemberOrder()
+      },
+      //更多查询
+      fromtip(...data){
+        let vm = this;
+        vm.ishowSearch=false
+        vm.search.min_price=data[0].min_price;
+        vm.search.max_price=data[0].max_price;
+        vm.search.create_start=data[0].create_start;
+        vm.search.create_end=data[0].create_end;
+        vm.getMemberOrder()
       }
-
     }
   }
 </script>

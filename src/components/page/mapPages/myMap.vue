@@ -12,12 +12,17 @@
           <div class="mapmain">
             <!--地图容器-->
             <div id="XSDFXPage" class="XSDFXPage"></div>
-            <div id="r-result" class="r-result"></div>
           </div>
           <!-- 地图地址列表 -->
           <div class="maplist">
             <div class="mappane">
-              <span class="addresslist">佳宁娜</span>
+              
+              <ul>
+                <li v-for="(item,index) in listArray" @click='getNowLocation(item)' class="textmap">
+                  <span v-text="item.title"></span>
+                </li>
+              </ul>
+
             </div>
             
                 
@@ -43,18 +48,20 @@ import {MP} from '../../../newMap.js'
     name: 'mymap',
     data () {
       return {
-        msgtitle: '选择地址'
-        
+        msgtitle: '选择地址',
+        cAddress: [],
+        listArray:[]
       }
     },
+    props: {
+      pcityMap:Object
+    },
     mounted(){
-      
+      // console.log(this.pcityMap)
       let vm = this;
       vm.initMap();
-
     },
     methods:{
-
       initMap () {
         this.createMap() ; //创建地图 
         this.setMapEvent();//设置地图事件
@@ -62,35 +69,74 @@ import {MP} from '../../../newMap.js'
         //this.addMarker();//向地图中添加marker
       },
       createMap(){
+        let vm =this;
         var map = new BMap.Map("XSDFXPage",{enableMapClick:true});//在百度地图容器中创建一个地图
         var point = new BMap.Point(116.4035,39.915);//定义一个中心点坐标
         map.centerAndZoom(point,12);//设定地图的中心点和坐标并将地图显示在地图容器中
         window.map = map;//将map变量存储在全局
-        // 添加地址定位
+        //添加地址定位
         var geolocation = new BMap.Geolocation();
-        geolocation.getCurrentPosition(function(r){console.log(r.point)
+        geolocation.getCurrentPosition(function(r){
+          // console.log(r.point)
           if(this.getStatus() == BMAP_STATUS_SUCCESS){
             var mk = new BMap.Marker(r.point);
             map.addOverlay(mk);//标出所在地
             map.panTo(r.point);//地图中心移动
             //alert('您的位置：'+r.point.lng+','+r.point.lat);
-            console.log('您的位置：'+r.point.lng+','+r.point.lat);
+            // console.log('您的位置：'+r.point.lng+','+r.point.lat);
             var point = new BMap.Point(r.point.lng,r.point.lat);//用所定位的经纬度查找所在地省市街道等信息
             var gc = new BMap.Geocoder();
             gc.getLocation(point, function(rs){
               var addComp = rs.addressComponents;
-              console.log(rs.address);//地址信息
-              alert(rs.address);//弹出所在地址
+              // alert(rs.address);
+              // console.log(rs.address);//地址信息
+// 　　　　　　   console.log(addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);//对应的市区、街道，街道号
             });
-            var local = new BMap.LocalSearch(map, {
-              renderOptions:{map: map}
+            // 获得周边
+            // var local = new BMap.LocalSearch(map, {
+            //   renderOptions:{map: map}
+            // });
+            var mPoint = new BMap.Point(r.point.lng,r.point.lat);
+            var circle = new BMap.Circle(mPoint,1000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.3, strokeOpacity: 0.3});
+            map.addOverlay(circle);
+            var local =  new BMap.LocalSearch(map, {
+              renderOptions: {map: map, autoViewport: false}
             });
-            local.search("公交站","地铁站");
+            local.searchNearby("公交车站",mPoint,1000);
+
+            // var myval;
+            setTimeout(function(){
+              local.wf.forEach(ele => {
+                this.content = ele;
+                callback(this);
+              });
+            },1000);
+            // var callback = cAddress =>{
+            //   console.log(cAddress.content.title);
+            // }
+            var callback = function(cAddress){              
+             // console.log(cAddress.content);
+              vm.listArray.push(cAddress.content)
+            }
+            console.log(vm.listArray);
+            
+            
+
           }else {
             alert('failed'+this.getStatus());
-          }        
+          }
         },{enableHighAccuracy: true});
-        
+
+
+        // let vm =this,
+        // url='http://api.map.baidu.com/place/v2/search?query=公交站&location=39.915,116.404&radius=2000&output=xml&ak=C0xzENPrE0PmqujScaChmiqigT6eISkH',
+        // params={};
+        // vm.$axios.get(url,{params}).then((res)=>{
+          
+        // }).catch(err => {
+        //   console.log(err);
+        // });
+
         // 百度地图API功能
         // var options = {
         //   onSearchComplete: function(results){
@@ -258,9 +304,9 @@ import {MP} from '../../../newMap.js'
       //创建一个Icon
       createIcon(json){
         //本地图标图片
-        var tubiao=require("/static/img/positioning.png")
-        var icon = new BMap.Icon(tubiao, new BMap.Size(json.w,json.h),{imageOffset: new BMap.Size(-json.l,-json.t),infoWindowOffset:new BMap.Size(json.lb+5,1),offset:new BMap.Size(json.x,json.h)})
-        return icon;
+        // var tubiao=require("/static/img/positioning.png")
+        // var icon = new BMap.Icon(tubiao, new BMap.Size(json.w,json.h),{imageOffset: new BMap.Size(-json.l,-json.t),infoWindowOffset:new BMap.Size(json.lb+5,1),offset:new BMap.Size(json.x,json.h)})
+        // return icon;
       },
 
 
@@ -268,9 +314,21 @@ import {MP} from '../../../newMap.js'
 
       closepop(){
         //执行父组件关闭方法
+        let data = this.pcityMap;
+        console.log(this.pcityMap)
+        //执行父组件方法
+        this.$emit('viewMap',data,'');
+      },
+      clickEttach(){
+        //执行父组件关闭方法
         let data = {
           mapShowStatus:false
         };
+        //执行父组件方法
+        this.$emit('viewMap',data,'');
+      },
+      getNowLocation(item){
+        let data = item;
         //执行父组件方法
         this.$emit('viewMap',data,'');
       }
@@ -338,8 +396,7 @@ import {MP} from '../../../newMap.js'
     margin: 0 auto;
   }
   .mappane{
-    border:1px solid rgb(86,53,96);
-    border-style:solid none none none;
+    padding-top: 8px;
   }
   .addresslist{
     height: 40px;
@@ -353,5 +410,14 @@ import {MP} from '../../../newMap.js'
     border:1px solid rgb(86,53,96);
     border-style:none none solid none;
     margin-bottom: 2%;
+  }
+
+  .textmap{
+    font-size: 14px;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid rgb(86,53,96);
+    border-style: solid none none none;
+    padding: 0 15px;
   }
 </style>

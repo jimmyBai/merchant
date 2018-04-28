@@ -77,7 +77,14 @@ export default {
                 data: params
               }).then((res)=>{
                 if(res.data.error_code=='0'){
-                  this.backlogin()
+                  vm.$message({
+                    message: '密码变更成功！',
+                    type: 'success'
+                  });
+                  setTimeout(x=>{
+                    this.backlogin()
+                  },1000)
+
                 }else{
                   vm.$message.error(res.data.message);
                 }

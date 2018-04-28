@@ -8,8 +8,13 @@
         <ul>
           <li>
             <div class="userbar" @click="showpop">
-              <div class="topimg userimg"></div>
-              <p v-text="username"></p>
+              <div>
+                <div class="topimg userimg"></div>
+                <p v-text="username"></p>
+              </div>
+              <div>
+                <i class="el-icon-caret-bottom"></i>
+              </div>
             </div>
             <div class="popmyinfo unshow" :class="{'isshow':showinfoBox}">
               <div class="popperarrow"><i></i></div>
@@ -167,7 +172,7 @@ export default {
 .popmyinfo ul li{ width:auto; cursor: pointer; display: block; padding: 0px; border-bottom: 1px solid #48344d; height: 24px; line-height: 24px;font-size: 12px; color: #9f8ba6}
 .popmyinfo ul li:last-child{border-bottom: none}
 .popmyinfo ul li:hover{background:#2e1c34}
-
+.userbar{display:flex; display:-webkit-flex; align-items:center;-webkit-align-items: center}
 
 
 </style>
