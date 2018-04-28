@@ -151,7 +151,7 @@
         <span @click="upshop()">保存</span>
       </div>
     </div>
-    
+
     <!-- 百度地图 -->
     <my-map v-if="mapShow" :pcityMap="cityMap" @viewMap='pviewMap'></my-map>
 
@@ -515,7 +515,7 @@ import myMap from './mapPages/myMap'
           console.log(err);
         });
       }
-      
+
     }
   }
 </script>
