@@ -194,7 +194,7 @@ import "../../../../static/css/newStyle.css"
       // 获取下拉列表的值
       settypelist(){
         let vm=this;
-         vm.usertions.forEach(ele => {
+        vm.usertions.forEach(ele => {
           if(ele.id==vm.listdata.type){
             vm.typelist=ele
           }

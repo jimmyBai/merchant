@@ -33,3 +33,16 @@
 }
 
 
+/* map */
+.notSame{
+  position: relative;
+}
+.baidumap{
+  position: absolute;
+  top: 0;
+  left: 333px;
+}
+.baidumap img{
+  width:32px;
+  height:32px;
+}

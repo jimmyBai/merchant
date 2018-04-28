@@ -51,9 +51,13 @@
             </dl>
           </div>
         </div>
-        <div class="line">
+        <div class="line notSame">
           <div class="title">店铺地址：</div>
-          <div class="content"><input type="text"  v-model="ListData.address" /></div>
+          <div class="content"><input type="text" :conter="conter" :zoom="zoom" @ready="ranady" v-model="ListData.address" /></div>
+          <!-- andy -->
+          <div class="baidumap">
+            <img src="/static/img/take_out2.png" @click="openMap" alt="">
+          </div>
         </div>
         <div class="line">
           <div class="title">联系电话：</div>
@@ -143,12 +147,23 @@
         <span @click="upshop()">保存</span>
       </div>
     </div>
+    
+    <!-- 百度地图 -->
+    <my-map v-if="mapShow" @viewMap='viewMap'></my-map>
+
   </div>
 </template>
 
 <script>
+// andy
+import '../../../static/css/newStyle.css'
+import myMap from './mapPages/myMap'
+
   export default {
     name: 'order',
+    components:{
+      myMap
+    },
     data () {
       return {
         ListData:'',
@@ -180,7 +195,10 @@
           value: '7',
           label: '周末'
         }],
-        dosave:true,
+        dosave: true,
+        mapShow: false,
+        conter: {lng:0,lat:0},
+        zoom: 3
       }
     },
     created(){
@@ -190,6 +208,20 @@
       this.getlistData()
     },
     methods:{
+      viewMap(...data){
+        let vm = this;
+        vm.mapShow=data.mapShowStatus;
+      },
+      ranady({BMap, map}){
+        console.log(BMap, map);
+        this.conter.lng = 116.404
+        this.conter.lat = 39.915
+        this.zomm = 15
+      },
+      // 打开百度地图
+      openMap(){
+        this.mapShow = true;
+      },
       addimg(way,item){
         let vm=this,maxbannernum=8,maximg=10,
           imgobj=event.target.files[0],
@@ -472,6 +504,7 @@
           console.log(err);
         });
       }
+      
     }
   }
 </script>

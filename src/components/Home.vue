@@ -87,7 +87,7 @@
         </el-col>
       </el-row>  
     </div>  
-
+    
   </div>
 </template>
 <script>
@@ -95,15 +95,18 @@ export default {
   name: 'home',
   data () {
     return {
-      }
+
+    }
   },
+
   methods:{
-    
+
   }
 }
 </script>
 
 <style scoped>
+
   .GridOne{
     background: linear-gradient(to right, #326fc8, #4ca5cb);
     height: 80px;

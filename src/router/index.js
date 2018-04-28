@@ -119,7 +119,19 @@ export default new Router({
             {
                 path:'/shop',
                 meta:{keepAlive:true},
-                component:resolve=>require(['../components/page/Shop.vue'],resolve)
+                component:resolve=>require(['../components/page/Shop.vue'],resolve),
+                children:[
+                  {
+                    path:'/',
+                    meta:{keepAlive:true},
+                    component:resolve=>require(['../components/page/mapPages/myMap.vue'],resolve),
+                  },
+                  {
+                    path:'/myMap',
+                    meta:{keepAlive:true},
+                    component:resolve=>require(['../components/page/mapPages/myMap.vue'],resolve),
+                  }
+                ]
             },
             {
                 path:'/export',
