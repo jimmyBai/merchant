@@ -210,7 +210,7 @@ import myMap from './mapPages/myMap'
 
     },
     mounted:function(){
-      this.getlistData()
+      this.getlistData();
     },
     methods:{
       pviewMap(...data){
