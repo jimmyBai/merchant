@@ -11,7 +11,7 @@
           </div>
         </div>
         <div class="ls-right">
-
+          <div class="ls-r-btn" @click="refresh"><i class="el-icon-refresh"></i><span>刷新</span></div>
         </div>
       </div>
       <el-table stripe :row-key="getRowKeys" :expand-row-keys="expands" :data="ListData">
@@ -89,15 +89,15 @@
 
     },
     mounted:function(){
-      this.getMemberOrder('')
+      this.getMemberOrder()
     },
     methods:{
-      getMemberOrder(content){
+      getMemberOrder(){
         let vm =this,url='/api/web/order/list',params={
           "user_id": sessionStorage.getItem('user_id')||"",    //为空表示所有
           "type": "1",      //订单类型 1[外卖] 2[订座] 3[店铺消费] 4[直播会员]
           "search": {
-            "content": content
+            "content": vm.content
           },
           "page": vm.page,
           "length": "10"
@@ -151,7 +151,11 @@
         this.getMemberOrder()
       },
       searchfn(searchfn){
-      this.getMemberOrder(this.content)
+      this.getMemberOrder()
+      },
+      refresh(){
+        this.content=''
+        this.getMemberOrder()
       }
     }
   }

@@ -6,7 +6,7 @@
     <div class="tabslist">
       <div class="lineflex">
         <div class="tabslist-head">
-          <div :class="{'is-active':activenum=='orderitem1'}" @click="changetabs('orderitem1')" class="tabtar-item ">外卖订单</div>
+          <div :class="{'is-active':activenum=='orderitem1'}" @click="changetabs('orderitem1')" class="tabtar-item ">外送订单</div>
           <div :class="{'is-active':activenum=='orderitem2'}" @click="changetabs('orderitem2')" class="tabtar-item">订台订单</div>
           <div :class="{'is-active':activenum=='orderitem3'}" @click="changetabs('orderitem3')" class="tabtar-item">直播订单</div>
         </div>

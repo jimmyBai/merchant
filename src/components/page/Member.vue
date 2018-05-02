@@ -16,7 +16,7 @@
         </div>
       </div>
       <el-table stripe :data="ListData">
-        <el-table-column prop="id" label="ID"></el-table-column>
+        <!--<el-table-column prop="id" label="ID"></el-table-column>-->
         <el-table-column prop="name" label="用户名"></el-table-column>
         <el-table-column prop="phone" label="手机号码"></el-table-column>
         <el-table-column prop="balance" label="余额"></el-table-column>

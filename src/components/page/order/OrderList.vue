@@ -28,7 +28,10 @@
         <el-table-column label="订单状态" align="right">
           <template slot-scope="scope">
             <div class="tdbtn-box">
-              <div class="tdbtn-view" :class="'btn-color-'+scope.row.order_status" @click="viewMore(scope.row)"><span v-text="scope.row.order_status_name"></span></div>
+              <div class="tdbtn-view" :class="'btn-color-'+scope.row.order_status" @click="viewMore(scope.row)">
+                <span v-if="scope.row.order_status!=1" v-text="scope.row.order_status_name"></span>
+                <span v-if="scope.row.order_status==1">待接单</span>
+              </div>
             </div>
           </template>
         </el-table-column>

@@ -41,7 +41,7 @@ export default {
   created(){
 
   },
-  mounted:function(){
+  mounted(){
 
   },
   methods:{
@@ -50,11 +50,19 @@ export default {
       let vm = this;
       vm.popshow=data.popstatus
       if(data[0].status&&data[0].status=='refresh'){
+        let NewPage = '_empty' + '?time=' + new Date().getTime()/1000
+        this.$router.push(NewPage)
+        this.$router.go(-1)
       }
     },
     adminevent(...data){
       let vm = this;
       vm.popadmin=data.popadmin
+      if(data[0].status&&data[0].status=='refresh'){
+        let NewPage = '_empty' + '?time=' + new Date().getTime()/1000
+        this.$router.push(NewPage)
+        this.$router.go(-1)
+      }
     },
     changetabs(way){
       this.activenum=way

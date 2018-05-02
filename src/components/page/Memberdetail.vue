@@ -41,10 +41,10 @@
                       <span>邮箱：</span>
                       <span v-text="userObj.email"></span>
                     </li>
-                    <li>
+                   <!-- <li>
                       <i class="i-member"></i>
                       <span>黄金会员</span>
-                    </li>
+                    </li>-->
                   </ul>
                 </div>
               </el-col>
@@ -78,7 +78,7 @@
           <div :class="{'is-active':activenum=='orderlist'}" @click="changetabs('orderlist')" class="tabtar-item ">外卖订单</div>
           <div :class="{'is-active':activenum=='reservatiolist'}" @click="changetabs('reservatiolist')" class="tabtar-item">订座订单</div>
           <div :class="{'is-active':activenum=='livelist'}" @click="changetabs('livelist')" class="tabtar-item">直播订单</div>
-          <div :class="{'is-active':activenum=='paylist'}" @click="changetabs('paylist')" class="tabtar-item">出入金记录订单</div>
+          <!--<div :class="{'is-active':activenum=='paylist'}" @click="changetabs('paylist')" class="tabtar-item">出入金记录订单</div>-->
         </div>
         <div class="tabslist-content">
           <router-view></router-view>
@@ -161,10 +161,10 @@ export default {
 </script>
 <style scoped>
 .b-imginfo,.b-datainfo{ border-radius: 3px; border:1px solid #48344d;  margin-left: 0; padding: 15px;  }
-.b-imginfo{line-height: 200px; padding-right: 30px}
-.b-datainfo{ margin-left: 20px; padding: 0 ;height: 232px}
+.b-imginfo{ padding-right: 30px}
+.b-datainfo{ margin-left: 20px; padding: 0 ;height: 197px}
 .userimg{ background:#37213e; border: 1px solid #48344e; text-align: center;}
-.userimg img{ height: 180px; background-size: cover; vertical-align: middle}
+.userimg img{ height: 165px; background-size: cover; vertical-align: middle}
 .b-datainfo .el-row{ width: 100%; display: flex; display: -webkit-flex; height: 100%}
 .b-datainfo .el-col{ padding: 15px 0; flex: 1; -webkit-flex: 1; height: 100%; border-right: 1px solid #48344d;display: flex; display: -webkit-flex; align-items: center; -webkit-align-items: center; flex-direction: column; -webkit-flex-direction: column; -webkit-justify-content: center;justify-content: center}
 .b-datainfo .el-col>div{ margin: 0 auto}

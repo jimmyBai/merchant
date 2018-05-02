@@ -1,5 +1,5 @@
 <template>
-  <div class="homepage">
+  <div class="homepage" @click.stop="closeWindow">
     <div class="topbar">
       <div class="leftlogo">
         <img src="../../static/img/mainlogo.png" />
@@ -7,7 +7,7 @@
       <div class="rightinfo">
         <ul>
           <li>
-            <div class="userbar" @click="showpop">
+            <div class="userbar" @click.stop="showpop">
               <div>
                 <div class="topimg userimg"></div>
                 <p v-text="username"></p>
@@ -19,10 +19,10 @@
             <div class="popmyinfo unshow" :class="{'isshow':showinfoBox}">
               <div class="popperarrow"><i></i></div>
               <ul>
-                <li @click="goview('myinfo')">我的信息</li>
-                <li @click="goview('set')">设置</li>
-                <li @click="goview('lock')">锁屏</li>
-                <li @click="goview('login')">登出</li>
+                <li @click.stop="goview('myinfo')">我的信息</li>
+                <li @click.stop="goview('set')">设置</li>
+                <li @click.stop="goview('lock')">锁屏</li>
+                <li @click.stop="goview('login')">登出</li>
               </ul>
             </div>
           </li>
@@ -59,7 +59,7 @@ export default {
     return {
       showinfoBox:false,
       num:this.$store.state.menuIndex,
-      menuArray:[{'name':'首页','userid':0,'icon':'00'},{'name':'会员','userid':1,'icon':'01'},{'name':'订单','userid':2,'icon':'02'},{'name':'外卖','userid':3,'icon':'03'},{'name':'店铺','userid':5,'icon':'05'},{'name':'报表','userid':4,'icon':'04'},{'name':'权限','userid':6,'icon':'06'},{'name':'订座','userid':7,'icon':'07'}]
+      menuArray:[{'name':'首页','userid':0,'icon':'00'},{'name':'会员','userid':1,'icon':'01'},{'name':'订单','userid':2,'icon':'02'},{'name':'外送','userid':3,'icon':'03'},{'name':'店铺','userid':5,'icon':'05'},{'name':'报表','userid':4,'icon':'04'},{'name':'权限','userid':6,'icon':'06'},{'name':'订座','userid':7,'icon':'07'}]
     }
   },
   mounted:function(){
@@ -118,6 +118,12 @@ export default {
         vm.$store.state.menuIndex='0'
       }
       vm.$router.push('/'+way)
+    },
+    closeWindow(){
+      let vm =this;
+      if(vm.showinfoBox){
+        vm.showinfoBox=!vm.showinfoBox
+      }
     },
     //联系客服
     servicephone(){

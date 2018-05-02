@@ -36,7 +36,7 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .el-table--striped .el-table__body tr.el-table__row--striped td{background: #38213e;}
 .el-table td, .el-table th{ font-weight: normal}
 .el-table__expanded-cell[class*=cell]{ padding: 0px}
-.tabslist .el-icon-arrow-right:before{ content: ''}
+.el-table__expand-column .el-icon-arrow-right:before{ content: ''}
 .el-table--border, .el-table--group{ border: 1px solid #48344d}
 .el-table--border td, .el-table--border th, .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed{border-right:1px solid #48344d}
 .el-table--border{border-bottom: none}

@@ -96,6 +96,7 @@
         //执行父组件方法
         let data = {
           popstatus:false,
+          status:''
         };
         this.$emit('sievent',data,'');
 
@@ -154,6 +155,8 @@
           }
           url='/api/web/authority/role/add';
         }
+        if(!params.role_name){vm.$message.error('请输入角色名称');return}
+        if(params.data.length<1){vm.$message.error('请选择权限');return}
         vm.$axios({
           method:'post',
           url:url,
@@ -164,7 +167,7 @@
               popstatus:false,
               status:'refresh'
             };
-            this.$emit('sievent',data,'');
+            vm.$emit('sievent',data,'');
           }else{
             vm.$message.error(res.data.message);
 

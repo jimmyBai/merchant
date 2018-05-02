@@ -11,13 +11,13 @@
             <div class="adduser-item">
               <div class="itemline">
                 <div class="itemtitle"><em>*</em>姓名</div>
-                <div class="itemcontent"><input type="text" v-model="username"></div>
+                <div class="itemcontent"><input type="text" maxlength="20" v-model="username"></div>
               </div>
             </div>
             <div class="adduser-item">
               <div class="itemline">
                 <div class="itemtitle"><em>*</em>手机号码</div>
-                <div class="itemcontent"><input type="tel" v-model="phone"></div>
+                <div class="itemcontent"><input type="tel" maxlength="11" v-model="phone"></div>
               </div>
             </div>
             <div class="adduser-item">
@@ -39,7 +39,7 @@
               <div class="itemline">
                 <div class="itemtitle">角色描述</div>
                 <div class="itemcontent">
-                  <div class="mytextarea"><textarea v-model="describe"></textarea></div>
+                  <div class="mytextarea"><textarea maxlength="240" v-model="describe"></textarea></div>
                 </div>
               </div>
             </div>
@@ -81,6 +81,13 @@
     },
     props: {
       fromParent: String
+    },
+    watch:{
+      phone(cVal,oVal){
+        if(cVal){
+          return this.phone=cVal.replace(/\D/,'')
+        }
+      }
     },
     created(){
 
@@ -169,7 +176,8 @@
             role_id:vm.usevalue.id
           };
         }
-        if(!this.fromParent&&params.password){
+
+        if(!this.fromParent&&(!params.password||!params.username||!params.phone)){
           vm.$message.error('请完善信息');
           return
         }

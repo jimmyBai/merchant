@@ -10,7 +10,8 @@
             <!--订单状态操作-->
             <div class="orderstatusbar">
               <div class="mainbtn" @click="ishow=!ishow">
-                <span :class="'btn-color-'+detailinfo.order_status" v-text="detailinfo.order_status_name"></span>
+                <span v-if="detailinfo.order_status!=1" :class="'btn-color-'+detailinfo.order_status" v-text="detailinfo.order_status_name"></span>
+                <span v-if="detailinfo.order_status==1" :class="'btn-color-'+detailinfo.order_status">待接单</span>
               </div>
               <!--order_status==2 待派送   3派送中--->
               <div v-if="ishow">
