@@ -40,7 +40,7 @@
               <div class="tdbtn-view newView" style="padding:0 5px" @click="vieweditor(scope.row.product_id)">
                 <i class="el-icon-view"></i><span>查看/编辑</span>
               </div>
-              <div class="tdBtn-view" @click="removeThis(index)">
+              <div class="tdBtn-view" @click="removeThis(scope.row.product_id,index)">
                 <i class="el-icon-delete"></i>&nbsp;&nbsp;<span>删除</span>
               </div>
             </div>
@@ -141,11 +141,13 @@ export default {
       this.fromParent=id.toString();
     },
     // 删除
-    removeThis(ListData,index){
+    removeThis(id,index){
       let vm = this,
-      url='/api/web/product/delete'
+      url='/api/web/product/delete',
+      params={'product_id':id}
       vm.$axios({
         method:'post',
+        data:params,
         url:url
       }).then((res)=>{
         if(res.data.error_code=='0'){
