@@ -19,12 +19,11 @@
               
               <ul>
                 <li v-for="(item,index) in listArray" @click='getNowLocation(item)' class="textmap">
-                  <span v-text="item.title"></span>
+                  <span v-text="item.address"></span>
                 </li>
               </ul>
 
             </div>
-            
                 
             <div class="mapbottom"></div>
           </div>
@@ -64,10 +63,10 @@ import {MP} from '../../../newMap.js'
     },
     methods:{
       initMap () {
-        this.createMap() ; //创建地图 
-        this.setMapEvent();//设置地图事件
-        this.addMapControl();//向地图添加控件
-        //this.addMarker();//向地图中添加marker
+        this.createMap(); //创建地图 
+        this.setMapEvent(); //设置地图事件
+        this.addMapControl(); //向地图添加控件
+        //this.addMarker(); //向地图中添加marker
       },
       createMap(){
         let vm =this;
@@ -83,95 +82,86 @@ import {MP} from '../../../newMap.js'
             var mk = new BMap.Marker(r.point);
             map.addOverlay(mk);//标出所在地
             map.panTo(r.point);//地图中心移动
-            //alert('您的位置：'+r.point.lng+','+r.point.lat);
-            // console.log('您的位置：'+r.point.lng+','+r.point.lat);
+            //console.log('您的位置：'+r.point.lng+','+r.point.lat);
             var point = new BMap.Point(r.point.lng,r.point.lat);//用所定位的经纬度查找所在地省市街道等信息
             var gc = new BMap.Geocoder();
             gc.getLocation(point, function(rs){
               var addComp = rs.addressComponents;
-              // alert(rs.address);
-              // console.log(rs.address);//地址信息
-// 　　　　　　   console.log(addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);//对应的市区、街道，街道号
+              //console.log(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);//对应的市区、街道，街道号
             });
-            // 获得周边
-            // var local = new BMap.LocalSearch(map, {
-            //   renderOptions:{map: map}
-            // });
+            // 获得周边信息
+            var myKeys = ["酒店","广场","大厦","银行","公园","学校","景点","加油站","停车场","咖啡厅"];
             var mPoint = new BMap.Point(r.point.lng,r.point.lat);
-            var circle = new BMap.Circle(mPoint,1000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.3, strokeOpacity: 0.3});
+            var circle = new BMap.Circle(mPoint,100,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.3, strokeOpacity: 0.3});
             map.addOverlay(circle);
             var local =  new BMap.LocalSearch(map, {
               renderOptions: {map: map, autoViewport: false}
             });
-            local.searchNearby("公交车站",mPoint,1000);
-
-            // var myval;
-            setTimeout(function(){
+            local.searchNearby(myKeys,mPoint,100);
+            
+            // 获取坐标数据
+            var v = setInterval((x)=>{
+              if(local.wf){
+                clearInterval(v);
+              }
               local.wf.forEach(ele => {
-                this.content = ele;
-                callback(this);
-              });
-            },1000);
-            // var callback = cAddress =>{
-            //   console.log(cAddress.content.title);
+                vm.listArray.push(ele);
+              })
+              console.log(vm.listArray);
+            },1500);
+            
+            // setTimeout(function(){
+            //   local.wf.forEach(ele => {
+            //     vm.content = ele;
+            //     callback(vm);
+            //   });
+            // },1000);
+            // var callback = function(cAddress){
+            //   vm.listArray.push(cAddress.content)
             // }
-            var callback = function(cAddress){              
-             // console.log(cAddress.content);
-              vm.listArray.push(cAddress.content)
-            }
-            console.log(vm.listArray);
+            // console.log(vm.listArray);
             
-            
-
           }else {
             alert('failed'+this.getStatus());
           }
         },{enableHighAccuracy: true});
 
+        // 移动坐标
+        map.addEventListener("click",function(e) {
 
-        // let vm =this,
-        // url='http://api.map.baidu.com/place/v2/search?query=公交站&location=39.915,116.404&radius=2000&output=xml&ak=C0xzENPrE0PmqujScaChmiqigT6eISkH',
-        // params={};
-        // vm.$axios.get(url,{params}).then((res)=>{
-          
-        // }).catch(err => {
-        //   console.log(err);
-        // });
+          map.clearOverlays(); //清除旧坐标
+          var ckpoint = new BMap.Marker(e.point);
+          map.addOverlay(ckpoint); //标出所在地
+          map.panTo(e.point); //地图中心移动
 
-        // 百度地图API功能
-        // var options = {
-        //   onSearchComplete: function(results){
-        //     // 判断状态是否正确
-        //     if (local.getStatus() == BMAP_STATUS_SUCCESS){
-        //       var s = [];
-        //       for (var i = 0; i < results.getCurrentNumPois(); i ++){
-        //         s.push(results.getPoi(i).title + ", " + results.getPoi(i).address);
-        //       }
-        //       document.getElementById("r-result").innerHTML = s.join("<br/>");
-        //       console.log(s)
-        //     }
-        //   }
-        // };
-        // var local = new BMap.LocalSearch(map, options);
-        // local.search("酒店, 广场, 公交站, 地铁站, 加油站");
-        
-        // var myKeys = ["酒店", "广场", "公交站", "地铁站", "加油站"];
-        // var local = new BMap.LocalSearch(map, {
-        //   renderOptions:{map: map, panel:"r-result"},
-        //   pageCapacity:5
-        // });
-        // local.searchInBounds(myKeys, map.getBounds());
+          var point = new BMap.Point(e.point.lng,e.point.lat); //用所定位的经纬度查找所在地省市街道等信息
+          var gc = new BMap.Geocoder();
+          gc.getLocation(point, function(rs){
+            var addComp = rs.addressComponents;
+          });
+          var myKeys = ["酒店","广场","大厦","银行","公园","学校","景点","加油站","停车场","咖啡厅"];
+          var mPoint = new BMap.Point(e.point.lng,e.point.lat);
+          var circle = new BMap.Circle(mPoint,100,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.3, strokeOpacity: 0.3});
+          map.addOverlay(circle);
+          var local =  new BMap.LocalSearch(map, {
+            renderOptions: {map: map, autoViewport: false}
+          });
+          local.searchNearby(myKeys,mPoint,100);
 
-        // 添加地址解析
-        // var geoc = new BMap.Geocoder();
-        // map.addEventListener("click", function(e){        
-        // var pt = e.point;
-        // geoc.getLocation(pt, function(rs){
-        //     var addComp = rs.addressComponents;
-        //     alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
-        //     console.log(addComp);
-        //   });        
-        // });
+          // 获取坐标数据
+          vm.listArray = [];
+          var v = setInterval((x)=>{
+            if(local.wf){
+              clearInterval(v);
+            }
+            local.wf.forEach(ele => {
+              vm.listArray.push(ele);
+              console.log(vm.listArray)
+            })
+          },1500);
+
+        });
+
       },
       setMapEvent(){
         map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
@@ -188,7 +178,7 @@ import {MP} from '../../../newMap.js'
         map.addControl(ctrl_ove);
         //向地图中添加比例尺控件
         var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
-        // 添加带有定位的导航控件
+        //添加带有定位的导航控件
         var navigationControl = new BMap.NavigationControl({
           // 靠左上角位置
           anchor: BMAP_ANCHOR_TOP_LEFT,
@@ -199,47 +189,33 @@ import {MP} from '../../../newMap.js'
         });
         map.addControl(navigationControl);
 
-        // 设置定时器
+        //设置定时器
         setTimeout(function(){
-          map.setZoom(12);
+          map.setZoom(16);
         },2000);
         setTimeout(function(){
             map.enableDragging();
         },2000);
 
         // 添加城市定位控件
-        // var geolocationControl = new BMap.GeolocationControl();
-        // geolocationControl.addEventListener("locationSuccess", function(e){
-        //   // 定位成功事件
-        //   var address = '';
-        //   address += e.addressComponent.province;
-        //   address += e.addressComponent.city;
-        //   address += e.addressComponent.district;
-        //   address += e.addressComponent.street;
-        //   address += e.addressComponent.streetNumber;
-        //   alert("当前定位地址为：" + address);
-        // });
-        // geolocationControl.addEventListener("locationError",function(e){
-        //   // 定位失败事件
-        //   alert(e.message);
-        // });
-        // map.addControl(geolocationControl);
-        // 添加添加城市列表控件
-        // map.addControl(new BMap.CityListControl({
-        //     anchor:BMAP_ANCHOR_BOTTOM_RIGHT,
-        //     offset:new BMap.Size(130,23)
-        //     // 切换城市之间事件
-        //     // onChangeBefore: function(){
-        //     //    alert('before');
-        //     // },
-        //     // 切换城市之后事件
-        //     // onChangeAfter:function(){
-        //     //   alert('after');
-        //     // }
-        // }));
+        var geolocationControl = new BMap.GeolocationControl();
+        geolocationControl.addEventListener("locationSuccess", function(e){
+          // 定位成功事件
+          var address = '';
+          address += e.addressComponent.province;
+          address += e.addressComponent.city;
+          address += e.addressComponent.district;
+          address += e.addressComponent.street;
+          address += e.addressComponent.streetNumber;
+          alert("当前定位地址为：" + address);
+        });
+        geolocationControl.addEventListener("locationError",function(e){
+          // 定位失败事件
+          alert(e.message);
+        });
+        map.addControl(geolocationControl);
         
       },
-      //标注点数组
       //创建marker
       // addMarker(){
       //   var markerArr = [{
@@ -304,10 +280,10 @@ import {MP} from '../../../newMap.js'
       // },
       //创建一个Icon
       createIcon(json){
-        //本地图标图片
-        // var tubiao=require("/static/img/positioning.png")
-        // var icon = new BMap.Icon(tubiao, new BMap.Size(json.w,json.h),{imageOffset: new BMap.Size(-json.l,-json.t),infoWindowOffset:new BMap.Size(json.lb+5,1),offset:new BMap.Size(json.x,json.h)})
-        // return icon;
+      //本地图标图片
+      // var tubiao=require("/static/img/positioning.png")
+      // var icon = new BMap.Icon(tubiao, new BMap.Size(json.w,json.h),{imageOffset: new BMap.Size(-json.l,-json.t),infoWindowOffset:new BMap.Size(json.lb+5,1),offset:new BMap.Size(json.x,json.h)})
+      // return icon;
       },
 
 
@@ -316,15 +292,7 @@ import {MP} from '../../../newMap.js'
       closepop(){
         //执行父组件关闭方法
         let data = this.pcityMap;
-        console.log(this.pcityMap)
-        //执行父组件方法
-        this.$emit('viewMap',data,'');
-      },
-      clickEttach(){
-        //执行父组件关闭方法
-        let data = {
-          mapShowStatus:false
-        };
+        console.log(this.pcityMap);
         //执行父组件方法
         this.$emit('viewMap',data,'');
       },
@@ -332,7 +300,15 @@ import {MP} from '../../../newMap.js'
         let data = item;
         //执行父组件方法
         this.$emit('viewMap',data,'');
-      }
+      },
+      // clickEttach(){
+      //   //执行父组件关闭方法
+      //   let data = {
+      //     mapShowStatus:false
+      //   };
+      //   //执行父组件方法
+      //   this.$emit('viewMap',data,'');
+      // }
       
     }
   }
@@ -420,5 +396,9 @@ import {MP} from '../../../newMap.js'
     border: 1px solid rgb(86,53,96);
     border-style: solid none none none;
     padding: 0 15px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; 
   }
 </style>

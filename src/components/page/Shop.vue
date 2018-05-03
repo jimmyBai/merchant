@@ -51,18 +51,19 @@
             </dl>
           </div>
         </div>
+
         <div class="line notSame">
           <div class="title">店铺地址：</div>
-          <div class="content"><input type="text" :conter="conter" :zoom="zoom" @ready="ranady" v-model="ListData.address" /></div>
+          <div class="content"><input type="text" v-model="pCity" disabled="disabled" /></div>
           <!-- andy -->
-          <!-- <div class="baidumap">
-            <img src="/static/img/take_out2.png" @click="openMap" alt="">
-          </div> -->
           <div class="baidumap">
-            <!-- <img src="/static/img/take_out2.png" @click="openMap" alt=""> -->
             <input type="button" class="baidubtn" value="打开地图" @click="openMap">
           </div>
         </div>
+        <div class="line dzhome">
+          <input type="text" v-model="ListData.address">
+        </div>
+
         <div class="line">
           <div class="title">联系电话：</div>
           <div class="content"><input type="text"  v-model="ListData.telephone" /></div>
@@ -201,9 +202,8 @@ import myMap from './mapPages/myMap'
         }],
         dosave: true,
         mapShow: false,
-        conter: {lng:0,lat:0},
-        zoom: 3,
-        cityMap:{}
+        cityMap:{},
+        pCity: ''
       }
     },
     created(){
@@ -215,23 +215,19 @@ import myMap from './mapPages/myMap'
     methods:{
       pviewMap(...data){
         let vm = this;
-      vm.cityMap=data[0]
-       vm.$set(vm.ListData,'address',data[0].title)
-     //  vm.ListData.address=data[0].title
-       vm.mapShow=data[1];
-      console.log( vm.mapShow)
+        vm.cityMap=data[0]
+        vm.$set(vm.ListData,'address',data[0].address)
+        vm.pCity=data[0].province+data[0].city
+        //vm.ListData.address=data[0].title
+        vm.mapShow=data[1];
+        console.log( vm.mapShow)
         //console.log("alldata:",data);
-      },
-      ranady({BMap, map}){
-        console.log(BMap, map);
-        this.conter.lng = 116.404
-        this.conter.lat = 39.915
-        this.zomm = 15
       },
       // 打开百度地图
       openMap(data){
-        this.cityMap=this.cityMap
-        this.mapShow = true;
+        let vm = this;
+        vm.cityMap=vm.cityMap;
+        vm.mapShow = true;
       },
       addimg(way,item){
         let vm=this,maxbannernum=8,maximg=10,
