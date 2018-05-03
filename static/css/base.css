@@ -198,7 +198,7 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .popperarrow{position: absolute; top: -16px; left: 50%; margin-left: -8px; display: block; height: 0;  width: 0;  font-size: 0; line-height: 0; border-color: transparent transparent #48344d transparent; border-style: dashed dashed solid dashed;
   border-width: 8px;}
 .popperarrow>i{position: absolute; top: -9px; left: -10px; display: block; height: 0; width: 0; font-size: 0; line-height: 0; border-color: transparent transparent #38213e transparent; border-style: dashed dashed solid dashed;  border-width: 10px;}
-
+.popmyinfo .popperarrow{right: 10px; left: auto }
 /**tabs**/
 .tabslist{ margin-top: 20px;}
 .tabslist-head{ display: flex; display: -webkit-flex; border-bottom: 1px solid #48344d;margin-top: -1px; position: relative}
@@ -226,3 +226,5 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .el-table .el-table__expand-column .cell{ width: 0;padding: 0;display: none}
 /**弹窗样式**/
 .message-box_content{ max-height: 600px; overflow-y: scroll;-webkit-overflow-scrolling: touch}
+/**搜索按钮**/
+.search-icon{line-height: 18px; margin-left: 4px;}

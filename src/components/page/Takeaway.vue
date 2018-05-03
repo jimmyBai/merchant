@@ -11,7 +11,10 @@
         <div class="ls-left">
           <div class="form-tabel">
             <div class="td-title">外送商品表</div>
-            <div class="td-content"><input type="text" v-model="product_name" /><span class="search-icon" @click="searchlist"><i class="el-icon-search"></i></span></div>
+            <div class="td-content">
+              <input type="text" v-model="product_name" />
+              <span class="search-icon" @click="searchlist"><i class="el-icon-search"></i></span>
+            </div>
           </div>
         </div>
         <div class="ls-right">
@@ -171,6 +174,6 @@ export default {
   .ls-left .form-tabel{ display: flex;display: -webkit-flex; align-items: center; -webkit-align-items: center; padding-bottom: 10px}
   .form-tabel .td-title{ margin-right: 5px; color: #f8e2ff}
   .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
-  .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center; margin-left: 1px}
+  .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center;}
   .td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
 </style>
