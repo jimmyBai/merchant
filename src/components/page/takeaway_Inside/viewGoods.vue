@@ -39,14 +39,14 @@
                 </el-select></div>
               </div>
               <div class="adduser-producer">
-                <div class="producertitle"><em>*</em>产地</div>
+                <div class="producertitle">产地</div>
                 <div class="producercontent"><input type="text" v-model="place"></div>
               </div>
             </div>
             <!-- 年份 -->
             <div class="adduser-item">
               <div class="itemline">
-                <div class="itemtitle"><em>*</em>年份</div>
+                <div class="itemtitle">年份</div>
                 <div class="itemcontent"><input type="tel" v-model="years"></div>
               </div>
             </div>
@@ -77,12 +77,7 @@
               <div class="adduser-producer">
                 <div class="producertitle"><em>*</em>特价</div>
                 <div class="producercontent changeInput"><input type="text" placeholder="￥" v-model="special_price" :disabled="!is_use_special_price"></div>
-                <el-switch
-                  v-model="is_use_special_price"
-                  active-color="rgb(96,58,108)"
-                  inactive-color="#7e7c7c"
-                  >
-                </el-switch>
+                <el-switch v-model="is_use_special_price" active-color="rgb(96,58,108)" inactive-color="#7e7c7c"></el-switch>
               </div>
             </div>
             <!-- collection -->
@@ -224,7 +219,7 @@ import "../../../../static/css/newStyle.css"
       },
       // 修改保存
       clickSaveInfo(){
-        let vm =this,url,params;
+        let vm =this,url,params={product:{}};
         if(!this.typelist){
           this.$message.error('请选择分类');
           return false
@@ -233,12 +228,6 @@ import "../../../../static/css/newStyle.css"
           return false
         }else if(!this.name_en){
           this.$message.error("商品英文名称不能为空!");
-          return false
-        }else if(!this.place){
-          this.$message.error("产品产地不能为空!");
-          return false
-        }else if(!this.years){
-          this.$message.error("产品年份不能为空!");
           return false
         }else if(!this.weight){
           this.$message.error("产品重量不能为空!");
@@ -250,47 +239,27 @@ import "../../../../static/css/newStyle.css"
           this.$message.error("产品单价不能为空!");
           return false
         }
+        params.product={
+          name:vm.name,
+          name_en:vm.name_en,
+          describe:vm.describe,
+          type:vm.typelist.id,
+          place:vm.place,
+          years:vm.years,
+          brand:vm.brand,
+          weight:vm.weight,
+          price:vm.price,
+          special_price:vm.special_price,
+          inventory:vm.inventory,
+          capacity:vm.capacity,
+          is_use_special_price:vm.is_use_special_price?'on':'off',
+          inventory_track:vm.inventory_track?'on':'off',
+        }
         if(this.fromParent){
-          url='/api/web/product/update',
-          params={
-            product:{
-              name:vm.name,
-              name_en:vm.name_en,
-              describe:vm.describe,
-              type:vm.typelist.id,
-              place:vm.place,
-              years:vm.years,
-              brand:vm.brand,
-              weight:vm.weight,
-              price:vm.price,
-              special_price:vm.special_price,
-              inventory:vm.inventory,
-              capacity:vm.capacity,
-              is_use_special_price:vm.is_use_special_price?'on':'off',
-              inventory_track:vm.inventory_track?'on':'off',
-              product_id:vm.fromParent
-            }
-          };
+          url='/api/web/product/update';
+          params.product.product_id=vm.fromParent;
         }else{
-          url='/api/web/product/create',
-          params={
-            product:{
-              name:vm.name,
-              name_en:vm.name_en,
-              describe:vm.describe,
-              type:vm.typelist.id,
-              place:vm.place,
-              years:vm.years,
-              brand:vm.brand,
-              weight:vm.weight,
-              price:vm.price,
-              special_price:vm.special_price,
-              inventory:vm.inventory,
-              capacity:vm.capacity,
-              is_use_special_price:vm.is_use_special_price?'on':'off',
-              inventory_track:vm.inventory_track?'on':'off'
-            }
-          };
+          url='/api/web/product/create';
         }
         vm.$axios({
           method:'post',

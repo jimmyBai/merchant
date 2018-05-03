@@ -40,7 +40,7 @@
               <div class="tdbtn-view newView" style="padding:0 5px" @click="vieweditor(scope.row.product_id)">
                 <i class="el-icon-view"></i><span>查看/编辑</span>
               </div>
-              <div class="tdBtn-view" @click="removeThis(scope.row.product_id,index)">
+              <div class="tdBtn-view" @click="removeThis(scope.row.product_id)">
                 <i class="el-icon-delete"></i>&nbsp;&nbsp;<span>删除</span>
               </div>
             </div>
@@ -130,7 +130,7 @@ export default {
     // 分页
     handleCurrentChange(val){
       this.page=val
-      this.getlistData(this.page);
+      this.getlistData();
     },
     clickadd(){
       this.fromParent=''
@@ -141,7 +141,7 @@ export default {
       this.fromParent=id.toString();
     },
     // 删除
-    removeThis(id,index){
+    removeThis(id){
       let vm = this,
       url='/api/web/product/delete',
       params={'product_id':id}
@@ -151,11 +151,11 @@ export default {
         url:url
       }).then((res)=>{
         if(res.data.error_code=='0'){
-          vm.ListData.splice(index,1);
           vm.$message({
             message: '删除成功!',
             type: 'success'
           });
+          vm.getlistData()
         }else{
           vm.$message.error(res.data.message);
         }
