@@ -46,15 +46,16 @@ import {MP} from '../../../newMap.js'
 
   export default {
     name: 'mymap',
-    data () {
+    data(){
       return {
         msgtitle: '选择地址',
         cAddress: [],
-        listArray:[]
+        listArray:[],
+        // returnmap:''
       }
     },
-    props: {
-      pcityMap:Object
+    props:{
+      pcityMap: Object
     },
     mounted(){
       // console.log(this.pcityMap)
@@ -69,6 +70,7 @@ import {MP} from '../../../newMap.js'
         //this.addMarker(); //向地图中添加marker
       },
       createMap(){
+
         let vm =this;
         var map = new BMap.Map("XSDFXPage",{enableMapClick:true});//在百度地图容器中创建一个地图
         var point = new BMap.Point(116.4035,39.915);//定义一个中心点坐标
@@ -104,7 +106,7 @@ import {MP} from '../../../newMap.js'
               if(local.wf){
                 clearInterval(v);
               }
-              local.wf.forEach(ele => {
+              local.wf.forEach(ele =>{
                 vm.listArray.push(ele);
               })
               console.log(vm.listArray);
@@ -121,13 +123,13 @@ import {MP} from '../../../newMap.js'
             // }
             // console.log(vm.listArray);
             
-          }else {
+          }else{
             alert('failed'+this.getStatus());
           }
         },{enableHighAccuracy: true});
 
         // 移动坐标
-        map.addEventListener("click",function(e) {
+        map.addEventListener("click",function(e){
 
           map.clearOverlays(); //清除旧坐标
           var ckpoint = new BMap.Marker(e.point);
@@ -154,10 +156,10 @@ import {MP} from '../../../newMap.js'
             if(local.wf){
               clearInterval(v);
             }
-            local.wf.forEach(ele => {
+            local.wf.forEach(ele =>{
               vm.listArray.push(ele);
-              console.log(vm.listArray)
             })
+            console.log(vm.listArray);
           },1500);
 
         });
@@ -207,7 +209,7 @@ import {MP} from '../../../newMap.js'
           address += e.addressComponent.district;
           address += e.addressComponent.street;
           address += e.addressComponent.streetNumber;
-          alert("当前定位地址为：" + address);
+          // alert("当前定位地址为：" + address);
         });
         geolocationControl.addEventListener("locationError",function(e){
           // 定位失败事件
@@ -298,6 +300,7 @@ import {MP} from '../../../newMap.js'
       },
       getNowLocation(item){
         let data = item;
+        console.log(data);
         //执行父组件方法
         this.$emit('viewMap',data,'');
       },
