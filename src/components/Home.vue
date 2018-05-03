@@ -1,7 +1,5 @@
 <template>
   <div class="ws-content">
-
-
     <!-- title -->
     <div class="navbar">
       <h1 class="nav-bar-title">信息<small> | 基础信息</small></h1>
@@ -46,7 +44,6 @@
         </el-col>
       </el-row>
     </div>
-
     <!-- body -->
     <div class="navbar">
       <h1 class="nav-bar-title">外卖订单<small> | 订单信息</small></h1>
