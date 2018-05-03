@@ -34,7 +34,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column type="expand">
+        <el-table-column type="expand" width="1">
           <template slot-scope="props">
             <div class="table-expand">
               <div class="expandname">

@@ -33,6 +33,8 @@ if (process.env.NODE_ENV === 'development') {
     axios.defaults.baseURL  = 'http://dev.merchant.api.018eighteen.com/'
   }else if(window.location.host.indexOf('uat.')>=0){
     axios.defaults.baseURL = 'http://uat.merchant.api.018eighteen.com/'
+  }else if(window.location.host.indexOf('uat.')>=0){
+    axios.defaults.baseURL = 'http://pro.merchant.api.018eighteen.com/'
   }
 
 }

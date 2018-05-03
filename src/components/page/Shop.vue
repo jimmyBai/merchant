@@ -197,7 +197,7 @@ import myMap from './mapPages/myMap'
           label: '周六'
         }, {
           value: '7',
-          label: '周末'
+          label: '周日'
         }],
         dosave: true,
         mapShow: false,
@@ -393,6 +393,10 @@ import myMap from './mapPages/myMap'
       },
       getlistData(){
         let vm =this,url='/api/web/setting/info',params={};
+        vm.ListData={}
+        vm.imgVO=[]
+        vm.recommend=[]
+        vm.business_time=[]
         vm.$axios.get(url,{params}).then((res)=>{
           if(res.data.error_code=='0'){
             vm.ListData=res.data.data
@@ -502,11 +506,12 @@ import myMap from './mapPages/myMap'
               message: '店铺信息修改成功！',
               type: 'success'
             });
-            sessionStorage.setItem('INDEXNUM',1)
+            /*sessionStorage.setItem('INDEXNUM',1)
             vm.$store.dispatch('changetabs',1);
             setTimeout(()=>{
               vm.$router.push('/member')
-            })
+            })*/
+            vm.getlistData();
           }else{
             vm.$message.error(res.data.message);
 

@@ -2,7 +2,7 @@
   <div class="main">
     <!-- title -->
     <div class="navbar">
-      <h1 class="nav-bar-title">外卖<small> | 外卖商品信息设置</small></h1>
+      <h1 class="nav-bar-title">外送<small> | 外送商品信息设置</small></h1>
     </div>
     <!-- infoList -->
     <div class="listtable">
@@ -10,7 +10,7 @@
 
         <div class="ls-left">
           <div class="form-tabel">
-            <div class="td-title">外卖商品表</div>
+            <div class="td-title">外送商品表</div>
             <div class="td-content"><input type="text" v-model="product_name" /><span class="search-icon" @click="searchlist"><i class="el-icon-search"></i></span></div>
           </div>
         </div>
@@ -21,7 +21,7 @@
         </div>
 
       </div>
-  
+
       <el-table stripe :data="ListData">
         <el-table-column prop="product_id" label="ID"></el-table-column>
         <el-table-column prop="product_name" label="商户名称"></el-table-column>
@@ -145,7 +145,15 @@ export default {
         method:'post',
         url:url
       }).then((res)=>{
-        vm.ListData.splice(index,1);
+        if(res.data.error_code=='0'){
+          vm.ListData.splice(index,1);
+          vm.$message({
+            message: '删除成功!',
+            type: 'success'
+          });
+        }else{
+          vm.$message.error(res.data.message);
+        }
       }).catch(err => {
         console.log(err);
       });

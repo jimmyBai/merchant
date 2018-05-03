@@ -32,7 +32,7 @@
             <!-- collection -->
             <div class="adduser-itemBox">
               <div class="adduser-class">
-                <div class="classtitle">分类</div>
+                <div class="classtitle"><em>*</em>分类</div>
                 <div class="classcontent"><el-select v-model="typelist" value-key='id' placeholder="请选择">
                   <el-option v-for="item in usertions" :key="item.id" :label="item.name" :value='item'>
                   </el-option>
@@ -60,11 +60,11 @@
             <!-- collection -->
             <div class="adduser-itemBox">
               <div class="adduser-class">
-                <div class="classtitle" >重量&nbsp;(KG)</div>
+                <div class="classtitle"><em>*</em>重量&nbsp;(KG)</div>
                 <div class="classcontent"><input type="text" v-model="weight"></div>
               </div>
               <div class="adduser-producer">
-                <div class="producertitle">容量&nbsp;(ML)</div>
+                <div class="producertitle"><em>*</em>容量&nbsp;(ML)</div>
                 <div class="producercontent"><input type="text" v-model="capacity"></div>
               </div>
             </div>
@@ -110,7 +110,7 @@
           </div>
         </div>
         <div class="message-box_btns">
-          
+
         </div>
       </div>
     </div>
@@ -214,14 +214,6 @@ import "../../../../static/css/newStyle.css"
         vm.$axios.get(url,{params}).then((res)=>{
           if(res.data.error_code=='0'){
             vm.usertions=res.data.data
-            // if(vm.fromParent&&vm.typelist){
-            //   console.log(vm.typelist.type)
-            //   vm.usertions.forEach(ele => {
-            //     if(ele.id==vm.typelist.type){
-            //       vm.typelist = ele
-            //     }
-            //   });
-            // }
             if(vm.listdata){vm.settypelist()}
           }else{
             vm.$message.error(res.data.message);
@@ -257,7 +249,7 @@ import "../../../../static/css/newStyle.css"
         }else if(!this.price){
           this.$message.error("产品单价不能为空!");
           return false
-        }  
+        }
         if(this.fromParent){
           url='/api/web/product/update',
           params={
@@ -306,6 +298,18 @@ import "../../../../static/css/newStyle.css"
           data: params
         }).then((res)=>{
           if(res.data.error_code=='0'){
+
+            if(this.fromParent){
+              vm.$message({
+                message: '修改商品成功!',
+                type: 'success'
+              });
+            }else{
+              vm.$message({
+                message: '添加商品成功!',
+                type: 'success'
+              });
+            }
             //执行父组件关闭方法
             let data = {
               isTakeawayStatus: false,
