@@ -91,7 +91,7 @@ import searchView from './Seacrhtips'
     },
     mounted:function(){
       this.getMemberOrder()
-      //orderstatus:0未付款,1已付款,2待派送，3派送中，4座位使用中，5已完成，6已取消，7超时未付款，8待退款，9已退款
+      //orderstatus:0未付款,1已付款,2待配送，3派送中，4座位使用中，5已完成，6已取消，7超时未付款，8待退款，9已退款
     },
     methods:{
       getMemberOrder(){
@@ -171,8 +171,9 @@ import searchView from './Seacrhtips'
       fromtip(...data){
         let vm = this;
         vm.ishowSearch=false
-        vm.search.min_price=data[0].min_price;
-        vm.search.max_price=data[0].max_price;
+        console.log(data)
+        vm.search.min_price=data[0].min_balance;
+        vm.search.max_price=data[0].max_balance;
         vm.search.create_start=data[0].create_start;
         vm.search.create_end=data[0].create_end;
         vm.getMemberOrder()
@@ -187,6 +188,7 @@ import searchView from './Seacrhtips'
   .ls-left .form-tabel{ display: flex;display: -webkit-flex; align-items: center; -webkit-align-items: center; padding-bottom: 10px}
   .form-tabel .td-title{ margin-right: 5px; color: #f8e2ff}
   .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
-  .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center; margin-left: 1px}
-
+  .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center; }
+  .osselect{ margin-left: 4px;}
+  .td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
 </style>

@@ -24,7 +24,8 @@
         <el-table-column label="付款金额" prop="order_paid_price"></el-table-column>
         <el-table-column label="订单状态">
           <template slot-scope="scope">
-            <span :class="'status-'+scope.row.order_status" v-text="scope.row.order_status_name"></span>
+            <span v-if="scope.row.order_status!=1" :class="'status-'+scope.row.order_status" v-text="scope.row.order_status_name"></span>
+            <span v-if="scope.row.order_status==1" :class="'status-'+scope.row.order_status">待接单</span>
           </template>
         </el-table-column>
         <el-table-column>
@@ -34,7 +35,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column type="expand">
+        <el-table-column type="expand" width="1">
           <template slot-scope="props">
             <div class="table-expand">
               <div class="expandname">
@@ -167,7 +168,8 @@
 .ls-left .form-tabel{ display: flex;display: -webkit-flex; align-items: center; -webkit-align-items: center; padding-bottom: 10px}
 .form-tabel .td-title{ margin-right: 5px; color: #f8e2ff}
 .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
-.search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center; margin-left: 1px}
+.search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px;text-align: center; }
+.td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
 .expandgoodslist .linetr>div{ padding: 15px}
 .goodsimg{ position: relative;}
 .goodsimg .img{ height: 50px;width: 50px;}

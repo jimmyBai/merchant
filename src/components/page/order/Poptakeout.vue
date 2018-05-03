@@ -82,7 +82,7 @@
                 <li><div class="content"><span v-text="detailinfo.order_sn"></span></div></li>
                 <li><div class="title">收货人信息</div></li>
                 <li><div class="content"><span>收货人：</span><span v-text="detailinfo.consignee"></span><span v-text="detailinfo.phone"></span></div></li>
-                <li><div class="content"><span>收货地址：</span><span class="addr" v-text="detailinfo.address"></span></div></li>
+                <li style="margin-top: 10px;"><div class="content"><span>收货地址：</span><span class="addr" v-text="detailinfo.address"></span></div></li>
                 <li><div class="title">商品数量</div></li>
                 <li><div class="content"><span v-text="detailinfo.product_total_num"></span></div></li>
               </ul>

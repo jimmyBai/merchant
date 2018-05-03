@@ -6,7 +6,7 @@
       </div>
       <div class="rightinfo">
         <ul>
-          <li>
+          <li class="myinfoli">
             <div class="userbar" @click.stop="showpop">
               <div>
                 <div class="topimg userimg"></div>
@@ -18,11 +18,11 @@
             </div>
             <div class="popmyinfo unshow" :class="{'isshow':showinfoBox}">
               <div class="popperarrow"><i></i></div>
-              <ul>
-                <li @click.stop="goview('myinfo')">我的信息</li>
-                <li @click.stop="goview('set')">设置</li>
-                <li @click.stop="goview('lock')">锁屏</li>
-                <li @click.stop="goview('login')">登出</li>
+              <ul class="iconul">
+                <li @click.stop="goview('myinfo')"><i class="i-user"></i>我的信息</li>
+                <li @click.stop="goview('set')"><i class="i-set"></i>设置</li>
+                <li @click.stop="goview('lock')"><i class="i-lock"></i>锁屏</li>
+                <li @click.stop="goview('login')"><i class="i-loginout"></i>登出</li>
               </ul>
             </div>
           </li>
@@ -156,7 +156,7 @@ export default {
 .topbar .leftlogo img{ height: 60px}
 .rightinfo{}
 .rightinfo>ul{display: flex;display: -webkit-flex; height: 100%; color:#f8e2ff;}
-.rightinfo>ul li{ width: 60px; padding:10px 5px;text-align: center; position: relative; cursor: pointer}
+.rightinfo>ul li{ width: 60px; padding:10px 5px;text-align: center; position: relative; cursor: pointer;right: 0;top:0}
 .rightinfo>ul li p{ font-size: 12px; transform: scale(0.9); letter-spacing: 1px}
 .topimg{ background: url("../../static/img/topinfo.png") no-repeat; margin: 0 auto}
 .userimg{ background-position: 0px 0px;width: 25px; height: 25px; background-size: cover}
@@ -173,12 +173,16 @@ export default {
 .menuul li .icon-menu05{background-position: 0px -100px;width: 25px; height: 25px; background-size: cover;}
 .menuul li .icon-menu06{background-position: 0px -125px;width: 25px; height: 25px; background-size: cover;}
 .menuul li .icon-menu07{background-position: 0px -150px;width: 25px; height: 25px; background-size: cover;}
-.popmyinfo{background: #38213e; z-index: 99; width: 70px; border: 1px solid #48344d; position: relative; top: 10px}
+.popmyinfo{background: #38213e; z-index: 99; min-width: 90px; border: 1px solid #48344d; position: absolute; top: 62px;right: 0}
 .popmyinfo ul {display: flex; display: -webkit-flex; flex-direction: column; -webkit-flex-direction: column}
 .popmyinfo ul li{ width:auto; cursor: pointer; display: block; padding: 0px; border-bottom: 1px solid #48344d; height: 24px; line-height: 24px;font-size: 12px; color: #9f8ba6}
 .popmyinfo ul li:last-child{border-bottom: none}
 .popmyinfo ul li:hover{background:#2e1c34}
 .userbar{display:flex; display:-webkit-flex; align-items:center;-webkit-align-items: center}
-
-
+.popmyinfo ul li i{ background: url("../../static/img/list_icon.png") no-repeat; display: inline-block;content: '';width: 13px; height: 13px; position: relative; top: 2px; right: 5px;}
+.popmyinfo ul li i.i-user{ background-position: 0 0; background-size: cover; }
+.popmyinfo ul li i.i-set{ background-position: 0 -13px; background-size: cover; }
+.popmyinfo ul li i.i-lock{ background-position: 0 -26px;  background-size: cover; }
+.popmyinfo ul li i.i-loginout{ background-position: 0 -39px; background-size: cover;}
+.popmyinfo ul.iconul li{ text-align: left; padding: 3px 10px; padding-left: 15px}
 </style>

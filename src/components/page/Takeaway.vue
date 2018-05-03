@@ -2,7 +2,7 @@
   <div class="main">
     <!-- title -->
     <div class="navbar">
-      <h1 class="nav-bar-title">外卖<small> | 外卖商品信息设置</small></h1>
+      <h1 class="nav-bar-title">外送<small> | 外送商品信息设置</small></h1>
     </div>
     <!-- infoList -->
     <div class="listtable">
@@ -10,8 +10,11 @@
 
         <div class="ls-left">
           <div class="form-tabel">
-            <div class="td-title">外卖商品表</div>
-            <div class="td-content"><input type="text" v-model="product_name" /><span class="search-icon" @click="searchlist"><i class="el-icon-search"></i></span></div>
+            <div class="td-title">外送商品表</div>
+            <div class="td-content">
+              <input type="text" v-model="product_name" />
+              <span class="search-icon" @click="searchlist"><i class="el-icon-search"></i></span>
+            </div>
           </div>
         </div>
         <div class="ls-right">
@@ -21,7 +24,7 @@
         </div>
 
       </div>
-  
+
       <el-table stripe :data="ListData">
         <el-table-column prop="product_id" label="ID"></el-table-column>
         <el-table-column prop="product_name" label="商户名称"></el-table-column>
@@ -37,7 +40,7 @@
               <div class="tdbtn-view newView" style="padding:0 5px" @click="vieweditor(scope.row.product_id)">
                 <i class="el-icon-view"></i><span>查看/编辑</span>
               </div>
-              <div class="tdBtn-view" @click="removeThis(index)">
+              <div class="tdBtn-view" @click="removeThis(scope.row.product_id)">
                 <i class="el-icon-delete"></i>&nbsp;&nbsp;<span>删除</span>
               </div>
             </div>
@@ -127,7 +130,7 @@ export default {
     // 分页
     handleCurrentChange(val){
       this.page=val
-      this.getlistData(this.page);
+      this.getlistData();
     },
     clickadd(){
       this.fromParent=''
@@ -138,14 +141,24 @@ export default {
       this.fromParent=id.toString();
     },
     // 删除
-    removeThis(ListData,index){
+    removeThis(id){
       let vm = this,
-      url='/api/web/product/delete'
+      url='/api/web/product/delete',
+      params={'product_id':id}
       vm.$axios({
         method:'post',
+        data:params,
         url:url
       }).then((res)=>{
-        vm.ListData.splice(index,1);
+        if(res.data.error_code=='0'){
+          vm.$message({
+            message: '删除成功!',
+            type: 'success'
+          });
+          vm.getlistData()
+        }else{
+          vm.$message.error(res.data.message);
+        }
       }).catch(err => {
         console.log(err);
       });
@@ -163,6 +176,6 @@ export default {
   .ls-left .form-tabel{ display: flex;display: -webkit-flex; align-items: center; -webkit-align-items: center; padding-bottom: 10px}
   .form-tabel .td-title{ margin-right: 5px; color: #f8e2ff}
   .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
-  .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center; margin-left: 1px}
+  .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center;}
   .td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
 </style>
