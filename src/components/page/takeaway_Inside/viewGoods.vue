@@ -84,13 +84,7 @@
             <div class="adduser-itemBox">
               <div class="adduser-class notSame">
                 <div class="notSametitle" v-model="track"><em>*</em>库存跟踪</div>
-                  <el-switch
-                    v-model="inventory_track"
-                    active-color="rgb(96,58,108)"
-                    inactive-color="#7e7c7c"
-                    class="el_switch"
-                    >
-                  </el-switch>
+                <el-switch v-model="inventory_track" active-color="rgb(96,58,108)" inactive-color="#7e7c7c" class="el_switch"></el-switch>
               </div>
               <div class="adduser-producer">
                 <div class="producertitle"><em>*</em>库存数量</div>

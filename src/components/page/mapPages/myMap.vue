@@ -61,6 +61,7 @@ import {MP} from '../../../newMap.js'
       // console.log(this.pcityMap)
       let vm = this;
       vm.initMap();
+      
     },
     methods:{
       initMap () {
@@ -219,66 +220,12 @@ import {MP} from '../../../newMap.js'
         
       },
       //创建marker
-      // addMarker(){
-      //   var markerArr = [{
-      //     title:"深圳市腾讯计算机系统有限公司",
-      //     content:"地址：深圳市深南大道10000号<br/>电话：0755-83765566",
-      //     point:"114.02597366|22.54605355",
-      //     isOpen:1,icon:{w:23,h:25,l:46,t:21,x:9,lb:12}
-      //   }];
-      //   for(var i=0;i<markerArr.length;i++){
-      //     var json = markerArr[i];
-      //     var p0 = json.point.split("|")[0];
-      //     var p1 = json.point.split("|")[1];
-      //     var point = new BMap.Point(p0,p1);
-      //     //这个地方加this
-      //     var iconImg = this.createIcon(json.icon);
-      //     var marker = new BMap.Marker(point,{icon:iconImg});
-      //     //这个地方加this
-      //     var iw = this.createInfoWindow(i);
-      //     var label = new BMap.Label(json.title,{"offset":new BMap.Size(json.icon.lb-json.icon.x+10,-20)});
-      //     marker.setLabel(label);
-      //     map.addOverlay(marker);
-      //     label.setStyle({
-      //       borderColor:"#808080",
-      //       color:"#333",
-      //       cursor:"pointer"
-      //     });
-      //     var index = i;
-      //     //这个地方加this
-      //     var _iw = this.createInfoWindow(i);
-      //     var _marker = marker;
-      //     marker.addEventListener("click",function(){
-      //     //这个地方加this
-      //       this.openInfoWindow(_iw);
-      //     });
-      //     iw.addEventListener("open",function(){
-      //       _marker.getLabel().hide();
-      //     })
-      //     _iw.addEventListener("close",function(){
-      //       _marker.getLabel().show();
-      //     })
-      //     label.addEventListener("click",function(){
-      //       _marker.openInfoWindow(_iw);
-      //     })
-      //     if(!!json.isOpen){
-      //       label.hide();
-      //       _marker.openInfoWindow(_iw);
-      //     }
-      //   }
+      //addMarker(){
+      
       // },
       //创建InfoWindow
-      // createInfoWindow(i){
-      // //这个地方复制一下上面的var markerArr 不然会不显示报错
-      //   var markerArr = [{
-      //     title:"深圳市腾讯计算机系统有限公司",
-      //     content:"地址：深圳市深南大道10000号<br/>电话：0755-83765566",
-      //     point:"114.02597366|22.54605355",
-      //     isOpen:1,icon:{w:23,h:25,l:46,t:21,x:9,lb:12}
-      //   }];
-      //   var json = markerArr[i];
-      //   var iw = new BMap.InfoWindow("<b class='iw_poi_title' title='" + json.title + "'>" + json.title + "</b><div class='iw_poi_content'>"+json.content+"</div>");
-      //   return iw;
+      //createInfoWindow(i){
+
       // },
       //创建一个Icon
       createIcon(json){
