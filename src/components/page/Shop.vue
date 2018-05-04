@@ -103,7 +103,7 @@
         </div>
         <div class="line">
           <div class="title">店铺描述：</div>
-          <div class="content"><div class="mytextarea"><textarea  v-model="ListData.describe" ></textarea></div></div>
+          <div class="content"><div class="mytextarea"><textarea maxlength="240" v-model="ListData.describe" ></textarea></div></div>
         </div>
         <div class="line">
           <div class="title">座位数量：</div>
@@ -268,19 +268,20 @@ import myMap from './mapPages/myMap'
                      //店铺图片
                      if(item){
                        //修改图片
-                       if(image.width==maxWidth&&image.height==maxHeight){
+                      // if(image.width==maxWidth&&image.height==maxHeight){
+                       if((image.width/image.height).toFixed(2)==(maxWidth/maxHeight).toFixed(2)){
                          item.img=e.target.result;
                          vm.imgupload('2',item.img,way,item)
                        }else{
                          vm.$message.error('图片尺寸不对');
-                         item.img=e.target.result;
-                         vm.imgupload('2',item.img,way,item)
+                         /*item.img=e.target.result;
+                         vm.imgupload('2',item.img,way,item)*/
                          return
                        }
                      }else{
                        //添加图片
                        let imgobj={},ajaxarray=[];
-                       if(image.width==maxWidth&&image.height==maxHeight){
+                       if((image.width/image.height).toFixed(2)==(maxWidth/maxHeight).toFixed(2)){
                          imgobj={
                            img:e.target.result
                          }
@@ -288,23 +289,23 @@ import myMap from './mapPages/myMap'
                          vm.imgupload('2',imgobj.img,way,item)
                        }else{
                          vm.$message.error('图片尺寸不对');
-                         imgobj={
+                         /*imgobj={
                            img:e.target.result
                          }
                          vm.imgVO.push(imgobj)
-                         vm.imgupload('2',imgobj.img,way,item)
+                         vm.imgupload('2',imgobj.img,way,item)*/
                        }
                      }
                    }else if(way==3){
                       //上传logo
-                     if(image.width==168&&image.height==168){
+                     if((image.width/image.height).toFixed(2)==1.00){
                        vm.ListData.logo=e.target.result;
                        vm.imgupload('3',vm.ListData.logo,way)
                      }else{
                        vm.$message.error('图片尺寸不对');
-                       vm.ListData.logo=e.target.result;
+                      /* vm.ListData.logo=e.target.result;
                        vm.imgupload('3',vm.ListData.logo,way)
-                       return
+                       return*/
                      }
 
 
@@ -324,7 +325,7 @@ import myMap from './mapPages/myMap'
                      }else{
                        //添加图片
                        let imgobj={};
-                       if(image.width==maxWidth&&image.height==maxHeight){
+                       if((image.width/image.height).toFixed(2)==(maxWidth/maxHeight).toFixed(2)){
                          imgobj={
                            img:e.target.result
                          }
@@ -332,11 +333,11 @@ import myMap from './mapPages/myMap'
                          vm.imgupload('4',imgobj.img,way,item)
                        }else{
                          vm.$message.error('图片尺寸不对');
-                         imgobj={
+                        /* imgobj={
                            img:e.target.result
                          }
                          vm.recommend.push(imgobj)
-                         vm.imgupload('4',imgobj.img,way,item)
+                         vm.imgupload('4',imgobj.img,way,item)*/
                        }
                      }
                    }

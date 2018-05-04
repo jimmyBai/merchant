@@ -111,7 +111,8 @@ export default {
       vm.showinfoBox=!vm.showinfoBox
       //如果是登出登录
       if(way=='login'){
-        localStorage.clear()
+        localStorage.removeItem('token')
+        localStorage.removeItem('uid')
         sessionStorage.clear()
         vm.$store.state.token=''
         vm.$store.state.uid=''
