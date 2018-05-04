@@ -131,15 +131,41 @@ import "../../../../static/css/newStyle.css"
         capacity: '',
         price: '',
         special_price: '',
-        is_use_special_price: '',
+        is_use_special_price: false,
         track: '',
-        inventory_track: '',
+        inventory_track: false,
         inventory: '',
         listdata:''
       }
     },
     props: {
       fromParent: String
+    },
+    watch:{
+      name_en(nVal,oVal){
+        this.name_en=nVal.toString().replace(/[^a-zA-Z]/g,'');
+      },
+      place(nVal,oVal){
+        this.place=nVal.toString().replace(/[^\u4e00-\u9fa5]/g,'');
+      },
+      years(nVal,oVal){
+        this.years=nVal.toString().replace(/[^0-9]*/g,'');
+      },
+      weight(nVal,oVal){
+        this.weight=nVal.toString().replace(/[^0-9]*/g,'');
+      },
+      capacity(nVal,oVal){
+        this.capacity=nVal.toString().replace(/[^0-9]*/g,'');
+      },
+      price(nVal,oVal){
+        this.price=nVal.toString().replace(/[^0-9]*/g,'');
+      },
+      special_price(nVal,oVal){
+        this.special_price=nVal.toString().replace(/[^0-9]*/g,'');
+      },
+      inventory(nVal,oVal){
+        this.inventory=nVal.toString().replace(/[^0-9]*/g,'');
+      }
     },
     mounted:function(){
       // 判断页面
@@ -222,6 +248,12 @@ import "../../../../static/css/newStyle.css"
           return false
         }else if(!this.name_en){
           this.$message.error("商品英文名称不能为空!");
+          return false
+        }else if(!this.place){
+          this.$message.error("产品产地不能为空!");
+          return false
+        }else if(!this.years){
+          this.$message.error("产品年份不能为空!");
           return false
         }else if(!this.weight){
           this.$message.error("产品重量不能为空!");

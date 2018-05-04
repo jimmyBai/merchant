@@ -62,6 +62,7 @@ export default {
         let NewPage = '_empty' + '?time=' + new Date().getTime()/1000
         this.$router.push(NewPage)
         this.$router.go(-1)
+        // this.$router.push('/sadmin');
       }
     },
     changetabs(way){
