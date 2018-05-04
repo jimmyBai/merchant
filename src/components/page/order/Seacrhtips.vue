@@ -3,14 +3,14 @@
     <div class="res-head">筛选条件</div>
     <div class="res-content">
       <el-row class="res-content-line">
-        <el-col :span="4"><div class="res-title">余额：</div></el-col>
+        <el-col :span="4"><div class="res-title">付款金额：</div></el-col>
         <el-col :span="7"><div class="res-input"><input  v-model="searchinfo.min_balance" type="tel"></div></el-col>
         <el-col :span="1"><div class="res-line">~</div></el-col>
         <el-col :span="7"><div class="res-input"><input  v-model="searchinfo.max_balance" type="tel"></div></el-col>
         <el-col :span="4"><div class="res-btn" @click="searchFn"><span>确定</span></div></el-col>
       </el-row>
       <el-row class="res-content-line">
-        <el-col :span="4"><div class="res-title">加入</br>时间段：</div></el-col>
+        <el-col :span="4"><div class="res-title">下单时间：</div></el-col>
         <el-col :span="7">
           <div class="res-input">
             <el-date-picker v-model="searchinfo.create_start"  :editable="false" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期">

@@ -51,7 +51,7 @@ import {MP} from '../../../newMap.js'
         msgtitle: '选择地址',
         cAddress: [],
         listArray:[],
-        // returnmap:''
+        returnmap:''
       }
     },
     props:{
@@ -61,6 +61,7 @@ import {MP} from '../../../newMap.js'
       // console.log(this.pcityMap)
       let vm = this;
       vm.initMap();
+      
       
     },
     methods:{
