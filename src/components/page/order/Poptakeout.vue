@@ -85,6 +85,8 @@
                 <li style="margin-top: 10px;"><div class="content"><span>收货地址：</span><span class="addr" v-text="detailinfo.address"></span></div></li>
                 <li><div class="title">商品数量</div></li>
                 <li><div class="content"><span v-text="detailinfo.product_total_num"></span></div></li>
+                <li><div class="title">下单评论</div></li>
+                <li><div class="content"><span v-text="detailinfo.remark"></span></div></li>
               </ul>
             </div>
             <div class="goodsinfo">

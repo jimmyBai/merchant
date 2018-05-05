@@ -143,28 +143,44 @@ import "../../../../static/css/newStyle.css"
     },
     watch:{
       name_en(nVal,oVal){
-        this.name_en=nVal.toString().replace(/[^a-zA-Z]/g,'');
+        if(nVal){
+          this.name_en=nVal.toString().replace(/[^a-zA-Z]/g,'');
+        }
       },
       place(nVal,oVal){
-        this.place=nVal.toString().replace(/[^\u4e00-\u9fa5]/g,'');
+        if(nVal){
+          this.place=nVal.toString().replace(/[^\u4e00-\u9fa5]/g,'');
+        }
       },
       years(nVal,oVal){
-        this.years=nVal.toString().replace(/[^0-9]*/g,'');
+        if(nVal){
+          this.years=nVal.toString().replace(/[^0-9]*/g,'');
+        }
       },
       weight(nVal,oVal){
-        this.weight=nVal.toString().replace(/[^0-9]*/g,'');
+        if(nVal){
+          this.weight=nVal.toString().replace(/[^0-9]*/g,'');
+        }
       },
       capacity(nVal,oVal){
-        this.capacity=nVal.toString().replace(/[^0-9]*/g,'');
+        if(nVal){
+          this.capacity=nVal.toString().replace(/[^0-9]*/g,'');
+        }
       },
       price(nVal,oVal){
-        this.price=nVal.toString().replace(/[^0-9]*/g,'');
+        if(nVal){
+          this.price=nVal.toString().replace(/[^0-9]*/g,'');
+        }
       },
       special_price(nVal,oVal){
-        this.special_price=nVal.toString().replace(/[^0-9]*/g,'');
+        if(nVal){
+          this.special_price=nVal.toString().replace(/[^0-9]*/g,'');
+        }
       },
       inventory(nVal,oVal){
-        this.inventory=nVal.toString().replace(/[^0-9]*/g,'');
+        if(nVal){
+          this.inventory=nVal.toString().replace(/[^0-9]*/g,'');
+        }
       }
     },
     mounted:function(){
