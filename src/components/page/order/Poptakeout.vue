@@ -97,14 +97,14 @@
                       <div class="img">
                         <img src="../../../../static/img/goodsimg.jpg" />
                       </div>
-                      <div class="goodsnum"><span v-text="item.num">2</span></div>
+                      <div class="goodsnum"><span v-text="item.num"></span></div>
                     </div>
                     <div class="goodstext">
                       <div class="goodsname"><span v-text="item.name"></span></div>
                       <div class="goodstips"><span v-text="item.weight+'KG'"></span></div>
                     </div>
                     <div class="goodtotalm">
-                      <div class="goodsprice"><span v-text="item.unit_price"></span></div>
+                      <div class="goodsprice"><span v-text="(item.unit_price*item.num).toFixed(2)"></span></div>
                       <div class="mtotal"><span v-text="item.unit_price"></span><span class="preadd">X</span><span v-text="item.num"></span></div>
                     </div>
                   </li>
@@ -116,6 +116,10 @@
               <li class="c_w">
                 <div>小计</div>
                 <div><span v-text="detailinfo.subtotal_amount"></span></div>
+              </li>
+              <li class="c_w">
+                <div>平台费</div>
+                <div><span v-text="detailinfo.service_fee"></span></div>
               </li>
               <li class="c_w">
                 <div>配送</div>

@@ -306,12 +306,12 @@ import "../../../../static/css/newStyle.css"
 
             if(this.fromParent){
               vm.$message({
-                message: '修改商品成功!',
+                message: '修改商品成功,请等待审核!',
                 type: 'success'
               });
             }else{
               vm.$message({
-                message: '添加商品成功!',
+                message: '添加商品成功,请等待审核!',
                 type: 'success'
               });
             }
