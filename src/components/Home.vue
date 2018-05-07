@@ -10,7 +10,7 @@
           <div class="grid-content bg-purple GridOne">
             <span class="listTitle">用户数量</span>
             <div class="listLift">
-              <span>123</span>
+              <span v-text="usernum"></span>
             </div>
             <div class="listRight">
               <img src="/static/img/userNum.png" class="userNum" alt="">
@@ -22,7 +22,7 @@
           <div class="grid-content bg-purple GridTwo">
             <span class="listTitle">当前会员</span>
             <div class="listLift">
-              <span>123</span>
+              <span v-text="membernum"></span>
             </div>
             <div class="listRight">
               <img src="/static/img/currentVip.png" class="currentVip" alt="">
@@ -34,7 +34,7 @@
           <div class="grid-content bg-purple GridThree">
             <span class="listTitle">当前订单数量</span>
             <div class="listLift">
-              <span>123</span>
+              <span v-text="ordernum"></span>
             </div>
             <div class="listRight">
               <img src="/static/img/currentOrderNum.png" class="currentOrderNum" alt="">
@@ -46,9 +46,9 @@
     </div>
     <!-- body -->
     <div class="navbar">
-      <h1 class="nav-bar-title">外卖订单<small> | 订单信息</small></h1>
+      <h1 class="nav-bar-title">外送订单<small> | 订单信息</small></h1>
     </div>
-    <div class="orderbox">
+    <div class="orderbox" v-if="false">
       <el-row :gutter="20">
         <el-col :span="6">
           <div class="grid-content bg-purple fourGrid">
@@ -82,9 +82,9 @@
             <span class="prompt">1</span>
           </div>
         </el-col>
-      </el-row>  
-    </div>  
-    
+      </el-row>
+    </div>
+
   </div>
 </template>
 <script>
@@ -92,7 +92,9 @@ export default {
   name: 'home',
   data () {
     return {
-
+      usernum:'',
+      membernum:'',
+      ordernum:''
     }
   },
 
@@ -142,7 +144,7 @@ export default {
     right: -5px;
     width: 32%;
   }
-  
+
   .listLift{
     width: 70%;
     height: 40px;

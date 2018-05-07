@@ -66,7 +66,7 @@
 
         <div class="line">
           <div class="title">联系电话：</div>
-          <div class="content"><input type="text"  v-model="ListData.telephone" /></div>
+          <div class="content"><input type="text" v-model="ListData.telephone" /></div>
         </div>
         <div class="line">
           <div class="title">人均消费：</div>
@@ -125,10 +125,10 @@
                     </el-select>
                   </el-col>
                   <el-col :span="8">
-                    <el-time-select v-model="item.am_begin" :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '14:00'}">
+                    <el-time-select v-model="item.am_begin" :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '23:30'}">
                     </el-time-select>
                     <div class="fromto">至</div>
-                    <el-time-select v-model="item.am_end" :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '14:00'}">
+                    <el-time-select v-model="item.am_end" :editable="false" :picker-options="{ start: '00:00', step: '00:30',end: '23:30'}">
                     </el-time-select>
                   </el-col>
                   <el-col :span="8">
@@ -209,6 +209,22 @@ import myMap from './mapPages/myMap'
     created(){
 
     },
+    watch:{
+      'ListData.telephone'(cVal,oVal){
+        if(cVal){
+          return this.ListData.telephone=cVal.replace(/\D/,'')
+        }
+      },
+      'ListData.consumption'(cVal,oVal){
+        if(cVal){
+          if(/^\d+(\.\d+)?$/.test(cVal)){
+
+          }else{
+            return this.ListData.consumption=cVal.replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1')
+          }
+        }
+      }
+    },
     mounted:function(){
       this.getlistData();
     },
@@ -218,10 +234,11 @@ import myMap from './mapPages/myMap'
         vm.cityMap=data[0]
         vm.$set(vm.ListData,'address',data[0].address)
         vm.pCity=data[0].province+data[0].city
-        //vm.ListData.address=data[0].title
         vm.mapShow=data[1];
-        console.log( vm.mapShow)
-        //console.log("alldata:",data);
+        if(data[0].point&&data[0].point.lat&&data[0].point.lng){
+          vm.ListData.lat=data[0].point.lat
+          vm.ListData.lng=data[0].point.lng
+        }
       },
       // 打开百度地图
       openMap(data){
@@ -447,7 +464,7 @@ import myMap from './mapPages/myMap'
           return
         }
 
-          let vm =this, url='/api/web/setting/save',params,banners=[],recommend=[],business=[],logoarray=[];
+          let vm =this,flag, url='/api/web/setting/save',params,banners=[],recommend=[],business=[],logoarray=[];
           //封装Logo图片数组
           if(vm.ListData.logo){
             logoarray.push(vm.ListData.logo)
@@ -467,18 +484,42 @@ import myMap from './mapPages/myMap'
           //封装店铺营业时间
           if(vm.business_time&&vm.business_time.length>0){
             vm.business_time.forEach(item=>{
-              let timelineobj={
-                "interval": {
-                  "begin": item.startWeek.value,
-                  "end": item.endWeek.value,
-                },
-                "time": {
-                  "am": item.am_begin+'-'+item.am_end,
-                  "pm": item.pm_begin+'-'+item.pm_end
+              if(item.startWeek&&item.endWeek){
+                item.am_begin=item.am_begin?item.am_begin:''
+                item.am_end=item.am_end&&item.am_end!='null'?item.am_end:''
+                item.pm_begin=item.pm_begin?item.pm_begin:''
+                item.pm_end=item.pm_end&&item.pm_end!='null'?item.pm_end:''
+                let timelineobj={
+                  "interval": {
+                    "begin": item.startWeek.value,
+                    "end": item.endWeek.value,
+                  },
+                  "time": {
+                    "am": item.am_begin+'-'+item.am_end,
+                    "pm": item.pm_begin+'-'+item.pm_end
+                  }
+                }
+                if(!item.am_begin||!item.am_end){
+                  timelineobj.time.am=''
+                }
+                if(!item.pm_begin||!item.pm_end){
+                  timelineobj.time.pm=''
+                }
+                if(timelineobj.interval.begin&&timelineobj.interval.end){
+                  if((item.am_begin&&item.am_end)||(item.pm_begin&&item.pm_end)){
+                    business.push(timelineobj)
+                  }else{
+                    flag=true
+                  }
+                }else{
+                  flag=true
                 }
               }
-              business.push(timelineobj)
             })
+          }
+          if(flag){
+            vm.$message.error('店铺时间必须设置！');
+            return false
           }
           params={
             'name':vm.ListData.name,
@@ -490,7 +531,9 @@ import myMap from './mapPages/myMap'
             'consumption':vm.ListData.consumption,
             'banners':banners,
             'recommend':recommend,
-            'business':business
+            'business':business,
+            'lat':vm.ListData.lat,
+            'lng':vm.ListData.lng
           }
 
         vm.$axios({

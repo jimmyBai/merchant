@@ -265,12 +265,6 @@ import "../../../../static/css/newStyle.css"
         }else if(!this.name_en){
           this.$message.error("商品英文名称不能为空!");
           return false
-        }else if(!this.place){
-          this.$message.error("产品产地不能为空!");
-          return false
-        }else if(!this.years){
-          this.$message.error("产品年份不能为空!");
-          return false
         }else if(!this.weight){
           this.$message.error("产品重量不能为空!");
           return false
