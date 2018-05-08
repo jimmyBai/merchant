@@ -243,7 +243,12 @@ import myMap from './mapPages/myMap'
       // 打开百度地图
       openMap(data){
         let vm = this;
-        vm.cityMap=vm.cityMap;
+        vm.cityMap={
+          lng:vm.ListData.lng,
+          lat:vm.ListData.lat,
+          address:vm.ListData.address
+        };
+        // console.log(vm.cityMap)
         vm.mapShow = true;
       },
       addimg(way,item){
