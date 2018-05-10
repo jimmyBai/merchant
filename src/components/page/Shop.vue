@@ -68,10 +68,16 @@
           <div class="title">联系电话：</div>
           <div class="content"><input type="text" v-model="ListData.telephone" /></div>
         </div>
+        
         <div class="line">
-          <div class="title">人均消费：</div>
-          <div class="content"><input type="text"  v-model="ListData.consumption" /></div>
+          <div class="title">最低人均消费：</div>
+          <div class="content"><input type="text" v-model="ListData.consumption_min" /></div>
         </div>
+        <div class="line">
+          <div class="title">最高人均消费：</div>
+          <div class="content"><input type="text" v-model="ListData.consumption_max" /></div>
+        </div>
+
         <div class="line photobox">
           <div class="title">推荐图片：</div>
           <div class="content">
@@ -215,12 +221,21 @@ import myMap from './mapPages/myMap'
           return this.ListData.telephone=cVal.replace(/\D/,'')
         }
       },
-      'ListData.consumption'(cVal,oVal){
+      'ListData.consumption_max'(cVal,oVal){
+        if(cVal){
+          if(/^\d+(\.\d+)?$/.test(cVal)){
+            
+          }else{
+            return this.ListData.consumption_max=cVal.replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1')
+          }
+        }
+      },
+      'ListData.consumption_min'(cVal,oVal){
         if(cVal){
           if(/^\d+(\.\d+)?$/.test(cVal)){
 
           }else{
-            return this.ListData.consumption=cVal.replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1')
+            return this.ListData.consumption_min=cVal.replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1')
           }
         }
       }
@@ -233,8 +248,8 @@ import myMap from './mapPages/myMap'
         let vm = this;
         vm.cityMap=data[0]
         vm.$set(vm.ListData,'address',data[0].address)
-        vm.pCity=data[0].province+data[0].city
         vm.mapShow=data[1];
+        vm.pCity=data[0].province+data[0].city     
         if(data[0].point&&data[0].point.lat&&data[0].point.lng){
           vm.ListData.lat=data[0].point.lat
           vm.ListData.lng=data[0].point.lng
@@ -246,7 +261,8 @@ import myMap from './mapPages/myMap'
         vm.cityMap={
           lng:vm.ListData.lng,
           lat:vm.ListData.lat,
-          address:vm.ListData.address
+          address:vm.ListData.address,
+          pCity:vm.pCity
         };
         // console.log(vm.cityMap)
         vm.mapShow = true;
@@ -526,6 +542,9 @@ import myMap from './mapPages/myMap'
             vm.$message.error('店铺时间必须设置！');
             return false
           }
+          if(vm.ListData.consumption_max<vm.ListData.consumption_min){
+            vm.$message.error('最高消费不能小于最低消费！');
+          }
           params={
             'name':vm.ListData.name,
             'address':vm.ListData.address,
@@ -533,7 +552,8 @@ import myMap from './mapPages/myMap'
             'seat_number':vm.ListData.seat_number,
             'logo':logoarray,
             'phone':vm.ListData.telephone,
-            'consumption':vm.ListData.consumption,
+            'consumption_min':vm.ListData.consumption_min,
+            'consumption_max':vm.ListData.consumption_max,
             'banners':banners,
             'recommend':recommend,
             'business':business,

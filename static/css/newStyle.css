@@ -31,6 +31,30 @@
   width: 48%;
   float: left;
 }
+.viewwhy{
+  background: #7a6fbe; 
+  padding: 0 5px;
+  border-radius: 2px;
+  width: 32%;
+  float: left;
+}
+.Vieweditor{
+  background: #7a6fbe; 
+  padding: 0 5px;
+  border-radius: 2px;
+  width: 34.4%;
+  float: left;
+  margin-left: 2px;
+}
+.viewdelete{
+  background: #e65c20; 
+  padding: 0 5px; 
+  border-radius: 2px; 
+  text-align: center; 
+  width: 32%;
+  float: right;
+  margin-left: 2px;
+}
 
 /* map */
 .notSame{

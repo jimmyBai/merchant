@@ -55,7 +55,7 @@ import {MP} from '../../../newMap.js'
       pcityMap: Object
     },
     mounted(){
-      // console.log(this.pcityMap);
+      console.log(this.pcityMap);
       let vm = this;
       vm.initMap();
     },

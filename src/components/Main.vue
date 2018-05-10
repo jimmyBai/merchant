@@ -21,6 +21,7 @@
               <ul class="iconul">
                 <li @click.stop="goview('myinfo')"><i class="i-user"></i>我的信息</li>
                 <li @click.stop="goview('set')"><i class="i-set"></i>设置</li>
+                <li @click.stop="goview('MerchantWallet')"><i class="i-wallet"></i>钱包</li>
                 <li @click.stop="goview('lock')"><i class="i-lock"></i>锁屏</li>
                 <li @click.stop="goview('login')"><i class="i-loginout"></i>登出</li>
               </ul>
@@ -59,7 +60,16 @@ export default {
     return {
       showinfoBox:false,
       num:this.$store.state.menuIndex,
-      menuArray:[{'name':'首页','userid':0,'icon':'00'},{'name':'会员','userid':1,'icon':'01'},{'name':'订单','userid':2,'icon':'02'},{'name':'外送','userid':3,'icon':'03'},{'name':'店铺','userid':5,'icon':'05'},{'name':'报表','userid':4,'icon':'04'},{'name':'权限','userid':6,'icon':'06'},{'name':'订座','userid':7,'icon':'07'}]
+      menuArray:[
+        {'name':'首页','userid':0,'icon':'00'},
+        {'name':'会员','userid':1,'icon':'01'},
+        {'name':'订单','userid':2,'icon':'02'},
+        {'name':'外送','userid':3,'icon':'03'},
+        {'name':'店铺','userid':5,'icon':'05'},
+        {'name':'报表','userid':4,'icon':'04'},
+        {'name':'权限','userid':6,'icon':'06'},
+        {'name':'订座','userid':7,'icon':'07'}
+      ]
     }
   },
   mounted:function(){
@@ -117,6 +127,10 @@ export default {
         vm.$store.state.token=''
         vm.$store.state.uid=''
         vm.$store.state.menuIndex='0'
+      }
+      // 进入钱包
+      if(way=='MerchantWallet'){
+        vm.$router.push('/'+way)
       }
       vm.$router.push('/'+way)
     },
@@ -185,5 +199,6 @@ export default {
 .popmyinfo ul li i.i-set{ background-position: 0 -13px; background-size: cover; }
 .popmyinfo ul li i.i-lock{ background-position: 0 -26px;  background-size: cover; }
 .popmyinfo ul li i.i-loginout{ background-position: 0 -39px; background-size: cover;}
+.popmyinfo ul li i.i-wallet{ background-position: 0 -39px; background-size: cover;}
 .popmyinfo ul.iconul li{ text-align: left; padding: 3px 10px; padding-left: 15px}
 </style>
