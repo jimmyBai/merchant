@@ -199,6 +199,6 @@ export default {
 .popmyinfo ul li i.i-set{ background-position: 0 -13px; background-size: cover; }
 .popmyinfo ul li i.i-lock{ background-position: 0 -26px;  background-size: cover; }
 .popmyinfo ul li i.i-loginout{ background-position: 0 -39px; background-size: cover;}
-.popmyinfo ul li i.i-wallet{ background-position: 0 -39px; background-size: cover;}
+.popmyinfo ul li i.i-wallet{ background: url("../../static/img/wallet.png") no-repeat; display: inline-block; background-size: cover;}
 .popmyinfo ul.iconul li{ text-align: left; padding: 3px 10px; padding-left: 15px}
 </style>
