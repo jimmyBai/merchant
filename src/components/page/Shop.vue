@@ -8,7 +8,7 @@
       <div class="formbox">
         <div class="line">
           <div class="title">店铺名称：</div>
-          <div class="content"><input v-model="ListData.name" type="text" /></div>
+          <div class="content"><input v-model="ListData.name" type="text" @focus="selectval($event)" /></div>
         </div>
         <div class="line">
           <div class="title">店铺logo：</div>
@@ -66,16 +66,16 @@
 
         <div class="line">
           <div class="title">联系电话：</div>
-          <div class="content"><input type="text" v-model="ListData.telephone" /></div>
+          <div class="content"><input type="text" v-model="ListData.telephone" @focus="selectval($event)" /></div>
         </div>
         
         <div class="line">
           <div class="title">最低人均消费：</div>
-          <div class="content"><input type="text" v-model="ListData.consumption_min" /></div>
+          <div class="content"><input type="text" v-model="ListData.consumption_min" @focus="selectval($event)" @change="inputchange('1')" /></div>
         </div>
         <div class="line">
           <div class="title">最高人均消费：</div>
-          <div class="content"><input type="text" v-model="ListData.consumption_max" /></div>
+          <div class="content"><input type="text" v-model="ListData.consumption_max" @focus="selectval($event)" @change="inputchange('2')" /></div>
         </div>
 
         <div class="line photobox">
@@ -113,7 +113,7 @@
         </div>
         <div class="line">
           <div class="title">座位数量：</div>
-          <div class="content"><input type="tel" v-model="ListData.seat_number" /></div>
+          <div class="content"><input type="tel" v-model="ListData.seat_number" @focus="selectval($event)" /></div>
         </div>
         <div class="line shopline">
           <div class="title">营业时间：</div>
@@ -266,6 +266,15 @@ import myMap from './mapPages/myMap'
         };
         // console.log(vm.cityMap)
         vm.mapShow = true;
+      },
+      inputchange(){
+        let vm = this;
+        if(this.ListData.consumption_max<this.ListData.consumption_min){
+          vm.$message.error('最高消费不能小于最低消费！');
+        }
+      },
+      selectval(event){
+        event.currentTarget.select();
       },
       addimg(way,item){
         let vm=this,maxbannernum=8,maximg=10,
@@ -544,6 +553,7 @@ import myMap from './mapPages/myMap'
           }
           if(vm.ListData.consumption_max<vm.ListData.consumption_min){
             vm.$message.error('最高消费不能小于最低消费！');
+            return false
           }
           params={
             'name':vm.ListData.name,
