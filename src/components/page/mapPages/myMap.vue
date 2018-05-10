@@ -40,7 +40,7 @@
 <script>
 // andy
 import '../../../../static/css/newStyle.css'
-import {MP} from '../../../newMap.js'  
+import {MP} from '../../../../static/js/newMap.js'
 
   export default {
     name: 'mymap',
