@@ -71,11 +71,15 @@
         
         <div class="line">
           <div class="title">最低人均消费：</div>
-          <div class="content"><input type="text" v-model="ListData.consumption_min" @focus="selectval($event)" @blur="autoval" @change="inputchange('1')" /></div>
+          <div class="content">
+            <input type="text" v-model="ListData.consumption_min" @focus="selectval($event)" @blur="autoval(1)" @change="inputchange('1')" />
+          </div>
         </div>
         <div class="line">
           <div class="title">最高人均消费：</div>
-          <div class="content"><input type="text" v-model="ListData.consumption_max" @focus="selectval($event)" @change="inputchange('2')" /></div>
+          <div class="content">
+            <input type="text" v-model="ListData.consumption_max" @focus="selectval($event)" @blur="autoval(2)" @change="inputchange('2')" />
+          </div>
         </div>
 
         <div class="line photobox">
@@ -276,8 +280,22 @@ import myMap from './mapPages/myMap'
       selectval(event){
         event.currentTarget.select();
       },
-      autoval(){
-        
+      autoval(way){
+        let vm = this;
+        if(way!=2){
+          if(!/\./.test(this.ListData.consumption_min)){ //末尾添加.00
+            this.ListData.consumption_min += '.00';
+          }else if(/\./.test(this.ListData.consumption_min)){
+            this.ListData.consumption_min += '00';
+          }
+        }
+        if(way!=1){
+          if(!/\./.test(this.ListData.consumption_max)){ //末尾添加.00
+            this.ListData.consumption_max += '.00';
+          }else if(/\./.test(this.ListData.consumption_max)){
+            this.ListData.consumption_max += '00';
+          }
+        }
       },
       addimg(way,item){
         let vm=this,maxbannernum=8,maximg=10,
