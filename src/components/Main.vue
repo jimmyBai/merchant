@@ -39,7 +39,7 @@
     <div class="contentbar">
       <div class="leftmenubar">
         <ul class="menuul">
-          <li v-for='(item,index) in menuArray' :class="{active:index==num}"  @click="gopage(item.userid,index)">
+          <li v-for='(item,index) in menuArray' :class="{active:index==num}" @click="gopage(item.userid,index)">
             <div class="pmenu">
               <i :class="'icon-menu'+item.icon"></i>
               <span v-text="item.name"></span>
@@ -100,10 +100,10 @@ export default {
        vm.$router.push('/order')
       }else if(id==3){
        vm.$router.push('/takeaway')
-      }else if(id==5){
-       vm.$router.push('/shop')
       }else if(id==4){
        vm.$router.push('/export')
+      }else if(id==5){
+       vm.$router.push('/shop')
       }else if(id==6){
        vm.$router.push('/permission')
       }else if(id==7){
@@ -127,10 +127,6 @@ export default {
         vm.$store.state.token=''
         vm.$store.state.uid=''
         vm.$store.state.menuIndex='0'
-      }
-      // 进入钱包
-      if(way=='MerchantWallet'){
-        vm.$router.push('/'+way)
       }
       vm.$router.push('/'+way)
     },

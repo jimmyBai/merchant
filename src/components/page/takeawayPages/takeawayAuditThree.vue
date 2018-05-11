@@ -3,7 +3,7 @@
     <!-- infoList -->
     <div class="listtable">
       <div class="list-search">
-
+        
         <div class="ls-left">
           <div class="form-tabel">
             <div class="td-title">外送商品表</div>
@@ -13,35 +13,21 @@
             </div>
           </div>
         </div>
-        <div class="ls-right">
-          <div class="ls-r-btn" @click="clickadd">
-            <i class="el-icon-circle-plus-outline"></i><span>添加</span>
-          </div>
-        </div>
 
       </div>
 
       <el-table stripe :data="ListData">
-        <el-table-column prop="product_id" label="ID"></el-table-column>
-        <el-table-column prop="product_name" label="商户名称"></el-table-column>
-        <el-table-column prop="name" label="分类"></el-table-column>
-        <el-table-column prop="sale_price" label="单价"></el-table-column>
-        <el-table-column prop="inventory" label="库存"></el-table-column>
-        <el-table-column prop="weight" label="重量"></el-table-column>
-        <el-table-column prop="capacity" label="容量"></el-table-column>
-        <el-table-column prop="status" label="产品状态"></el-table-column>
-        <el-table-column prop="remark" label="递交时间"></el-table-column>
-        <el-table-column prop="remark" label="审核时间"></el-table-column>
-        <el-table-column width="280">
+        <el-table-column width="80" prop="product_id" label="ID"></el-table-column>
+        <el-table-column width="80" prop="product_name" label="商品名称"></el-table-column>
+        <el-table-column width="80" prop="remark" label="审核时间"></el-table-column>
+        <el-table-column prop="remark" label="拒绝原因"></el-table-column>
+        <el-table-column width="180">
           <template slot-scope="scope">
             <div class="tdBtn-box">
-              <div class="tdBtn-view viewwhy" @click="viewrefuse">
-                <i class="el-icon-view"></i>&nbsp;&nbsp;<span>查看</span>
-              </div>
-              <div class="tdbtn-view Vieweditor"  @click="vieweditor(scope.row.product_id)"> <!-- @click="vieweditor(scope.row.product_id)" -->
+              <div class="tdbtn-view newView" @click="vieweditor(scope.row.product_id)">
                 <i class="el-icon-view"></i><span>查看/编辑</span>
               </div>
-              <div class="tdBtn-view viewdelete" @click="removeThis(scope.row.product_id)"> <!-- @click="removeThis(scope.row.product_id)" -->
+              <div class="tdBtn-view" @click="removeThis(scope.row.product_id)">
                 <i class="el-icon-delete"></i>&nbsp;&nbsp;<span>删除</span>
               </div>
             </div>
@@ -59,21 +45,16 @@
     <!-- 添加/查看商品 -->
     <view-goods v-if="isTakeawayShow" :fromParent="fromParent" @viewevent="viewevent"></view-goods>
 
-    <!-- 查看拒绝原因 -->
-    <audit-refuse-why v-if="isAuditWhyShow" @refuseevent="refuseevent"></audit-refuse-why>
-
   </div>
 </template>
 
 <script>
 import viewGoods from './viewGoods'
-import auditRefuseWhy from './auditRefuseWhy'
 
 export default {
-  name: 'takeawayDudit',
+  name: 'takeawayAudit',
   components:{
-    viewGoods,
-    auditRefuseWhy
+    viewGoods
   },
   data () {
     return {
@@ -89,8 +70,7 @@ export default {
       value2: true,
       isTakeawayShow: false,
       index: '',
-      fromParent:'',
-      isAuditWhyShow: false
+      fromParent:''
     }
   },
   mounted:function(){
@@ -103,10 +83,6 @@ export default {
       if(data[0].status&&data[0].status=='refresh'){
         this.getlistData()
       }
-    },
-    refuseevent(...data){
-      let vm = this;
-      vm.isAuditWhyShow=data.isAuditWhyStatus;
     },
     // 获取数据
     getlistData(){
@@ -150,9 +126,6 @@ export default {
     vieweditor(id){
       this.isTakeawayShow = true;
       this.fromParent=id.toString();
-    },
-    viewrefuse(){
-      this.isAuditWhyShow = true;
     },
     // 删除
     removeThis(id){

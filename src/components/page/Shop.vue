@@ -71,7 +71,7 @@
         
         <div class="line">
           <div class="title">最低人均消费：</div>
-          <div class="content"><input type="text" v-model="ListData.consumption_min" @focus="selectval($event)" @change="inputchange('1')" /></div>
+          <div class="content"><input type="text" v-model="ListData.consumption_min" @focus="selectval($event)" @blur="autoval" @change="inputchange('1')" /></div>
         </div>
         <div class="line">
           <div class="title">最高人均消费：</div>
@@ -275,6 +275,9 @@ import myMap from './mapPages/myMap'
       },
       selectval(event){
         event.currentTarget.select();
+      },
+      autoval(){
+        
       },
       addimg(way,item){
         let vm=this,maxbannernum=8,maximg=10,

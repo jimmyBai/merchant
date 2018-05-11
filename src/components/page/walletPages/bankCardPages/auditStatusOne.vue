@@ -29,7 +29,7 @@
       <div class="list-bottom"></div>
     </div>
   </div>
-
+  
 </template>
 
 <script>

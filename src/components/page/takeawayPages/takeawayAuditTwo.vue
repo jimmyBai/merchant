@@ -13,17 +13,12 @@
             </div>
           </div>
         </div>
-        <div class="ls-right">
-          <div class="ls-r-btn" @click="clickadd">
-            <i class="el-icon-circle-plus-outline"></i><span>添加</span>
-          </div>
-        </div>
-
+        
       </div>
 
       <el-table stripe :data="ListData">
         <el-table-column prop="product_id" label="ID"></el-table-column>
-        <el-table-column prop="product_name" label="商户名称"></el-table-column>
+        <el-table-column prop="product_name" label="商品名称"></el-table-column>
         <el-table-column prop="name" label="分类"></el-table-column>
         <el-table-column prop="sale_price" label="单价"></el-table-column>
         <el-table-column prop="inventory" label="库存"></el-table-column>
@@ -31,10 +26,10 @@
         <el-table-column prop="capacity" label="容量"></el-table-column>
         <el-table-column prop="status" label="产品状态"></el-table-column>
         <el-table-column prop="remark" label="递交时间"></el-table-column>
-        <!-- <el-table-column width="180">
+        <el-table-column width="180">
           <template slot-scope="scope">
             <div class="tdBtn-box">
-              <div class="tdbtn-view newView"  @click="vieweditor(scope.row.product_id)">
+              <div class="tdbtn-view newView" @click="vieweditor(scope.row.product_id)">
                 <i class="el-icon-view"></i><span>查看/编辑</span>
               </div>
               <div class="tdBtn-view" @click="removeThis(scope.row.product_id)">
@@ -42,7 +37,7 @@
               </div>
             </div>
           </template>
-        </el-table-column> -->
+        </el-table-column>
       </el-table>
       <div class="list-bottom"></div>
     </div>
@@ -62,7 +57,7 @@
 import viewGoods from './viewGoods'
 
 export default {
-  name: 'takeawayDudit',
+  name: 'takeawayAudit',
   components:{
     viewGoods
   },

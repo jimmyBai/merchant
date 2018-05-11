@@ -68,7 +68,7 @@ export default {
   }
   .container{
     position: relative;
-    top: 0;
+    top: 30px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -112,17 +112,17 @@ export default {
   }
   .savebtn{
     width: 60px;
-    height: 20px;
+    height: 25px;
     float: left;
     margin-left: 60px;
     color: #fff;
-    background: rgb(242,86,86);
+    background: #ac5397;
     border: 0;
     border-radius: 3px;
   }
   .cancelbtn{
     width: 60px;
-    height: 20px;
+    height: 25px;
     float: right;
     margin-right: 60px;
     color: #fff;
