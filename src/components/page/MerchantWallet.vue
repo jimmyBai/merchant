@@ -8,7 +8,7 @@
         <div class="moneyleft">
           <div class="moneyshow">
             <span class="moneynum">
-              <span>￥100<span>RMB</span></span>
+              <span>￥100<span>.00</span></span>
             </span>
             <span class="moneytext">账户余额</span>
           </div>
@@ -16,9 +16,9 @@
         <div class="moneyright">
           <div class="moneyshow">
             <span class="moneynum smallmy">
-              <span>￥100<span>RMB</span></span>
+              <span>￥100<span>.00</span></span>
             </span>
-            <span class="moneytext smalltxt">客户店铺现金金额</span>
+            <span class="moneytext smalltxt">客户充值卡金额</span>
           </div>
         </div>
       </div>
