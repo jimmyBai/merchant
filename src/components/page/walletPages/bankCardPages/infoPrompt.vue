@@ -13,14 +13,6 @@
     </div>
 
     <div class="v-modal" style="z-index: 99;"></div>
-    <!-- <div class="promptbox">
-      <div class="ptitle">
-        <span>添加银行卡成功</span>
-      </div>
-      <div class="pcontent">
-        <span>递交成功！我们会在1-2天内完成审核，如果有问题请联系我们的客服，谢谢！</span>
-      </div>
-    </div> -->
   </div>
     
 </template>
@@ -59,7 +51,7 @@ import "../../../../../static/css/newStyle.css"
   .message-box_header{ position: relative; height: 40px;justify-content: center; -webkit-justify-content: center; line-height: 40px; display: flex; display: -webkit-flex; background: -webkit-gradient(linear, 0 0, 0 bottom, from(#433249), to(#38293d));}
   .message-box_closebtn{ position: absolute; right: 0; display: inline-block; height: 40px; width: 40px; text-align: center; cursor: pointer}
   .message-box_title{ font-size: 16px;}
-  .message-box_content{ padding: 20px}
+  .message-box_content{ padding: 20px; font-size: 14px;}
   .popsaveline{ width: 80%; margin: 0 auto; margin-top: 20px}
   .popsaveline span{ text-align: center}
 </style>

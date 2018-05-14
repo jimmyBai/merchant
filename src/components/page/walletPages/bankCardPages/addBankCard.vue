@@ -31,15 +31,14 @@
             </div>
             <!-- 保存/取消 -->
             <div class="btnBox">
-              <div class="saveline" @click="clickSaveInfo()">
+              <div class="saveline" @click="clickSaveInfo">
                 <span>递交</span>
               </div>
-              <div class="cancelline" @click="clickCancelInfo()">
+              <div class="cancelline" @click="clickCancelInfo">
                 <span>取消</span>
               </div>
             </div>
             
-
           </div>
         </div>
         <div class="message-box_btns">
@@ -49,29 +48,6 @@
     </div>
     <div class="v-modal" style="z-index: 99;"></div>
 
-    <!-- <div class="promptbox">
-      <div class="ptitle">
-        <span>添加银行卡成功</span>
-      </div>
-      <div class="pcontent">
-        <span>递交成功！我们会在1-2天内完成审核，如果有问题请联系我们的客服，谢谢！</span>
-      </div>
-    </div> -->
-    <!-- <div class="el-message-box__wrapper" v-show="ispromptShow">
-      <div class="el-message-box">
-        <div class="message-box_header">
-          <div class="message-box_title"><span v-text='msgtitle'></span></div>
-          <div class="message-box_closebtn" @click="closept"><i class="el-message-box__close el-icon-close"></i></div>
-        </div>
-        <div class="message-box_content">
-          <span>222222</span>
-        </div>  
-      </div>
-    </div> -->
-
-    <!-- 递交提示 -->
-    <!-- <info-prompt v-if="isPromptShow" @pviewprompt="viewprompt"></info-prompt> -->
-
   </div>
 
 </template>
@@ -79,19 +55,13 @@
 <script>
 // andy
 import "../../../../../static/css/newStyle.css"
-// import infoPrompt from './infoPrompt'
 
   export default {
     name: 'addBankCard',
-    components:{
-      // infoPrompt
-    },
     data () {
       return {
-        msgtitle: '添加银行卡',
-        priceStatus: true
-        // isPromptShow: false
-        
+        msgtitle: '添加银行卡'
+      
       }
     },
     methods:{
@@ -100,6 +70,7 @@ import "../../../../../static/css/newStyle.css"
         vm.isPromptShow=data.isPromptStatus;
       },
       
+      // 关闭页面
       closepop(){
         //执行父组件关闭方法
         let data = {
@@ -108,17 +79,24 @@ import "../../../../../static/css/newStyle.css"
         //执行父组件方法
         this.$emit('pviewbankcard',data,'');
       },
+      // 递交成功
       clickSaveInfo(){
+        //执行父组件关闭方法
+        let data = {
+          isBankCardStatus:false,
+          status: 'refresh'
+        };
+        //执行父组件方法
+        this.$emit('pviewbankcard',data,'');
+      },
+      // 递交取消
+      clickCancelInfo(){
         //执行父组件关闭方法
         let data = {
           isBankCardStatus:false
         };
         //执行父组件方法
         this.$emit('pviewbankcard',data,'');
-        
-      },
-      clickCancelInfo(){
-        
       }
 
     }

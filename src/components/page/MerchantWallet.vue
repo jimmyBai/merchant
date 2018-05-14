@@ -8,7 +8,7 @@
         <div class="moneyleft">
           <div class="moneyshow">
             <span class="moneynum">
-              <span>100<span>RMB</span></span>
+              <span>￥100<span>RMB</span></span>
             </span>
             <span class="moneytext">账户余额</span>
           </div>
@@ -16,7 +16,7 @@
         <div class="moneyright">
           <div class="moneyshow">
             <span class="moneynum smallmy">
-              <span>100<span>RMB</span></span>
+              <span>￥100<span>RMB</span></span>
             </span>
             <span class="moneytext smalltxt">客户店铺现金金额</span>
           </div>
@@ -84,7 +84,7 @@ export default {
     background: #38213e;
   }
   .moneyleft{
-    width: 40%;
+    width: 25%;
     height: 160px;
     float: left;
     position: relative;
@@ -92,7 +92,7 @@ export default {
     justify-content: center;
   }
   .moneyright{
-    width: 60%;
+    width: 75%;
     height: 160px;
     float: right;
     position: relative;
@@ -109,12 +109,14 @@ export default {
   }
   .moneytext{
     display: block;
-    padding-top: 5px;
+    padding: 5px 0 0 5px;
   }
-
+  .smalltxt{
+    padding: 10px 0 0 2px;
+  }
   .smallmy{
     display: block;
-    font-size: 12px;
+    font-size: 16px;
     color: #cccccc;
   }
 </style>

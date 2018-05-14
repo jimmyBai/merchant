@@ -61,16 +61,22 @@ import infoPrompt from './bankCardPages/infoPrompt'
       },
       viewbankcard(...data){
         let vm = this;
-        vm.isBankCardShow=data.isBankCardStatus;
-        console.log(data)
+        vm.isBankCardShow=data[0].isBankCardStatus;
+        if(data[0].status&&data[0].status=='refresh'){
+          vm.isPromptShow=!vm.isBankCardShow
+          setTimeout(function(){
+            vm.isPromptShow = false;
+          },2000);
+        }
       },
       viewprompt(...data){
         let vm = this;
-        vm.isPromptShow=data.isPromptStatus;
+        vm.isPromptShow=data[0].isPromptStatus;
       },
-       clickadd(){
-        this.isBankCardShow = true;
-
+      clickadd(){
+        let vm = this;
+        vm.isBankCardShow = true;
+        vm.isPromptShow = false;
       }
     }
   }
