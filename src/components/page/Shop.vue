@@ -47,7 +47,7 @@
                   </li>
                 </ul>
               </dd>
-              <dd>最多可上传8张图片，每张图片上传不可大于1M,请上传每张为750px*330px规格的图片</dd>
+              <dd>最多可上传10张图片，每张图片上传不可大于300kb,请上传每张为750px*330px规格的图片</dd>
             </dl>
           </div>
         </div>
@@ -107,7 +107,7 @@
                   </li>
                 </ul>
               </dd>
-              <dd>最多可上传10张图片，每张图片上传不可大于1M,请上传每张为750px*330px规格的图片</dd>
+              <dd>最多可上传20张图片，每张图片上传不可大于300kb,请上传每张为750px*330px规格的图片</dd>
             </dl>
           </div>
         </div>
@@ -298,9 +298,10 @@ import myMap from './mapPages/myMap'
         }
       },
       addimg(way,item){
-        let vm=this,maxbannernum=8,maximg=10,
+        let vm=this,maxbannernum=10,maximg=20,
           imgobj=event.target.files[0],
-          maxSize=1024*1024*2,
+          // maxSize=1024*1024*2,
+          maxSize=1024*300*1,
           maxWidth=400,
           maxHeight=300;
         if(way!=3){
@@ -320,97 +321,100 @@ import myMap from './mapPages/myMap'
           }
           //图片size大小判断
           if(imgobj.size>maxSize){   //上传文件大小小于2M 1024*1024*2
-            vm.$message.error('请上传小于2M的图片');
+            // vm.$message.error('请上传小于2M的图片');
+            vm.$message.error('请上传小于300kb的图片');
+            // console.log(imgobj.size)
             return
           }
         }
         var reader = new FileReader();
         reader.onload = function (e) {
-             //加载图片获取图片真实宽度和高度
-            var image = new Image()
-                image.src = e.target.result;
-               image.onload=function(){
-                   var width = image.width;
-                   var height = image.height;
-                   if(way==1){
-                     //店铺图片
-                     if(item){
-                       //修改图片
-                      // if(image.width==maxWidth&&image.height==maxHeight){
-                       if((image.width/image.height).toFixed(2)==(maxWidth/maxHeight).toFixed(2)){
-                         item.img=e.target.result;
-                         vm.imgupload('2',item.img,way,item)
-                       }else{
-                         vm.$message.error('图片尺寸不对');
-                         /*item.img=e.target.result;
-                         vm.imgupload('2',item.img,way,item)*/
-                         return
-                       }
-                     }else{
-                       //添加图片
-                       let imgobj={},ajaxarray=[];
-                       if((image.width/image.height).toFixed(2)==(maxWidth/maxHeight).toFixed(2)){
-                         imgobj={
-                           img:e.target.result
-                         }
-                         vm.imgVO.push(imgobj)
-                         vm.imgupload('2',imgobj.img,way,item)
-                       }else{
-                         vm.$message.error('图片尺寸不对');
-                         /*imgobj={
-                           img:e.target.result
-                         }
-                         vm.imgVO.push(imgobj)
-                         vm.imgupload('2',imgobj.img,way,item)*/
-                       }
-                     }
-                   }else if(way==3){
-                      //上传logo
-                     if((image.width/image.height).toFixed(2)==1.00){
-                       vm.ListData.logo=e.target.result;
-                       vm.imgupload('3',vm.ListData.logo,way)
-                     }else{
-                       vm.$message.error('图片尺寸不对');
-                      /* vm.ListData.logo=e.target.result;
-                       vm.imgupload('3',vm.ListData.logo,way)
-                       return*/
-                     }
+          //加载图片获取图片真实宽度和高度
+          var image = new Image()
+          image.src = e.target.result;
+          image.onload=function(){
+            var width = image.width;
+            var height = image.height;
+            if(way==1){
+              //店铺图片
+              if(item){
+                //修改图片
+              // if(image.width==maxWidth&&image.height==maxHeight){
+                if((image.width/image.height).toFixed(2)==(maxWidth/maxHeight).toFixed(2)){
+                  item.img=e.target.result;
+                  vm.imgupload('2',item.img,way,item)
+                }else{
+                  vm.$message.error('图片尺寸不对');
+                  /*item.img=e.target.result;
+                  vm.imgupload('2',item.img,way,item)*/
+                  return
+                }
+              }else{
+                //添加图片
+                let imgobj={},ajaxarray=[];
+                if((image.width/image.height).toFixed(2)==(maxWidth/maxHeight).toFixed(2)){
+                  imgobj={
+                    img:e.target.result
+                  }
+                  vm.imgVO.push(imgobj)
+                  vm.imgupload('2',imgobj.img,way,item)
+                }else{
+                  vm.$message.error('图片尺寸不对');
+                  // console.log(image.width+','+image.height)
+                  /*imgobj={
+                    img:e.target.result
+                  }
+                  vm.imgVO.push(imgobj)
+                  vm.imgupload('2',imgobj.img,way,item)*/
+                }
+              }
+            }else if(way==3){
+              //上传logo
+              if((image.width/image.height).toFixed(2)==1.00){
+                vm.ListData.logo=e.target.result;
+                vm.imgupload('3',vm.ListData.logo,way)
+              }else{
+                vm.$message.error('图片尺寸不对');
+              /* vm.ListData.logo=e.target.result;
+                vm.imgupload('3',vm.ListData.logo,way)
+                return*/
+              }
 
 
-                   }else{
-                     //推荐图片
-                     if(item){
-                       //修改图片
-                       if(image.width==maxWidth&&image.height==maxHeight){
-                         item.img=e.target.result;
-                         vm.imgupload('4',item.img,way,item)
-                       }else{
-                         vm.$message.error('图片尺寸不对');
-                         item.img=e.target.result;
-                         vm.imgupload('4',item.img,way,item)
-                         return
-                       }
-                     }else{
-                       //添加图片
-                       let imgobj={};
-                       if((image.width/image.height).toFixed(2)==(maxWidth/maxHeight).toFixed(2)){
-                         imgobj={
-                           img:e.target.result
-                         }
-                         vm.recommend.push(imgobj)
-                         vm.imgupload('4',imgobj.img,way,item)
-                       }else{
-                         vm.$message.error('图片尺寸不对');
-                        /* imgobj={
-                           img:e.target.result
-                         }
-                         vm.recommend.push(imgobj)
-                         vm.imgupload('4',imgobj.img,way,item)*/
-                       }
-                     }
-                   }
-               };
-         };
+            }else{
+              //推荐图片
+              if(item){
+                //修改图片
+                if(image.width==maxWidth&&image.height==maxHeight){
+                  item.img=e.target.result;
+                  vm.imgupload('4',item.img,way,item)
+                }else{
+                  vm.$message.error('图片尺寸不对');
+                  item.img=e.target.result;
+                  vm.imgupload('4',item.img,way,item)
+                  return
+                }
+              }else{
+                //添加图片
+                let imgobj={};
+                if((image.width/image.height).toFixed(2)==(maxWidth/maxHeight).toFixed(2)){
+                  imgobj={
+                    img:e.target.result
+                  }
+                  vm.recommend.push(imgobj)
+                  vm.imgupload('4',imgobj.img,way,item)
+                }else{
+                  vm.$message.error('图片尺寸不对');
+                /* imgobj={
+                    img:e.target.result
+                  }
+                  vm.recommend.push(imgobj)
+                  vm.imgupload('4',imgobj.img,way,item)*/
+                }
+              }
+            }
+          };
+        };
         reader.readAsDataURL(imgobj);
       },
       delimg(way,item,index){
@@ -514,83 +518,82 @@ import myMap from './mapPages/myMap'
           this.$message.error('图片上传完成之后才能保存！');
           return
         }
-
-          let vm =this,flag, url='/api/web/setting/save',params,banners=[],recommend=[],business=[],logoarray=[];
-          //封装Logo图片数组
-          if(vm.ListData.logo){
-            logoarray.push(vm.ListData.logo)
-          }
-          //获取店铺图片
-          if(vm.imgVO&&vm.imgVO.length>0){
-            vm.imgVO.forEach(item=>{
-              banners.push(item.img)
-            })
-          }
-          //获取推荐图片
-          if(vm.recommend&&vm.recommend.length>0){
-            vm.recommend.forEach(item=>{
-              recommend.push(item.img)
-            })
-          }
-          //封装店铺营业时间
-          if(vm.business_time&&vm.business_time.length>0){
-            vm.business_time.forEach(item=>{
-              if(item.startWeek&&item.endWeek){
-                item.am_begin=item.am_begin?item.am_begin:''
-                item.am_end=item.am_end&&item.am_end!='null'?item.am_end:''
-                item.pm_begin=item.pm_begin?item.pm_begin:''
-                item.pm_end=item.pm_end&&item.pm_end!='null'?item.pm_end:''
-                let timelineobj={
-                  "interval": {
-                    "begin": item.startWeek.value,
-                    "end": item.endWeek.value,
-                  },
-                  "time": {
-                    "am": item.am_begin+'-'+item.am_end,
-                    "pm": item.pm_begin+'-'+item.pm_end
-                  }
+        let vm =this,flag, url='/api/web/setting/save',params,banners=[],recommend=[],business=[],logoarray=[];
+        //封装Logo图片数组
+        if(vm.ListData.logo){
+          logoarray.push(vm.ListData.logo)
+        }
+        //获取店铺图片
+        if(vm.imgVO&&vm.imgVO.length>0){
+          vm.imgVO.forEach(item=>{
+            banners.push(item.img)
+          })
+        }
+        //获取推荐图片
+        if(vm.recommend&&vm.recommend.length>0){
+          vm.recommend.forEach(item=>{
+            recommend.push(item.img)
+          })
+        }
+        //封装店铺营业时间
+        if(vm.business_time&&vm.business_time.length>0){
+          vm.business_time.forEach(item=>{
+            if(item.startWeek&&item.endWeek){
+              item.am_begin=item.am_begin?item.am_begin:''
+              item.am_end=item.am_end&&item.am_end!='null'?item.am_end:''
+              item.pm_begin=item.pm_begin?item.pm_begin:''
+              item.pm_end=item.pm_end&&item.pm_end!='null'?item.pm_end:''
+              let timelineobj={
+                "interval": {
+                  "begin": item.startWeek.value,
+                  "end": item.endWeek.value,
+                },
+                "time": {
+                  "am": item.am_begin+'-'+item.am_end,
+                  "pm": item.pm_begin+'-'+item.pm_end
                 }
-                if(!item.am_begin||!item.am_end){
-                  timelineobj.time.am=''
-                }
-                if(!item.pm_begin||!item.pm_end){
-                  timelineobj.time.pm=''
-                }
-                if(timelineobj.interval.begin&&timelineobj.interval.end){
-                  if((item.am_begin&&item.am_end)||(item.pm_begin&&item.pm_end)){
-                    business.push(timelineobj)
-                  }else{
-                    flag=true
-                  }
+              }
+              if(!item.am_begin||!item.am_end){
+                timelineobj.time.am=''
+              }
+              if(!item.pm_begin||!item.pm_end){
+                timelineobj.time.pm=''
+              }
+              if(timelineobj.interval.begin&&timelineobj.interval.end){
+                if((item.am_begin&&item.am_end)||(item.pm_begin&&item.pm_end)){
+                  business.push(timelineobj)
                 }else{
                   flag=true
                 }
+              }else{
+                flag=true
               }
-            })
-          }
-          if(flag){
-            vm.$message.error('店铺时间必须设置！');
-            return false
-          }
-          if(vm.ListData.consumption_max<vm.ListData.consumption_min){
-            vm.$message.error('最高消费不能小于最低消费！');
-            return false
-          }
-          params={
-            'name':vm.ListData.name,
-            'address':vm.ListData.address,
-            'describe':vm.ListData.describe,
-            'seat_number':vm.ListData.seat_number,
-            'logo':logoarray,
-            'phone':vm.ListData.telephone,
-            'consumption_min':vm.ListData.consumption_min,
-            'consumption_max':vm.ListData.consumption_max,
-            'banners':banners,
-            'recommend':recommend,
-            'business':business,
-            'lat':vm.ListData.lat,
-            'lng':vm.ListData.lng
-          }
+            }
+          })
+        }
+        if(flag){
+          vm.$message.error('店铺时间必须设置！');
+          return false
+        }
+        if(vm.ListData.consumption_max<vm.ListData.consumption_min){
+          vm.$message.error('最高消费不能小于最低消费！');
+          return false
+        }
+        params={
+          'name':vm.ListData.name,
+          'address':vm.ListData.address,
+          'describe':vm.ListData.describe,
+          'seat_number':vm.ListData.seat_number,
+          'logo':logoarray,
+          'phone':vm.ListData.telephone,
+          'consumption_min':vm.ListData.consumption_min,
+          'consumption_max':vm.ListData.consumption_max,
+          'banners':banners,
+          'recommend':recommend,
+          'business':business,
+          'lat':vm.ListData.lat,
+          'lng':vm.ListData.lng
+        }
 
         vm.$axios({
           method:'post',
