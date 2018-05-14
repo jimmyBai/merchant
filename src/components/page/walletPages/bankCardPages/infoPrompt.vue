@@ -43,7 +43,7 @@ import "../../../../../static/css/newStyle.css"
           isPromptStatus:false
         };
         //执行父组件方法
-        this.$emit('viewprompt',data,'');
+        this.$emit('pviewprompt',data,'');
       }
 
     }

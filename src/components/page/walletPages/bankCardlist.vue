@@ -18,23 +18,28 @@
 
     <!-- 添加银行卡 -->
     <add-bank-card v-if="isBankCardShow" @pviewbankcard="viewbankcard"></add-bank-card>
+    <!-- 银行卡递交提示 -->
+    <info-prompt v-if="isPromptShow" @pviewprompt="viewprompt"></info-prompt>
 
   </div>
 </template>
 
 <script>
 import addBankCard from './bankCardPages/addBankCard'
+import infoPrompt from './bankCardPages/infoPrompt'
 
   export default {
     name: 'bankCardlist',
     components:{
-      addBankCard
+      addBankCard,
+      infoPrompt
     },
     data () {
       return {
         activenum:'auditStatusOne',
         ListData:[],
-        isBankCardShow: false
+        isBankCardShow: false,
+        isPromptShow: false
       }
     },
     created(){
@@ -57,6 +62,11 @@ import addBankCard from './bankCardPages/addBankCard'
       viewbankcard(...data){
         let vm = this;
         vm.isBankCardShow=data.isBankCardStatus;
+        console.log(data)
+      },
+      viewprompt(...data){
+        let vm = this;
+        vm.isPromptShow=data.isPromptStatus;
       },
        clickadd(){
         this.isBankCardShow = true;
