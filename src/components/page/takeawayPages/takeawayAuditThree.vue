@@ -50,6 +50,7 @@
 
 <script>
 import viewGoods from './viewGoods'
+import "../../../../static/css/newStyle.css"
 
 export default {
   name: 'takeawayAudit',

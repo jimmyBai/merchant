@@ -24,6 +24,13 @@
   width: 45%;
   float: right;
 }
+.newView{ 
+  background: #7a6fbe; 
+  padding: 0 5px;
+  border-radius: 2px;
+  width: 48%;
+  float: left;
+}
 
 /* map */
 .notSame{
