@@ -12,21 +12,21 @@
             <div class="adduser-item">
               <div class="itemline">
                 <div class="itemtitle">银行</div>
-                <div class="itemcontent"><input type="text"></div>
+                <div class="itemcontent"><input type="text" v-model="bankname"></div>
               </div>
             </div>
             <!-- 银行号码 -->
             <div class="adduser-item">
               <div class="itemline">
                 <div class="itemtitle">银行号码</div>
-                <div class="itemcontent"><input type="text"></div>
+                <div class="itemcontent"><input type="text" v-model="banknum"></div>
               </div>
             </div>
             <!-- 支行描述 -->
             <div class="adduser-item">
               <div class="itemline">
                 <div class="itemtitle">支行</div>
-                <div class="itemcontent"><input type="text"></div>
+                <div class="itemcontent"><input type="text"  v-model="bankbranch"></div>
               </div>
             </div>
             <!-- 保存/取消 -->
@@ -60,9 +60,30 @@ import "../../../../../static/css/newStyle.css"
     name: 'addBankCard',
     data () {
       return {
-        msgtitle: '添加银行卡'
+        msgtitle: '添加银行卡',
+        bankname: '',
+        banknum: '',
+        bankbranch: ''
       
       }
+    },
+    watch:{
+      bankname(nVal,oVal){
+        if(nVal){
+          this.bankname=nVal.toString().replace(/[^0-9]*/g,'');
+        }
+      },
+      banknum(nVal,oVal){
+        if(nVal){
+          this.banknum=nVal.toString().replace(/[^0-9]*/g,'');
+        }
+      },
+      bankbranch(nVal,oVal){
+        if(nVal){
+          this.bankbranch=nVal.toString().replace(/[^0-9]*/g,'');
+        }
+      }
+      
     },
     methods:{
       viewprompt(...data){

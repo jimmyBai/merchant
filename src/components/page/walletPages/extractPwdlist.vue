@@ -9,11 +9,11 @@
     <div class="container">
       <div class="line">
         <span class="title">提款密码：</span>
-        <input type="text" class="content oldip" />
+        <input type="text" class="content oldip" v-model="pwd" />
       </div>
       <div class="line">
         <span class="title">再次输入提款密码：</span>
-        <input type="text" class="content" />
+        <input type="text" class="content" v-model="repwd" />
       </div>
 
       <div class="btnbox">
@@ -33,8 +33,22 @@ export default {
   name: 'live',
   data () {
     return {
-      
+      pwd: '',
+      repwd: ''
     }
+  },
+  watch:{
+    pwd(nVal,oVal){
+      if(nVal){
+        this.pwd=nVal.toString().replace(/[^0-9]*/g,'');
+      }
+    },
+    repwd(nVal,oVal){
+      if(nVal){
+        this.repwd=nVal.toString().replace(/[^0-9]*/g,'');
+      }
+    }
+      
   },
   methods:{
     
@@ -107,14 +121,15 @@ export default {
 
   .btnbox{
     padding: 20px 0 0 0;
-    width: 100%;
+    width: 65%;
     height: 40px;
+    position: absolute;
+    right: 0;
   }
   .savebtn{
     width: 60px;
     height: 25px;
     float: left;
-    margin-left: 60px;
     color: #fff;
     background: #ac5397;
     border: 0;
@@ -123,11 +138,11 @@ export default {
   .cancelbtn{
     width: 60px;
     height: 25px;
-    float: right;
-    margin-right: 60px;
+    float: left;
     color: #fff;
     background: rgb(242,86,86);
     border: 0;
     border-radius: 3px;
+    margin-left: 20px;
   }
 </style>

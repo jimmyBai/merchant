@@ -72,7 +72,7 @@
         <div class="line">
           <div class="title">最低人均消费：</div>
           <div class="content">
-            <input type="text" v-model="ListData.consumption_min" @focus="selectval($event)" @blur="autoval(1)" @change="inputchange('1')" />
+            <input type="text" ref="input" v-model="ListData.consumption_min" @focus="selectval($event)" @blur="autoval(1)" @change="inputchange('1')" />
           </div>
         </div>
         <div class="line">
@@ -236,11 +236,31 @@ import myMap from './mapPages/myMap'
       },
       'ListData.consumption_min'(cVal,oVal){
         if(cVal){
-          if(/^\d+(\.\d+)?$/.test(cVal)){
+          // if(/^\d+(\.\d+)?$/.test(cVal)){
 
-          }else{
-            return this.ListData.consumption_min=cVal.replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1')
-          }
+          // }else{
+          //   return this.ListData.consumption_min=cVal.replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1')
+          // }
+
+          let vm = this;
+          let reg = /^[1-9]\d*(\.\d{0,2})?$|^0(\.\d{0,2})?$|^-([1-9]{1}\d*(\.\d{0,2})?)?$|^-(0(\.\d{0,2})?)?$/;
+          let input = vm.$refs.input;
+
+          var oldValue = '';
+          input.addEventListener('input',function(){
+            console.log(input.value)
+            if(input.value && !reg.test(input.value)){
+              input.value = oldValue;
+            }  
+            oldValue = input.value;
+          });
+          
+          input.addEventListener('change',function(){
+            if(input.value.endsWith('.') || input.value.endsWith('-')){
+              input.value = input.value.slice(0,-1);
+            }
+          });
+          
         }
       }
     },
