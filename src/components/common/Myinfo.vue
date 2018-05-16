@@ -45,6 +45,14 @@
               </li>
             </ul>
           </div>
+
+          <!-- 新增二维码 _Andy -->
+          <div class="twocode">
+            <span class="title">二维码</span>
+            <span class="prompt">顾客将通过扫描二维码进行小费支付</span>
+            <!-- <span>二维码show</span> -->
+            <input type="button" value="点击生成二维码">
+          </div>
         </el-col>
         <el-col :span="14" class="bright">
           <!--<div class="moneyline">
@@ -80,6 +88,22 @@
               </div>
             </div>
           </div>-->
+
+          <div class="databox">
+            <div class="title">
+              <span>实时数据</span>
+            </div>
+            <div class="content">
+
+              <div class="tiplist">
+                <div class="tiptitle">
+                  <span>我的小费</span>
+                  <input type="text"/>
+                  <span class="search-icon"><i class="el-icon-search"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
         </el-col>
       </el-row>
     </div>
@@ -121,8 +145,7 @@
 .memberboxhead{ background:#462747;  margin: 0 auto; position: relative; z-index: 2 }
 .memberboxhead .memberimg{ padding: 20px 0; height: 155px; margin: 0 auto; text-align: center}
 .memberboxhead .memberimg img{height: 100%; background-size: cover}
-.memberphoto{ position: absolute; height: 130px; width: 130px;
-  bottom: -25px; left: 50px}
+.memberphoto{ position: absolute; height: 130px; width: 130px; bottom: -25px; left: 50px}
 .memberphoto img { width: 100%; background-size: cover}
 .nameline{ text-align: center; height: 50px; line-height: 50px}
 .nameline .name{ font-size: 24px;}
@@ -147,4 +170,33 @@ i.dtitle{ background-position: 0px -20px;}
 .flexbox>div i.part2{background-position: 0 -80px;}
 .flexbox>div i.part3{background-position: 0 -160px;}
 .group { font-size: 16px; text-align: center}
+
+
+.twocode{
+  margin-top: 10px;
+  text-align: center;
+}
+.twocode .title{
+  display: block;
+  color: #ffffff;
+  font-size: 16px;
+}
+.twocode .prompt{
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+}
+.twocode input{
+  cursor: pointer;
+  background: #ac5397;
+  height: 40px;
+  line-height: 40px;
+  color: #fff;
+  display: inline-block;
+  width: 200px;
+  text-align: center;
+  border: 0;
+  font-size: 12px;
+  margin-top: 30px;
+}
 </style>

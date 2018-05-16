@@ -8,25 +8,32 @@
         </div>
         <div class="message-box_content">
           <div class="addpop">
-            <!-- 银行名称 -->
+            <!-- 户名 -->
             <div class="adduser-item">
               <div class="itemline">
-                <div class="itemtitle">银行</div>
+                <div class="itemtitle">户名</div>
                 <div class="itemcontent"><input type="text" v-model="bankname"></div>
               </div>
             </div>
-            <!-- 银行号码 -->
+            <!-- 开户行 -->
             <div class="adduser-item">
               <div class="itemline">
-                <div class="itemtitle">银行号码</div>
-                <div class="itemcontent"><input type="text" v-model="banknum"></div>
+                <div class="itemtitle">开户行</div>
+                <div class="itemcontent"><input type="text" v-model="bankopenaccount"></div>
               </div>
             </div>
-            <!-- 支行描述 -->
+            <!-- 账号 -->
             <div class="adduser-item">
               <div class="itemline">
-                <div class="itemtitle">支行</div>
-                <div class="itemcontent"><input type="text"  v-model="bankbranch"></div>
+                <div class="itemtitle">账号</div>
+                <div class="itemcontent"><input type="text" v-model="bankaccount"></div>
+              </div>
+            </div>
+            <!-- 预留手机号 -->
+            <div class="adduser-item">
+              <div class="itemline">
+                <div class="itemtitle">预留手机号</div>
+                <div class="itemcontent"><input type="text" v-model="bankphone"></div>
               </div>
             </div>
             <!-- 保存/取消 -->
@@ -62,8 +69,9 @@ import "../../../../../static/css/newStyle.css"
       return {
         msgtitle: '添加银行卡',
         bankname: '',
-        banknum: '',
-        bankbranch: ''
+        bankopenaccount: '',
+        bankaccount: '',
+        bankphone: ''
       
       }
     },
@@ -73,14 +81,19 @@ import "../../../../../static/css/newStyle.css"
           this.bankname=nVal.toString().replace(/[^0-9]*/g,'');
         }
       },
-      banknum(nVal,oVal){
+      bankopenaccount(nVal,oVal){
         if(nVal){
-          this.banknum=nVal.toString().replace(/[^0-9]*/g,'');
+          this.bankopenaccount=nVal.toString().replace(/[^0-9]*/g,'');
         }
       },
-      bankbranch(nVal,oVal){
+      bankaccount(nVal,oVal){
         if(nVal){
-          this.bankbranch=nVal.toString().replace(/[^0-9]*/g,'');
+          this.bankaccount=nVal.toString().replace(/[^0-9]*/g,'');
+        }
+      },
+      bankphone(nVal,oVal){
+        if(nVal){
+          this.bankphone=nVal.toString().replace(/[^0-9]*/g,'');
         }
       }
       

@@ -134,12 +134,29 @@ export default new Router({
               {
                 path:'/',
                 meta:{keepAlive:true},
-                component:resolve=>require(['../components/page/mapPages/myMap.vue'],resolve),
+                component:resolve=>require(['../components/page/shopPages/shoplist.vue'],resolve),
               },
               {
-                path:'/myMap',
+                path:'/shoplist',
                 meta:{keepAlive:true},
-                component:resolve=>require(['../components/page/mapPages/myMap.vue'],resolve),
+                component:resolve=>require(['../components/page/shopPages/shoplist.vue'],resolve),
+                children:[
+                  {
+                    path:'/',
+                    meta:{keepAlive:true},
+                    component:resolve=>require(['../components/page/mapPages/myMap.vue'],resolve),
+                  },
+                  {
+                    path:'/myMap',
+                    meta:{keepAlive:true},
+                    component:resolve=>require(['../components/page/mapPages/myMap.vue'],resolve),
+                  }
+                ]
+              },
+              {
+                path:'/tiplist',
+                meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/shopPages/tiplist.vue'],resolve),
               }
             ]
           },
@@ -222,28 +239,28 @@ export default new Router({
                 path:'/bankCardlist',
                 meta:{keepAlive:true},
                 component:resolve=>require(['../components/page/walletPages/bankCardlist.vue'],resolve),
-                children:[
-                  {
-                    path:'/',
-                    meta:{keepAlive:true},
-                    component:resolve=>require(['../components/page/walletPages/bankCardPages/auditStatusOne.vue'],resolve),
-                  },
-                  {
-                    path:'/auditStatusOne',
-                    meta:{keepAlive:true},
-                    component:resolve=>require(['../components/page/walletPages/bankCardPages/auditStatusOne.vue'],resolve),
-                  },
-                  {
-                    path:'/auditStatusTwo',
-                    meta:{keepAlive:true},
-                    component:resolve=>require(['../components/page/walletPages/bankCardPages/auditStatusTwo.vue'],resolve),
-                  },
-                  {
-                    path:'/auditStatusThree',
-                    meta:{keepAlive:true},
-                    component:resolve=>require(['../components/page/walletPages/bankCardPages/auditStatusThree.vue'],resolve),
-                  }
-                ]
+                // children:[
+                //   {
+                //     path:'/',
+                //     meta:{keepAlive:true},
+                //     component:resolve=>require(['../components/page/walletPages/bankCardPages/auditStatusOne.vue'],resolve),
+                //   },
+                //   {
+                //     path:'/auditStatusOne',
+                //     meta:{keepAlive:true},
+                //     component:resolve=>require(['../components/page/walletPages/bankCardPages/auditStatusOne.vue'],resolve),
+                //   },
+                //   {
+                //     path:'/auditStatusTwo',
+                //     meta:{keepAlive:true},
+                //     component:resolve=>require(['../components/page/walletPages/bankCardPages/auditStatusTwo.vue'],resolve),
+                //   },
+                //   {
+                //     path:'/auditStatusThree',
+                //     meta:{keepAlive:true},
+                //     component:resolve=>require(['../components/page/walletPages/bankCardPages/auditStatusThree.vue'],resolve),
+                //   }
+                // ]
               },
               {
                 path:'/extractlist',

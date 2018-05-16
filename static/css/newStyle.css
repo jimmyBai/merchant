@@ -48,3 +48,11 @@
 .dzhome{
   padding: 0 90px;
 }
+
+.bankselect .el-input--suffix .el-input__inner{
+  outline: none;
+  background: #2e1c34;
+  border: 1px solid #3d2b43;
+  color: #fff;
+  height: 32px;
+}
