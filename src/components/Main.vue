@@ -43,7 +43,7 @@
             <div class="pmenu">
               <i :class="'icon-menu'+item.icon"></i>
               <span v-text="item.name"></span>
-              <div class="" v-if="item.userid==4">
+              <div class="newmenu" v-if="item.userid==4">
                 <span @click="traderoom('1')">交易明细</span>
                 <span @click="traderoom('2')">交易汇总</span>
               </div>
@@ -169,7 +169,7 @@ export default {
       if(way == 1){
         console.log(123)
         let vm = this;
-        vm.$router.push('/page/tradeboxPages/tradedetaillist.vue');
+        vm.$router.push('/tradedetail');
         console.log(456)
       }
     }
@@ -212,4 +212,11 @@ export default {
 .popmyinfo ul li i.i-loginout{ background-position: 0 -39px; background-size: cover;}
 .popmyinfo ul li i.i-wallet{ background: url("../../static/img/wallet.png") no-repeat; display: inline-block; background-size: cover;}
 .popmyinfo ul.iconul li{ text-align: left; padding: 3px 10px; padding-left: 15px}
+
+.newmenu{
+  margin-top: 20px;
+}
+.newmenu span{
+  margin-top: 10px;
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-  <h3>交易明细</h3>
+  <h3>小费统计</h3>
 
 
 

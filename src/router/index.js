@@ -163,24 +163,29 @@ export default new Router({
           {
             path:'/export',
             meta:{keepAlive:true},
-            component:resolve=>require(['../components/page/Export.vue'],resolve),
+            component:resolve=>require(['../components/page/Export.vue'],resolve)
+          },
+          {
+            path:'/tradedetail',
+            meta:{keepAlive:true},
+            component:resolve=>require(['../components/page/tradedetail.vue'],resolve),
             children:[
-              // {
-              //   path:'/',
-              //   meta:{keepAlive:true},
-              //   component:resolve=>require(['../components/page/mapPages/myMap.vue'],resolve),
-              // },
               {
-                path:'/tradedetaillist',
+                path:'/',
                 meta:{keepAlive:true},
-                component:resolve=>require(['../components/page/tradeboxPages/tradedetaillist.vue'],resolve),
+                component:resolve=>require(['../components/page/tradedetailPages/tiptotallist.vue'],resolve),
               },
               {
-                path:'/tradesumlist',
+                path:'/tiptotallist',
                 meta:{keepAlive:true},
-                component:resolve=>require(['../components/page/tradeboxPages/tradesumlist.vue'],resolve),
+                component:resolve=>require(['../components/page/tradedetailPages/tiptotallist.vue'],resolve),
               }
             ]
+          },
+          {
+            path:'/tradesum',
+            meta:{keepAlive:true},
+            component:resolve=>require(['../components/page/tradesum.vue'],resolve),
           },
           {
             path:'/takeaway',
