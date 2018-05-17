@@ -56,3 +56,6 @@
   color: #fff;
   height: 32px;
 }
+.tiplist .el-table tr th{
+  background: #462747;
+}

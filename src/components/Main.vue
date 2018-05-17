@@ -43,6 +43,11 @@
             <div class="pmenu">
               <i :class="'icon-menu'+item.icon"></i>
               <span v-text="item.name"></span>
+              <div class="" v-if="item.userid==4">
+                <span @click="traderoom('1')">交易明细</span>
+                <span @click="traderoom('2')">交易汇总</span>
+              </div>
+              <!-- item.userid==4 -->
             </div>
           </li>
         </ul>
@@ -69,7 +74,8 @@ export default {
         {'name':'报表','userid':4,'icon':'04'},
         {'name':'权限','userid':6,'icon':'06'},
         {'name':'订座','userid':7,'icon':'07'}
-      ]
+      ],
+      istradedetail: false
     }
   },
   mounted:function(){
@@ -102,6 +108,7 @@ export default {
        vm.$router.push('/takeaway')
       }else if(id==4){
        vm.$router.push('/export')
+       vm.istradedetail = true;
       }else if(id==5){
        vm.$router.push('/shop')
       }else if(id==6){
@@ -157,6 +164,14 @@ export default {
       }).catch(()=>{
 
       });
+    },
+    traderoom(way){
+      if(way == 1){
+        console.log(123)
+        let vm = this;
+        vm.$router.push('/page/tradeboxPages/tradedetaillist.vue');
+        console.log(456)
+      }
     }
   }
 }

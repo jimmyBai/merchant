@@ -163,7 +163,24 @@ export default new Router({
           {
             path:'/export',
             meta:{keepAlive:true},
-            component:resolve=>require(['../components/page/Export.vue'],resolve)
+            component:resolve=>require(['../components/page/Export.vue'],resolve),
+            children:[
+              // {
+              //   path:'/',
+              //   meta:{keepAlive:true},
+              //   component:resolve=>require(['../components/page/mapPages/myMap.vue'],resolve),
+              // },
+              {
+                path:'/tradedetaillist',
+                meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/tradeboxPages/tradedetaillist.vue'],resolve),
+              },
+              {
+                path:'/tradesumlist',
+                meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/tradeboxPages/tradesumlist.vue'],resolve),
+              }
+            ]
           },
           {
             path:'/takeaway',

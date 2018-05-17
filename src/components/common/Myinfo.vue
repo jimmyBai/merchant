@@ -51,7 +51,8 @@
             <span class="title">二维码</span>
             <span class="prompt">顾客将通过扫描二维码进行小费支付</span>
             <!-- <span>二维码show</span> -->
-            <input type="button" value="点击生成二维码">
+            <input type="button" value="点击生成二维码" @click="clickopencode">
+            <!-- <input type="button" value="点击下载" @click="clickdlcode"> -->
           </div>
         </el-col>
         <el-col :span="14" class="bright">
@@ -91,31 +92,85 @@
 
           <div class="databox">
             <div class="title">
-              <span>实时数据</span>
+              <span><img src="../../../static/img/tiptitle.png" />实时数据</span>
             </div>
             <div class="content">
-
+              
+              <div class="tipimgshow">
+                <div class="imgleft">
+                  <div class="insideleft">
+                    <img class="phoneimg" src="../../../static/img/tipone.png" alt="">
+                  </div>
+                  <div class="insideright">
+                    <span>0.00</span>
+                    <span>总小费金额</span>
+                  </div>
+                </div>
+                <div class="imgright">
+                  <div class="insideleft protect">
+                    <img src="../../../static/img/tipthree.png" alt="">
+                  </div>
+                  <div class="insideright protectnum">
+                    <span>0.00</span>
+                    <span>支付人数</span>
+                  </div>
+                </div>
+              </div>
               <div class="tiplist">
                 <div class="tiptitle">
                   <span>我的小费</span>
-                  <input type="text"/>
+                  <input type="text" placeholder="请输入手机号/金额" />
                   <span class="search-icon"><i class="el-icon-search"></i></span>
                 </div>
+                <el-table stripe :data="reListData">
+                  <el-table-column prop="" label="用户名"></el-table-column>
+                  <el-table-column prop="" label="手机号码"></el-table-column>
+                  <el-table-column prop="" label="小费金额"></el-table-column>
+                  <el-table-column prop="" label="支付方式"></el-table-column>
+                  <el-table-column prop="" label="支付时间"></el-table-column>
+                </el-table>
               </div>
+              
             </div>
           </div>
         </el-col>
       </el-row>
     </div>
+
+    <!-- 拍照/上传 -->
+    <div class="dialogbox" v-if="isdialogShow">
+      <div class="dialoglist">
+        <span class="photography">拍照</span>
+        <span class="upload">本地上传</span>
+      </div>
+      <div class="dialoglist2">
+        <span class="cancel">取消</span>
+      </div>
+    </div>
+
+    <!-- 保存 -->
+    <div class="dialogsave" v-if="isdialogShow2">
+      <span>已保存到系统相册</span>
+    </div>
+
+    <!-- 遮罩层 -->
+    <div class="mask" v-if="ismaskShow" @click="clickdownMask"></div>
+
   </div>
 </template>
 
 <script>
+import "../../../static/css/newStyle.css"
+
   export default {
     name: 'myinfo',
     data () {
       return {
-        ListData:[]
+        ListData:[],
+        reListData:[],
+        isdialogShow: false,
+        isdialogShow2: false,
+        ismaskShow: false
       }
     },
     created(){
@@ -137,6 +192,22 @@
         }).catch(err => {
           vm.$message.error(err);
         });
+      },
+      clickopencode(){
+        let vm = this;
+        vm.isdialogShow = true;
+        vm.ismaskShow = true;
+      },
+      clickdlcode(){
+        let vm = this;
+        vm.isdialogShow2 = true;
+        vm.ismaskShow = true;
+      },
+      clickdownMask(){
+        let vm = this;
+        vm.isdialogShow = false;
+        vm.isdialogShow2 = false;
+        vm.ismaskShow = false;
       }
     }
   }
@@ -150,7 +221,7 @@
 .nameline{ text-align: center; height: 50px; line-height: 50px}
 .nameline .name{ font-size: 24px;}
 .nameline .line{ margin: 0 5px}
-.memberboxcontent{ margin-top: 10px}
+.memberboxcontent{ margin-top: 10px;}
 .memberboxcontent .el-row{ padding: 10px 0}
 .memberviewinfo{border-bottom: 1px solid #48344d; padding: 20px 0}
 .memberviewinfo ul{ width: 240px; margin: 0 auto; }
@@ -198,5 +269,222 @@ i.dtitle{ background-position: 0px -20px;}
   border: 0;
   font-size: 12px;
   margin-top: 30px;
+  -webkit-appearance: none;
 }
+
+.databox{
+
+}
+.databox .title{
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  margin-top: 20px;
+  background: #331f3a;
+  position: relative;
+}
+.databox .title img{
+  width: 20px;
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+}
+.databox .title span{
+  margin-left: 50px;
+}
+
+.tipimgshow{
+  width: 100%;
+  height: 100px;
+  background: #462747;
+  position: relative;
+}
+.imgleft{
+  width: 30%;
+  height: 100px;
+  float: left;
+}
+.imgright{
+  width: 70%;
+  height: 100px;
+  float: left;
+}
+.insideleft{
+  width: 50%;
+  float: left;
+  text-align: center;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.protect{
+  width: 20%;
+}
+.insideleft img{
+  width: 30px;
+  float: right;
+  padding-right: 10px;
+}
+.phoneimg{
+  width: 25px!important;
+  float: right;
+  padding-right: 10px;
+}
+.insideright{
+  width: 50%;
+  float: right;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.protectnum{
+  width: 80%;
+}
+.insideright span{
+  display: block;
+}
+
+.tiplist{
+  height: auto;
+  background: #462747;
+  padding: 0 20px;
+}
+.tiplist .tiptitle{
+  width: 100%;
+
+}
+.tiptitle input{
+  border-radius: 1px;
+  background: none;
+  padding: 3px;
+  border: 1px solid #48344e;
+  height: 18px;
+  line-height: 18px;
+  text-indent: 5px;
+  color: #f8e2ff;
+  width: 150px;
+  margin-left: 10px;
+  -webkit-appearance: none;
+}
+.search-icon{
+  cursor: pointer;
+  border-radius: 1px;
+  border: 1px solid #48344e;
+  padding: 3px;
+  height: 18px;
+  display: inline-block;
+  width: 18px;
+  text-align: center;
+  position: relative;
+  top: 1px;
+}
+.search-icon{
+  line-height: 18px;
+  margin-bottom: 5px;
+}
+
+
+::-webkit-input-placeholder{
+　font-size: 12px;
+}
+:-moz-placeholder{
+　font-size: 12px;
+}
+::-moz-placeholder{
+　font-size: 12px;
+}
+:-ms-input-placeholder{
+　font-size: 12px;
+}
+
+
+/* dialog --拍照/上传 */
+.dialogbox{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 300px;
+  height: 147px;
+  z-index: 100;
+}
+.dialoglist{
+  width: 100%;
+  height: 102px;
+}
+.photography{
+  display: block;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  background: #331f3a;
+  color: #ffffff;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.upload{
+  display: block;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  background: #331f3a;
+  color: #ffffff;
+  text-align: center;
+  margin-top: 2px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.dialoglist2{
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+}
+.cancel{
+  display: block;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  background: #331f3a;
+  color: #ac5397;
+  text-align: center;
+  margin-top: 5px;
+  border-radius: 10px;
+}
+
+/* dialog --保存二维码 */
+.dialogsave{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 300px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 10px;
+  z-index: 100;
+}
+
+
+
+/* dialog --遮罩层 */
+.mask{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  background: #38213e;
+  opacity: 0.4;
+  z-index: 99;
+}
+
 </style>

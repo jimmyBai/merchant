@@ -99,8 +99,15 @@ export default {
   .blessing .content textarea{
     width: 400px;
     height: 80px;
-    background: #38213e;
-    border: 1px solid #3d2b43;
+    /* background: #38213e;
+    border: 1px solid #3d2b43; */
+    border:1px solid #706375; 
+    background: none; 
+    outline:none; 
+    border-radius: 3px;
+    color: #fff;
+    text-indent: 10px;
+    -webkit-appearance: none;
   }
   .formbox .charge{
     margin: 15px 0;
@@ -122,5 +129,6 @@ export default {
     text-align: center;
     border: 0;
     font-size: 12px;
+    -webkit-appearance: none;
   }
 </style>
