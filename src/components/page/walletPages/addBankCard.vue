@@ -45,7 +45,7 @@
                 <span>取消</span>
               </div>
             </div>
-            
+
           </div>
         </div>
         <div class="message-box_btns">
@@ -72,7 +72,7 @@ import "../../../../static/css/newStyle.css"
         account_bank: '',
         account_sn: '',
         phone: ''
-      
+
       }
     },
     watch:{
@@ -96,14 +96,14 @@ import "../../../../static/css/newStyle.css"
           this.phone=nVal.toString().replace(/[^0-9]*/g,'');
         }
       }
-      
+
     },
     methods:{
       viewprompt(...data){
         let vm = this;
         vm.isPromptShow=data.isPromptStatus;
       },
-      
+
       // 递交成功
       clickSaveInfo(){
         // let vm =this,url='/api/web/bank/add',params={};
@@ -113,7 +113,7 @@ import "../../../../static/css/newStyle.css"
         //   data: params
         // }).then((res)=>{
         //   if(res.data.error_code=='0'){
-            
+
         //   }else{
         //     vm.$message.error(res.data.message);
         //   }
@@ -142,7 +142,7 @@ import "../../../../static/css/newStyle.css"
         };
         //执行父组件方法
         this.$emit('pviewbankcard',data,'');
-      }
+      },
       // 关闭页面
       closepop(){
         //执行父组件关闭方法
@@ -169,7 +169,7 @@ import "../../../../static/css/newStyle.css"
   .message-box_content{ padding: 20px}
   .popsaveline{ width: 80%; margin: 0 auto; margin-top: 20px}
   .popsaveline span{ text-align: center}
-  
+
 
   .btnBox{
     width: 100%;
@@ -192,7 +192,7 @@ import "../../../../static/css/newStyle.css"
     height: 30px;
     line-height: 30px;
   }
-  
+
   .cancelline{
     width: 30%;
     text-align: center;
