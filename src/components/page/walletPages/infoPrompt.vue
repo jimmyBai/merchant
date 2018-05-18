@@ -18,7 +18,7 @@
 </template>
 <script>
 // andy
-import "../../../../../static/css/newStyle.css"
+import "../../../../static/css/newStyle.css"
 
   export default {
     name: 'infoPrompt',

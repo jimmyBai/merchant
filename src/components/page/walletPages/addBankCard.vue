@@ -61,7 +61,7 @@
 
 <script>
 // andy
-import "../../../../../static/css/newStyle.css"
+import "../../../../static/css/newStyle.css"
 
   export default {
     name: 'addBankCard',
@@ -78,12 +78,12 @@ import "../../../../../static/css/newStyle.css"
     watch:{
       bankname(nVal,oVal){
         if(nVal){
-          this.bankname=nVal.toString().replace(/[^0-9]*/g,'');
+          this.place=nVal.toString().replace(/[^\u4e00-\u9fa5]/g,'');
         }
       },
       bankopenaccount(nVal,oVal){
         if(nVal){
-          this.bankopenaccount=nVal.toString().replace(/[^0-9]*/g,'');
+          this.place=nVal.toString().replace(/[^\u4e00-\u9fa5]/g,'');
         }
       },
       bankaccount(nVal,oVal){

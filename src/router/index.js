@@ -168,7 +168,7 @@ export default new Router({
           {
             path:'/tradedetail',
             meta:{keepAlive:true},
-            component:resolve=>require(['../components/page/tradedetail.vue'],resolve),
+            component:resolve=>require(['../components/page/Tradedetail.vue'],resolve),
             children:[
               {
                 path:'/',
@@ -185,7 +185,7 @@ export default new Router({
           {
             path:'/tradesum',
             meta:{keepAlive:true},
-            component:resolve=>require(['../components/page/tradesum.vue'],resolve),
+            component:resolve=>require(['../components/page/Tradesum.vue'],resolve),
           },
           {
             path:'/takeaway',
@@ -261,28 +261,6 @@ export default new Router({
                 path:'/bankCardlist',
                 meta:{keepAlive:true},
                 component:resolve=>require(['../components/page/walletPages/bankCardlist.vue'],resolve),
-                // children:[
-                //   {
-                //     path:'/',
-                //     meta:{keepAlive:true},
-                //     component:resolve=>require(['../components/page/walletPages/bankCardPages/auditStatusOne.vue'],resolve),
-                //   },
-                //   {
-                //     path:'/auditStatusOne',
-                //     meta:{keepAlive:true},
-                //     component:resolve=>require(['../components/page/walletPages/bankCardPages/auditStatusOne.vue'],resolve),
-                //   },
-                //   {
-                //     path:'/auditStatusTwo',
-                //     meta:{keepAlive:true},
-                //     component:resolve=>require(['../components/page/walletPages/bankCardPages/auditStatusTwo.vue'],resolve),
-                //   },
-                //   {
-                //     path:'/auditStatusThree',
-                //     meta:{keepAlive:true},
-                //     component:resolve=>require(['../components/page/walletPages/bankCardPages/auditStatusThree.vue'],resolve),
-                //   }
-                // ]
               },
               {
                 path:'/extractlist',
@@ -293,16 +271,6 @@ export default new Router({
                 path:'/recordslist',
                 meta:{keepAlive:true},
                 component:resolve=>require(['../components/page/walletPages/recordslist.vue'],resolve),
-              },
-              {
-                path:'/certificationlist',
-                meta:{keepAlive:true},
-                component:resolve=>require(['../components/page/walletPages/certificationlist.vue'],resolve),
-              },
-              {
-                path:'/extractPwdlist',
-                meta:{keepAlive:true},
-                component:resolve=>require(['../components/page/walletPages/extractPwdlist.vue'],resolve),
               }
             ]
           }

@@ -13,7 +13,7 @@
                 <span v-if="detailinfo.order_status!=1" :class="'btn-color-'+detailinfo.order_status" v-text="detailinfo.order_status_name"></span>
                 <span v-if="detailinfo.order_status==1" :class="'btn-color-'+detailinfo.order_status">待接单</span>
               </div>
-              <!--order_status==2 待派送   3派送中--->
+              <!--order_status==2 待派送   3派送中-->
               <div v-if="ishow">
                 <div v-if="detailinfo.order_status==2||detailinfo.order_status==3" class="deliverItem">
                   <ul :class="'itemline-'+detailinfo.order_status">
@@ -68,7 +68,7 @@
               </div>
 
             </div>
-          <!---viewSTART--->
+          <!---viewSTART-->
             <div class="baseinfo">
               <dl>
                 <dt>订单金额</dt>

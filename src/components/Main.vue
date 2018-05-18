@@ -43,11 +43,14 @@
             <div class="pmenu">
               <i :class="'icon-menu'+item.icon"></i>
               <span v-text="item.name"></span>
-              <div class="newmenu" v-if="item.userid==4">
-                <span @click="traderoom('1')">交易明细</span>
-                <span @click="traderoom('2')">交易汇总</span>
+              <img src="../../static/img/leftarrow.png" v-if="!isdradeShow&&item.userid==4" class="ltimg" >
+              <img src="../../static/img/downarrow.png" v-if="isdradeShow&&item.userid==4" class="dnimg">
+
+              <div class="newmenu" v-if="isdradeShow&&item.userid==4">
+                <span :class="{'isselect':isA,'isselect2':!isA}" @click="traderoom('1',$event)">交易明细</span>
+                <span :class="{'isselect':isB,'isselect2':!isB}" @click="traderoom('2',$event)">交易汇总</span>
               </div>
-              <!-- item.userid==4 -->
+
             </div>
           </li>
         </ul>
@@ -75,7 +78,9 @@ export default {
         {'name':'权限','userid':6,'icon':'06'},
         {'name':'订座','userid':7,'icon':'07'}
       ],
-      istradedetail: false
+      isdradeShow: false,
+      isA: true,
+      isB: true
     }
   },
   mounted:function(){
@@ -99,24 +104,34 @@ export default {
       this.$store.dispatch('changetabs',index);
       if(id==0){
         vm.$router.push('/main')
+        vm.isdradeShow = false;
       }else if(id==1){
-       vm.$router.push('/member')
+        vm.$router.push('/member')
+        vm.isdradeShow = false;
       }else if(id==2){
         sessionStorage.removeItem('user_id')
-       vm.$router.push('/order')
+        vm.$router.push('/order')
+        vm.isdradeShow = false;
       }else if(id==3){
-       vm.$router.push('/takeaway')
+        vm.$router.push('/takeaway')
+        vm.isdradeShow = false;
       }else if(id==4){
-       vm.$router.push('/export')
-       vm.istradedetail = true;
+        // vm.$router.push('/export')
+        if(!vm.isdradeShow&&id==4){
+          vm.isdradeShow = true;
+        }
       }else if(id==5){
-       vm.$router.push('/shop')
+        vm.$router.push('/shop')
+        vm.isdradeShow = false;
       }else if(id==6){
-       vm.$router.push('/permission')
+        vm.$router.push('/permission')
+        vm.isdradeShow = false;
       }else if(id==7){
-       vm.$router.push('/reservation')
+        vm.$router.push('/reservation')
+        vm.isdradeShow = false;
       }else if(id==8){
-       vm.$router.push('/onlive')
+        vm.$router.push('/onlive')
+        vm.isdradeShow = false;
       }
     },
     showpop(){
@@ -166,12 +181,17 @@ export default {
       });
     },
     traderoom(way){
+      let vm = this;
       if(way == 1){
-        console.log(123)
-        let vm = this;
         vm.$router.push('/tradedetail');
-        console.log(456)
+        vm.isA = !vm.isA;
+        vm.isB = true;
+      }else if(way != 1){
+        vm.$router.push('/tradesum');
+        vm.isB = !vm.isB;
+        vm.isA = true;
       }
+      
     }
   }
 }
@@ -218,5 +238,20 @@ export default {
 }
 .newmenu span{
   margin-top: 10px;
+}
+.pmenu .ltimg{
+  width: 6px;
+  position: absolute;
+  top: 26px;
+  right: 10px;
+}
+.pmenu .dnimg{
+  width: 12px;
+  position: absolute;
+  top: 32px;
+  right: 8px;
+}
+.leftmenubar ul li .isselect{
+  color: #aa96b1;
 }
 </style>

@@ -38,8 +38,6 @@
               <div :class="{'is-active':activenum=='bankCardlist'}" @click="changetabs('bankCardlist')" class="tabtar-item ">银行卡</div>
               <div :class="{'is-active':activenum=='extractlist'}" @click="changetabs('extractlist')" class="tabtar-item">提取</div>
               <div :class="{'is-active':activenum=='recordslist'}" @click="changetabs('recordslist')" class="tabtar-item">交易记录</div>
-              <!-- <div :class="{'is-active':activenum=='certificationlist'}" @click="changetabs('certificationlist')" class="tabtar-item">企业认证</div> -->
-              <!-- <div :class="{'is-active':activenum=='extractPwdlist'}" @click="changetabs('extractPwdlist')" class="tabtar-item">提取密码</div> -->
               <div class="ls-r-btn" @click="clickadd">
                 <i class="el-icon-circle-plus-outline"></i><span>添加</span>
               </div>
@@ -62,8 +60,8 @@
 </template>
 
 <script>
-import addBankCard from './walletPages/bankCardPages/addBankCard'
-import infoPrompt from './walletPages/bankCardPages/infoPrompt'
+import addBankCard from './walletPages/addBankCard'
+import infoPrompt from './walletPages/infoPrompt'
 
 export default {
   name: 'MerchantWallet',
@@ -90,12 +88,6 @@ export default {
     }else if(this.$route.path=='/recordslist'){
       this.activenum='recordslist'
     }
-    // else if(this.$route.path=='/certificationlist'){
-    //   this.activenum='certificationlist'
-    // }
-    // else if(this.$route.path=='/extractPwdlist'){
-    //   this.activenum='extractPwdlist'
-    // }
   },
   methods:{
     changetabs(way){

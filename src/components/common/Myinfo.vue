@@ -4,7 +4,7 @@
       <div class="memberimg">
         <img src="../../../static/img/membertopimg.png" />
       </div>
-      <div class="memberphoto">
+      <div class="memberphoto" @click="changeportrait('1')">
         <img src="../../../static/img/membericon.png" />
       </div>
     </div>
@@ -51,8 +51,8 @@
             <span class="title">二维码</span>
             <span class="prompt">顾客将通过扫描二维码进行小费支付</span>
             <!-- <span>二维码show</span> -->
-            <input type="button" value="点击生成二维码" @click="clickopencode">
-            <!-- <input type="button" value="点击下载" @click="clickdlcode"> -->
+            <input type="button" v-if="!istwocode" value="点击生成二维码" @click="commontwocode('1')">
+            <input type="button" v-if="istwocode" value="点击下载" @click="commontwocode('2')">
           </div>
         </el-col>
         <el-col :span="14" class="bright">
@@ -99,7 +99,7 @@
               <div class="tipimgshow">
                 <div class="imgleft">
                   <div class="insideleft">
-                    <img class="phoneimg" src="../../../static/img/tipone.png" alt="">
+                    <img src="../../../static/img/tipone.png" alt="">
                   </div>
                   <div class="insideright">
                     <span>0.00</span>
@@ -112,13 +112,13 @@
                   </div>
                   <div class="insideright protectnum">
                     <span>0.00</span>
-                    <span>支付人数</span>
+                    <span>支付人次</span>
                   </div>
                 </div>
               </div>
               <div class="tiplist">
                 <div class="tiptitle">
-                  <span>我的小费</span>
+                  <span class="tipspan">我的小费</span>
                   <input type="text" placeholder="请输入手机号/金额" />
                   <span class="search-icon"><i class="el-icon-search"></i></span>
                 </div>
@@ -140,11 +140,11 @@
     <!-- 拍照/上传 -->
     <div class="dialogbox" v-if="isdialogShow">
       <div class="dialoglist">
-        <span class="photography">拍照</span>
-        <span class="upload">本地上传</span>
+        <span class="photography" @click="changeportrait('2')">拍照</span>
+        <span class="upload" @click="changeportrait('3')">本地上传</span>
       </div>
       <div class="dialoglist2">
-        <span class="cancel">取消</span>
+        <span class="cancel" @click="changeportrait('4')">取消</span>
       </div>
     </div>
 
@@ -170,7 +170,8 @@ import "../../../static/css/newStyle.css"
         reListData:[],
         isdialogShow: false,
         isdialogShow2: false,
-        ismaskShow: false
+        ismaskShow: false,
+        istwocode: false
       }
     },
     created(){
@@ -193,22 +194,47 @@ import "../../../static/css/newStyle.css"
           vm.$message.error(err);
         });
       },
-      clickopencode(){
+      // 更换头像
+      changeportrait(way){
         let vm = this;
-        vm.isdialogShow = true;
-        vm.ismaskShow = true;
+        if(way==1){
+          vm.isdialogShow = true;
+          vm.ismaskShow = true;
+        }
+        if(way==2){
+          vm.isdialogShow = false;
+          vm.ismaskShow = false;
+        }
+        if(way==3){
+          vm.isdialogShow = false;
+          vm.ismaskShow = false;
+        }
+        if(way==4){
+          vm.isdialogShow = false;
+          vm.ismaskShow = false;
+        }
+        
       },
-      clickdlcode(){
+      // 生成二维码
+      commontwocode(way){
         let vm = this;
-        vm.isdialogShow2 = true;
-        vm.ismaskShow = true;
+        if(way==1){
+          vm.istwocode = true
+        }
+        if(way!=1){
+          vm.isdialogShow2 = true;
+          vm.ismaskShow = true;
+          vm.istwocode = false;
+        }
+        
       },
+      // 遮罩层
       clickdownMask(){
         let vm = this;
         vm.isdialogShow = false;
         vm.isdialogShow2 = false;
         vm.ismaskShow = false;
-      }
+      },
     }
   }
 </script>
@@ -301,12 +327,12 @@ i.dtitle{ background-position: 0px -20px;}
   position: relative;
 }
 .imgleft{
-  width: 30%;
+  width: 40%;
   height: 100px;
   float: left;
 }
 .imgright{
-  width: 70%;
+  width: 60%;
   height: 100px;
   float: left;
 }
@@ -319,15 +345,10 @@ i.dtitle{ background-position: 0px -20px;}
   transform: translateY(-50%);
 }
 .protect{
-  width: 20%;
+  width: 30%;
 }
 .insideleft img{
-  width: 30px;
-  float: right;
-  padding-right: 10px;
-}
-.phoneimg{
-  width: 25px!important;
+  width: 60px;
   float: right;
   padding-right: 10px;
 }
@@ -339,7 +360,7 @@ i.dtitle{ background-position: 0px -20px;}
   transform: translateY(-50%);
 }
 .protectnum{
-  width: 80%;
+  width: 70%;
 }
 .insideright span{
   display: block;
@@ -352,13 +373,16 @@ i.dtitle{ background-position: 0px -20px;}
 }
 .tiplist .tiptitle{
   width: 100%;
-
+}
+.tipspan{
+  color: #f8e2ff;
 }
 .tiptitle input{
   border-radius: 1px;
   background: none;
   padding: 3px;
   border: 1px solid #48344e;
+  background: #2e1c34;
   height: 18px;
   line-height: 18px;
   text-indent: 5px;
@@ -470,8 +494,8 @@ i.dtitle{ background-position: 0px -20px;}
   background: #ffffff;
   border-radius: 10px;
   z-index: 100;
+  color: #2e1c34;
 }
-
 
 
 /* dialog --遮罩层 */
@@ -482,8 +506,8 @@ i.dtitle{ background-position: 0px -20px;}
   left: 0;
   right: 0;
   text-align: center;
-  background: #38213e;
-  opacity: 0.4;
+  background: #000;
+  opacity: 0.5;
   z-index: 99;
 }
 

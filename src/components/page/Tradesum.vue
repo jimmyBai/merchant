@@ -3,14 +3,13 @@
   <h3>交易汇总</h3>
 
 
-
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'shop',
+  name: 'tradesum',
   data () {
     return {
       

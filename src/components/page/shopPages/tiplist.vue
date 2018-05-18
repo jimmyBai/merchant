@@ -2,7 +2,7 @@
   <div class="tipcontainer">
 
     <div class="tipcontent">
-      <div class="title">小费设置</div>
+      <div class="title tipseting">小费设置</div>
       <div class="formbox">
         <div class="line">
           <div class="title"><em>*&nbsp;&nbsp;</em>默认小费金额</div>
@@ -24,7 +24,7 @@
         <div class="blessing">
           <div class="title"><em>*&nbsp;&nbsp;</em>默认祝福语</div>
           <div class="content">
-            <textarea></textarea>
+            <textarea placeholder="您的满意，是我们最大的动力！"></textarea>
           </div>
         </div>
         <div class="charge">
@@ -81,6 +81,9 @@ export default {
     display: block;
     font-size: 12px;
   }
+  .tipseting{
+    color: #f8e2ff;
+  }
   .firstIp{
     margin: 0 5px 0 0!important;
   }
@@ -121,14 +124,32 @@ export default {
   .savebtn input{
     cursor: pointer;
     background: #ac5397;
-    height: 30px;
-    line-height: 30px;
+    height: 40px;
+    line-height: 40px;
     color: #fff;
     display: inline-block;
-    width: 300px;
+    width: 400px;
     text-align: center;
     border: 0;
     font-size: 12px;
     -webkit-appearance: none;
   }
+
+  ::-webkit-input-placeholder{
+  　font-size: 12px;
+    color: #fff;
+  }
+  :-moz-placeholder{
+  　font-size: 12px;
+    color: #fff;
+  }
+  ::-moz-placeholder{
+  　font-size: 12px;
+    color: #fff;
+  }
+  :-ms-input-placeholder{
+  　font-size: 12px;
+    color: #fff;
+  }
+
 </style>
