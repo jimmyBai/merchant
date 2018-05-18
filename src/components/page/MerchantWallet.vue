@@ -8,7 +8,7 @@
         <div class="moneyleft">
           <div class="moneyshow">
             <span class="moneynum">
-              <span>￥100<span>.00</span></span>
+              <span>￥<span v-text="ListData.balance"></span></span>
             </span>
             <span class="moneytext">账户余额</span>
           </div>
@@ -16,7 +16,7 @@
         <div class="moneycontent">
           <div class="moneyshow">
             <span class="moneynum ctmy">
-              <span>￥100<span>.00</span></span>
+              <span>￥<span v-text="ListData.frozen_balance"></span></span>
             </span>
             <span class="moneytext cttxt">不可提现金额</span>
           </div>
@@ -71,10 +71,10 @@ export default {
   },
   data () {
     return {
-      activenum:'bankCardlist',
-      ListData:[],
+      activenum: 'bankCardlist',
+      ListData: [],
       isBankCardShow: false,
-      isPromptShow: false
+      isPromptShow: false,
     }
   },
   created(){
@@ -88,12 +88,34 @@ export default {
     }else if(this.$route.path=='/recordslist'){
       this.activenum='recordslist'
     }
+
+    this.getlistData()
   },
   methods:{
     changetabs(way){
       this.activenum=way
       this.$router.push('/'+way)
     },
+
+    // 获取余额数据
+    getlistData(){
+      this.ListData = []
+      let vm = this,url='/api/web/wallet/balance',
+      params={};
+      vm.$axios.get(url,{params}).then((res)=>{
+        if(res.data.error_code=='0'){
+          if(res.data.data[0]){
+            vm.ListData=res.data.data[0]
+          }
+          
+        }else{
+          vm.$message.error(res.data.message);
+        }
+      }).catch(err => {
+        console.log(err);
+      });
+    },
+
     viewbankcard(...data){
       let vm = this;
       vm.isBankCardShow=data[0].isBankCardStatus;

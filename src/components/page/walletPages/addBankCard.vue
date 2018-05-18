@@ -12,28 +12,28 @@
             <div class="adduser-item">
               <div class="itemline">
                 <div class="itemtitle">户名</div>
-                <div class="itemcontent"><input type="text" v-model="bankname"></div>
+                <div class="itemcontent"><input type="text" v-model="account_name"></div>
               </div>
             </div>
             <!-- 开户行 -->
             <div class="adduser-item">
               <div class="itemline">
                 <div class="itemtitle">开户行</div>
-                <div class="itemcontent"><input type="text" v-model="bankopenaccount"></div>
+                <div class="itemcontent"><input type="text" v-model="account_bank"></div>
               </div>
             </div>
             <!-- 账号 -->
             <div class="adduser-item">
               <div class="itemline">
                 <div class="itemtitle">账号</div>
-                <div class="itemcontent"><input type="text" v-model="bankaccount"></div>
+                <div class="itemcontent"><input type="text" v-model="account_sn"></div>
               </div>
             </div>
             <!-- 预留手机号 -->
             <div class="adduser-item">
               <div class="itemline">
                 <div class="itemtitle">预留手机号</div>
-                <div class="itemcontent"><input type="text" v-model="bankphone"></div>
+                <div class="itemcontent"><input type="text" v-model="phone"></div>
               </div>
             </div>
             <!-- 保存/取消 -->
@@ -68,32 +68,32 @@ import "../../../../static/css/newStyle.css"
     data () {
       return {
         msgtitle: '添加银行卡',
-        bankname: '',
-        bankopenaccount: '',
-        bankaccount: '',
-        bankphone: ''
+        account_name: '',
+        account_bank: '',
+        account_sn: '',
+        phone: ''
       
       }
     },
     watch:{
-      bankname(nVal,oVal){
+      account_name(nVal,oVal){
         if(nVal){
-          this.place=nVal.toString().replace(/[^\u4e00-\u9fa5]/g,'');
+          this.account_name=nVal.toString().replace(/[^\u4e00-\u9fa5]/g,'');
         }
       },
-      bankopenaccount(nVal,oVal){
+      account_bank(nVal,oVal){
         if(nVal){
-          this.place=nVal.toString().replace(/[^\u4e00-\u9fa5]/g,'');
+          this.account_bank=nVal.toString().replace(/[^\u4e00-\u9fa5]/g,'');
         }
       },
-      bankaccount(nVal,oVal){
+      account_sn(nVal,oVal){
         if(nVal){
-          this.bankaccount=nVal.toString().replace(/[^0-9]*/g,'');
+          this.account_sn=nVal.toString().replace(/[^0-9]*/g,'');
         }
       },
-      bankphone(nVal,oVal){
+      phone(nVal,oVal){
         if(nVal){
-          this.bankphone=nVal.toString().replace(/[^0-9]*/g,'');
+          this.phone=nVal.toString().replace(/[^0-9]*/g,'');
         }
       }
       
@@ -104,17 +104,28 @@ import "../../../../static/css/newStyle.css"
         vm.isPromptShow=data.isPromptStatus;
       },
       
-      // 关闭页面
-      closepop(){
-        //执行父组件关闭方法
-        let data = {
-          isBankCardStatus:false
-        };
-        //执行父组件方法
-        this.$emit('pviewbankcard',data,'');
-      },
       // 递交成功
       clickSaveInfo(){
+        // let vm =this,url='/api/web/bank/add',params={};
+        // vm.$axios({
+        //   method:'post',
+        //   url:url,
+        //   data: params
+        // }).then((res)=>{
+        //   if(res.data.error_code=='0'){
+            
+        //   }else{
+        //     vm.$message.error(res.data.message);
+        //   }
+
+        // }).catch(err => {
+        //   console.log(err);
+        // });
+
+
+
+
+
         //执行父组件关闭方法
         let data = {
           isBankCardStatus:false,
@@ -132,6 +143,15 @@ import "../../../../static/css/newStyle.css"
         //执行父组件方法
         this.$emit('pviewbankcard',data,'');
       }
+      // 关闭页面
+      closepop(){
+        //执行父组件关闭方法
+        let data = {
+          isBankCardStatus:false
+        };
+        //执行父组件方法
+        this.$emit('pviewbankcard',data,'');
+      },
 
     }
   }

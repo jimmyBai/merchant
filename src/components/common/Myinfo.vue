@@ -13,8 +13,8 @@
         <el-col :span="10" class="left">
           <div class="nameline">
             <span class="name" v-text="ListData.username"></span>
-            <!--<span class="line">|</span>
-            <span class="duty">总经理</span>-->
+            <span class="line">|</span>
+            <span class="duty">总经理</span>
           </div>
           <div class="userinfo memberviewinfo">
             <ul>
@@ -275,7 +275,7 @@ i.dtitle{ background-position: 0px -20px;}
 }
 .twocode .title{
   display: block;
-  color: #ffffff;
+  color: #aa96b1;
   font-size: 16px;
 }
 .twocode .prompt{
@@ -495,6 +495,7 @@ i.dtitle{ background-position: 0px -20px;}
   border-radius: 10px;
   z-index: 100;
   color: #2e1c34;
+  font-size: 16px;
 }
 
 

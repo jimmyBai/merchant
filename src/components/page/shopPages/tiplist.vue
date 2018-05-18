@@ -2,16 +2,16 @@
   <div class="tipcontainer">
 
     <div class="tipcontent">
-      <div class="title tipseting">小费设置</div>
+      <div class="title">小费设置</div>
       <div class="formbox">
         <div class="line">
           <div class="title"><em>*&nbsp;&nbsp;</em>默认小费金额</div>
           <div class="content">
-            <input type="text" class="firstIp" /><span>元</span>
-            <input type="text" /><span>元</span>
-            <input type="text" /><span>元</span>
-            <input type="text" /><span>元</span>
-            <input type="text" /><span>元</span>
+            <input type="text" class="firstIp" value="0.00" /><span>元</span>
+            <input type="text" value="0.00" /><span>元</span>
+            <input type="text" value="0.00" /><span>元</span>
+            <input type="text" value="0.00" /><span>元</span>
+            <input type="text" value="0.00" /><span>元</span>
             <span class="tipprompt">请输入5个默认可选小费金额</span>
           </div>
         </div>
@@ -80,9 +80,6 @@ export default {
   .line .tipprompt{
     display: block;
     font-size: 12px;
-  }
-  .tipseting{
-    color: #f8e2ff;
   }
   .firstIp{
     margin: 0 5px 0 0!important;

@@ -47,8 +47,8 @@
               <img src="../../static/img/downarrow.png" v-if="isdradeShow&&item.userid==4" class="dnimg">
 
               <div class="newmenu" v-if="isdradeShow&&item.userid==4">
-                <span :class="{'isselect':isA,'isselect2':!isA}" @click="traderoom('1',$event)">交易明细</span>
-                <span :class="{'isselect':isB,'isselect2':!isB}" @click="traderoom('2',$event)">交易汇总</span>
+                <span :class="{'isselect':isA}" @click="traderoom('1',$event)">交易明细</span>
+                <!-- <span :class="{'isselect':isB,'isselect2':!isB}" @click="traderoom('2',$event)">交易汇总</span> -->
               </div>
 
             </div>
@@ -79,8 +79,8 @@ export default {
         {'name':'订座','userid':7,'icon':'07'}
       ],
       isdradeShow: false,
-      isA: true,
-      isB: true
+      isA: true
+      // isB: true
     }
   },
   mounted:function(){
@@ -105,16 +105,20 @@ export default {
       if(id==0){
         vm.$router.push('/main')
         vm.isdradeShow = false;
+        vm.isA = true;
       }else if(id==1){
         vm.$router.push('/member')
         vm.isdradeShow = false;
+        vm.isA = true;
       }else if(id==2){
         sessionStorage.removeItem('user_id')
         vm.$router.push('/order')
         vm.isdradeShow = false;
+        vm.isA = true;
       }else if(id==3){
         vm.$router.push('/takeaway')
         vm.isdradeShow = false;
+        vm.isA = true;
       }else if(id==4){
         // vm.$router.push('/export')
         if(!vm.isdradeShow&&id==4){
@@ -123,15 +127,19 @@ export default {
       }else if(id==5){
         vm.$router.push('/shop')
         vm.isdradeShow = false;
+        vm.isA = true;
       }else if(id==6){
         vm.$router.push('/permission')
         vm.isdradeShow = false;
+        vm.isA = true;
       }else if(id==7){
         vm.$router.push('/reservation')
         vm.isdradeShow = false;
+        vm.isA = true;
       }else if(id==8){
         vm.$router.push('/onlive')
         vm.isdradeShow = false;
+        vm.isA = true;
       }
     },
     showpop(){
@@ -184,13 +192,13 @@ export default {
       let vm = this;
       if(way == 1){
         vm.$router.push('/tradedetail');
-        vm.isA = !vm.isA;
-        vm.isB = true;
-      }else if(way != 1){
-        vm.$router.push('/tradesum');
-        vm.isB = !vm.isB;
-        vm.isA = true;
+        vm.isA = false;
       }
+      // else if(way != 1){
+      //   vm.$router.push('/tradesum');
+      //   vm.isB = !vm.isB;
+      //   vm.isA = true;
+      // }
       
     }
   }

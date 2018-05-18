@@ -46,10 +46,10 @@
     <div class="pagination">
       <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
-
+    
     <!-- 添加/查看商品 -->
     <view-goods v-if="isTakeawayShow" :fromParent="fromParent" @viewevent="viewevent"></view-goods>
-
+    
   </div>
 </template>
 
