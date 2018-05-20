@@ -47,13 +47,13 @@
           </div>
 
           <!-- 新增二维码 _Andy -->
-          <div class="twocode">
+          <!-- <div class="twocode">
             <span class="title">二维码</span>
             <span class="prompt">顾客将通过扫描二维码进行小费支付</span>
-            <!-- <span>二维码show</span> -->
+            <span>二维码show</span>
             <input type="button" v-if="!istwocode" value="点击生成二维码" @click="commontwocode('1')">
             <input type="button" v-if="istwocode" value="点击下载" @click="commontwocode('2')">
-          </div>
+          </div> -->
         </el-col>
         <el-col :span="14" class="bright">
           <!--<div class="moneyline">
@@ -90,7 +90,7 @@
             </div>
           </div>-->
 
-          <div class="databox">
+          <!-- <div class="databox">
             <div class="title">
               <span><img src="../../../static/img/tiptitle.png" />实时数据</span>
             </div>
@@ -132,7 +132,7 @@
               </div>
               
             </div>
-          </div>
+          </div> -->
         </el-col>
       </el-row>
     </div>

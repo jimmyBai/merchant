@@ -6,19 +6,21 @@
       <div class="line">
         <span class="title">银行账户</span>
         <div class="bankselect">
-          <el-select v-model="typelist" value-key='id' placeholder="请选择">
+          <el-select v-model="name" value-key='id' placeholder="请选择">
             <el-option v-for="item in usertions" :key="item.id" :label="item.name" :value='item'></el-option>
           </el-select>
+          <span v-text="account_id"></span>
         </div>
       </div>
       
       <div class="line">
         <span class="title">可提现金额</span>
         <input type="text" class="content" v-model="amount" />
+        <span v-text="trade_amount"></span>
       </div>
 
       <div class="btnbox">
-        <input type="button" class="savebtn" value="提交">
+        <input type="button" class="savebtn" value="提交" @click="subaudit">
         <input type="button" class="cancelbtn" value="取消">
       </div>
 
@@ -35,8 +37,10 @@ export default {
   data () {
     return {
       amount: '',
-      typelist: '',
-      usertions: []
+      name: '',
+      usertions: [],
+      trade_amount: '',
+      account_id: ''
     }
   },
   watch:{
@@ -44,16 +48,54 @@ export default {
       if(nVal){
         this.amount=nVal.toString().replace(/[^0-9]*/g,'');
       }
-    },
-    typelist(nVal,oVal){
-      if(nVal){
-        this.typelist=nVal.toString().replace(/[^0-9]*/g,'');
-      }
     }
       
   },
+  mounted:function(){
+    this.getclassinfo();
+  },
   methods:{
-    
+
+    // 获取银行卡列表
+    getclassinfo(){
+      let vm =this,url='/api/web/bank/list',params={};
+      vm.$axios.get(url,{params}).then((res)=>{
+        if(res.data.error_code=='0'){
+          vm.usertions=res.data.data
+        }else{
+          vm.$message.error(res.data.message);
+        }
+      }).catch(err => {
+        console.log(err);
+      });
+    },
+    // 提交审核
+    subaudit(){
+      // let vm =this,
+      // url='/api/web/withdrawal/create',
+      // params={}
+      // // params={}
+      // vm.$axios({
+      //   method:'post',
+      //   url:url,
+      //   data: params
+      // }).then((res)=>{
+      //   if(res.data.error_code=='0'){
+          
+      //     vm.$message({
+      //       message: '提交审核成功,请等待审核!',
+      //       type: 'success'
+      //     });
+
+      //   }else{
+      //     vm.$message.error(res.data.message);
+      //   }
+      // }).catch(err => {
+      //   console.log(err);
+      // });
+    }
+
+
   }
 }
 </script>

@@ -43,13 +43,13 @@
             <div class="pmenu">
               <i :class="'icon-menu'+item.icon"></i>
               <span v-text="item.name"></span>
-              <img src="../../static/img/leftarrow.png" v-if="!isdradeShow&&item.userid==4" class="ltimg" >
+              <!-- <img src="../../static/img/leftarrow.png" v-if="!isdradeShow&&item.userid==4" class="ltimg" >
               <img src="../../static/img/downarrow.png" v-if="isdradeShow&&item.userid==4" class="dnimg">
 
               <div class="newmenu" v-if="isdradeShow&&item.userid==4">
                 <span :class="{'isselect':isA}" @click="traderoom('1',$event)">交易明细</span>
-                <!-- <span :class="{'isselect':isB,'isselect2':!isB}" @click="traderoom('2',$event)">交易汇总</span> -->
-              </div>
+                <span :class="{'isselect':isB,'isselect2':!isB}" @click="traderoom('2',$event)">交易汇总</span>
+              </div> -->
 
             </div>
           </li>
@@ -120,10 +120,10 @@ export default {
         vm.isdradeShow = false;
         vm.isA = true;
       }else if(id==4){
-        // vm.$router.push('/export')
-        if(!vm.isdradeShow&&id==4){
-          vm.isdradeShow = true;
-        }
+        vm.$router.push('/export')
+        // if(!vm.isdradeShow&&id==4){
+        //   vm.isdradeShow = true;
+        // }
       }else if(id==5){
         vm.$router.push('/shop')
         vm.isdradeShow = false;

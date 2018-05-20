@@ -21,14 +21,14 @@
             <span class="moneytext cttxt">不可提现金额</span>
           </div>
         </div>
-        <div class="moneyright">
+        <!-- <div class="moneyright">
           <div class="moneyshow">
             <span class="moneynum rtmy">
               <span>￥100<span>.00</span></span>
             </span>
             <span class="moneytext rttxt">客户充值卡金额</span>
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- tab -->
       <div class="datatab">
@@ -38,9 +38,9 @@
               <div :class="{'is-active':activenum=='bankCardlist'}" @click="changetabs('bankCardlist')" class="tabtar-item ">银行卡</div>
               <div :class="{'is-active':activenum=='extractlist'}" @click="changetabs('extractlist')" class="tabtar-item">提取</div>
               <div :class="{'is-active':activenum=='recordslist'}" @click="changetabs('recordslist')" class="tabtar-item">交易记录</div>
-              <div class="ls-r-btn" @click="clickadd">
+              <!-- <div class="ls-r-btn" @click="clickadd">
                 <i class="el-icon-circle-plus-outline"></i><span>添加</span>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="tabslist-content">
@@ -52,7 +52,7 @@
     </div>
 
     <!-- 添加银行卡 -->
-    <add-bank-card v-if="isBankCardShow" @pviewbankcard="viewbankcard"></add-bank-card>
+    <add-bank-card v-if="isBankCardShow" :fromParent="fromParent" @pviewbankcard="viewbankcard"></add-bank-card>
     <!-- 银行卡递交提示 -->
     <info-prompt v-if="isPromptShow" @pviewprompt="viewprompt"></info-prompt>
 
@@ -75,6 +75,7 @@ export default {
       ListData: [],
       isBankCardShow: false,
       isPromptShow: false,
+      fromParent:''
     }
   },
   created(){

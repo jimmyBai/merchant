@@ -8,6 +8,15 @@
         </div>
         <div class="message-box_content">
           <div class="addpop">
+
+            <!-- 银行id? -->
+            <div class="adduser-item">
+              <div class="itemline">
+                <div class="itemtitle">银行id</div>
+                <div class="itemcontent"><input type="text" v-model="bank_id"></div>
+              </div>
+            </div>
+
             <!-- 户名 -->
             <div class="adduser-item">
               <div class="itemline">
@@ -71,7 +80,8 @@ import "../../../../static/css/newStyle.css"
         account_name: '',
         account_bank: '',
         account_sn: '',
-        phone: ''
+        phone: '',
+        bank_id: ''
       
       }
     },
@@ -98,6 +108,9 @@ import "../../../../static/css/newStyle.css"
       }
       
     },
+    props: {
+      fromParent: String
+    },
     methods:{
       viewprompt(...data){
         let vm = this;
@@ -106,7 +119,26 @@ import "../../../../static/css/newStyle.css"
       
       // 递交成功
       clickSaveInfo(){
-        // let vm =this,url='/api/web/bank/add',params={};
+        // let vm =this,url='/api/web/bank/add',params={
+        //   account_name:vm.account_name,
+        //   account_bank:vm.account_bank,
+        //   account_sn:vm.account_sn,
+        //   phone:vm.phone,
+        //   bank_id:vm.bank_id
+        // };
+        // if(!this.account_name){
+        //   this.$message.error('户名不能为空');
+
+        // }else if(!this.account_bank){
+        //   this.$message.error("开户行不能为空!");
+          
+        // }else if(!this.account_sn){
+        //   this.$message.error("银行账户不能为空!");
+        //   return false
+        // }else if(!this.phone){
+        //   this.$message.error("手机号不能为空!");
+        //   return false
+        // }
         // vm.$axios({
         //   method:'post',
         //   url:url,
@@ -114,6 +146,19 @@ import "../../../../static/css/newStyle.css"
         // }).then((res)=>{
         //   if(res.data.error_code=='0'){
             
+        //     vm.$message({
+        //       message: '添加银行卡成功,请等待审核!',
+        //       type: 'success'
+        //     });
+
+        //     //执行父组件关闭方法
+        //     let data = {
+        //       isBankCardStatus:false,
+        //       status: 'refresh'
+        //     };
+        //     //执行父组件方法
+        //     this.$emit('pviewbankcard',data,'');
+
         //   }else{
         //     vm.$message.error(res.data.message);
         //   }
@@ -121,18 +166,14 @@ import "../../../../static/css/newStyle.css"
         // }).catch(err => {
         //   console.log(err);
         // });
-
-
-
-
-
+        
         //执行父组件关闭方法
         let data = {
-          isBankCardStatus:false,
-          status: 'refresh'
+          isBankCardStatus:false
         };
         //执行父组件方法
         this.$emit('pviewbankcard',data,'');
+
       },
       // 递交取消
       clickCancelInfo(){
@@ -142,7 +183,7 @@ import "../../../../static/css/newStyle.css"
         };
         //执行父组件方法
         this.$emit('pviewbankcard',data,'');
-      }
+      },
       // 关闭页面
       closepop(){
         //执行父组件关闭方法
@@ -151,7 +192,7 @@ import "../../../../static/css/newStyle.css"
         };
         //执行父组件方法
         this.$emit('pviewbankcard',data,'');
-      },
+      }
 
     }
   }

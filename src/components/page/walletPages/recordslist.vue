@@ -3,14 +3,17 @@
     <!-- infoList -->
     <div class="listtable">
       <el-table stripe :data="ListData">
-        <el-table-column prop="" label="账号"></el-table-column>
+        <!-- <el-table-column prop="" label="账号"></el-table-column>
         <el-table-column prop="" label="户名"></el-table-column>
         <el-table-column prop="" label="开户行"></el-table-column>
-        <el-table-column prop="" label="钱包余额"></el-table-column>
+        <el-table-column prop="" label="钱包余额"></el-table-column> -->
+        <el-table-column prop="account_sn" label="银行卡号"></el-table-column>
+        <el-table-column prop="trade_type_name" label="交易类型"></el-table-column>
         <el-table-column prop="trade_amount" label="交易金额"></el-table-column>
         <el-table-column prop="balance" label="交易后余额"></el-table-column>
+        <el-table-column prop="frozen_balance" label="交易后不可提现余额"></el-table-column>
         <el-table-column prop="trade_time" label="提现时间"></el-table-column>
-        <el-table-column prop="" label="操作"></el-table-column>
+        <!-- <el-table-column prop="" label="操作"></el-table-column> -->
       </el-table>
       <div class="list-bottom"></div>
     </div>
