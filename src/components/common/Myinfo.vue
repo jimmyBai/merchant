@@ -13,8 +13,8 @@
         <el-col :span="10" class="left">
           <div class="nameline">
             <span class="name" v-text="ListData.username"></span>
-            <span class="line">|</span>
-            <span class="duty">总经理</span>
+           <!-- <span class="line">|</span>
+            <span class="duty">总经理</span>-->
           </div>
           <div class="userinfo memberviewinfo">
             <ul>
@@ -47,7 +47,11 @@
           </div>
 
           <!-- 新增二维码 _Andy -->
+<<<<<<< HEAD
           <!-- <div class="twocode">
+=======
+          <div class="twocode" v-if="false">
+>>>>>>> f27d638b4bac1e4f6382ed9e3b987d3998a976d3
             <span class="title">二维码</span>
             <span class="prompt">顾客将通过扫描二维码进行小费支付</span>
             <span>二维码show</span>
@@ -55,7 +59,7 @@
             <input type="button" v-if="istwocode" value="点击下载" @click="commontwocode('2')">
           </div> -->
         </el-col>
-        <el-col :span="14" class="bright">
+        <el-col :span="14" class="bright" v-if="false">
           <!--<div class="moneyline">
             <div class="rhead">
               <i class="mtitle"></i>
@@ -95,7 +99,7 @@
               <span><img src="../../../static/img/tiptitle.png" />实时数据</span>
             </div>
             <div class="content">
-              
+
               <div class="tipimgshow">
                 <div class="imgleft">
                   <div class="insideleft">
@@ -130,7 +134,7 @@
                   <el-table-column prop="" label="支付时间"></el-table-column>
                 </el-table>
               </div>
-              
+
             </div>
           </div> -->
         </el-col>
@@ -213,7 +217,7 @@ import "../../../static/css/newStyle.css"
           vm.isdialogShow = false;
           vm.ismaskShow = false;
         }
-        
+
       },
       // 生成二维码
       commontwocode(way){
@@ -226,7 +230,7 @@ import "../../../static/css/newStyle.css"
           vm.ismaskShow = true;
           vm.istwocode = false;
         }
-        
+
       },
       // 遮罩层
       clickdownMask(){

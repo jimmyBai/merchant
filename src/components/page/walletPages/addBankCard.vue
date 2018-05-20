@@ -54,7 +54,7 @@
                 <span>取消</span>
               </div>
             </div>
-            
+
           </div>
         </div>
         <div class="message-box_btns">
@@ -80,9 +80,14 @@ import "../../../../static/css/newStyle.css"
         account_name: '',
         account_bank: '',
         account_sn: '',
+<<<<<<< HEAD
         phone: '',
         bank_id: ''
       
+=======
+        phone: ''
+
+>>>>>>> f27d638b4bac1e4f6382ed9e3b987d3998a976d3
       }
     },
     watch:{
@@ -106,7 +111,7 @@ import "../../../../static/css/newStyle.css"
           this.phone=nVal.toString().replace(/[^0-9]*/g,'');
         }
       }
-      
+
     },
     props: {
       fromParent: String
@@ -116,7 +121,7 @@ import "../../../../static/css/newStyle.css"
         let vm = this;
         vm.isPromptShow=data.isPromptStatus;
       },
-      
+
       // 递交成功
       clickSaveInfo(){
         // let vm =this,url='/api/web/bank/add',params={
@@ -210,7 +215,7 @@ import "../../../../static/css/newStyle.css"
   .message-box_content{ padding: 20px}
   .popsaveline{ width: 80%; margin: 0 auto; margin-top: 20px}
   .popsaveline span{ text-align: center}
-  
+
 
   .btnBox{
     width: 100%;
@@ -233,7 +238,7 @@ import "../../../../static/css/newStyle.css"
     height: 30px;
     line-height: 30px;
   }
-  
+
   .cancelline{
     width: 30%;
     text-align: center;
