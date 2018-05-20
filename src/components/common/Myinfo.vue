@@ -47,11 +47,7 @@
           </div>
 
           <!-- 新增二维码 _Andy -->
-<<<<<<< HEAD
           <!-- <div class="twocode">
-=======
-          <div class="twocode" v-if="false">
->>>>>>> f27d638b4bac1e4f6382ed9e3b987d3998a976d3
             <span class="title">二维码</span>
             <span class="prompt">顾客将通过扫描二维码进行小费支付</span>
             <span>二维码show</span>
