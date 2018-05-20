@@ -58,6 +58,11 @@
                         <span>确认接单</span>
                       </div>
                     </li>
+                   <li class="savebtn">
+                      <div @click="printOrder()">
+                        <span>打印接单</span>
+                      </div>
+                    </li>
                     <li class="savebtn">
                       <div @click="orderFn(0)">
                         <span>取消订单</span>
@@ -71,7 +76,7 @@
           <!---viewSTART-->
             <div class="baseinfo">
               <dl>
-                <dt>订单金额</dt>
+                <dt>订单金额  <span style="display: inline-block; width: 80px; text-align: center;height: 20px; line-height: 20px; margin-left: 20px; color: #fff; background:#efae12; border-radius: 3px" @click="print">打印订单</span></dt>
                 <dd class="money"><span v-text="'¥'+detailinfo.total_amount"></span></dd>
                 <dd class="reson" v-if="detailinfo.cancel_reason"><span v-text="detailinfo.cancel_reason"></span></dd>
               </dl>
@@ -147,6 +152,8 @@
 </template>
 
 <script>
+import CryptoJS from 'crypto-js'
+import {fetchPost} from '../../../../static/js/fetch.js';
   export default {
     name: 'addsrole',
     data () {
@@ -157,7 +164,13 @@
         estimated_time:'',
         deliver_man:'',
         delivery_phone:'',
-        ishow:false
+        ishow:false,
+
+          USER:"sheep@yottaspace.cn",//必填，飞鹅云 www.feieyun.cn后台注册的账号名
+          UKEY:"hgfZmCRytUsZPese",//必填，飞鹅云后台注册账号后生成的UKEY
+          STIME:new Date().getTime(),
+          SIG:'',
+
       }
     },
     props: {
@@ -169,8 +182,128 @@
     mounted:function(){
       this.msgtitle=this.orderinfo.title
       this.geteditInfo()
+      //this.printList()
+
+      this.SIG = CryptoJS.SHA1(this.USER+this.UKEY+this.STIME).toString(CryptoJS.enc.Hex)
     },
     methods:{
+      //打印订单
+      print(){
+        //调用接口获取打印数据
+        var orderInfo;
+        orderInfo = "<CB>018外送测试</CB><BR>";//标题字体如需居中放大,就需要用标签套上
+        orderInfo += "用户下单时间：2018-05-20 15:59:59<BR>";
+        orderInfo += "预计送达时间：2018-05-20 17:00:00<BR>";
+        orderInfo += "订单编号：20180520156621<BR>";
+        orderInfo += "--------------------------------<BR>";
+        orderInfo += "备注：快点送到<BR>";
+        orderInfo += "--------------------------------<BR>";
+        orderInfo += "商品名称　　　    单价    数量   金额<BR>";
+        orderInfo += "--------------------------------<BR>";
+        orderInfo += "1,Martell Cordon Bleu<BR>";
+        orderInfo += "               1060   X1    1060<BR>";
+        orderInfo += "<BR>";
+        orderInfo += "2,青岛纯生       15     X1     15<BR>";
+        orderInfo += "--------------------------------<BR>";
+        orderInfo += "优惠：                      0<BR>";
+        orderInfo += "店铺现金使用情况:            ¥0<BR>";
+        orderInfo += "总件数:  2       产品金额：1075<BR>";
+        orderInfo += "                     配送费50<BR>";
+        orderInfo += "                实付金额：1125<BR>";
+        orderInfo += "<BR>";
+        orderInfo += "支付状态:在线支付-已支付        <BR>";
+        orderInfo += "--------------------------------<BR>";
+        orderInfo += "客户地址：深圳市罗湖区人民南路佳宁娜广场B座1904<BR>";
+        orderInfo += "联系人：Jimmy<BR>";
+        orderInfo += "联系电话：13686844254<BR>";
+        orderInfo += "--------------------------------<BR>";
+        orderInfo += "店铺：复兴路69号院华熙LIVE.hi-up西区B1    <BR>";
+        orderInfo += "电话：020-018018018    <BR>";
+        let vm = this;
+        let myobj = {
+          user: vm.USER,//账号
+          stime: vm.STIME,//当前时间的秒数，请求时间
+          sig: vm.SIG,//签名
+          apiname: "Open_printMsg",
+          sn: '918503233',
+          content:orderInfo
+        };
+        fetchPost({
+          method: 'POST',
+          url: 'http://api.feieyun.cn:80/Api/Open/',
+          data: myobj,
+          success: function (response) {
+            console.log(response);
+          }
+        });
+      },
+
+
+      //订单打印
+      printOrder(){
+       // this.unbindprint()
+        let vm =this,url='/api/web/printer/printing',params={'sn':'918503233','order_sn':this.orderinfo.orderid};
+        vm.$axios({
+          method:'post',
+          url:url,
+          data: params
+        }).then((res)=>{
+          if(res.data.error_code=='0'){
+
+          }else{
+            vm.$message.error(res.data.message);
+          }
+        }).catch(err => {
+            console.log(err);
+        });
+      },
+      //绑定打印机
+      bindprint(){
+        let vm =this,url='/api/web/printer/binding',params={'sn_num':'918503233','key':'fcah7zdm','remark':'打印机测试机'};
+        vm.$axios({
+          method:'post',
+          url:url,
+          data: params
+        }).then((res)=>{
+          if(res.data.error_code=='0'){
+
+          }else{
+            vm.$message.error(res.data.message);
+          }
+        }).catch(err => {
+            console.log(err);
+        });
+      },
+      //解绑打印机
+      unbindprint(){
+        let vm =this,url='/api/web/printer/unbind',params={'sn':'918503233',};
+        vm.$axios({
+          method:'post',
+          url:url,
+          data: params
+        }).then((res)=>{
+          if(res.data.error_code=='0'){
+
+          }else{
+            vm.$message.error(res.data.message);
+          }
+      }).catch(err => {
+          console.log(err);
+      });
+      },
+      //获取打印机列表
+      printList(){
+        let vm =this,url='/api/web/printer/list',params={};
+        vm.$axios.get(url,{params}).then((res)=>{
+          if(res.data.error_code=='0'){
+
+          }else{
+
+          }
+        }).catch(err => {
+            console.log(err);
+        });
+      },
       //获取修改信息
       geteditInfo(){
         let vm =this,url='/api/web/order/detail',params={'order_sn':this.orderinfo.orderid};

@@ -54,25 +54,31 @@ export default {
     print(){
       //调用接口获取打印数据
       var orderInfo;
-      orderInfo = "<CB>测试打印</CB><BR>";//标题字体如需居中放大,就需要用标签套上
-      orderInfo += "名称　　　　　 单价  数量 金额<BR>";
+      orderInfo = "<CB>018外送</CB><BR>";//标题字体如需居中放大,就需要用标签套上
+      orderInfo += "用户下单时间：2018-05-20 15:14:33<BR>";
+      orderInfo += "预计送达时间：2018-05-20 16:00:00<BR>";
+      orderInfo += "订单编号：1232342422<BR>";
       orderInfo += "--------------------------------<BR>";
-      orderInfo += "番　　　　　　 1.0    1   1.0<BR>";
-      orderInfo += "番茄　　　　　 10.0   10  10.0<BR>";
-      orderInfo += "番茄炒　　　　 10.0   100 100.0<BR>";
-      orderInfo += "番茄炒粉　　　 100.0  100 100.0<BR>";
-      orderInfo += "番茄炒粉粉　　 1000.0 1   100.0<BR>";
-      orderInfo += "番茄炒粉粉粉粉 100.0  100 100.0<BR>";
-      orderInfo += "番茄炒粉粉粉粉 15.0   1   15.0<BR>";
       orderInfo += "备注：快点送到xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<BR>";
       orderInfo += "--------------------------------<BR>";
-      orderInfo += "合计：xx.0元<BR>";
-      orderInfo += "送货地点：xxxxxxxxxxxxxxxxx<BR>";
-      orderInfo += "联系电话：138000000000<BR>";
-      orderInfo += "订餐时间：2011-01-06 19:30:10<BR><BR>";
-      orderInfo += "----------请扫描二维码----------";
-      orderInfo += "<QR>http://www.dzist.com</QR>";//把二维码字符串用标签套上即可自动生成二维码
-      orderInfo += "<CUT>";//把二维码字符串用标签套上即可自动生成二维码
+      orderInfo += "商品名称　　　    单价    数量   金额<BR>";
+      orderInfo += "--------------------------------<BR>";
+      orderInfo += "1,Martell Cordon Bleu　 ¥1060    X1   ¥1060<BR>";
+      orderInfo += "2,青岛纯生       ¥15      X1   ¥15<BR>";
+      orderInfo += "--------------------------------<BR>";
+      orderInfo += "优惠：                         ¥0<BR>";
+      orderInfo += "店铺现金使用情况：               ¥0<BR>";
+      orderInfo += "总件数： 2          产品金额：¥1075<BR>";
+      orderInfo += "                        配送费¥50<BR>";
+      orderInfo += "                   实付金额：¥1125<BR>";
+      orderInfo += "支付状态：在线支付-已支付            <BR>";
+      orderInfo += "--------------------------------<BR>";
+      orderInfo += "客户地址：深圳市罗湖区人民南路佳宁娜广场B座1904<BR>";
+      orderInfo += "联系人：Jimmy<BR>";
+      orderInfo += "联系电话：13686844254<BR>";
+      orderInfo += "--------------------------------<BR>";
+      orderInfo += "店铺：复兴路69号院华熙LIVE.hi-up西区B1    <BR>";
+      orderInfo += "电话：020-018018018    <BR>";
       let vm = this;
       let myobj = {
         user: vm.USER,//账号

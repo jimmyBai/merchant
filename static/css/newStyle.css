@@ -13,19 +13,20 @@
   color: #fff;
   margin: 0;
 }
-.tdBtn-box>div{ 
+.tdBtn-box>div{
   cursor: pointer;
 }
-.tdBtn-view{ 
-  background: #e65c20; 
-  padding: 0 5px; 
-  border-radius: 2px; 
-  text-align: center; 
+.tdBtn-view{
+  background: #e65c20;
+  padding: 0 5px;
+  border-radius: 2px;
+  text-align: center;
   width: 45%;
   float: right;
 }
-.newView{ 
-  background: #7a6fbe; 
+.newView{
+  min-width:80px ;
+  background: #7a6fbe;
   padding: 0 5px;
   border-radius: 2px;
   width: 48%;
