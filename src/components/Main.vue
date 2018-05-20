@@ -21,7 +21,7 @@
               <ul class="iconul">
                 <li @click.stop="goview('myinfo')"><i class="i-user"></i>我的信息</li>
                 <li @click.stop="goview('set')"><i class="i-set"></i>设置</li>
-                <!--<li @click.stop="goview('MerchantWallet')"><i class="i-wallet"></i>钱包</li>-->
+                <li @click.stop="goview('MerchantWallet')"><i class="i-wallet"></i>钱包</li>
                 <li @click.stop="goview('lock')"><i class="i-lock"></i>锁屏</li>
                 <li @click.stop="goview('login')"><i class="i-loginout"></i>登出</li>
               </ul>
@@ -47,15 +47,9 @@
               <img src="../../static/img/downarrow.png" v-if="isdradeShow&&item.userid==4" class="dnimg">
 
               <div class="newmenu" v-if="isdradeShow&&item.userid==4">
-<<<<<<< HEAD
                 <span :class="{'isselect':isA}" @click="traderoom('1',$event)">交易明细</span>
                 <span :class="{'isselect':isB,'isselect2':!isB}" @click="traderoom('2',$event)">交易汇总</span>
               </div> -->
-=======
-                <!--<span :class="{'isselect':isA}" @click="traderoom('1',$event)">交易明细</span>-->
-                <!-- <span :class="{'isselect':isB,'isselect2':!isB}" @click="traderoom('2',$event)">交易汇总</span> -->
-              </div>
->>>>>>> f27d638b4bac1e4f6382ed9e3b987d3998a976d3
 
             </div>
           </li>

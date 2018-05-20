@@ -80,14 +80,9 @@ import "../../../../static/css/newStyle.css"
         account_name: '',
         account_bank: '',
         account_sn: '',
-<<<<<<< HEAD
         phone: '',
         bank_id: ''
       
-=======
-        phone: ''
-
->>>>>>> f27d638b4bac1e4f6382ed9e3b987d3998a976d3
       }
     },
     watch:{
