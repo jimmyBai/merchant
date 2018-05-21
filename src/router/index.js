@@ -15,16 +15,16 @@ export default new Router({
       meta:{keepAlive:true},
       component:resolve=>require(['../components/Login.vue'],resolve)
     },
-    /*{
+    {
       path:'/print',
       meta:{keepAlive:true},
       component:resolve=>require(['../components/Print.vue'],resolve)
     },
-    {
-      path:'/socket',
-        meta:{keepAlive:true},
-      component:resolve=>require(['../components/Socket.vue'],resolve)
-    },*/
+/*{
+  path:'/socket',
+    meta:{keepAlive:true},
+  component:resolve=>require(['../components/Socket.vue'],resolve)
+},*/
     {
       path:'/changepwd',
       name:'changepwd',

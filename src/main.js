@@ -39,6 +39,9 @@ if (process.env.NODE_ENV === 'development') {
 
 }
 
+
+
+
 // 请求头信息
 // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';

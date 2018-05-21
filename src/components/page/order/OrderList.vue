@@ -116,7 +116,19 @@ import searchView from './Seacrhtips'
         }).then((res)=>{
           if(res.data.error_code=='0'){
             if(res.data.data.list) {
-              vm.ListData = res.data.data.list
+              let dateArray=[]
+              if(res.data.data.list.length>0){
+                res.data.data.list.forEach(item=>{
+                  if(item.order_status==7||item.order_status==0){
+
+                  }else{
+                    dateArray.push(item)
+                  }
+
+                })
+              }
+
+              vm.ListData = dateArray
             }
             vm.total=Number(res.data.data.total);
             vm.pages=Number(res.data.data.pages);
@@ -133,8 +145,6 @@ import searchView from './Seacrhtips'
                 vm.$set(item,'totalnum',totalnum)
               }
             })
-
-
 
           }else{
             vm.$message.error(res.data.message);
