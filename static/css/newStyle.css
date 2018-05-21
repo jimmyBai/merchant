@@ -32,6 +32,17 @@
   float: left;
 }
 
+/* 钱包/首页页面 */
+.bkpages{
+  width: 90%;
+}
+/* 钱包/交易记录页面 */
+.repages{
+  width: 72%;
+}
+
+
+
 /* map */
 .notSame{
   position: relative;
@@ -58,4 +69,14 @@
 }
 .tiplist .el-table tr th{
   background: #462747;
+}
+
+.itemline .el-input--suffix .el-input__inner{
+  outline: none;
+  background: #2e1c34;
+  border: 1px solid #3d2b43;
+  color: #fff;
+  height: 32px;
+  width: 352px;
+  padding-left: 0;
 }

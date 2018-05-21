@@ -38,9 +38,9 @@
               <div :class="{'is-active':activenum=='bankCardlist'}" @click="changetabs('bankCardlist')" class="tabtar-item ">银行卡</div>
               <div :class="{'is-active':activenum=='extractlist'}" @click="changetabs('extractlist')" class="tabtar-item">提取</div>
               <div :class="{'is-active':activenum=='recordslist'}" @click="changetabs('recordslist')" class="tabtar-item">交易记录</div>
-              <!-- <div class="ls-r-btn" @click="clickadd">
+              <div class="ls-r-btn" @click="clickadd">
                 <i class="el-icon-circle-plus-outline"></i><span>添加</span>
-              </div> -->
+              </div>
             </div>
           </div>
           <div class="tabslist-content">
@@ -50,12 +50,12 @@
 
       </div>
     </div>
-
+    
     <!-- 添加银行卡 -->
     <add-bank-card v-if="isBankCardShow" :fromParent="fromParent" @pviewbankcard="viewbankcard"></add-bank-card>
     <!-- 银行卡递交提示 -->
     <info-prompt v-if="isPromptShow" @pviewprompt="viewprompt"></info-prompt>
-
+    
   </div>
 </template>
 
@@ -108,7 +108,6 @@ export default {
           if(res.data.data[0]){
             vm.ListData=res.data.data[0]
           }
-          
         }else{
           vm.$message.error(res.data.message);
         }
@@ -122,6 +121,13 @@ export default {
       vm.isBankCardShow=data[0].isBankCardStatus;
       if(data[0].status&&data[0].status=='refresh'){
         vm.isPromptShow=!vm.isBankCardShow
+        // let NewPage = '_empty' + '?time=' + new Date().getTime()/1000
+        // this.$router.push(NewPage);
+        // this.$router.go(-1);
+        this.$router.push('/bankCardlist');
+        if(this.$route.path=='/bankCardlist'){
+          this.activenum='bankCardlist'
+        }
         setTimeout(function(){
           vm.isPromptShow = false;
         },2000);

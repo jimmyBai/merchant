@@ -14,6 +14,16 @@
         <el-table-column prop="frozen_balance" label="交易后不可提现余额"></el-table-column>
         <el-table-column prop="trade_time" label="提现时间"></el-table-column>
         <!-- <el-table-column prop="" label="操作"></el-table-column> -->
+        
+        <!-- <el-table-column width="120">
+          <template slot-scope="scope">
+            <div class="tdBtn-box">
+              <div class="tdBtn-view repages" @click="removeThis(scope.row)">
+                <i class="el-icon-delete"></i>&nbsp;&nbsp;<span>删除</span>
+              </div>
+            </div>
+          </template>
+        </el-table-column> -->
       </el-table>
       <div class="list-bottom"></div>
     </div>
@@ -28,6 +38,9 @@
 </template>
 
 <script>
+// andy
+import "../../../../static/css/newStyle.css"
+
 export default {
   name: 'recordslist',
   data () {

@@ -6,22 +6,20 @@
       <div class="line">
         <span class="title">银行账户</span>
         <div class="bankselect">
-          <el-select v-model="name" value-key='id' placeholder="请选择">
+          <el-select v-model="account_id" value-key='id' placeholder="请选择" ref="_select">
             <el-option v-for="item in usertions" :key="item.id" :label="item.name" :value='item'></el-option>
           </el-select>
-          <span v-text="account_id"></span>
         </div>
       </div>
       
       <div class="line">
         <span class="title">可提现金额</span>
-        <input type="text" class="content" v-model="amount" />
-        <span v-text="trade_amount"></span>
+        <input type="text" class="content" v-model="trade_amount" ref="_input" />
       </div>
 
       <div class="btnbox">
         <input type="button" class="savebtn" value="提交" @click="subaudit">
-        <input type="button" class="cancelbtn" value="取消">
+        <input type="button" class="cancelbtn" value="取消" @click="claudit">
       </div>
 
     </div>
@@ -33,10 +31,9 @@
 import "../../../../static/css/newStyle.css"
 
 export default {
-  name: 'live',
+  name: 'extractlist',
   data () {
     return {
-      amount: '',
       name: '',
       usertions: [],
       trade_amount: '',
@@ -44,12 +41,11 @@ export default {
     }
   },
   watch:{
-    amount(nVal,oVal){
+    trade_amount(nVal,oVal){
       if(nVal){
-        this.amount=nVal.toString().replace(/[^0-9]*/g,'');
+        this.trade_amount=nVal.toString().replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1');
       }
     }
-      
   },
   mounted:function(){
     this.getclassinfo();
@@ -58,10 +54,10 @@ export default {
 
     // 获取银行卡列表
     getclassinfo(){
-      let vm =this,url='/api/web/bank/list',params={};
+      let vm =this,url='/api/web/bank',params={};
       vm.$axios.get(url,{params}).then((res)=>{
         if(res.data.error_code=='0'){
-          vm.usertions=res.data.data
+          vm.usertions=res.data.data.list
         }else{
           vm.$message.error(res.data.message);
         }
@@ -71,31 +67,57 @@ export default {
     },
     // 提交审核
     subaudit(){
-      // let vm =this,
-      // url='/api/web/withdrawal/create',
-      // params={}
-      // // params={}
-      // vm.$axios({
-      //   method:'post',
-      //   url:url,
-      //   data: params
-      // }).then((res)=>{
-      //   if(res.data.error_code=='0'){
+      let vm =this,
+      url='/api/web/withdrawal/create',
+      params={
+        trade_amount:vm.trade_amount,
+        account_id:vm.account_id.id
+      }
+      if(!this.account_id){
+        this.$message.error('请选择银行卡！');
+        return false
+      }else if(!this.trade_amount){
+        this.$message.error('提现金额不能为空！');
+        return false
+      }
+      vm.$axios({
+        method:'post',
+        url:url,
+        data: params
+      }).then((res)=>{
+        if(res.data.error_code=='0'){
           
-      //     vm.$message({
-      //       message: '提交审核成功,请等待审核!',
-      //       type: 'success'
-      //     });
+          vm.$message({
+            message: '提交审核成功,请等待审核!',
+            type: 'success'
+          });
+          // 刷新路由
+          let NewPage = '_empty' + '?time=' + new Date().getTime()/1000
+          this.$router.push(NewPage);
+          this.$router.go(-1);
 
-      //   }else{
-      //     vm.$message.error(res.data.message);
-      //   }
-      // }).catch(err => {
-      //   console.log(err);
-      // });
+        }else{
+          vm.$message.error(res.data.message);
+        }
+      }).catch(err => {
+        console.log(err);
+      });
+    },
+    // 清除
+    claudit(){
+      let vm=this;
+      let _select = vm.$refs._select;
+      let _input = vm.$refs._input;
+      if(!_select.value){
+      }else{
+        vm.account_id = '';
+      }
+      if(!_input.value){
+      }else{
+        vm.trade_amount = '';
+      }
     }
-
-
+    
   }
 }
 </script>
@@ -126,7 +148,7 @@ export default {
     border-radius: 3px; 
     height: 30px; 
     line-height: 30px;
-    width: 200px; 
+    width: 195px; 
     padding: 0 10px; 
     color: #fff 
   }

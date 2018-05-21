@@ -12,8 +12,10 @@
             <!-- 银行id? -->
             <div class="adduser-item">
               <div class="itemline">
-                <div class="itemtitle">银行id</div>
-                <div class="itemcontent"><input type="text" v-model="bank_id"></div>
+                <div class="itemtitle">银行卡</div>
+                <el-select v-model="bank_id" value-key='id' placeholder="请选择">
+                  <el-option v-for="item in usertions" :key="item.id" :label="item.name" :value='item'></el-option>
+                </el-select>
               </div>
             </div>
 
@@ -81,7 +83,8 @@ import "../../../../static/css/newStyle.css"
         account_bank: '',
         account_sn: '',
         phone: '',
-        bank_id: ''
+        bank_id: '',
+        usertions: []
       
       }
     },
@@ -111,68 +114,78 @@ import "../../../../static/css/newStyle.css"
     props: {
       fromParent: String
     },
+    mounted:function(){
+      this.getclassinfo();
+    },
     methods:{
       viewprompt(...data){
         let vm = this;
         vm.isPromptShow=data.isPromptStatus;
       },
-
+      // 获取银行卡列表
+      getclassinfo(){
+        let vm =this,url='/api/web/bank/list',params={};
+        vm.$axios.get(url,{params}).then((res)=>{
+          if(res.data.error_code=='0'){
+            vm.usertions=res.data.data
+          }else{
+            vm.$message.error(res.data.message);
+          }
+        }).catch(err => {
+          console.log(err);
+        });
+      },
       // 递交成功
       clickSaveInfo(){
-        // let vm =this,url='/api/web/bank/add',params={
-        //   account_name:vm.account_name,
-        //   account_bank:vm.account_bank,
-        //   account_sn:vm.account_sn,
-        //   phone:vm.phone,
-        //   bank_id:vm.bank_id
-        // };
-        // if(!this.account_name){
-        //   this.$message.error('户名不能为空');
-
-        // }else if(!this.account_bank){
-        //   this.$message.error("开户行不能为空!");
-          
-        // }else if(!this.account_sn){
-        //   this.$message.error("银行账户不能为空!");
-        //   return false
-        // }else if(!this.phone){
-        //   this.$message.error("手机号不能为空!");
-        //   return false
-        // }
-        // vm.$axios({
-        //   method:'post',
-        //   url:url,
-        //   data: params
-        // }).then((res)=>{
-        //   if(res.data.error_code=='0'){
-            
-        //     vm.$message({
-        //       message: '添加银行卡成功,请等待审核!',
-        //       type: 'success'
-        //     });
-
-        //     //执行父组件关闭方法
-        //     let data = {
-        //       isBankCardStatus:false,
-        //       status: 'refresh'
-        //     };
-        //     //执行父组件方法
-        //     this.$emit('pviewbankcard',data,'');
-
-        //   }else{
-        //     vm.$message.error(res.data.message);
-        //   }
-
-        // }).catch(err => {
-        //   console.log(err);
-        // });
-        
-        //执行父组件关闭方法
-        let data = {
-          isBankCardStatus:false
+        let vm=this,url='/api/web/bank/add',params={
+          account_name:vm.account_name,
+          account_bank:vm.account_bank,
+          account_sn:vm.account_sn,
+          phone:vm.phone,
+          bank_id:vm.bank_id.id
         };
-        //执行父组件方法
-        this.$emit('pviewbankcard',data,'');
+        if(!this.bank_id){
+          this.$message.error('请选择银行卡！');
+          return false
+        }else if(!this.account_name){
+          this.$message.error('户名不能为空！');
+          return false
+        }else if(!this.account_bank){
+          this.$message.error("开户行不能为空！");
+          return false
+        }else if(!this.account_sn){
+          this.$message.error("银行账户不能为空！");
+          return false
+        }else if(!this.phone){
+          this.$message.error("手机号不能为空！");
+          return false
+        }
+        vm.$axios({
+          method:'post',
+          url:url,
+          data:params
+        }).then((res)=>{
+          if(res.data.error_code=='0'){
+            
+            vm.$message({
+              message: '添加银行卡成功,请等待审核!',
+              type: 'success'
+            });
+            
+            //执行父组件关闭方法
+            let data = {
+              isBankCardStatus:false,
+              status: 'refresh'
+            };
+            //执行父组件方法
+            this.$emit('pviewbankcard',data,'');
+          
+          }else{
+            vm.$message.error(res.data.message);
+          }
+        }).catch(err => {
+          console.log(err);
+        });
 
       },
       // 递交取消
