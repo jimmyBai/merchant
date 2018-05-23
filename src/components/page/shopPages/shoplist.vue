@@ -65,7 +65,7 @@
           <div class="title">联系电话：</div>
           <div class="content"><input type="text" v-model="ListData.telephone" @focus="selectval($event)" /></div>
         </div>
-        
+
         <div class="line">
           <div class="title">最低人均消费：</div>
           <div class="content">
@@ -135,14 +135,14 @@
                     <el-time-select v-model="item.am_begin" :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '23:30'}">
                     </el-time-select>
                     <div class="fromto">至</div>
-                    <el-time-select v-model="item.am_end" :editable="false" :picker-options="{ start: '00:00', step: '00:30',end: '23:30'}">
+                    <el-time-select v-model="item.am_end" :editable="false" :picker-options="{ start: '00:00', step: '00:30',end: '23:30',minTime:item.am_begin}">
                     </el-time-select>
                   </el-col>
                   <el-col :span="8">
-                    <el-time-select v-model="item.pm_begin" :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '23:30'}">
+                    <el-time-select v-model="item.pm_begin" :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '23:30',minTime:item.am_end}">
                     </el-time-select>
                     <div class="fromto">至</div>
-                    <el-time-select v-model="item.pm_end" :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '23:30'}">
+                    <el-time-select v-model="item.pm_end" :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '23:30', maxTime:item.am_begin}">
                     </el-time-select>
                   </el-col>
                 </el-row>
@@ -225,7 +225,7 @@ import myMap from '../mapPages/myMap'
       'ListData.consumption_max'(cVal,oVal){
         if(cVal){
           if(/^\d+(\.\d+)?$/.test(cVal)){
-            
+
           }else{
             return this.ListData.consumption_max=cVal.replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1')
           }
@@ -238,7 +238,7 @@ import myMap from '../mapPages/myMap'
           }else{
             return this.ListData.consumption_min=cVal.replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1')
           }
-          
+
           // let vm = this;
           // let reg = /^[1-9]\d*(\.\d{0,2})?$|^0(\.\d{0,2})?$|^-([1-9]{1}\d*(\.\d{0,2})?)?$|^-(0(\.\d{0,2})?)?$/;
           // let input = vm.$refs.input;
@@ -248,16 +248,16 @@ import myMap from '../mapPages/myMap'
           //   console.log(input.value)
           //   if(input.value && !reg.test(input.value)){
           //     input.value = oldValue;
-          //   }  
+          //   }
           //   oldValue = input.value;
           // });
-          
+
           // input.addEventListener('change',function(){
           //   if(input.value.endsWith('.') || input.value.endsWith('-')){
           //     input.value = input.value.slice(0,-1);
           //   }
           // });
-          
+
         }
       }
     },
@@ -265,12 +265,15 @@ import myMap from '../mapPages/myMap'
       this.getlistData();
     },
     methods:{
+      setEndTime(item){
+        console.log(item)
+      },
       pviewMap(...data){
         let vm = this;
         vm.cityMap=data[0]
         vm.$set(vm.ListData,'address',data[0].address)
         vm.mapShow=data[1];
-        vm.pCity=data[0].province+data[0].city     
+        vm.pCity=data[0].province+data[0].city
         if(data[0].point&&data[0].point.lat&&data[0].point.lng){
           vm.ListData.lat=data[0].point.lat
           vm.ListData.lng=data[0].point.lng
@@ -665,11 +668,8 @@ import myMap from '../mapPages/myMap'
 .saveshop span{ cursor:pointer;background: #ac5397; height: 30px; line-height: 30px; color: #fff; display: inline-block; width: 300px; text-align: center;}
 .addImgbg {display: flex; display: -webkit-flex; align-items: center;-webkit-align-items: center; justify-content: center; -webkit-justify-content: center}
 .addImgbg i{ font-size: 24px;}
-
-
 .shopline .title{ min-width: 60px}
 .shopline .timetep{ width: 100%}
-
 .timetep .el-row{ display: flex; display: -webkit-flex; align-items: center; -webkit-align-items: center; margin-bottom: 10px}
 .timetep .el-row:last-child{margin-bottom: 0}
 .timetep .el-row .lineitem { margin-bottom: 10px}
@@ -681,15 +681,13 @@ import myMap from '../mapPages/myMap'
 .delicon i{font-size: 21px; color:#ac5397 }
 .lineitem>div{ display: flex; display: -webkit-flex; align-items: center; -webkit-align-items: center; padding: 0 3px;}
 .fromto{ margin: 0 3px}
-
 .logobox{ width: 135px;height: 100px; background: #462d4d}
 .logobox i{ font-size: 24px;}
 .logobox>div{ position: relative; height: 100%; display: flex; display: -webkit-flex; align-items: center; -webkit-align-items: center;justify-content: center;-webkit-justify-content: center}
 .line .title{ min-width: 80px; text-align: right}
 .logobox>div img{width: 100%;min-width:135px}
+.time-select-item{ color:#e4e7ed }
+el-scrollbar__view .disabled{color:#e4e7ed }
 
-
-.baidubtn{
-  width: 74px!important;
-}
+.baidubtn{  width: 74px!important;}
 </style>
