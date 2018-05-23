@@ -42,7 +42,9 @@
   width: 72%;
 }
 
-
+/* 钱包结算状态 */
+.btn-color-0{background: #f34b2a!important;} /*未付款*/
+.btn-color-1{background: #efae12!important;} /*已付款*/
 
 /* map */
 .notSame{
@@ -80,4 +82,35 @@
   height: 32px;
   width: 352px;
   padding-left: 0;
+}
+
+
+.main input{
+  font-size: 12px;
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  width: 100%;
+  height: 26px;
+  line-height: 26px;
+}
+.main .res-input{
+  padding: 0 5px;
+  background: #6f4e79;
+  border: 1px solid #48344f;
+}
+.main .el-input {
+  width: 100%;
+}
+.main .res-input .el-input__icon {
+  line-height: 26px;
+}
+.res-export{
+  color: #fff;
+  font-size: 12px;
+  background: rgb(242,86,86);
+  padding: 3px 6px;
+  border-radius: 2px;
+  cursor: pointer;
 }

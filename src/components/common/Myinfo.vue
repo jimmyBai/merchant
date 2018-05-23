@@ -47,13 +47,19 @@
           </div>
 
           <!-- 新增二维码 _Andy -->
-          <!-- <div class="twocode">
+          <div class="twocode">
             <span class="title">二维码</span>
             <span class="prompt">顾客将通过扫描二维码进行小费支付</span>
-            <span>二维码show</span>
-            <input type="button" v-if="!istwocode" value="点击生成二维码" @click="commontwocode('1')">
-            <input type="button" v-if="istwocode" value="点击下载" @click="commontwocode('2')">
-          </div> -->
+            
+            <!-- 显示二维码 -->
+            <div class="response" v-show="isqrcodeShow">
+              <div id="qrcode"></div>
+            </div>
+
+            <input type="button" v-if="istwocode" value="点击生成二维码" @click="commontwocode('1')">
+            <input type="button" v-if="istwocode2" value="点击下载" @click="commontwocode('2')">
+            <input type="button" value="删除" @click="commontwocode('3')">
+          </div>
         </el-col>
         <el-col :span="14" class="bright" v-if="false">
           <!--<div class="moneyline">
@@ -161,6 +167,8 @@
 
 <script>
 import "../../../static/css/newStyle.css"
+import "../../../static/js/qrcode.js"
+import QRCode from 'qrcodejs2'
 
   export default {
     name: 'myinfo',
@@ -171,16 +179,44 @@ import "../../../static/css/newStyle.css"
         isdialogShow: false,
         isdialogShow2: false,
         ismaskShow: false,
-        istwocode: false
+        istwocode: true,
+        istwocode2: false,
+        isqrcodeShow: false
       }
     },
     created(){
-
+      
+    },
+    computed:{
+      UID(){
+        return this.$store.state.uid
+      }
     },
     mounted:function(){
       this.getlistData()
+      this._getQart()
     },
     methods:{
+      
+      _getQart(){
+        let vm =this;
+        // 参数
+        var qrcode = new QRCode('qrcode', {
+          text: 'your content',
+          width: 160,
+          height: 160,
+          colorDark : '#000000',
+          colorLight : '#ffffff',
+          correctLevel : QRCode.CorrectLevel.H,
+          uid: vm.UID
+        });
+
+        // API
+        qrcode.clear();
+        qrcode.makeCode('new content');
+        
+      },
+      
       getlistData(){
         let vm =this,url='/api/web/authority/user/info',params={'id':''};
         vm.$axios.get(url,{params}).then((res)=>{
@@ -215,19 +251,29 @@ import "../../../static/css/newStyle.css"
         }
 
       },
+
       // 生成二维码
       commontwocode(way){
         let vm = this;
         if(way==1){
-          vm.istwocode = true
+          vm.istwocode = false
+          vm.istwocode2 = true
+          vm.isqrcodeShow = true
         }
         if(way!=1){
-          vm.isdialogShow2 = true;
-          vm.ismaskShow = true;
-          vm.istwocode = false;
+          // vm.isdialogShow2 = true;
+          // vm.ismaskShow = true;
         }
-
+        // 清除二维码
+        if(way==3&&way!=1){
+          vm.isqrcodeShow = false
+          vm.istwocode = true
+          vm.istwocode2 = false
+          vm.isdialogShow2 = false
+          vm.ismaskShow = false
+        }
       },
+      
       // 遮罩层
       clickdownMask(){
         let vm = this;
@@ -294,7 +340,7 @@ i.dtitle{ background-position: 0px -20px;}
   text-align: center;
   border: 0;
   font-size: 12px;
-  margin-top: 30px;
+  margin-top: 20px;
   -webkit-appearance: none;
 }
 
@@ -510,6 +556,16 @@ i.dtitle{ background-position: 0px -20px;}
   background: #000;
   opacity: 0.5;
   z-index: 99;
+}
+
+
+.response{
+  width: 100%;
+  height: 160px;
+  text-align: center;
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
 }
 
 </style>

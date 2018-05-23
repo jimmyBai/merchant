@@ -255,22 +255,22 @@ export default new Router({
               {
                 path:'/',
                 meta:{keepAlive:true},
-                component:resolve=>require(['../components/page/walletPages/bankCardlist.vue'],resolve),
+                component:resolve=>require(['../components/page/walletPages/incomelist.vue'],resolve),
+              },
+              {
+                path:'/incomelist',
+                meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/walletPages/incomelist.vue'],resolve),
+              },
+              {
+                path:'/expendlist',
+                meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/walletPages/expendlist.vue'],resolve),
               },
               {
                 path:'/bankCardlist',
                 meta:{keepAlive:true},
                 component:resolve=>require(['../components/page/walletPages/bankCardlist.vue'],resolve),
-              },
-              {
-                path:'/extractlist',
-                meta:{keepAlive:true},
-                component:resolve=>require(['../components/page/walletPages/extractlist.vue'],resolve),
-              },
-              {
-                path:'/recordslist',
-                meta:{keepAlive:true},
-                component:resolve=>require(['../components/page/walletPages/recordslist.vue'],resolve),
               }
             ]
           }

@@ -8,15 +8,16 @@
         <div class="moneyleft">
           <div class="moneyshow">
             <span class="moneynum">
-              <span>￥<span v-text="ListData.balance"></span></span>
+              <span>￥<span v-text="ListData.balance"></span>RMB</span>
             </span>
             <span class="moneytext">账户余额</span>
+            <input type="button" class="moneybtn" value="提现" @click="openEX">
           </div>
         </div>
         <div class="moneycontent">
           <div class="moneyshow">
             <span class="moneynum ctmy">
-              <span>￥<span v-text="ListData.frozen_balance"></span></span>
+              <span>￥<span v-text="ListData.frozen_balance"></span>RMB</span>
             </span>
             <span class="moneytext cttxt">不可提现金额</span>
           </div>
@@ -35,9 +36,12 @@
         <div class="tabslist">
           <div class="lineflex">
             <div class="tabslist-head">
+              <!-- <div :class="{'is-active':activenum=='extractlist'}" @click="changetabs('extractlist')" class="tabtar-item">提取</div> -->
+
+              <div :class="{'is-active':activenum=='incomelist'}" @click="changetabs('incomelist')" class="tabtar-item">收入</div>
+              <div :class="{'is-active':activenum=='expendlist'}" @click="changetabs('expendlist')" class="tabtar-item">支出</div>
+              <!-- <div :class="{'is-active':activenum=='recordslist'}" @click="changetabs('recordslist')" class="tabtar-item">交易记录</div> -->
               <div :class="{'is-active':activenum=='bankCardlist'}" @click="changetabs('bankCardlist')" class="tabtar-item ">银行卡</div>
-              <div :class="{'is-active':activenum=='extractlist'}" @click="changetabs('extractlist')" class="tabtar-item">提取</div>
-              <div :class="{'is-active':activenum=='recordslist'}" @click="changetabs('recordslist')" class="tabtar-item">交易记录</div>
               <div class="ls-r-btn" @click="clickadd">
                 <i class="el-icon-circle-plus-outline"></i><span>添加</span>
               </div>
@@ -56,26 +60,33 @@
     <!-- 银行卡递交提示 -->
     <info-prompt v-if="isPromptShow" @pviewprompt="viewprompt"></info-prompt>
     
+    <!-- 提现 -->
+    <extractlist v-if="isexShow" @pviewex="viewex"></extractlist>
+
+
   </div>
 </template>
 
 <script>
 import addBankCard from './walletPages/addBankCard'
 import infoPrompt from './walletPages/infoPrompt'
+import extractlist from './walletPages/extractlist'
 
 export default {
   name: 'MerchantWallet',
   components:{
     addBankCard,
-    infoPrompt
+    infoPrompt,
+    extractlist
   },
   data () {
     return {
-      activenum: 'bankCardlist',
+      activenum: 'incomelist',
       ListData: [],
       isBankCardShow: false,
       isPromptShow: false,
-      fromParent:''
+      fromParent:'',
+      isexShow: false
     }
   },
   created(){
@@ -83,11 +94,11 @@ export default {
   },
   mounted:function(){
     if(this.$route.path=='/MerchantWallet'){
+      this.activenum='incomelist'
+    }else if(this.$route.path=='/expendlist'){
+      this.activenum='expendlist'
+    }else if(this.$route.path=='/bankCardlist'){
       this.activenum='bankCardlist'
-    }else if(this.$route.path=='/extractlist'){
-      this.activenum='extractlist'
-    }else if(this.$route.path=='/recordslist'){
-      this.activenum='recordslist'
     }
 
     this.getlistData()
@@ -136,6 +147,14 @@ export default {
     viewprompt(...data){
       let vm = this;
       vm.isPromptShow=data[0].isPromptStatus;
+    },
+    viewex(...data){
+      let vm = this;
+      vm.isexShow=data[0].isexStatus;
+    },
+    openEX(){
+      let vm = this;
+      vm.isexShow = true;
     },
     clickadd(){
       let vm = this;
@@ -218,6 +237,22 @@ export default {
   }
   .ls-r-btn span{
     margin-left: 5px;
+  }
+
+  .moneybtn{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60px;
+    height: 20px;
+    line-height: 20px;
+    border: 0;
+    border-radius: 0.5rem;
+    font-size: 12px;
+    background: #724480;
+    color: #fff;
+    border-color: #724480;
+    -webkit-appearance:none;
   }
   
 </style>
