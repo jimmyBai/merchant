@@ -41,10 +41,10 @@
         <el-table-column prop="type" label="收入类型"></el-table-column>
         <el-table-column prop="amount" label="收入金额"></el-table-column>
         <el-table-column prop="receipt_time" label="收款时间"></el-table-column>
-        <el-table-column width="80" prop="status" label="结算">
+        <el-table-column width="100" prop="status" label="结算">
           <template slot-scope="scope">
-            <div class="tdbtn-box">
-              <div class="tdbtn-view" :class="'btn-color-'+scope.row.status">
+            <div class="orstatus">
+              <div :class="'btn-color-'+scope.row.status">
                 <span v-if="scope.row.status!=1">未解冻</span>
                 <span v-if="scope.row.status==1">已解冻</span>
               </div>
@@ -158,4 +158,7 @@ import "../../../../static/css/newStyle.css"
   .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center;}
   .td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
   
+  .orstatus{
+    float: left;
+  }
 </style>

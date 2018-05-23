@@ -19,9 +19,11 @@
             <span class="moneynum ctmy">
               <span>￥<span v-text="ListData.frozen_balance"></span>RMB</span>
             </span>
-            <span class="moneytext cttxt">不可提现金额</span>
+            <span class="moneytext cttxt">不可提现金额<img class="wenhaoimg" src="../../../static/img/wenhao.png" @click="showwenhao" /></span>
           </div>
+          <span class="wenhaopt" v-if="iswenhaoHide">这是不可提现的金额</span>
         </div>
+        
         <!-- <div class="moneyright">
           <div class="moneyshow">
             <span class="moneynum rtmy">
@@ -86,7 +88,8 @@ export default {
       isBankCardShow: false,
       isPromptShow: false,
       fromParent:'',
-      isexShow: false
+      isexShow: false,
+      iswenhaoHide: false
     }
   },
   created(){
@@ -160,6 +163,14 @@ export default {
       let vm = this;
       vm.isBankCardShow = true;
       vm.isPromptShow = false;
+    },
+    // 金额提示
+    showwenhao(){
+      let vm = this;
+      vm.iswenhaoHide = true;
+      setTimeout(function(){
+        vm.iswenhaoHide = false;
+      },2000)
     }
   }
 }
@@ -255,4 +266,24 @@ export default {
     -webkit-appearance:none;
   }
   
+
+  .wenhaoimg{
+    width: 24px;
+    height: auto;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+  }
+  .wenhaopt{
+    display: block;
+    position: absolute;
+    bottom: 30px;
+    color: #fff;
+    width: 140px;
+    height: 20px;
+    line-height: 20px;
+    border: 1px solid #706375;
+    text-align: center;
+    border-radius: 0.5rem;
+  }
 </style>
