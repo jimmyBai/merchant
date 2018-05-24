@@ -142,7 +142,7 @@
                     <el-time-select v-model="item.pm_begin" :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '23:30',minTime:item.am_end}">
                     </el-time-select>
                     <div class="fromto">至</div>
-                    <el-time-select v-model="item.pm_end" :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '23:30', maxTime:item.am_begin}">
+                    <el-time-select v-model="item.pm_end" @change="getEndTime(item)"  :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '23:30'}">
                     </el-time-select>
                   </el-col>
                 </el-row>
@@ -265,7 +265,29 @@ import myMap from '../mapPages/myMap'
       this.getlistData();
     },
     methods:{
-      setEndTime(item){
+      getEndTime(item){
+        let vm =this;
+        if(item.pm_end){
+          //获取时间
+          let newambegin=item.am_begin.replace(":",'')
+          let newpmbegin=item.pm_begin.replace(":",'')
+          let newpmend=item.pm_end.replace(":",'')
+          console.log(newpmbegin)
+          console.log(newambegin)
+          console.log(newpmend)
+          //结束时间为0开头
+          if(newpmend.toString().substr(0,1)<=0){
+            if(newpmend.toString()>=newambegin.toString()){
+              vm.$message.error('下午结束时间必须小于上午开始时间')
+              item.pm_end=''
+            }
+          }else{
+            if(newpmend.toString()<newpmbegin.toString()){
+              vm.$message.error('下午结束时间必须大于下午开始时间')
+              item.pm_end=''
+            }
+          }
+        }
         console.log(item)
       },
       pviewMap(...data){
