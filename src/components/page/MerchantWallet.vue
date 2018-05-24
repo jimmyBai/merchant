@@ -19,7 +19,7 @@
             <span class="moneynum ctmy">
               <span>￥<span v-text="ListData.frozen_balance"></span>RMB</span>
             </span>
-            <span class="moneytext cttxt">不可提现金额<img class="wenhaoimg" src="../../../static/img/wenhao.png" @click="showwenhao" /></span>
+            <span class="moneytext">不可提现金额<img class="wenhaoimg" src="../../../static/img/wenhao.png" @click="showwenhao" /></span>
           </div>
           <span class="wenhaopt" v-if="iswenhaoHide">这是不可提现的金额</span>
         </div>
@@ -190,7 +190,8 @@ export default {
     justify-content: center;
   }
   .moneycontent{
-    width: 15%;
+    /* width: 15%; */
+    width: 75%;
     height: 160px;
     float: left;
     position: relative;
@@ -213,16 +214,17 @@ export default {
   }
   .moneytext{
     display: block;
-    padding: 5px 0 0 5px;
+    margin: 5px 0 0 5px;
+    width: auto;
+    height: 24px;
+    line-height: 24px;
+    position: relative;
   }
 
   .ctmy{
     display: block;
     font-size: 16px;
     color: #cccccc;
-  }
-  .cttxt{
-    padding: 10px 0 0 2px;
   }
   .rtmy{
     display: block;
@@ -252,7 +254,7 @@ export default {
 
   .moneybtn{
     position: absolute;
-    bottom: 0;
+    bottom: 3px;
     right: 0;
     width: 60px;
     height: 20px;
@@ -268,10 +270,10 @@ export default {
   
 
   .wenhaoimg{
-    width: 24px;
+    width: 20px;
     height: auto;
     position: absolute;
-    bottom: 0;
+    top: 0;
     right: 10px;
   }
   .wenhaopt{
