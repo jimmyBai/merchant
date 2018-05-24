@@ -5,8 +5,8 @@
         
         <div class="ls-left">
           <div class="form-tabel">
-            <div class="td-title">支出交易记录表</div>
             <el-row class="res-content-line">
+              <el-col :span="3"><div class="td-title">支出交易记录表</div></el-col>
               <el-col :span="3"><div class="res-title">筛选时间：</div></el-col>
               <el-col :span="5">
                 <div class="res-input">
