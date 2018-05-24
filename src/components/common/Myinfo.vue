@@ -210,10 +210,10 @@ import QRCode from 'qrcodejs2'
           correctLevel : QRCode.CorrectLevel.H,
           uid: vm.UID
         });
-
+        
         // API
         qrcode.clear();
-        qrcode.makeCode('new content');
+        qrcode.makeCode(vm.UID);
         
       },
       
