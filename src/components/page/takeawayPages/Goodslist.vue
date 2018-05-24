@@ -1,8 +1,5 @@
 <template>
   <div class="main">
-    <div class="navbar">
-      <h1 class="nav-bar-title">外卖<small> | 外卖商品信息设置</small></h1>
-    </div>
     <!-- infoList -->
     <div class="listtable">
       <div class="list-search">

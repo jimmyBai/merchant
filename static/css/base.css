@@ -228,3 +228,4 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .message-box_content{ max-height: 600px; overflow-y: scroll;-webkit-overflow-scrolling: touch}
 /**搜索按钮**/
 .search-icon{line-height: 18px; margin-left: 4px;}
+

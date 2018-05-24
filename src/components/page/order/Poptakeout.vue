@@ -43,6 +43,30 @@
                         <span v-if="detailinfo.order_status==3" v-text="estimated_time"></span>
                       </div>
                     </li>
+                    <!--配送的时候打印订单选项-->
+                    <li v-if="detailinfo.order_status==2" class="printline">
+                      <div class="itemtitle">
+                        <span>订单打印：</span>
+                      </div>
+                      <div class="itemcontent">
+                        <div @click="printCheck=!printCheck" class="printcheckbox">
+                          <i class="checkIcon" :class="{'el-icon-check':printCheck}"></i>
+                          <span>需要打印</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li v-if="detailinfo.order_status==2">
+                      <div class="itemtitle">
+                        <span>设备：</span>
+                      </div>
+                      <div class="itemcontent">
+                        <el-select v-model="printvalue" placeholder="请选择">
+                          <el-option v-for="item in printList" :key="item.value" :label="item.label" :value="item.value">
+                          </el-option>
+                        </el-select>
+                      </div>
+                    </li>
+                    <!--打印选项结束-->
                     <li class="savebtn">
                       <div @click="deliverfn">
                         <span v-if="detailinfo.order_status==2">保存并开始配送</span>
@@ -58,11 +82,6 @@
                         <span>确认接单</span>
                       </div>
                     </li>
-                   <li class="savebtn">
-                      <div @click="printOrder()">
-                        <span>打印接单</span>
-                      </div>
-                    </li>
                     <li class="savebtn">
                       <div @click="orderFn(0)">
                         <span>取消订单</span>
@@ -76,7 +95,7 @@
           <!---viewSTART-->
             <div class="baseinfo">
               <dl>
-                <dt>订单金额  <span style="display: inline-block; width: 80px; text-align: center;height: 20px; line-height: 20px; margin-left: 20px; color: #fff; background:#efae12; border-radius: 3px" @click="print">打印订单</span></dt>
+                <dt>订单金额</dt>
                 <dd class="money"><span v-text="'¥'+detailinfo.total_amount"></span></dd>
                 <dd class="reson" v-if="detailinfo.cancel_reason"><span v-text="detailinfo.cancel_reason"></span></dd>
               </dl>
@@ -165,7 +184,9 @@ import {fetchPost} from '../../../../static/js/fetch.js';
         deliver_man:'',
         delivery_phone:'',
         ishow:false,
-
+        printCheck:true,
+        printvalue:'',
+        printList:[],
           USER:"sheep@yottaspace.cn",//必填，飞鹅云 www.feieyun.cn后台注册的账号名
           UKEY:"hgfZmCRytUsZPese",//必填，飞鹅云后台注册账号后生成的UKEY
           STIME:new Date().getTime(),
@@ -182,7 +203,6 @@ import {fetchPost} from '../../../../static/js/fetch.js';
     mounted:function(){
       this.msgtitle=this.orderinfo.title
       this.geteditInfo()
-      //this.printList()
 
       this.SIG = CryptoJS.SHA1(this.USER+this.UKEY+this.STIME).toString(CryptoJS.enc.Hex)
     },
@@ -292,11 +312,11 @@ import {fetchPost} from '../../../../static/js/fetch.js';
       });
       },
       //获取打印机列表
-      printList(){
+      getprintList(){
         let vm =this,url='/api/web/printer/list',params={};
         vm.$axios.get(url,{params}).then((res)=>{
           if(res.data.error_code=='0'){
-
+              vm.printList=res.data.data
           }else{
 
           }
@@ -321,7 +341,11 @@ import {fetchPost} from '../../../../static/js/fetch.js';
                 vm.deliver_man = vm.detailinfo.delivery_man
                 vm.delivery_phone = vm.detailinfo.delivery_phone
                 vm.estimated_time = vm.detailinfo.estimated_time
+              }else if(vm.detailinfo.order_status==2){
+                //当订单状态为待派送的时候 获取打印机列表
+                vm.getprintList()  //获取打印机列表
               }
+
             }
             vm.msgtitle=res.data.data.order_status_name
           }else{
@@ -485,7 +509,8 @@ em{ font-style: normal; margin-right: 5px; color: #ac5397}
 .deliverItem ul li .itemcontent{ flex: 1.5}
 .deliverItem ul li.savebtn>div{ text-align: center; display: block;width: 100%; cursor: pointer}
 
-
-
-
+/**打印**/
+.printcheckbox{ display: flex;display:-webkit-flex; align-items: center;-webkit-align-items: center}
+.checkIcon{ height: 12px;width: 12px; font-size: 12px; display: inline-block;content: ''; border-radius: 2px; border: 1px solid #fff; background: #b95e15}
+.printcheckbox>span{ margin-left: 5px}
 </style>
