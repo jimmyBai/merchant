@@ -167,8 +167,12 @@
 
 <script>
 import "../../../static/css/newStyle.css"
-import "../../../static/js/qrcode.js"
-import QRCode from 'qrcodejs2'
+// import QRCode from 'qrcodejs2'
+// import "../../../static/js/qrcode.js"
+
+import $ from 'jquery'
+import "../../../static/js/jquery.qrcode.js"
+
 
   export default {
     name: 'myinfo',
@@ -190,7 +194,14 @@ import QRCode from 'qrcodejs2'
     computed:{
       UID(){
         return this.$store.state.uid
+      },
+      userName(){
+        return this.$store.state.username
+      },
+      userToken(){
+        return this.$store.state.token
       }
+      
     },
     mounted:function(){
       this.getlistData()
@@ -199,22 +210,45 @@ import QRCode from 'qrcodejs2'
     methods:{
       
       _getQart(){
+        // let vm =this;
+        // // 参数
+        // var qrcode = new QRCode('qrcode', {
+        //   text: 'your content',
+        //   width: 160,
+        //   height: 160,
+        //   colorDark : '#000000',
+        //   colorLight : '#ffffff',
+        //   correctLevel : QRCode.CorrectLevel.H,
+        //   uid: vm.UID,
+        //   username: vm.userName,
+        //   token: vm.userToken
+        // });
+        //   console.log(vm.UID);
+        //   console.log(vm.userName);
+        //   console.log(vm.userToken);
+        // // API
+        // qrcode.clear();
+        // qrcode.makeCode(vm.UID+'\n'+vm.userName+'\n'+vm.userToken);
+
         let vm =this;
-        // 参数
-        var qrcode = new QRCode('qrcode', {
-          text: 'your content',
-          width: 160,
-          height: 160,
-          colorDark : '#000000',
-          colorLight : '#ffffff',
-          correctLevel : QRCode.CorrectLevel.H,
-          uid: vm.UID
-        });
-        
-        // API
-        qrcode.clear();
-        qrcode.makeCode(vm.UID);
-        
+        $(function(){
+          jQuery('#qrcode').qrcode({
+            render: "canvas",  
+            text: vm.UID+'\n'+vm.userName+'\n'+vm.userToken, 
+            width: "160", //二维码的宽度  
+            height: "160", //二维码的高度  
+            background: "#ffffff", //二维码的后景色  
+            foreground: "#000000", //二维码的前景色  
+            src: '../../../static/img/mainlogo.png', //二维码中间的图片
+            uid: vm.UID,
+            username: vm.userName,
+            token: vm.userToken
+          });
+
+          console.log(vm.UID);
+          console.log(vm.userName);
+          console.log(vm.userToken);
+        })
       },
       
       getlistData(){
