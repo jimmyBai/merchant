@@ -44,12 +44,12 @@
             <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
           </div>
           <el-table stripe :data="ListData">
-            <el-table-column width="80" prop="username" label="用户名"></el-table-column>
-            <el-table-column width="80" prop="phone" label="手机号码"></el-table-column>
-            <el-table-column width="80" prop="store_username" label="管理员"></el-table-column>
-            <el-table-column width="80" prop="store_user_role" label="角色"></el-table-column>
-            <el-table-column width="80" prop="amount" label="小费金额"></el-table-column>
-            <el-table-column width="80" prop="payment" label="支付方式"></el-table-column>
+            <el-table-column width="120" prop="username" label="用户名"></el-table-column>
+            <el-table-column prop="phone" label="手机号码"></el-table-column>
+            <el-table-column width="120" prop="store_username" label="管理员"></el-table-column>
+            <el-table-column width="120" prop="store_user_role" label="角色"></el-table-column>
+            <el-table-column width="120" prop="amount" label="小费金额"></el-table-column>
+            <el-table-column width="120" prop="payment" label="支付方式"></el-table-column>
             <el-table-column prop="pay_time" label="支付时间"></el-table-column>
           </el-table>
         </div>

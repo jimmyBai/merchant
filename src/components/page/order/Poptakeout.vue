@@ -351,6 +351,7 @@ import {fetchPost} from '../../../../static/js/fetch.js';
           url='/api/web/order/complete',
           params={
             'order_sn':vm.orderinfo.orderid,
+            'code':vm.code
           };
         }else if(vm.detailinfo.order_status==2){
           //把配送时间转化为分钟
