@@ -6,7 +6,7 @@
           <div class="form-tabel">
             <div class="td-title">打印机列表</div>
             <div class="td-content">
-              <input type="text" v-model="content" />
+              <input type="text" v-model="name" />
               <span @click="searchFn" class="search-icon"><i class="el-icon-search"></i></span>
             </div>
           </div>
@@ -15,24 +15,18 @@
         </div>
       </div>
       <el-table stripe :data="ListData">
-        <el-table-column prop="create_time" label="下单时间"></el-table-column>
-        <el-table-column prop="order_sn" label="打印机编号"></el-table-column>
-        <el-table-column prop="username" label="KEY"></el-table-column>
-        <el-table-column prop="phone" label="打印机备注"></el-table-column>
-        <el-table-column prop="name" label="手机号码"></el-table-column>
+        <el-table-column prop="sn" label="打印机编号"></el-table-column>
+        <el-table-column prop="remark" label="打印机备注"></el-table-column>
         <el-table-column width="240">
           <template slot-scope="scope">
             <div class="tdbtn-box">
-              <div class="tdbtn-view" @click="viewMore(scope.row)"><i class="el-icon-view"></i> <span>查看/编辑</span></div>
-              <div class="tdbtn-del" @click="delrole(scope.row)"><i class="el-icon-delete"></i> <span>删除</span></div>
+              <!--<div class="tdbtn-view" @click="viewMore(scope.row)"><i class="el-icon-view"></i> <span>查看/编辑</span></div>-->
+              <div class="tdbtn-del" @click="delprint(scope.row)"><i class="el-icon-delete"></i> <span>解绑打印机</span></div>
             </div>
           </template>
         </el-table-column>
       </el-table>
       <div class="list-bottm"></div>
-    </div>
-    <div class="pagination">
-      <el-pagination v-if="total_page" @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
   </div>
 </template>
@@ -43,11 +37,7 @@
     data () {
       return {
         ListData:[],
-        content:'',
-        page:1,
-        per_page:0,
-        total:0,
-        total_page:0
+        name:'',
       }
     },
     created(){
@@ -60,22 +50,14 @@
     methods:{
       getlistData(){
         let vm =this,url='/api/web/printer/list',params={
-          search: {
-            'content': vm.content
-          },
-          page: vm.page,
+          name: vm.content,
         };
         vm.ListData=[]
         vm.$axios.get(url,{params}).then((res)=>{
             if(res.data.error_code=='0'){
-            if(res.data.data.list){
-              vm.ListData=res.data.data.list
+            if(res.data.data){
+              vm.ListData=res.data.data
             }
-            vm.total=res.data.data.total;
-            vm.pages=res.data.data.pages;
-            vm.page=res.data.data.page;
-            vm.per_page=res.data.data.per_page;
-            vm.total_page=res.data.data.total_page;
           }else{
             vm.$message.error(res.data.message);
             console.log(res.data.message)
@@ -85,14 +67,28 @@
         });
 
       },
-      //分页
-      handleCurrentChange(val){
-        this.page=val
-        this.getlistData(this.page)
-      },
       //查询
       searchFn(){
         this.getlistData()
+      },
+      delprint(row){
+        let vm =this,
+          url='/api/web/printer/unbind',
+          params={sn:row.sn}
+          vm.$axios({
+            method:'post',
+            url:url,
+            data: params
+          }).then((res)=>{
+            if(res.data.error_code=='0'){
+               vm. searchFn()
+            }else{
+              vm.$message.error(res.data.message);
+
+            }
+          }).catch(err => {
+              console.log(err);
+          });
       },
       viewMore(scope){
         /*this.$router.push({

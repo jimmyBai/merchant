@@ -24,8 +24,8 @@
         <el-table-column label="手机号" prop="phone"></el-table-column>
         <el-table-column label="商品数量" prop="totalnum"></el-table-column>
         <el-table-column label="配送费" prop="delivery_fee"></el-table-column>
-        <el-table-column label="商品金额" prop="goodsprice"></el-table-column>
-        <el-table-column label="付款金额" prop="payprice"></el-table-column>
+        <el-table-column label="商品金额" prop="product_total_price"></el-table-column>
+        <el-table-column label="付款金额" prop="order_paid_price"></el-table-column>
         <el-table-column label="订单状态" align="right">
           <template slot-scope="scope">
             <div class="tdbtn-box">

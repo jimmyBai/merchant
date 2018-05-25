@@ -77,9 +77,8 @@ export default {
        /* {'name':'报表','userid':4,'icon':'04'},*/
         {'name':'权限','userid':6,'icon':'06'},
        /* {'name':'订座','userid':7,'icon':'07'}*/
+        {'name':'信息','userid':8,'icon':'08'},
       ],
-      isdradeShow: false,
-      isA: true
       // isB: true
     }
   },
@@ -104,21 +103,13 @@ export default {
       this.$store.dispatch('changetabs',index);
       if(id==0){
         vm.$router.push('/main')
-        vm.isdradeShow = false;
-        vm.isA = true;
       }else if(id==1){
         vm.$router.push('/member')
-        vm.isdradeShow = false;
-        vm.isA = true;
       }else if(id==2){
         sessionStorage.removeItem('user_id')
         vm.$router.push('/order')
-        vm.isdradeShow = false;
-        vm.isA = true;
       }else if(id==3){
         vm.$router.push('/takeaway')
-        vm.isdradeShow = false;
-        vm.isA = true;
       }else if(id==4){
         vm.$router.push('/export')
         // if(!vm.isdradeShow&&id==4){
@@ -126,20 +117,13 @@ export default {
         // }
       }else if(id==5){
         vm.$router.push('/shop')
-        vm.isdradeShow = false;
-        vm.isA = true;
       }else if(id==6){
         vm.$router.push('/permission')
-        vm.isdradeShow = false;
-        vm.isA = true;
       }else if(id==7){
         vm.$router.push('/reservation')
-        vm.isdradeShow = false;
-        vm.isA = true;
       }else if(id==8){
-        vm.$router.push('/onlive')
-        vm.isdradeShow = false;
-        vm.isA = true;
+        vm.$router.push('/msginfo')
+        //vm.$router.push('/onlive')
       }
     },
     showpop(){

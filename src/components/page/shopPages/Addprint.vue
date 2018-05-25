@@ -28,7 +28,7 @@
             </div>
             <div class="adduser-item">
               <div class="itemline">
-                <div class="itemtitle">打印机备注</div>
+                <div class="itemtitle"><em>*</em>打印机备注</div>
                 <div class="itemcontent"><input type="text" v-model="remark"></div>
               </div>
             </div>
@@ -52,8 +52,8 @@
     data () {
       return {
         msgtitle:'添加打印设备',
-        sn_num:'',
-        key:'',
+        sn_num:'918503233',
+        key:'fcah7zdm',
         remark:'',
         phone:''
       }
@@ -72,53 +72,27 @@
 
     },
     mounted:function(){
-      //判断是修改页面还是新增页面
-      if(this.fromParent){
-        this.msgtitle='查看打印设备'
-        //获取详情信息
-        this.geteditInfo()
-      }else{
-      }
+
     },
     methods:{
-      //获取修改信息
-      geteditInfo(){
-
-      },
       closepop(){
         let data = {
           popstatus:false
         };
-
         //执行父组件方法
         this.$emit('sievent',data,'');
       },
-      //绑定/修改打印机
+      //绑定打印机
       addroleFn(){
         let vm =this,url,params;
-        //判断是添加还是修改管理员
-        if(this.fromParent){
-          url='/api/web/authority/user/edit';
-          params={
-            uid:vm.fromParent,
-            username:vm.username,
-            real_name:vm.username,
-            password:vm.password||'',
-            phone:vm.phone,
-            role_id:vm.usevalue.id,
-            email:vm.email,
-            describe:vm.describe
-          }
-        }else{
-          url='/api/web/printer/binding';
-          params={
-            sn_num:vm.sn_num,
-            key:vm.key,
-            remark:vm.remark,
-            phone:vm.phone
-          };
-        }
-        if(!this.sn_num&&!params.key){
+        url='/api/web/printer/binding';
+        params={
+          sn_num:vm.sn_num,
+          key:vm.key,
+          remark:vm.remark,
+          phone:vm.phone
+        };
+        if(!params.sn_num||!params.key||!params.remark){
           vm.$message.error('请完善打印设备信息');
           return
         }
@@ -128,6 +102,10 @@
           data: params
         }).then((res)=>{
           if(res.data.error_code=='0'){
+            vm.$message({
+              message: '打印机绑定成功！',
+              type: 'success'
+            });
             let data = {
               popstatus:false,
               status:'refresh'

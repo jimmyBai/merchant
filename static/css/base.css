@@ -88,6 +88,8 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .itemline-2 li.savebtn{background:#b95e15 }
 .itemline-3 li{ background:#1ea28b;}
 .itemline-3 li.savebtn{background:#177c6a }
+.itemline-3 li.smsline{background:#177c6a; display: flex; display: -webkit-flex;}
+.itemline-3 li.smslinetips{background:#177c6a;}
 /**按钮状态**/
 .btn-c-error{ background:#f25657}
 .btn-c-success{background:#22baa1}

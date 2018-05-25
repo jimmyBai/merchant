@@ -247,6 +247,11 @@ export default new Router({
             component:resolve=>require(['../components/page/Onlive.vue'],resolve)
           },
           {
+            path:'/msginfo',
+              meta:{keepAlive:true},
+            component:resolve=>require(['../components/page/Msginfo.vue'],resolve)
+          },
+          {
             path:'/reservation',
             meta:{keepAlive:true},
             component:resolve=>require(['../components/page/Reservation.vue'],resolve)
