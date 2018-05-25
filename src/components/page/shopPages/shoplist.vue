@@ -546,7 +546,11 @@ import myMap from '../mapPages/myMap'
               if(d_h>0){
                 let timearray=d_h.split('.');
                 backHour=timearray[0]
-                backMin=timearray[1]*6
+                if(!timearray[1]){
+                  backMin=0
+                }else{
+                  backMin=timearray[1]*6
+                }
               }
               if(backHour<10){backHour='0'+backHour}
               if(backMin<10){backMin='0'+backMin}

@@ -154,6 +154,11 @@ export default new Router({
                 ]
               },
               {
+                path:'/printlist',
+                  meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/shopPages/Printlist.vue'],resolve),
+              },
+              {
                 path:'/tiplist',
                 meta:{keepAlive:true},
                 component:resolve=>require(['../components/page/shopPages/tiplist.vue'],resolve),

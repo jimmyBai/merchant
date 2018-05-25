@@ -116,7 +116,7 @@ import searchView from './Seacrhtips'
           data: params
         }).then((res)=>{
           if(res.data.error_code=='0'){
-            if(res.data.data.list) {
+            /*if(res.data.data.list) {
               let dateArray=[]
               if(res.data.data.list.length>0){
                 res.data.data.list.forEach(item=>{
@@ -129,8 +129,9 @@ import searchView from './Seacrhtips'
                 })
               }
 
-              vm.ListData = dateArray
-            }
+
+            }*/
+            vm.ListData = res.data.data.list
             vm.total=Number(res.data.data.total);
             vm.pages=Number(res.data.data.pages);
             vm.page=Number(res.data.data.page);
