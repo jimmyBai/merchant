@@ -96,7 +96,7 @@ import "../../../../static/css/newStyle.css"
       },
       account_bank(nVal,oVal){
         if(nVal){
-          this.account_name=nVal.toString().replace(/[^\u4e00-\u9fa5^A-Za-z]*/g,'');
+          this.account_bank=nVal.toString().replace(/[^\u4e00-\u9fa5^A-Za-z]*/g,'');
         }
       },
       account_sn(nVal,oVal){
