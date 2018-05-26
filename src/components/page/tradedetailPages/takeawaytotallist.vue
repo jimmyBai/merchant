@@ -7,7 +7,7 @@
       </div>
       <div class="content">
         <div class="tipimgshow">
-
+          
           <div class="imgleft">
             <div class="insideleft">
               <img class="phoneimg" src="../../../../static/img/tipone.png" alt="">
@@ -40,9 +40,9 @@
 
         <div class="list-search">
 
-            <div class="ls-left">
+          <div class="ls-left">
             <div class="form-tabel">
-                <el-row class="res-content-line">
+              <el-row class="res-content-line">
                 <el-col :span="4"><div class="td-title">外送商品销售列表</div></el-col>
                 <el-col :span="3"><div class="res-title">筛选时间：</div></el-col>
                 <el-col :span="5">
@@ -65,10 +65,10 @@
                     <span class="search-icon" ><i class="el-icon-search"></i></span>
                     </div>
                 </el-col>
-                </el-row>
+              </el-row>
             </div>
-            </div>
-
+          </div>
+          
         </div>
         <el-table stripe :data="ListData">
           <el-table-column prop="" label="分类"></el-table-column>

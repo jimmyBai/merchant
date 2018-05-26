@@ -48,7 +48,7 @@
 
               <div class="newmenu" v-if="isdradeShow&&item.userid==4">
                 <span :class="{'isselect':isA,'isselect':!isA}" @click="traderoom('1',$event)">交易明细</span>
-                <span :class="{'isselect':isB,'isselect2':!isB}" @click="traderoom('2',$event)">交易汇总</span>
+                <!-- <span :class="{'isselect':isB,'isselect2':!isB}" @click="traderoom('2',$event)">交易汇总</span> -->
               </div>
 
               
