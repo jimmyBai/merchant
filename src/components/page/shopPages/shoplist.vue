@@ -113,17 +113,6 @@
           <div class="content"><div class="mytextarea"><textarea maxlength="240" v-model="ListData.describe" ></textarea></div></div>
         </div>
         <div class="line">
-          <div class="title">配送范围：</div>
-          <div class="content"><input type="tel" v-model="ListData.delivery_range" /></div>
-        </div>
-        <div class="line">
-          <div class="title">配送时间：</div>
-          <div class="content" style="width: 222px">
-            <el-time-select v-model="estimated_time" style="width: 222px;" :editable="false" :picker-options="{ start: '00:05',step: '00:05',end: '02:30'}" placeholder="选择时间">
-            </el-time-select>
-          </div>
-        </div>
-        <div class="line">
           <div class="title">座位数量：</div>
           <div class="content"><input type="tel" v-model="ListData.seat_number" @focus="selectval($event)" /></div>
         </div>
@@ -153,7 +142,7 @@
                     <el-time-select v-model="item.pm_begin" :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '23:30',minTime:item.am_end}">
                     </el-time-select>
                     <div class="fromto">至</div>
-                    <el-time-select v-model="item.pm_end" @change="getEndTime(item)"  :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '23:30'}">
+                    <el-time-select v-model="item.pm_end" :editable="false" :picker-options="{ start: '00:00', step: '00:30', end: '23:30', maxTime:item.am_begin}">
                     </el-time-select>
                   </el-col>
                 </el-row>
@@ -221,8 +210,7 @@ import myMap from '../mapPages/myMap'
         dosave: true,
         mapShow: false,
         cityMap:{},
-        pCity: '',
-        estimated_time:''
+        pCity: ''
       }
     },
     created(){
@@ -258,25 +246,8 @@ import myMap from '../mapPages/myMap'
       this.getlistData();
     },
     methods:{
-      getEndTime(item){
-        let vm =this;
-        if(item.pm_end){
-          let newambegin=item.am_begin.replace(":",'')
-          let newpmbegin=item.pm_begin.replace(":",'')
-          let newpmend=item.pm_end.replace(":",'')
-          //结束时间为0开头
-          if(newpmend.toString().substr(0,1)<=0){
-            if(newpmend.toString()>=newambegin.toString()){
-              vm.$message.error('下午结束时间必须小于上午开始时间')
-              item.pm_end=''
-            }
-          }else{
-            if(newpmend.toString()<newpmbegin.toString()){
-              vm.$message.error('下午结束时间必须大于下午开始时间')
-              item.pm_end=''
-            }
-          }
-        }
+      setEndTime(item){
+        console.log(item)
       },
       pviewMap(...data){
         let vm = this;
@@ -318,6 +289,7 @@ import myMap from '../mapPages/myMap'
         if(way!=1){
           this.ListData.consumption_max=(this.ListData.consumption_max*1).toFixed(2)
         }
+        
       },
       addimg(way,item){
         let vm=this,maxbannernum=10,maximg=20,
@@ -512,26 +484,6 @@ import myMap from '../mapPages/myMap'
             }
             vm.startTime=vm.ListData.start_time
             vm.endTime=vm.ListData.end_time
-            //配送时间设置
-            if(vm.ListData.delivery_time&&vm.ListData.delivery_time>0){
-              let backHour,backMin;
-              let d_h=(vm.ListData.delivery_time/60).toString()     //转化为HH:MM
-              if(d_h>0){
-                let timearray=d_h.split('.');
-                backHour=timearray[0]
-                if(!timearray[1]){
-                  backMin=0
-                }else{
-                  backMin=timearray[1]*6
-                }
-              }
-              if(backHour<10){backHour='0'+backHour}
-              if(backMin<10){backMin='0'+backMin}
-              vm.estimated_time=backHour+':'+backMin
-
-            }else{
-              vm.estimated_time='00:00'
-            }
           }else{
             vm.$message.error(res.data.message);
           }
@@ -555,7 +507,6 @@ import myMap from '../mapPages/myMap'
         this.business_time.splice(index,1)
       },
       upshop(){
-        let timesStr=0;
         //图片上传成功之后才能保存
         if(!this.dosave){
           this.$message.error('图片上传完成之后才能保存！');
@@ -577,17 +528,6 @@ import myMap from '../mapPages/myMap'
           vm.recommend.forEach(item=>{
             recommend.push(item.img)
           })
-        }
-        //获取配送时间
-        if(vm.estimated_time){
-          //把配送时间转化为分钟
-          let timearray=this.estimated_time.split(':');
-          if(timearray[0]>0){
-            timesStr+=timearray[0]*60
-          }
-          if(timearray[1]>0){
-            timesStr+=timearray[1]*1
-          }
         }
         //封装店铺营业时间
         if(vm.business_time&&vm.business_time.length>0){
@@ -646,9 +586,7 @@ import myMap from '../mapPages/myMap'
           'recommend':recommend,
           'business':business,
           'lat':vm.ListData.lat,
-          'lng':vm.ListData.lng,
-          'delivery_range':vm.ListData.delivery_range,
-          'delivery_time':timesStr
+          'lng':vm.ListData.lng
         }
 
         vm.$axios({

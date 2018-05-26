@@ -53,7 +53,7 @@
             
             <!-- 显示二维码 -->
             <div class="response" v-show="isqrcodeShow">
-              <div id="qrcode"></div>
+              <div id="qrcode" class="qrcode"></div>
             </div>
 
             <input type="button" v-if="istwocode" value="点击生成二维码" @click="commontwocode('1')">
@@ -139,15 +139,14 @@
 
             </div>
           </div>
-
           <!-- 分页 -->
           <div class="pagination">
             <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
           </div>
-
         </el-col>
       </el-row>
     </div>
+
 
     <!-- 拍照/上传 -->
     <div class="dialogbox" v-if="isdialogShow">

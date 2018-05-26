@@ -51,6 +51,7 @@
                 <!-- <span :class="{'isselect':isB,'isselect2':!isB}" @click="traderoom('2',$event)">交易汇总</span> -->
               </div>
 
+              
             </div>
           </li>
         </ul>
@@ -77,7 +78,6 @@ export default {
         {'name':'报表','userid':4,'icon':'04'},
         {'name':'权限','userid':6,'icon':'06'},
        /* {'name':'订座','userid':7,'icon':'07'}*/
-        {'name':'信息','userid':8,'icon':'08'},
       ],
       isdradeShow:false,
       isA: true
@@ -230,7 +230,6 @@ export default {
 .menuul li .icon-menu05{background-position: 0px -100px;width: 25px; height: 25px; background-size: cover;}
 .menuul li .icon-menu06{background-position: 0px -125px;width: 25px; height: 25px; background-size: cover;}
 .menuul li .icon-menu07{background-position: 0px -150px;width: 25px; height: 25px; background-size: cover;}
-.menuul li .icon-menu08{background-position: 0px -200px;width: 25px; height: 25px; background-size: cover;}
 .popmyinfo{background: #38213e; z-index: 99; min-width: 90px; border: 1px solid #48344d; position: absolute; top: 62px;right: 0}
 .popmyinfo ul {display: flex; display: -webkit-flex; flex-direction: column; -webkit-flex-direction: column}
 .popmyinfo ul li{ width:auto; cursor: pointer; display: block; padding: 0px; border-bottom: 1px solid #48344d; height: 24px; line-height: 24px;font-size: 12px; color: #9f8ba6}
@@ -245,9 +244,25 @@ export default {
 .popmyinfo ul li i.i-wallet{ background: url("../../static/img/wallet.png") no-repeat; display: inline-block; background-size: cover;}
 .popmyinfo ul.iconul li{ text-align: left; padding: 3px 10px; padding-left: 15px}
 
-.newmenu{ margin-top: 20px;}
-.newmenu span{ margin-top: 10px;}
-.pmenu .ltimg{ width: 6px;  position: absolute; top: 26px; right: 10px;}
-.pmenu .dnimg{ width: 12px; position: absolute; top: 32px; right: 8px;}
-.leftmenubar ul li .isselect{ color: #aa96b1;}
+.newmenu{
+  margin-top: 20px;
+}
+.newmenu span{
+  margin-top: 10px;
+}
+.pmenu .ltimg{
+  width: 6px;
+  position: absolute;
+  top: 26px;
+  right: 10px;
+}
+.pmenu .dnimg{
+  width: 12px;
+  position: absolute;
+  top: 32px;
+  right: 8px;
+}
+.leftmenubar ul li .isselect{
+  color: #aa96b1;
+}
 </style>

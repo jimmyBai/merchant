@@ -24,8 +24,8 @@
         <el-table-column label="手机号" prop="phone"></el-table-column>
         <el-table-column label="商品数量" prop="totalnum"></el-table-column>
         <el-table-column label="配送费" prop="delivery_fee"></el-table-column>
-        <el-table-column label="商品金额" prop="product_total_price"></el-table-column>
-        <el-table-column label="付款金额" prop="order_paid_price"></el-table-column>
+        <el-table-column label="商品金额" prop="goodsprice"></el-table-column>
+        <el-table-column label="付款金额" prop="payprice"></el-table-column>
         <el-table-column label="订单状态" align="right">
           <template slot-scope="scope">
             <div class="tdbtn-box">
@@ -116,7 +116,7 @@ import searchView from './Seacrhtips'
           data: params
         }).then((res)=>{
           if(res.data.error_code=='0'){
-            /*if(res.data.data.list) {
+            if(res.data.data.list) {
               let dateArray=[]
               if(res.data.data.list.length>0){
                 res.data.data.list.forEach(item=>{
@@ -129,9 +129,8 @@ import searchView from './Seacrhtips'
                 })
               }
 
-
-            }*/
-            vm.ListData = res.data.data.list
+              vm.ListData = dateArray
+            }
             vm.total=Number(res.data.data.total);
             vm.pages=Number(res.data.data.pages);
             vm.page=Number(res.data.data.page);

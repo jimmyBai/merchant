@@ -23,22 +23,22 @@
           <router-view></router-view>
         </div>
       </div>
-      <v-print v-if="popshow" @sievent="pievent"></v-print>
+
     </div>
+
+
   </div>
 </template>
 
 <script>
-import vPrint from './shopPages/Addprint';
+
 export default {
   name: 'shop',
   data () {
     return {
-      activenum:'shoplist',
-      popshow:false
+      activenum:'shoplist'
     }
   },
-  components:{vPrint},
   created(){
 
   },
@@ -55,27 +55,10 @@ export default {
     changetabs(way){
       this.activenum=way
       this.$router.push('/'+way)
-    },
-    addPrint(){
-      this.popshow=!this.popshow
-    },
-    //接受子组件传参
-    pievent(...data){
-      let vm = this;
-      vm.popshow=data.popstatus
-      if(data[0].status&&data[0].status=='refresh'){
-        let NewPage = '_empty' + '?time=' + new Date().getTime()/1000
-        this.$router.push(NewPage)
-        this.$router.go(-1)
-      }
-    },
+    }
   }
 }
 </script>
 <style scoped>
-.tabslist{ margin-top: 0}
-.nav-rbtn{ position: relative; color: #fff}
-.lineflex{ position: relative}
-.nav-rbtn{ position: absolute; right: 20px; top: 2px}
-.nav-rbtn>div{ display: inline-block; height: 23px; line-height: 23px;}
+
 </style>

@@ -85,6 +85,7 @@ import "../../../../static/css/newStyle.css"
         total:0,
         total_page:0,
         options: [
+          {value: '',label: '全部'},
           {value: 'takeout',label: '外送'},
           {value: 'seat',label: '订座'},
           {value: 'vip_member',label: '直播会员'},

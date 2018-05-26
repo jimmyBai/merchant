@@ -73,6 +73,7 @@ import "../../../../static/css/newStyle.css"
         total:0,
         total_page:0,
         options:[
+          {value: '',label: '全部'},
           {value: 'withdraw_reject',label: '提现驳回'},
           {value: 'withdraw',label: '提现成功'},
           {value: 'user_refund',label: '用户退款'}
