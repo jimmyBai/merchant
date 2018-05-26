@@ -8,18 +8,23 @@
         <div class="moneyleft">
           <div class="moneyshow">
             <span class="moneynum">
-              <span>￥<span v-text="ListData.balance"></span>RMB</span>
+              <span>￥<span v-text="ListData.balance"></span></span>
             </span>
-            <span class="moneytext">账户余额</span>
-            <input type="button" class="moneybtn" value="提现" @click="openEX">
+            <span class="moneytext">
+              <span class="wenhaotext">账户余额</span>
+              <input type="button" class="moneybtn" value="提现" @click="openEX">
+            </span>
           </div>
         </div>
         <div class="moneycontent">
           <div class="moneyshow">
             <span class="moneynum ctmy">
-              <span>￥<span v-text="ListData.frozen_balance"></span>RMB</span>
+              <span>￥<span v-text="ListData.frozen_balance"></span></span>
             </span>
-            <span class="moneytext">不可提现金额<img class="wenhaoimg" src="../../../static/img/wenhao.png" @click="showwenhao" /></span>
+            <span class="moneytext">
+              <span class="wenhaotext2">不可提现金额</span>
+              <img class="wenhaoimg" src="../../../static/img/wenhao.png" @click="showwenhao" />
+            </span>
           </div>
           <span class="wenhaopt" v-if="iswenhaoHide">这是不可提现的金额</span>
         </div>
@@ -176,7 +181,7 @@ export default {
 }
 </script>
 <style scoped>
-  .databanner{
+    .databanner{
     width: 100%;
     height: 160px;
     background: #38213e;
@@ -234,8 +239,6 @@ export default {
   .rttxt{
     padding: 10px 0 0 2px;
   }
-  
-
 
   .ls-r-btn{
     position: absolute;
@@ -253,8 +256,8 @@ export default {
   }
 
   .moneybtn{
-    position: absolute;
-    bottom: 3px;
+    position: relative;
+    bottom: 2px;
     right: 0;
     width: 60px;
     height: 20px;
@@ -268,13 +271,17 @@ export default {
     -webkit-appearance:none;
   }
   
-
   .wenhaoimg{
     width: 20px;
-    height: auto;
-    position: absolute;
-    top: 0;
-    right: 10px;
+    height: 20px;
+  }
+  .wenhaotext{
+    position: relative;
+    top: -2px;
+  }
+  .wenhaotext2{
+    position: relative;
+    top: -4px;
   }
   .wenhaopt{
     display: block;

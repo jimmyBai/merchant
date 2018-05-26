@@ -61,7 +61,7 @@
             <input type="button" value="删除" @click="commontwocode('3')">
           </div>
         </el-col>
-        <el-col :span="14" class="bright" v-if="false">
+        <el-col :span="14" class="bright">
           <!--<div class="moneyline">
             <div class="rhead">
               <i class="mtitle"></i>
@@ -96,7 +96,7 @@
             </div>
           </div>-->
 
-          <!-- <div class="databox">
+          <div class="databox">
             <div class="title">
               <span><img src="../../../static/img/tiptitle.png" />实时数据</span>
             </div>
@@ -108,7 +108,7 @@
                     <img src="../../../static/img/tipone.png" alt="">
                   </div>
                   <div class="insideright">
-                    <span>0.00</span>
+                    <span v-text="statistics.amount" class="apcolor"></span>
                     <span>总小费金额</span>
                   </div>
                 </div>
@@ -117,7 +117,7 @@
                     <img src="../../../static/img/tipthree.png" alt="">
                   </div>
                   <div class="insideright protectnum">
-                    <span>0.00</span>
+                    <span v-text="statistics.paid" class="apcolor"></span>
                     <span>支付人次</span>
                   </div>
                 </div>
@@ -125,20 +125,26 @@
               <div class="tiplist">
                 <div class="tiptitle">
                   <span class="tipspan">我的小费</span>
-                  <input type="text" placeholder="请输入手机号/金额" />
-                  <span class="search-icon"><i class="el-icon-search"></i></span>
+                  <input type="text" v-model="search.content" placeholder="请输入手机号/用户名/管理员名称" />
+                  <span class="search-icon" @click="searchlist"><i class="el-icon-search"></i></span>
                 </div>
                 <el-table stripe :data="reListData">
-                  <el-table-column prop="" label="用户名"></el-table-column>
-                  <el-table-column prop="" label="手机号码"></el-table-column>
-                  <el-table-column prop="" label="小费金额"></el-table-column>
-                  <el-table-column prop="" label="支付方式"></el-table-column>
-                  <el-table-column prop="" label="支付时间"></el-table-column>
+                  <el-table-column width="60" prop="username" label="用户名"></el-table-column>
+                  <el-table-column prop="phone" label="手机号码"></el-table-column>
+                  <el-table-column prop="amount" label="小费金额"></el-table-column>
+                  <el-table-column width="80" prop="payment" label="支付方式"></el-table-column>
+                  <el-table-column prop="pay_time" label="支付时间"></el-table-column>
                 </el-table>
               </div>
 
             </div>
-          </div> -->
+          </div>
+
+          <!-- 分页 -->
+          <div class="pagination">
+            <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
+          </div>
+
         </el-col>
       </el-row>
     </div>
@@ -185,7 +191,22 @@ import "../../../static/js/jquery.qrcode.js"
         ismaskShow: false,
         istwocode: true,
         istwocode2: false,
-        isqrcodeShow: false
+        isqrcodeShow: false,
+        page: "1", //页码，默认为1
+        length: "10", //每页记录数，默认为10
+        page:0,
+        per_page:0,
+        total:0,
+        total_page:0,
+        search:{
+          uid: "",
+          content: "",
+          amount_max: "", //最大值
+          amount_min: "", //最小值
+          start_time: "", //开始时间
+          end_time: "" //结束时间
+        },
+        statistics: []
       }
     },
     created(){
@@ -206,6 +227,7 @@ import "../../../static/js/jquery.qrcode.js"
     mounted:function(){
       this.getlistData()
       this._getQart()
+      this.gettipData()
     },
     methods:{
       
@@ -238,8 +260,8 @@ import "../../../static/js/jquery.qrcode.js"
             width: "160", //二维码的宽度  
             height: "160", //二维码的高度  
             background: "#ffffff", //二维码的后景色  
-            foreground: "#000000", //二维码的前景色  
-            src: '../../../static/img/mainlogo.png', //二维码中间的图片
+            foreground: "#4c3d7b", //二维码的前景色  
+            src: '../../../static/img/018Logo.png', //二维码中间的图片
             uid: vm.UID,
             username: vm.userName,
             token: vm.userToken
@@ -250,6 +272,41 @@ import "../../../static/js/jquery.qrcode.js"
           console.log(vm.userToken);
         })
       },
+      // 获取小费记录数据
+      gettipData(){
+        this.reListData = []
+        this.statistics = []
+        let vm=this,url='/api/web/tip/list',params={
+          page: vm.page,
+          length: vm.length,
+          uid: vm.UID,
+          search:{
+            content: vm.search.content
+          }
+        };
+        vm.$axios({
+          method:'post',
+          url:url,
+          data:params
+        }).then((res)=>{
+          if(res.data.error_code=='0'){
+            if(res.data.data.list){
+              vm.reListData=res.data.data.list
+              vm.statistics=res.data.data.statistics
+            }
+            vm.total=Number(res.data.data.total);
+            vm.pages=Number(res.data.data.pages);
+            vm.page=Number(res.data.data.page);
+            vm.per_page=Number(res.data.data.per_page);
+            vm.total_page=Number(res.data.data.total_page);
+          }else{
+            vm.$message.error(res.data.message);
+          }
+        }).catch(err => {
+          console.log(err);
+        });
+       
+      }, 
       
       getlistData(){
         let vm =this,url='/api/web/authority/user/info',params={'id':''};
@@ -315,6 +372,15 @@ import "../../../static/js/jquery.qrcode.js"
         vm.isdialogShow2 = false;
         vm.ismaskShow = false;
       },
+      // 分页
+      handleCurrentChange(val){
+        this.page=val
+        this.gettipData();
+      },
+      // 搜索
+      searchlist(){
+        this.gettipData()
+      }
     }
   }
 </script>
@@ -450,6 +516,7 @@ i.dtitle{ background-position: 0px -20px;}
   height: auto;
   background: #462747;
   padding: 0 20px;
+  padding-bottom: 20px;
 }
 .tiplist .tiptitle{
   width: 100%;
@@ -485,9 +552,7 @@ i.dtitle{ background-position: 0px -20px;}
 }
 .search-icon{
   line-height: 18px;
-  margin-bottom: 5px;
 }
-
 
 ::-webkit-input-placeholder{
 　font-size: 12px;
@@ -595,11 +660,20 @@ i.dtitle{ background-position: 0px -20px;}
 
 .response{
   width: 100%;
-  height: 160px;
+  height: 168px;
   text-align: center;
   margin-top: 15px;
   display: flex;
   justify-content: center;
+}
+.qrcode{
+  width: 164px;
+  height: 162px;
+  background: #ffffff;
+  padding-top: 2px;
+}
+.apcolor{
+  color: #ffffff;
 }
 
 </style>

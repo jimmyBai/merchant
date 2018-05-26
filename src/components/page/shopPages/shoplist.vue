@@ -251,25 +251,6 @@ import myMap from '../mapPages/myMap'
             return this.ListData.consumption_min=cVal.replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1')
           }
 
-          // let vm = this;
-          // let reg = /^[1-9]\d*(\.\d{0,2})?$|^0(\.\d{0,2})?$|^-([1-9]{1}\d*(\.\d{0,2})?)?$|^-(0(\.\d{0,2})?)?$/;
-          // let input = vm.$refs.input;
-
-          // var oldValue = '';
-          // input.addEventListener('input',function(){
-          //   console.log(input.value)
-          //   if(input.value && !reg.test(input.value)){
-          //     input.value = oldValue;
-          //   }
-          //   oldValue = input.value;
-          // });
-
-          // input.addEventListener('change',function(){
-          //   if(input.value.endsWith('.') || input.value.endsWith('-')){
-          //     input.value = input.value.slice(0,-1);
-          //   }
-          // });
-
         }
       }
     },
@@ -332,18 +313,10 @@ import myMap from '../mapPages/myMap'
       autoval(way){
         let vm = this;
         if(way!=2){
-          if(!/\./.test(this.ListData.consumption_min)){ //末尾添加.00
-            this.ListData.consumption_min += '.00';
-          }else if(/\./.test(this.ListData.consumption_min)){
-            this.ListData.consumption_min += '00';
-          }
+          this.ListData.consumption_min=(this.ListData.consumption_min*1).toFixed(2)
         }
         if(way!=1){
-          if(!/\./.test(this.ListData.consumption_max)){ //末尾添加.00
-            this.ListData.consumption_max += '.00';
-          }else if(/\./.test(this.ListData.consumption_max)){
-            this.ListData.consumption_max += '00';
-          }
+          this.ListData.consumption_max=(this.ListData.consumption_max*1).toFixed(2)
         }
       },
       addimg(way,item){

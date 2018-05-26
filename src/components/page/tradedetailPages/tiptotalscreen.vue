@@ -5,27 +5,27 @@
     <div class="res-content">
       <el-row class="res-content-line">
         <el-col :span="4"><div class="res-title">付款金额：</div></el-col>
-        <el-col :span="7"><div class="res-input"><input  type="tel"></div></el-col>
+        <el-col :span="7"><div class="res-input"><input v-model="searchinfo.amount_min" type="tel"></div></el-col>
         <el-col :span="1"><div class="res-line">~</div></el-col>
-        <el-col :span="7"><div class="res-input"><input  type="tel"></div></el-col>
-        <el-col :span="4"><div class="res-btn" @click="searchFn"><span>确定</span></div></el-col>
+        <el-col :span="7"><div class="res-input"><input v-model="searchinfo.amount_max" type="tel"></div></el-col>
+        <el-col :span="4"><div class="res-btn" @click="searchAll"><span>确定</span></div></el-col>
       </el-row>
       <el-row class="res-content-line">
         <el-col :span="4"><div class="res-title">支付时间：</div></el-col>
         <el-col :span="7">
           <div class="res-input">
-            <el-date-picker :editable="false" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期">
+            <el-date-picker v-model="searchinfo.start_time" clear-icon :editable="false" value-format="yyyy-MM-dd" type="date" placeholder="选择日期">
             </el-date-picker>
           </div>
         </el-col>
         <el-col :span="1"><div class="res-line">~</div></el-col>
         <el-col :span="7">
           <div class="res-input">
-            <el-date-picker clear-icon :editable="false" value-format="yyyy-MM-dd" type="date" placeholder="选择日期">
+            <el-date-picker  v-model="searchinfo.end_time" clear-icon :editable="false" value-format="yyyy-MM-dd" type="date" placeholder="选择日期">
             </el-date-picker>
           </div>
         </el-col>
-        <el-col :span="4"><div class="res-btn" @click="searchFn"><span>确定</span></div></el-col>
+        <el-col :span="4"><div class="res-btn" @click="searchAll"><span>确定</span></div></el-col>
       </el-row>
     </div>
     <div class="res-bottom">
@@ -37,11 +37,14 @@
 
 <script>
   export default {
-    name: 'screen',
+    name: 'tipsearch',
     data () {
       return {
         
       }
+    },
+    props: {
+      searchinfo: Object
     },
     methods:{
       
@@ -49,14 +52,20 @@
       clearststus(){
         //通知父页面初始化刷新
         let data = {
-          
-        };
+          min_balance: "",
+          max_balance: "",
+          create_start: "",
+          create_end: ""
+        }
         //执行父组件方法
         this.$emit('tievent',data,'');
       },
-      searchFn(){
+      searchAll(){
         let data = {
-
+          amount_min: this.searchinfo.amount_min,
+          amount_max: this.searchinfo.amount_max,
+          start_time: this.searchinfo.start_time,
+          end_time:  this.searchinfo.end_time
         };
         //执行父组件方法
         this.$emit('tievent',data,'');
