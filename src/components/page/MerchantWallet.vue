@@ -12,7 +12,7 @@
             </span>
             <span class="moneytext">
               <span class="wenhaotext">账户余额</span>
-              <input type="button" class="moneybtn" value="提现" @click="openEX">
+              <input type="button" style="cursor:pointer;" class="moneybtn" value="提现" @click="openEX">
             </span>
           </div>
         </div>
@@ -23,7 +23,7 @@
             </span>
             <span class="moneytext">
               <span class="wenhaotext2">不可提现金额</span>
-              <img class="wenhaoimg" src="../../../static/img/wenhao.png" @click="showwenhao" />
+              <img class="wenhaoimg" style="cursor:pointer;" src="../../../static/img/wenhao.png" @click="showwenhao" />
             </span>
           </div>
           <span class="wenhaopt" v-if="iswenhaoHide">这是不可提现的金额</span>
