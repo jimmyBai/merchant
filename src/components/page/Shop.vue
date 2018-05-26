@@ -12,12 +12,12 @@
             <div :class="{'is-active':activenum=='printlist'}" @click="changetabs('printlist')" class="tabtar-item ">打印设置</div>
            <div :class="{'is-active':activenum=='tiplist'}" @click="changetabs('tiplist')" class="tabtar-item">小费</div>
           </div>
-          <div class="nav-rbtn" v-if="activenum=='printlist'">
+          <!-- <div class="nav-rbtn" v-if="activenum=='printlist'">
             <div class="tdbtn-add" @click="addPrint">
               <i class="el-icon-circle-plus-outline"></i>
               <span>添加</span>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="tabslist-content">
           <router-view></router-view>
