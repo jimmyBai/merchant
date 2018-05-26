@@ -184,6 +184,16 @@ export default new Router({
                 path:'/tiptotallist',
                 meta:{keepAlive:true},
                 component:resolve=>require(['../components/page/tradedetailPages/tiptotallist.vue'],resolve),
+              },
+              {
+                path:'/livetotallist',
+                meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/tradedetailPages/livetotallist.vue'],resolve),
+              },
+              {
+                path:'/takeawaytotallist',
+                meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/tradedetailPages/takeawaytotallist.vue'],resolve),
               }
             ]
           },
@@ -191,6 +201,18 @@ export default new Router({
             path:'/tradesum',
             meta:{keepAlive:true},
             component:resolve=>require(['../components/page/Tradesum.vue'],resolve),
+            children:[
+              {
+                path:'/',
+                meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/tradesumPages/outsideorderlist.vue'],resolve),
+              },
+              {
+                path:'/outsideorderlist',
+                meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/tradesumPages/outsideorderlist.vue'],resolve),
+              }
+            ]
           },
           {
             path:'/takeaway',

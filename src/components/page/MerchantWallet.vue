@@ -140,13 +140,17 @@ export default {
       vm.isBankCardShow=data[0].isBankCardStatus;
       if(data[0].status&&data[0].status=='refresh'){
         vm.isPromptShow=!vm.isBankCardShow
-        // let NewPage = '_empty' + '?time=' + new Date().getTime()/1000
-        // this.$router.push(NewPage);
-        // this.$router.go(-1);
-        this.$router.push('/bankCardlist');
-        if(this.$route.path=='/bankCardlist'){
+        
+        if(!this.$router.push('/bankCardlist')){
+          this.$router.push('/bankCardlist');
           this.activenum='bankCardlist'
         }
+        if(this.$router.push('/bankCardlist')==this.$router.push('/bankCardlist')){
+          let NewPage = '_empty' + '?time=' + new Date().getTime()/1000
+          this.$router.push(NewPage);
+          this.$router.go(-1);
+        }
+        
         setTimeout(function(){
           vm.isPromptShow = false;
         },2000);

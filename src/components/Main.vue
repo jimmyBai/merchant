@@ -47,8 +47,8 @@
               <img src="../../static/img/downarrow.png" v-if="isdradeShow&&item.userid==4" class="dnimg">
 
               <div class="newmenu" v-if="isdradeShow&&item.userid==4">
-                <span :class="{'isselect':isA}" @click="traderoom('1',$event)">交易明细</span>
-                <!-- <span :class="{'isselect':isB,'isselect2':!isB}" @click="traderoom('2',$event)">交易汇总</span> -->
+                <span :class="{'isselect':isA,'isselect':!isA}" @click="traderoom('1',$event)">交易明细</span>
+                <span :class="{'isselect':isB,'isselect2':!isB}" @click="traderoom('2',$event)">交易汇总</span>
               </div>
 
               
@@ -81,8 +81,8 @@ export default {
         {'name':'信息','userid':8,'icon':'08'},
       ],
       isdradeShow:false,
-      isA: true
-      // isB: true
+      isA: true,
+      isB: true
     }
   },
   mounted:function(){
@@ -125,7 +125,8 @@ export default {
         // vm.$router.push('/export')
         if(!vm.isdradeShow&&id==4){
           vm.isdradeShow = true;
-          vm.isA = true;
+          vm.isA = false;
+          vm.isB = true;
         }
       }else if(id==5){
         vm.$router.push('/shop')
@@ -196,13 +197,14 @@ export default {
       let vm = this;
       if(way == 1){
         vm.$router.push('/tradedetail');
+        vm.isA = !vm.isA;
+        vm.isB = true;
+      }
+      else if(way != 1){
+        vm.$router.push('/tradesum');
+        vm.isB = !vm.isB;
         vm.isA = false;
       }
-      // else if(way != 1){
-      //   vm.$router.push('/tradesum');
-      //   vm.isB = !vm.isB;
-      //   vm.isA = true;
-      // }
 
     }
   }
@@ -246,25 +248,9 @@ export default {
 .popmyinfo ul li i.i-wallet{ background: url("../../static/img/wallet.png") no-repeat; display: inline-block; background-size: cover;}
 .popmyinfo ul.iconul li{ text-align: left; padding: 3px 10px; padding-left: 15px}
 
-.newmenu{
-  margin-top: 20px;
-}
-.newmenu span{
-  margin-top: 10px;
-}
-.pmenu .ltimg{
-  width: 6px;
-  position: absolute;
-  top: 26px;
-  right: 10px;
-}
-.pmenu .dnimg{
-  width: 12px;
-  position: absolute;
-  top: 32px;
-  right: 8px;
-}
-.leftmenubar ul li .isselect{
-  color: #aa96b1;
-}
+.newmenu{ margin-top: 20px;}
+.newmenu span{ margin-top: 10px;}
+.pmenu .ltimg{ width: 6px;  position: absolute; top: 26px; right: 10px;}
+.pmenu .dnimg{ width: 12px; position: absolute; top: 32px; right: 8px;}
+.leftmenubar ul li .isselect{ color: #aa96b1;}
 </style>

@@ -18,7 +18,7 @@
             <div class="adduser-item">
               <div class="itemline itemlinetwo">
                 <div class="itemtitle">提取金额：</div>
-                <div class="itemcontent"><input type="text" v-model="trade_amount"></div>
+                <div class="itemcontent"><input type="text" v-model="trade_amount" @blur="autoval"></div>
               </div>
             </div>
             <!-- 银行账户 -->
@@ -71,7 +71,7 @@ export default {
   watch:{
     trade_amount(nVal,oVal){
       if(nVal){
-        this.trade_amount=nVal.toString().replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1');
+        this.trade_amount=nVal.toString().replace(/^\D*([0-9]\d*\.?\d{0,2})?.*$/,'$1');
       }
     }
   },
@@ -80,7 +80,10 @@ export default {
     this.getlistData();
   },
   methods:{
-
+    // 控制小数
+    autoval(){
+      this.trade_amount=(this.trade_amount*1).toFixed(2)
+    },
     // 获取银行卡列表
     getclassinfo(){
       let vm =this,url='/api/web/bank',params={};
