@@ -78,6 +78,7 @@ export default {
         {'name':'报表','userid':4,'icon':'04'},
         {'name':'权限','userid':6,'icon':'06'},
        /* {'name':'订座','userid':7,'icon':'07'}*/
+        {'name':'信息','userid':8,'icon':'08'},
       ],
       isdradeShow:false,
       isA: true
