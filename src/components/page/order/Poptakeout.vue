@@ -43,6 +43,42 @@
                         <span v-if="detailinfo.order_status==3" v-text="estimated_time"></span>
                       </div>
                     </li>
+                    <!--配送的时候打印订单选项-->
+                    <li v-if="detailinfo.order_status==2" class="printline">
+                      <div class="itemtitle">
+                        <span>订单打印：</span>
+                      </div>
+                      <div class="itemcontent">
+                        <div @click="printCheck=!printCheck" class="printcheckbox">
+                          <i class="checkIcon" :class="{'el-icon-check':printCheck}"></i>
+                          <span>需要打印</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li v-if="detailinfo.order_status==2">
+                      <div class="itemtitle">
+                        <span>设备：</span>
+                      </div>
+                      <div class="itemcontent">
+                        <el-select v-model="printvalue" placeholder="请选择">
+                          <el-option v-for="(item,index) in printList" :key="index" :label="item.remark" :value="item.sn">
+                          </el-option>
+                        </el-select>
+                      </div>
+                    </li>
+                    <!--打印选项结束-->
+                    <!--确认送达-->
+                    <li class="smsline" v-if="detailinfo.order_status==3">
+                      <div class="itemtitle">
+                        <span><input type="tel" v-model="code" placeholder="请输入验证码" /></span>
+                      </div>
+                      <div class="itemcontent" @click.stop="candotime&&sendSMS()">
+                        <span ref="codetime">重新发送</span>
+                      </div>
+                    </li>
+                    <li class="smslinetips" v-if="detailinfo.order_status==3">
+                      <span>请输入客户收到的短信签收验证码</span>
+                    </li>
                     <li class="savebtn">
                       <div @click="deliverfn">
                         <span v-if="detailinfo.order_status==2">保存并开始配送</span>
@@ -58,11 +94,6 @@
                         <span>确认接单</span>
                       </div>
                     </li>
-                   <li class="savebtn">
-                      <div @click="printOrder()">
-                        <span>打印接单</span>
-                      </div>
-                    </li>
                     <li class="savebtn">
                       <div @click="orderFn(0)">
                         <span>取消订单</span>
@@ -76,7 +107,7 @@
           <!---viewSTART-->
             <div class="baseinfo">
               <dl>
-                <dt>订单金额  <span style="display: inline-block; width: 80px; text-align: center;height: 20px; line-height: 20px; margin-left: 20px; color: #fff; background:#efae12; border-radius: 3px" @click="print">打印订单</span></dt>
+                <dt>订单金额</dt>
                 <dd class="money"><span v-text="'¥'+detailinfo.total_amount"></span></dd>
                 <dd class="reson" v-if="detailinfo.cancel_reason"><span v-text="detailinfo.cancel_reason"></span></dd>
               </dl>
@@ -165,7 +196,11 @@ import {fetchPost} from '../../../../static/js/fetch.js';
         deliver_man:'',
         delivery_phone:'',
         ishow:false,
-
+        printCheck:true,
+        printvalue:'',
+        printList:[],
+        candotime:true,
+        code:'',
           USER:"sheep@yottaspace.cn",//必填，飞鹅云 www.feieyun.cn后台注册的账号名
           UKEY:"hgfZmCRytUsZPese",//必填，飞鹅云后台注册账号后生成的UKEY
           STIME:new Date().getTime(),
@@ -182,127 +217,80 @@ import {fetchPost} from '../../../../static/js/fetch.js';
     mounted:function(){
       this.msgtitle=this.orderinfo.title
       this.geteditInfo()
-      //this.printList()
 
       this.SIG = CryptoJS.SHA1(this.USER+this.UKEY+this.STIME).toString(CryptoJS.enc.Hex)
     },
     methods:{
-      //打印订单
-      print(){
-        //调用接口获取打印数据
-        var orderInfo;
-        orderInfo = "<CB>018外送测试</CB><BR>";//标题字体如需居中放大,就需要用标签套上
-        orderInfo += "用户下单时间：2018-05-20 15:59:59<BR>";
-        orderInfo += "预计送达时间：2018-05-20 17:00:00<BR>";
-        orderInfo += "订单编号：20180520156621<BR>";
-        orderInfo += "--------------------------------<BR>";
-        orderInfo += "备注：快点送到<BR>";
-        orderInfo += "--------------------------------<BR>";
-        orderInfo += "商品名称　　　    单价    数量   金额<BR>";
-        orderInfo += "--------------------------------<BR>";
-        orderInfo += "1,Martell Cordon Bleu<BR>";
-        orderInfo += "               1060   X1    1060<BR>";
-        orderInfo += "<BR>";
-        orderInfo += "2,青岛纯生       15     X1     15<BR>";
-        orderInfo += "--------------------------------<BR>";
-        orderInfo += "优惠：                      0<BR>";
-        orderInfo += "店铺现金使用情况:            ¥0<BR>";
-        orderInfo += "总件数:  2       产品金额：1075<BR>";
-        orderInfo += "                     配送费50<BR>";
-        orderInfo += "                实付金额：1125<BR>";
-        orderInfo += "<BR>";
-        orderInfo += "支付状态:在线支付-已支付        <BR>";
-        orderInfo += "--------------------------------<BR>";
-        orderInfo += "客户地址：深圳市罗湖区人民南路佳宁娜广场B座1904<BR>";
-        orderInfo += "联系人：Jimmy<BR>";
-        orderInfo += "联系电话：13686844254<BR>";
-        orderInfo += "--------------------------------<BR>";
-        orderInfo += "店铺：复兴路69号院华熙LIVE.hi-up西区B1    <BR>";
-        orderInfo += "电话：020-018018018    <BR>";
-        let vm = this;
-        let myobj = {
-          user: vm.USER,//账号
-          stime: vm.STIME,//当前时间的秒数，请求时间
-          sig: vm.SIG,//签名
-          apiname: "Open_printMsg",
-          sn: '918503233',
-          content:orderInfo
-        };
-        fetchPost({
-          method: 'POST',
-          url: 'http://api.feieyun.cn:80/Api/Open/',
-          data: myobj,
-          success: function (response) {
-            console.log(response);
-          }
-        });
-      },
-
-
       //订单打印
       printOrder(){
-       // this.unbindprint()
-        let vm =this,url='/api/web/printer/printing',params={'sn':'918503233','order_sn':this.orderinfo.orderid};
+        let vm =this,url='/api/web/printer/printing',params={'sn':vm.printvalue,'order_sn':this.orderinfo.orderid};
         vm.$axios({
           method:'post',
           url:url,
           data: params
         }).then((res)=>{
           if(res.data.error_code=='0'){
-
+              vm.$message({
+                message: '订单打印成功！',
+                type: 'success'
+              });
           }else{
             vm.$message.error(res.data.message);
           }
         }).catch(err => {
             console.log(err);
         });
-      },
-      //绑定打印机
-      bindprint(){
-        let vm =this,url='/api/web/printer/binding',params={'sn_num':'918503233','key':'fcah7zdm','remark':'打印机测试机'};
-        vm.$axios({
-          method:'post',
-          url:url,
-          data: params
-        }).then((res)=>{
-          if(res.data.error_code=='0'){
-
-          }else{
-            vm.$message.error(res.data.message);
-          }
-        }).catch(err => {
-            console.log(err);
-        });
-      },
-      //解绑打印机
-      unbindprint(){
-        let vm =this,url='/api/web/printer/unbind',params={'sn':'918503233',};
-        vm.$axios({
-          method:'post',
-          url:url,
-          data: params
-        }).then((res)=>{
-          if(res.data.error_code=='0'){
-
-          }else{
-            vm.$message.error(res.data.message);
-          }
-      }).catch(err => {
-          console.log(err);
-      });
       },
       //获取打印机列表
-      printList(){
+      getprintList(){
         let vm =this,url='/api/web/printer/list',params={};
         vm.$axios.get(url,{params}).then((res)=>{
           if(res.data.error_code=='0'){
-
+              vm.printList=res.data.data
           }else{
-
           }
         }).catch(err => {
             console.log(err);
         });
+      },
+      //发送确认收货验证码
+      sendSMS(){
+        let vm =this,url='/api/web/sms/send',params={'phone':vm.detailinfo.phone,'type':2};
+        this.candotime=false;
+        vm.$axios({
+          method:'post',
+          url:url,
+          data: params
+        }).then((res)=>{
+          if(res.data.error_code=='0'){
+          vm.$message({
+            message: '验证码已发送成功！',
+            type: 'success'
+          });
+          vm.timeCut(60)
+          if(window.location.href.indexOf('uat.')>=0||window.location.href.indexOf('dev.')>=0){
+            vm.code='123456'
+          }
+          }else{
+            vm.$message.error(res.data.message);
+            vm.candotime=true;
+          }
+        }).catch(err => {
+            console.log(err);
+        });
+      },
+      //计时器
+      timeCut:function(time){
+        var srv = setInterval(()=>{
+          if(time>=1){
+            time--;
+            this.$refs.codetime.innerText=time+'S';
+          }else{
+            this.candotime=true;
+            this.$refs.codetime.innerText='重新获取';
+            clearInterval(srv)
+          }
+        },1000)
       },
       //获取修改信息
       geteditInfo(){
@@ -321,7 +309,11 @@ import {fetchPost} from '../../../../static/js/fetch.js';
                 vm.deliver_man = vm.detailinfo.delivery_man
                 vm.delivery_phone = vm.detailinfo.delivery_phone
                 vm.estimated_time = vm.detailinfo.estimated_time
+              }else if(vm.detailinfo.order_status==2){
+                //当订单状态为待派送的时候 获取打印机列表
+                vm.getprintList()  //获取打印机列表
               }
+
             }
             vm.msgtitle=res.data.data.order_status_name
           }else{
@@ -346,8 +338,12 @@ import {fetchPost} from '../../../../static/js/fetch.js';
       //派送
       deliverfn(){
         let vm =this,url,params={};
-        //判断是确认送达还是拍派送
+        //判断是确认送达还是派送
         if(vm.detailinfo.order_status==3){
+          if(!vm.code){
+            vm.$message.error('请填写收货验证码！');
+            return
+          }
           url='/api/web/order/complete',
           params={
             'order_sn':vm.orderinfo.orderid,
@@ -372,7 +368,19 @@ import {fetchPost} from '../../../../static/js/fetch.js';
             'delivery_phone':vm.delivery_phone,
             'estimated_time':timesStr,
           };
-
+          //配送信息必填
+          if(!params.deliver_man||!params.delivery_phone||!params.estimated_time){
+            vm.$message.error('请完善配送员信息！');
+            return
+          }
+          //如果选择了打印 打印机必须选择
+          if(vm.printCheck){
+            if(!vm.printvalue){
+             vm.$message.error('请选择打印机！');
+             return
+            }
+            vm.printOrder()
+          }
         }
         vm.$axios({
           method:'post',
@@ -486,7 +494,16 @@ em{ font-style: normal; margin-right: 5px; color: #ac5397}
 .deliverItem ul li .itemcontent{ flex: 1.5}
 .deliverItem ul li.savebtn>div{ text-align: center; display: block;width: 100%; cursor: pointer}
 
+/**确认送达提示**/
+.deliverItem ul li.smsline>span{ display: block}
+.deliverItem ul li.smsline>div{ flex: 1;-webkit-flex: 1}
+.deliverItem ul li.smsline .itemtitle{ padding:0 10px}
+.deliverItem ul li.smsline .itemcontent{width: 60px; text-align: center; display: block; height: 36px; line-height: 36px; cursor: pointer; background: #144a40}
+.deliverItem ul li.smslinetips{height: 18px; line-height: 18px; color: #fff; font-size: 11px; border-radius: 0 0 3px 3px; border-top: 1px solid #13463c}
+.deliverItem ul li.smsline{ border-radius: 3px 3px 0 0;padding: 0}
 
-
-
+/**打印**/
+.printcheckbox{ display: flex;display:-webkit-flex; align-items: center;-webkit-align-items: center}
+.checkIcon{ height: 12px;width: 12px; font-size: 12px; display: inline-block;content: ''; border-radius: 2px; border: 1px solid #fff; background: #b95e15}
+.printcheckbox>span{ margin-left: 5px}
 </style>
