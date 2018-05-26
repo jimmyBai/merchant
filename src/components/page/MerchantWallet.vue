@@ -20,19 +20,11 @@
           <div class="moneyshow">
             <span class="moneynum ctmy">
               <span>￥<span v-text="ListData.frozen_balance"></span></span>
-<<<<<<< HEAD
             </span>
             <span class="moneytext">
               <span class="wenhaotext2">不可提现金额</span>
               <img class="wenhaoimg" src="../../../static/img/wenhao.png" @click="showwenhao" />
             </span>
-=======
-            </span>
-            <span class="moneytext">
-              <span class="wenhaotext2">不可提现金额</span>
-              <img class="wenhaoimg" src="../../../static/img/wenhao.png" @click="showwenhao" />
-            </span>  
->>>>>>> 1913b09f02867f50b537234c3b5ea81975640367
           </div>
           <span class="wenhaopt" v-if="iswenhaoHide">这是不可提现的金额</span>
         </div>
