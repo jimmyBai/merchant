@@ -114,3 +114,6 @@
   border-radius: 2px;
   cursor: pointer;
 }
+.outside .el-input--suffix .el-input__inner{
+  padding-right: 20px;
+}

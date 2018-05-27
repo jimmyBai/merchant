@@ -27,10 +27,10 @@
             </div>
           </div>
           <div class="imgright">
-            <div class="insideleft protect">
+            <div class="insideleft">
               <img src="../../../../static/img/tiptwo.png" alt="">
             </div>
-            <div class="insideright protectnum">
+            <div class="insideright">
               <span v-text="statistics.receive" class="apcolor"></span>
               <span>收取店员人数</span>
             </div>
@@ -195,19 +195,22 @@ export default {
   position: relative;
 }
 .imgleft{
-  width: 20%;
+  width: 200px;
+  min-width: 200px;
   height: 100px;
   float: left;
 }
 
 .imgcontent{
-  width: 20%;
+  width: 200px;
+  min-width: 200px;
   height: 100px;
   float: left;
 }
 
 .imgright{
-  width: 60%;
+  width: 200px;
+  min-width: 200px;
   height: 100px;
   float: left;
 }
@@ -224,9 +227,7 @@ export default {
   float: right;
   padding-right: 10px;
 }
-.phoneimg{
-  
-}
+
 .insideright{
   width: 50%;
   float: right;
@@ -237,22 +238,16 @@ export default {
 .insideright span{
   display: block;
 }
-.protect{
-  width: 17%;
-}
 .protect img{
   width: 60px;
   float: left;
   padding-left: 20px;
 }
-.protectnum{
-  width: 83%;
-}
 
 
 .tiplist_two{
   height: auto;
-  padding: 0 10px;
+  padding: 0 10px 20px 10px;
 }
 .tiplist_two .tiptitle{
   width: 100%;

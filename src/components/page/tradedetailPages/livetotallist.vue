@@ -8,13 +8,13 @@
       <div class="content">
         <div class="tipimgshow">
 
-          <div class="imgleft">
+          <div class="imgcontent">
             <div class="insideleft">
               <img class="phoneimg" src="../../../../static/img/tipone.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.amount" class="apcolor"></span>
-              <span>商品总额</span>
+              <span v-text="summary_data.total_price" class="apcolor"></span>
+              <span>总额</span>
             </div>
           </div>
           <div class="imgcontent">
@@ -22,7 +22,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.paid" class="apcolor"></span>
+              <span v-text="summary_data.package_price" class="apcolor"></span>
               <span>套餐总额</span>
             </div>
           </div>
@@ -31,7 +31,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.paid" class="apcolor"></span>
+              <span v-text="summary_data.user_pay_price" class="apcolor"></span>
               <span>实付金额</span>
             </div>
           </div>
@@ -40,86 +40,58 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.paid" class="apcolor"></span>
+              <span v-text="summary_data.platform_price" class="apcolor"></span>
               <span>平台服务费</span>
             </div>
           </div>
-
-          <!-- <div class="imgright">
-            <div class="insideleft protect">
-              <img src="../../../../static/img/tiptwo.png" alt="">
-            </div>
-            <div class="insideright protectnum">
-              <span v-text="statistics.receive" class="apcolor"></span>
-              <span>总销售额</span>
-            </div>
-          </div> -->
 
         </div>
 
         <div class="list-search">
 
-            <div class="ls-left">
+          <div class="ls-left">
             <div class="form-tabel">
-                <el-row class="res-content-line">
-                <el-col :span="4"><div class="td-title">外送列表</div></el-col>
-                <el-col :span="3"><div class="res-title">筛选时间：</div></el-col>
-                <el-col :span="5">
-                    <div class="res-input">
-                    <el-date-picker :editable="false" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
-                    </div>
-                </el-col>
-                <el-col :span="1"><div class="res-line">至</div></el-col>
-                <el-col :span="5">
-                    <div class="res-input">
-                    <el-date-picker :editable="false" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
-                    </div>
-                </el-col>
-                <el-col :span="3"><div class="res-title">收入类型：</div></el-col>
-                <el-col :span="7">
-                    <div class="td-content">
-                    <el-select v-model="search.type" placeholder="全部" class="osselect">
-                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                    </el-select>
-                    <span class="search-icon" ><i class="el-icon-search"></i></span>
-                    </div>
-                </el-col>
-                </el-row>
+              <el-row class="res-content-line">
+              <el-col :span="4"><div class="td-title">直播列表</div></el-col>
+              <el-col :span="3"><div class="res-title">筛选时间：</div></el-col>
+              <el-col :span="5">
+                <div class="res-input">
+                  <el-date-picker :editable="false" v-model="search.start_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
+                </div>
+              </el-col>
+              <el-col :span="1"><div class="res-line">至</div></el-col>
+              <el-col :span="5">
+                <div class="res-input">
+                  <el-date-picker :editable="false" v-model="search.end_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
+                </div>
+              </el-col>
+              <el-col :span="3"><div class="res-title">状态：</div></el-col>
+              <el-col :span="7">
+                <div class="td-content">
+                  <input type="text" v-model="search.name" placeholder="请输入名称/手机号" />
+                  <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
+                </div>
+              </el-col>
+              </el-row>
             </div>
-            </div>
+          </div>
 
         </div>
         <div class="tiplist_two">
           <el-table stripe :data="ListData">
-            <el-table-column prop="" label="订单号"></el-table-column>
-            <el-table-column prop="" label="时间"></el-table-column>
-            <el-table-column prop="" label="用户名"></el-table-column>
-            <el-table-column prop="" label="商品套餐"></el-table-column>
-            <el-table-column prop="" label="套餐费用"></el-table-column>
-            <el-table-column prop="" label="实付金额"></el-table-column>
-            <el-table-column prop="" label="平台服务费"></el-table-column>
-            <el-table-column prop="" label="金额"></el-table-column>
-            <el-table-column prop="" label="支付方式"></el-table-column>
-            <el-table-column prop="" label="状态"></el-table-column>
+            <el-table-column width="120" prop="order_sn" label="订单号"></el-table-column>
+            <el-table-column width="140" prop="create_time" label="时间"></el-table-column>
+            <el-table-column prop="username" label="用户名"></el-table-column>
+            <el-table-column prop="product_name" label="商品套餐"></el-table-column>
+            <el-table-column prop="product_price" label="套餐费用"></el-table-column>
+            <el-table-column prop="order_total_price" label="实付金额"></el-table-column>
+            <el-table-column prop="platform_price" label="平台服务费"></el-table-column>
+            <el-table-column prop="total_price" label="总额"></el-table-column>
+            <el-table-column prop="pay_name" label="支付方式"></el-table-column>
+            <el-table-column prop="pay_status" label="订单状态"></el-table-column>
           </el-table>
-        </div>  
-        <!-- <div class="tiplist_two">
-          <div class="tiptitle">
-            <span class="tipspan">我的小费</span>
-            <input type="text" v-model="search.content" />
-            <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
-          </div>
-          <el-table stripe :data="ListData">
-            <el-table-column width="120" prop="username" label="用户名"></el-table-column>
-            <el-table-column prop="phone" label="手机号码"></el-table-column>
-            <el-table-column width="120" prop="store_username" label="管理员"></el-table-column>
-            <el-table-column width="120" prop="store_user_role" label="角色"></el-table-column>
-            <el-table-column width="120" prop="amount" label="小费金额"></el-table-column>
-            <el-table-column width="120" prop="payment" label="支付方式"></el-table-column>
-            <el-table-column prop="pay_time" label="支付时间"></el-table-column>
-          </el-table>
-        </div> -->
-        
+        </div>
+
       </div>
     </div>
 
@@ -127,12 +99,6 @@
     <div class="pagination">
       <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
-
-    <!--更多查询-->
-    <!-- <div class="right_seachBar">
-      <div class="arrorbox" @click="ishowSearch=!ishowSearch"><span><i class="icon-toogle"></i></span></div>
-      <tiptotalscreen v-if="ishowSearch" :searchinfo="search" @tievent="fromtip"></tiptotalscreen>
-    </div> -->
 
   </div>
 </template>
@@ -150,7 +116,7 @@ export default {
     return {
       ishowSearch: false,
       ListData: [],
-      statistics: [],
+      summary_data: [],
       page: "1", //页码，默认为1
       length: "10", //每页记录数，默认为10
       page:0,
@@ -158,14 +124,11 @@ export default {
       total:0,
       total_page:0,
       search:{
-        uid: "",
-        content: "",
-        amount_max: "", //最大值
-        amount_min: "", //最小值
+        name: "",
         start_time: "", //开始时间
         end_time: "" //结束时间
-      },
-      options:[]
+      }
+
     }
   },
   computed:{
@@ -179,53 +142,42 @@ export default {
   methods:{
     // 获取小费记录数据
     gettipData(){
-    //   this.ListData = []
-    //   this.statistics = []
-    //   let vm=this,url='/api/web/tip/list',params={
-    //     page: vm.page,
-    //     length: vm.length,
-    //     uid: vm.UID,
-    //     search:{
-    //       content: vm.search.content,
-    //       amount_max: vm.search.amount_max,
-    //       amount_min: vm.search.amount_min,
-    //       start_time: vm.search.start_time,
-    //       end_time: vm.search.end_time
-    //     }
-    //   }
-    //   vm.$axios({
-    //     method:'post',
-    //     url:url,
-    //     data:params
-    //   }).then((res)=>{
-    //     if(res.data.error_code=='0'){
-    //       if(res.data.data.list){
-    //         vm.ListData=res.data.data.list
-    //         vm.statistics=res.data.data.statistics
-    //       }
-    //       vm.total=Number(res.data.data.total);
-    //       vm.pages=Number(res.data.data.pages);
-    //       vm.page=Number(res.data.data.page);
-    //       vm.per_page=Number(res.data.data.per_page);
-    //       vm.total_page=Number(res.data.data.total_page);
-    //     }else{
-    //       vm.$message.error(res.data.message);
-    //     }
-    //   }).catch(err => {
-    //     console.log(err);
-    //   });
+      this.ListData = []
+      this.summary_data = []
+      let vm=this,url='/api/web/report/summary/live-sales',params={
+        page: vm.page,
+        length: vm.length,
+        uid: vm.UID,
+        search:{
+          name: vm.search.name,
+          start_time: vm.search.start_time,
+          end_time: vm.search.end_time
+        }
+      }
+      vm.$axios({
+        method:'post',
+        url:url,
+        data:params
+      }).then((res)=>{
+        if(res.data.error_code=='0'){
+          if(res.data.data.report_table.list){
+            vm.ListData=res.data.data.report_table.list
+          }
+          if(res.data.data.summary_data){
+            vm.summary_data=res.data.data.summary_data
+          }
+          vm.total=Number(res.data.data.total);
+          vm.pages=Number(res.data.data.pages);
+          vm.page=Number(res.data.data.page);
+          vm.per_page=Number(res.data.data.per_page);
+          vm.total_page=Number(res.data.data.total_page);
+        }else{
+          vm.$message.error(res.data.message);
+        }
+      }).catch(err => {
+        console.log(err);
+      });
 
-    },
-    //更多查询
-    fromtip(...data){
-    //   let vm = this;
-    //   vm.ishowSearch=false
-    //   // console.log(data)
-    //   vm.search.amount_min=data[0].amount_min;
-    //   vm.search.amount_max=data[0].amount_max;
-    //   vm.search.start_time=data[0].start_time;
-    //   vm.search.end_time=data[0].end_time;
-    //   vm.gettipData()
     },
     // 分页
     handleCurrentChange(val){
@@ -234,7 +186,7 @@ export default {
     },
     // 搜索
     searchAll(){
-    //   this.gettipData()
+      this.gettipData()
     }
 
 
@@ -248,7 +200,7 @@ export default {
 .ls-right .ls-r-btn span{ margin-left: 5px}
 .ls-left .form-tabel{ display: flex;display: -webkit-flex; align-items: center; -webkit-align-items: center; padding-bottom: 10px}
 .form-tabel .td-title{ margin-right: 5px; color: #f8e2ff}
-.form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
+.form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px;}
 .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center;}
 .td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
 
@@ -271,23 +223,12 @@ export default {
   height: 100px;
   position: relative;
 }
-.imgleft{
-  width: 20%;
-  height: 100px;
-  float: left;
-}
-
 .imgcontent{
-  width: 20%;
+  width: 25%;
   height: 100px;
   float: left;
 }
 
-.imgright{
-  width: 60%;
-  height: 100px;
-  float: left;
-}
 .insideleft{
   width: 50%;
   float: left;
@@ -301,9 +242,6 @@ export default {
   float: right;
   padding-right: 10px;
 }
-.phoneimg{
-  
-}
 .insideright{
   width: 50%;
   float: right;
@@ -314,22 +252,15 @@ export default {
 .insideright span{
   display: block;
 }
-.protect{
-  width: 17%;
-}
 .protect img{
   width: 60px;
   float: left;
   padding-left: 20px;
 }
-.protectnum{
-  width: 83%;
-}
-
 
 .tiplist_two{
   height: auto;
-  padding: 0 10px;
+  padding: 0 10px 20px 10px;
 }
 .tiplist_two .tiptitle{
   width: 100%;
@@ -366,7 +297,7 @@ export default {
 }
 .search-icon{
   line-height: 18px;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
 }
 .apcolor{
   color: #ffffff;
