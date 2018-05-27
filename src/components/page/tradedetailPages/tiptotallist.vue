@@ -37,24 +37,57 @@
           </div>
 
         </div>
-        <div class="tiplist_two">
-          <div class="tiptitle">
-            <span class="tipspan">我的小费</span>
-            <input type="text" v-model="search.content" />
-            <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
-          </div>
-          <el-table stripe :data="ListData">
-            <el-table-column width="120" prop="username" label="用户名"></el-table-column>
-            <el-table-column prop="phone" label="手机号码"></el-table-column>
-            <el-table-column width="120" prop="store_username" label="管理员"></el-table-column>
-            <el-table-column width="120" prop="store_user_role" label="角色"></el-table-column>
-            <el-table-column width="120" prop="amount" label="小费金额"></el-table-column>
-            <el-table-column width="120" prop="payment" label="支付方式"></el-table-column>
-            <el-table-column prop="pay_time" label="支付时间"></el-table-column>
-          </el-table>
-        </div>
-        
       </div>
+
+      <div class="list-search">
+
+        <div class="ls-left">
+          <div class="form-tabel">
+            <el-row class="res-content-line">
+            <el-col :span="2"><div class="td-title">小费列表</div></el-col>
+            <el-col :span="3"><div class="res-title">筛选时间：</div></el-col>
+            <el-col :span="5">
+              <div class="res-input">
+                <el-date-picker :editable="false" v-model="search.start_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
+              </div>
+            </el-col>
+            <el-col :span="1"><div class="res-line">至</div></el-col>
+            <el-col :span="5">
+              <div class="res-input">
+                <el-date-picker :editable="false" v-model="search.end_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
+              </div>
+            </el-col>
+            <el-col :span="7">
+              <div class="td-content">
+                <input type="text" v-model="search.content" placeholder="请输入名称/手机号" />
+                <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
+              </div>
+            </el-col>
+            </el-row>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="tiplist_two">
+        <!-- <div class="tiptitle">
+          <span class="tipspan">我的小费</span>
+          <input type="text" v-model="search.content" />
+          <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
+        </div> -->
+        <el-table stripe :data="ListData">
+          <el-table-column width="120" prop="username" label="用户名"></el-table-column>
+          <el-table-column prop="phone" label="手机号码"></el-table-column>
+          <el-table-column width="120" prop="store_username" label="管理员"></el-table-column>
+          <el-table-column width="120" prop="store_user_role" label="角色"></el-table-column>
+          <el-table-column width="120" prop="amount" label="小费金额"></el-table-column>
+          <el-table-column width="120" prop="payment" label="支付方式"></el-table-column>
+          <el-table-column prop="pay_time" label="支付时间"></el-table-column>
+        </el-table>
+      </div>
+
+
+
     </div>
 
     <!-- 分页 -->
@@ -62,23 +95,13 @@
       <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
 
-    <!--更多查询-->
-    <div class="right_seachBar">
-      <div class="arrorbox" @click="ishowSearch=!ishowSearch"><span><i class="icon-toogle"></i></span></div>
-      <tiptotalscreen v-if="ishowSearch" :searchinfo="search" @tievent="fromtip"></tiptotalscreen>
-    </div>
-
   </div>
 </template>
 
 <script>
-import tiptotalscreen from './tiptotalscreen'
-
+import "../../../../static/css/newStyle.css"
 export default {
   name: 'shop',
-  components:{
-    tiptotalscreen
-  },
   data () {
     return {
       ishowSearch: false,
@@ -93,8 +116,6 @@ export default {
       search:{
         uid: "",
         content: "",
-        amount_max: "", //最大值
-        amount_min: "", //最小值
         start_time: "", //开始时间
         end_time: "" //结束时间
       }
@@ -119,8 +140,6 @@ export default {
         uid: vm.UID,
         search:{
           content: vm.search.content,
-          amount_max: vm.search.amount_max,
-          amount_min: vm.search.amount_min,
           start_time: vm.search.start_time,
           end_time: vm.search.end_time
         }
@@ -148,17 +167,6 @@ export default {
       });
 
     },
-    //更多查询
-    fromtip(...data){
-      let vm = this;
-      vm.ishowSearch=false
-      // console.log(data)
-      vm.search.amount_min=data[0].amount_min;
-      vm.search.amount_max=data[0].amount_max;
-      vm.search.start_time=data[0].start_time;
-      vm.search.end_time=data[0].end_time;
-      vm.gettipData()
-    },
     // 分页
     handleCurrentChange(val){
       this.page=val
@@ -174,6 +182,15 @@ export default {
 }
 </script>
 <style scoped>
+
+.list-search{ padding:0 10px; display: flex;display: -webkit-flex; justify-content: space-between;-webkit-justify-content: space-between}
+.ls-right .ls-r-btn{ color: #fff; font-size: 12px; background: rgb(242,86,86); padding: 3px 8px; border-radius: 2px; cursor: pointer}
+.ls-right .ls-r-btn span{ margin-left: 5px}
+.ls-left .form-tabel{ display: flex;display: -webkit-flex; align-items: center; -webkit-align-items: center; padding-bottom: 10px}
+.form-tabel .td-title{ margin-right: 5px; color: #f8e2ff}
+.form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px;margin-left: 20px;}
+.search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center;}
+.td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
 
 .databox{
   width: 100%;
@@ -284,7 +301,7 @@ export default {
 }
 .search-icon{
   line-height: 18px;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
 }
 .apcolor{
   color: #ffffff;
