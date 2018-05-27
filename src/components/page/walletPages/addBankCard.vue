@@ -91,7 +91,7 @@ import "../../../../static/css/newStyle.css"
     watch:{
       account_name(nVal,oVal){
         if(nVal){
-          this.account_name=nVal.toString().replace(/[^\u4e00-\u9fa5^A-Za-z]*/g,'');
+          this.account_name=nVal.toString().replace(/[^\u4e00-\u9fa5^A-Za-z^\s]*/g,'');
         }
       },
       account_bank(nVal,oVal){

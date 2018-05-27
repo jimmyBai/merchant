@@ -41,37 +41,40 @@
         <div class="list-search outside">
 
             <div class="ls-left">
-            <div class="form-tabel">
-                <el-row class="res-content-line">
-                <el-col :span="4"><div class="td-title">外送商品销售列表</div></el-col>
-                <el-col :span="3"><div class="res-title">筛选时间：</div></el-col>
-                <el-col :span="5">
-                    <div class="res-input">
-                    <el-date-picker :editable="false" v-model="search.start_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
-                    </div>
-                </el-col>
-                <el-col :span="1"><div class="res-line">至</div></el-col>
-                <el-col :span="5">
-                    <div class="res-input">
-                    <el-date-picker :editable="false" v-model="search.end_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
-                    </div>
-                </el-col>
-                <el-col :span="3"><div class="res-title">收入类型：</div></el-col>
-                <el-col :span="13">
-                    <div class="td-content">
-                    <el-select v-model="search.type" placeholder="全部" value-key='id' class="osselect">
-                        <el-option v-for="item in options" :key="item.id" :label="item.name" :value='item'></el-option>
-                    </el-select>
-                    <input type="text" v-model="search.content" placeholder="请输入名称/手机号" />
-                    <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
-                    </div>
-                </el-col>
+              <div class="form-tabel">
+                <!-- <el-row>
+                  <el-col :span="24"><div class="td-title">外送商品销售列表</div></el-col>
                 </el-row>
-            </div>
+                <el-row class="res-content-line">
+                  <el-col :span="4"><div class="res-title">分类：</div></el-col>
+                  <el-col :span="20">
+                    <div class="td-content">
+                      <el-select v-model="search.type" placeholder="全部" value-key='id' class="osselect">
+                          <el-option v-for="item in options" :key="item.id" :label="item.name" :value='item'></el-option>
+                      </el-select>
+                      <input type="text" v-model="search.content" placeholder="请输入商品名称" />
+                      <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
+                    </div>
+                  </el-col>
+                </el-row> -->
+                <div class="ls_lt_1">
+                  <span class="td-title">外送商品销售列表</span>
+                </div>
+                <div class="ls_lt_2">
+                  <span class="res-title">分类</span>
+                </div>
+                <div class="td-content">
+                  <el-select v-model="search.type" placeholder="全部" value-key='id' class="osselect">
+                      <el-option v-for="item in options" :key="item.id" :label="item.name" :value='item'></el-option>
+                  </el-select>
+                  <input type="text" v-model="search.content" placeholder="请输入商品名称" />
+                  <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
+                </div>
+                  
+              </div>
             </div>
 
         </div>
-         </div>  
 
         <div class="tiplist_two">
           <el-table stripe :data="ListData">
@@ -84,7 +87,7 @@
         </div>
         
       </div>
- 
+    </div>
 
     <!-- 分页 -->
     <div class="pagination">
@@ -116,9 +119,7 @@ export default {
       total_page:0,
       search:{
         type: "",
-        content: "",
-        start_time: "", //开始时间
-        end_time: "" //结束时间
+        content: ""
       },
       options:[],
       opdata: ''
@@ -144,9 +145,7 @@ export default {
         uid: vm.UID,
         search:{
           type: vm.search.type.id,
-          content: vm.search.content,
-          start_time: vm.search.start_time,
-          end_time: vm.search.end_time
+          content: vm.search.content
         }
       }
       vm.$axios({
@@ -213,14 +212,37 @@ export default {
 </script>
 <style scoped>
 
-.list-search{ padding:0 10px; display: flex;display: -webkit-flex; justify-content: space-between;-webkit-justify-content: space-between}
+
 .ls-right .ls-r-btn{ color: #fff; font-size: 12px; background: rgb(242,86,86); padding: 3px 8px; border-radius: 2px; cursor: pointer}
 .ls-right .ls-r-btn span{ margin-left: 5px}
-.ls-left .form-tabel{ display: flex;display: -webkit-flex; align-items: center; -webkit-align-items: center; padding-bottom: 10px}
 .form-tabel .td-title{ margin-right: 5px; color: #f8e2ff}
 .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px; margin-left: 15px;}
 .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center;}
-.td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
+
+
+.list-search{
+  width: auto;
+  height: 58px;
+  padding: 0 10px;
+}
+.ls_lt_1{
+  width: 15%;
+  height: 58px;
+  line-height: 58px;
+  float: left;
+}
+.ls_lt_2{
+  width: 5%;
+  height: 58px;
+  line-height: 58px;
+  float: left;
+}
+.td-content{
+  width: 80%;
+  height: 58px;
+  line-height: 58px;
+  float: left;
+}
 
 .databox{
   width: 100%;

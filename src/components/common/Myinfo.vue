@@ -255,12 +255,13 @@ import "../../../static/js/jquery.qrcode.js"
         $(function(){
           jQuery('#qrcode').qrcode({
             render: "canvas",  
-            text: vm.UID+'\n'+vm.userName+'\n'+vm.userToken, 
+            // text: vm.UID+"\n"+vm.userName+"\n"+vm.userToken,
+            text: vm.UID,
             width: "160", //二维码的宽度  
             height: "160", //二维码的高度  
             background: "#ffffff", //二维码的后景色  
             foreground: "#4c3d7b", //二维码的前景色
-            correctLevel: 0, //纠错等级
+            correctLevel: 3, //纠错等级
             src: '../../../static/img/018Logo.png', //二维码中间的图片
             uid: vm.UID,
             username: vm.userName,

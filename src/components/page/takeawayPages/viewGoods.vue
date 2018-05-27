@@ -144,7 +144,7 @@ import "../../../../static/css/newStyle.css"
     watch:{
       name_en(nVal,oVal){
         if(nVal){
-          this.name_en=nVal.toString().replace(/[^a-zA-Z]/g,'');
+          this.name_en=nVal.toString().replace(/[^a-zA-Z^0-9]/g,'');
         }
       },
       place(nVal,oVal){
@@ -159,22 +159,22 @@ import "../../../../static/css/newStyle.css"
       },
       weight(nVal,oVal){
         if(nVal){
-          this.weight=nVal.toString().replace(/[^0-9]*/g,'');
+          this.weight=nVal.toString().replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1');
         }
       },
       capacity(nVal,oVal){
         if(nVal){
-          this.capacity=nVal.toString().replace(/[^0-9]*/g,'');
+          this.capacity=nVal.toString().replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1');
         }
       },
       price(nVal,oVal){
         if(nVal){
-          this.price=nVal.toString().replace(/[^0-9]*/g,'');
+          this.price=nVal.toString().replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1');
         }
       },
       special_price(nVal,oVal){
         if(nVal){
-          this.special_price=nVal.toString().replace(/[^0-9]*/g,'');
+          this.special_price=nVal.toString().replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1');
         }
       },
       inventory(nVal,oVal){
