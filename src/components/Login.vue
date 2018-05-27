@@ -13,7 +13,7 @@
             </div>
             <div class="errortips"></div>
             <div class="loginput log-userName">
-              <input type="password" maxlength="18" v-model="password" placeholder="请输入你的密码">
+              <input type="password" maxlength="18" autocomplete="new-password" v-model="password" placeholder="请输入你的密码">
             </div>
             <div class="errortips"></div>
             <div class="savepwd" @click="ischeck=!ischeck" :class="{'checkactive':ischeck}">

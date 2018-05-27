@@ -13,7 +13,7 @@
               <span v-text="usernum"></span>
             </div>
             <div class="listRight">
-              <img src="/static/img/userNum.png" class="userNum" alt="">
+              <img src="./../../static/img/userNum.png" class="userNum" alt="">
             </div>
             <span class="listString"></span>
           </div>
@@ -25,7 +25,7 @@
               <span v-text="membernum"></span>
             </div>
             <div class="listRight">
-              <img src="/static/img/currentVip.png" class="currentVip" alt="">
+              <img src="./../../static/img/currentVip.png" class="currentVip" alt="">
             </div>
             <span class="listString"></span>
           </div>
@@ -37,7 +37,7 @@
               <span v-text="ordernum"></span>
             </div>
             <div class="listRight">
-              <img src="/static/img/currentOrderNum.png" class="currentOrderNum" alt="">
+              <img src="./../../static/img/currentOrderNum.png" class="currentOrderNum" alt="">
             </div>
             <span class="listString"></span>
           </div>
@@ -52,7 +52,7 @@
       <el-row :gutter="20">
         <el-col :span="6">
           <div class="grid-content bg-purple fourGrid">
-            <img src="/static/img/take_out1.png" class="orderStatusImg" alt="">
+            <img src="./../../static/img/take_out1.png" class="orderStatusImg" alt="">
             <span class="orderStatusText">待接单</span>
             <span class="baffle"></span>
             <span class="prompt">1222</span>
@@ -60,7 +60,7 @@
         </el-col>
         <el-col :span="6">
           <div class="grid-content bg-purple fourGrid">
-            <img src="/static/img/take_out2.png" class="orderStatusImg" alt="">
+            <img src="./../../static/img/take_out2.png" class="orderStatusImg" alt="">
             <span class="orderStatusText">待配送</span>
             <span class="baffle"></span>
             <span class="prompt">322</span>
@@ -68,7 +68,7 @@
         </el-col>
         <el-col :span="6">
           <div class="grid-content bg-purple fourGrid">
-            <img src="/static/img/take_out3.png" class="orderStatusImg" alt="">
+            <img src="./../../static/img/take_out3.png" class="orderStatusImg" alt="">
             <span class="orderStatusText">配送中</span>
             <span class="baffle"></span>
             <span class="prompt">82</span>
@@ -76,7 +76,7 @@
         </el-col>
         <el-col :span="6">
           <div class="grid-content bg-purple fourGrid">
-            <img src="/static/img/take_out4.png" class="orderStatusImg" alt="">
+            <img src="./../../static/img/take_out4.png" class="orderStatusImg" alt="">
             <span class="orderStatusText">待退款</span>
             <span class="baffle"></span>
             <span class="prompt">1</span>

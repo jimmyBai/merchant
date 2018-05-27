@@ -10,16 +10,15 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "vue": "^2.5.2",
+    "vuex": "^2.3.1",
     "axios": "^0.18.0",
-    "babel-polyfill": "^6.26.0",
-    "crypto-js": "^3.1.9-1",
     "element-ui": "^2.2.2",
-    "jquery": "^3.3.1",
     "js-md5": "^0.7.3",
     "qrcodejs2": "0.0.2",
-    "vue": "^2.5.2",
     "vue-router": "^3.0.1",
-    "vuex": "^2.3.1"
+    "babel-polyfill": "^6.26.0",
+    "jquery": "^3.3.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
