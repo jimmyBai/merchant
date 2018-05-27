@@ -14,7 +14,7 @@
             </div>
             <div class="insideright">
               <span v-text="statistics.amount" class="apcolor"></span>
-              <span>商品总数量</span>
+              <span>总额</span>
             </div>
           </div>
           <div class="imgcontent">
@@ -23,18 +23,55 @@
             </div>
             <div class="insideright">
               <span v-text="statistics.paid" class="apcolor"></span>
-              <span>总销售量</span>
+              <span>商品总额</span>
             </div>
           </div>
-          <div class="imgright">
+          <div class="imgcontent">
+            <div class="insideleft">
+              <img src="../../../../static/img/tipthree.png" alt="">
+            </div>
+            <div class="insideright">
+              <span v-text="statistics.paid" class="apcolor"></span>
+              <span>配送费</span>
+            </div>
+          </div>
+          <div class="imgcontent">
+            <div class="insideleft">
+              <img src="../../../../static/img/tipthree.png" alt="">
+            </div>
+            <div class="insideright">
+              <span v-text="statistics.paid" class="apcolor"></span>
+              <span>充值卡</span>
+            </div>
+          </div>
+          <div class="imgcontent">
+            <div class="insideleft">
+              <img src="../../../../static/img/tipthree.png" alt="">
+            </div>
+            <div class="insideright">
+              <span v-text="statistics.paid" class="apcolor"></span>
+              <span>实付金额</span>
+            </div>
+          </div>
+          <div class="imgcontent">
+            <div class="insideleft">
+              <img src="../../../../static/img/tipthree.png" alt="">
+            </div>
+            <div class="insideright">
+              <span v-text="statistics.paid" class="apcolor"></span>
+              <span>平台服务费</span>
+            </div>
+          </div>
+
+          <!-- <div class="imgright">
             <div class="insideleft protect">
               <img src="../../../../static/img/tiptwo.png" alt="">
             </div>
             <div class="insideright protectnum">
               <span v-text="statistics.receive" class="apcolor"></span>
-              <span>总销售额</span>
+              <span>平台服务费</span>
             </div>
-          </div>
+          </div> -->
 
         </div>
 
@@ -70,13 +107,22 @@
           </div>
           
         </div>
-        <el-table stripe :data="ListData">
-          <el-table-column prop="" label="分类"></el-table-column>
-          <el-table-column prop="" label="商品名称"></el-table-column>
-          <el-table-column prop="" label="商品英文名称"></el-table-column>
-          <el-table-column prop="" label="数量"></el-table-column>
-          <el-table-column prop="" label="总额"></el-table-column>
-        </el-table>
+        <div class="tiplist_two">
+          <el-table stripe :data="ListData">
+            <el-table-column prop="" label="订单号"></el-table-column>
+            <el-table-column prop="" label="时间"></el-table-column>
+            <el-table-column prop="" label="用户名"></el-table-column>
+            <el-table-column prop="" label="商品总额"></el-table-column>
+            <el-table-column prop="" label="套餐费"></el-table-column>
+            <el-table-column prop="" label="费送费"></el-table-column>
+            <el-table-column prop="" label="充值卡"></el-table-column>
+            <el-table-column prop="" label="实付金额"></el-table-column>
+            <el-table-column prop="" label="平台服务费"></el-table-column>
+            <el-table-column prop="total_price" label="总额"></el-table-column>
+            <el-table-column prop="" label="支付方式"></el-table-column>
+            <el-table-column prop="" label="状态"></el-table-column>
+          </el-table>
+        </div>  
         <!-- <div class="tiplist_two">
           <div class="tiptitle">
             <span class="tipspan">我的小费</span>
@@ -134,10 +180,9 @@ export default {
       search:{
         uid: "",
         content: "",
-        amount_max: "", //最大值
-        amount_min: "", //最小值
         start_time: "", //开始时间
-        end_time: "" //结束时间
+        end_time: "", //结束时间
+        status: ""
       },
       options:[]
     }
@@ -151,43 +196,42 @@ export default {
     this.gettipData()
   },
   methods:{
-    // 获取小费记录数据
+    // 获取外送统计数据
     gettipData(){
-    //   this.ListData = []
-    //   this.statistics = []
-    //   let vm=this,url='/api/web/tip/list',params={
-    //     page: vm.page,
-    //     length: vm.length,
-    //     uid: vm.UID,
-    //     search:{
-    //       content: vm.search.content,
-    //       amount_max: vm.search.amount_max,
-    //       amount_min: vm.search.amount_min,
-    //       start_time: vm.search.start_time,
-    //       end_time: vm.search.end_time
-    //     }
-    //   }
-    //   vm.$axios({
-    //     method:'post',
-    //     url:url,
-    //     data:params
-    //   }).then((res)=>{
-    //     if(res.data.error_code=='0'){
-    //       if(res.data.data.list){
-    //         vm.ListData=res.data.data.list
-    //         vm.statistics=res.data.data.statistics
-    //       }
-    //       vm.total=Number(res.data.data.total);
-    //       vm.pages=Number(res.data.data.pages);
-    //       vm.page=Number(res.data.data.page);
-    //       vm.per_page=Number(res.data.data.per_page);
-    //       vm.total_page=Number(res.data.data.total_page);
-    //     }else{
-    //       vm.$message.error(res.data.message);
-    //     }
-    //   }).catch(err => {
-    //     console.log(err);
-    //   });
+      // this.ListData = []
+      // // this.statistics = []
+      // let vm=this,url='/api/web/report/summary/takeout-sales',params={
+      //   page: vm.page,
+      //   length: vm.length,
+      //   uid: vm.UID,
+      //   search:{
+      //     content: vm.search.content,
+      //     start_time: vm.search.start_time,
+      //     end_time: vm.search.end_time,
+      //     status: vm.search.status
+      //   }
+      // }
+      // vm.$axios({
+      //   method:'post',
+      //   url:url,
+      //   data:params
+      // }).then((res)=>{
+      //   if(res.data.error_code=='0'){
+      //     if(res.data.data.list){
+      //       vm.ListData=res.data.data.list
+      //       // vm.statistics=res.data.data.statistics
+      //     }
+      //     vm.total=Number(res.data.data.total);
+      //     vm.pages=Number(res.data.data.pages);
+      //     vm.page=Number(res.data.data.page);
+      //     vm.per_page=Number(res.data.data.per_page);
+      //     vm.total_page=Number(res.data.data.total_page);
+      //   }else{
+      //     vm.$message.error(res.data.message);
+      //   }
+      // }).catch(err => {
+      //   console.log(err);
+      // });
 
     },
     //更多查询
@@ -246,22 +290,22 @@ export default {
   position: relative;
 }
 .imgleft{
-  width: 20%;
+  width: 16.6%;
   height: 100px;
   float: left;
 }
 
 .imgcontent{
-  width: 20%;
+  width: 16.6%;
   height: 100px;
   float: left;
 }
 
-.imgright{
+/* .imgright{
   width: 60%;
   height: 100px;
   float: left;
-}
+} */
 .insideleft{
   width: 50%;
   float: left;

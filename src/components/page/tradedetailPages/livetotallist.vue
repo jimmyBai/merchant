@@ -14,7 +14,7 @@
             </div>
             <div class="insideright">
               <span v-text="statistics.amount" class="apcolor"></span>
-              <span>商品总数量</span>
+              <span>商品总额</span>
             </div>
           </div>
           <div class="imgcontent">
@@ -23,10 +23,29 @@
             </div>
             <div class="insideright">
               <span v-text="statistics.paid" class="apcolor"></span>
-              <span>总销售量</span>
+              <span>套餐总额</span>
             </div>
           </div>
-          <div class="imgright">
+          <div class="imgcontent">
+            <div class="insideleft">
+              <img src="../../../../static/img/tipthree.png" alt="">
+            </div>
+            <div class="insideright">
+              <span v-text="statistics.paid" class="apcolor"></span>
+              <span>实付金额</span>
+            </div>
+          </div>
+          <div class="imgcontent">
+            <div class="insideleft">
+              <img src="../../../../static/img/tipthree.png" alt="">
+            </div>
+            <div class="insideright">
+              <span v-text="statistics.paid" class="apcolor"></span>
+              <span>平台服务费</span>
+            </div>
+          </div>
+
+          <!-- <div class="imgright">
             <div class="insideleft protect">
               <img src="../../../../static/img/tiptwo.png" alt="">
             </div>
@@ -34,7 +53,7 @@
               <span v-text="statistics.receive" class="apcolor"></span>
               <span>总销售额</span>
             </div>
-          </div>
+          </div> -->
 
         </div>
 
@@ -70,15 +89,20 @@
             </div>
 
         </div>
-        <el-table stripe :data="ListData">
-          <el-table-column prop="" label="订单号"></el-table-column>
-          <el-table-column prop="" label="时间"></el-table-column>
-          <el-table-column prop="" label="用户名"></el-table-column>
-          <el-table-column prop="" label="商品总额"></el-table-column>
-          <el-table-column prop="" label="配送费"></el-table-column>
-          <el-table-column prop="" label="充值卡"></el-table-column>
-          <el-table-column prop="" label="支付方式"></el-table-column>
-        </el-table>
+        <div class="tiplist_two">
+          <el-table stripe :data="ListData">
+            <el-table-column prop="" label="订单号"></el-table-column>
+            <el-table-column prop="" label="时间"></el-table-column>
+            <el-table-column prop="" label="用户名"></el-table-column>
+            <el-table-column prop="" label="商品套餐"></el-table-column>
+            <el-table-column prop="" label="套餐费用"></el-table-column>
+            <el-table-column prop="" label="实付金额"></el-table-column>
+            <el-table-column prop="" label="平台服务费"></el-table-column>
+            <el-table-column prop="" label="金额"></el-table-column>
+            <el-table-column prop="" label="支付方式"></el-table-column>
+            <el-table-column prop="" label="状态"></el-table-column>
+          </el-table>
+        </div>  
         <!-- <div class="tiplist_two">
           <div class="tiptitle">
             <span class="tipspan">我的小费</span>

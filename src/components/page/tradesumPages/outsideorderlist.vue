@@ -70,13 +70,16 @@
             </div>
 
         </div>
-        <el-table stripe :data="ListData">
-          <el-table-column prop="" label="分类"></el-table-column>
-          <el-table-column prop="" label="商品名称"></el-table-column>
-          <el-table-column prop="" label="商品英文名称"></el-table-column>
-          <el-table-column prop="" label="数量"></el-table-column>
-          <el-table-column prop="" label="总额"></el-table-column>
-        </el-table>
+        
+        <div class="tiplist_two">
+          <el-table stripe :data="ListData">
+            <el-table-column prop="" label="分类"></el-table-column>
+            <el-table-column prop="" label="商品名称"></el-table-column>
+            <el-table-column prop="" label="商品英文名称"></el-table-column>
+            <el-table-column prop="" label="数量"></el-table-column>
+            <el-table-column prop="" label="总额"></el-table-column>
+          </el-table>
+        </div>
         <!-- <div class="tiplist_two">
           <div class="tiptitle">
             <span class="tipspan">我的小费</span>
