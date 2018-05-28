@@ -172,18 +172,18 @@
     </div>
 
     <!-- 用户跳转打印机/小费 -->
-    <!-- <div class="go-other">
+    <div class="go-other" v-show="isgoother">
       <div class="title"><span>是否设置打印机/小费</span></div>
       <div class="btn">
-        <input type="button" value="取消">
-        <input type="button" value="设置打印机">
-        <input type="button" value="设置小费">
+        <span class="cancel" @click="gohide('1')">取消</span>
+        <span class="printer" @click="gohide('2')">设置打印机</span>
+        <span class="tip" @click="gohide('3')">设置小费</span>
       </div>
     </div>
 
     <!-- 遮罩层 -->
-    <!-- <div class="mask" v-if="ismaskShow" @click="clickdownMask"></div> --> -->
-
+    <div class="mask" v-if="ismaskShow" @click="clickdownMask"></div>
+    
     <!-- 百度地图 -->
     <my-map v-if="mapShow" :pcityMap="cityMap" @viewMap='pviewMap'></my-map>
 
@@ -235,7 +235,9 @@ import myMap from '../mapPages/myMap'
         mapShow: false,
         cityMap:{},
         pCity: '',
-        estimated_time:''
+        estimated_time:'',
+        isgoother: false,
+        ismaskShow: false
       }
     },
     created(){
@@ -290,6 +292,28 @@ import myMap from '../mapPages/myMap'
       this.getlistData();
     },
     methods:{
+      gohide(way){
+        let vm = this;
+        if(way == 1){
+          vm.isgoother = false
+          vm.ismaskShow = false
+        }else if(way == 2){
+          vm.isgoother = false
+          vm.ismaskShow = false
+          localStorage.setItem('shopTabs','printlist')
+          vm.$router.push('/printlist');
+        }else if(way == 3){
+          vm.isgoother = false
+          vm.ismaskShow = false
+          localStorage.setItem('shopTabs','tiplist')
+          vm.$router.push('/tiplist');
+        }
+      },
+      clickdownMask(){
+        let vm =this;
+        vm.isgoother = false
+        vm.ismaskShow = false
+      },
       getEndTime(item){
         let vm =this;
         if(item.pm_end){
@@ -701,6 +725,8 @@ import myMap from '../mapPages/myMap'
               vm.$router.push('/member')
             })*/
             vm.getlistData();
+            vm.isgoother = true;
+            vm.ismaskShow = true;
           }else{
             vm.$message.error(res.data.message);
 
@@ -764,5 +790,48 @@ el-scrollbar__view .disabled{color:#e4e7ed }
   font-style: normal;
   /* margin-right: 5px; */
   color: #ac5397;
+}
+.go-other{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 300px;
+  height: 150px;
+  background: #34203a;
+  z-index: 100;
+}
+.go-other .title{
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background: -webkit-gradient(linear, 0 0, 0 bottom, from(#433249), to(#38293d));
+}
+.go-other .btn{ display: flex;display: -webkit-flex;align-items: center;-webkit-align-items:center; justify-content: center;
+  padding: 40px 10px 10px 10px;
+}
+.go-other .btn>span{
+  flex: 1; -webkit-flex:1;
+  height: 35px;
+  line-height: 35px;
+  text-align: center; 
+  color: #fff;
+  background: #ac5397;
+  cursor: pointer;
+  margin:0 2%;
+}
+.mask{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  background: #000;
+  opacity: 0.5;
+  z-index: 99;
 }
 </style>

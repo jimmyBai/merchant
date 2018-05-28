@@ -34,24 +34,32 @@ export default {
   name: 'shop',
   data () {
     return {
-      activenum:'shoplist',
-      popshow:false
+      popshow:false,
+      activenum:'shoplist'
     }
+  },
+  watch:{
+    '$route':'setFn'
   },
   components:{vPrint},
   created(){
 
   },
   mounted:function(){
-    if(this.$route.path=='/Shop'){
-      this.activenum='shoplist'
-    }else if(this.$route.path=='/printlist'){
-      this.activenum='printlist'
-    }
+    // if(this.$route.path=='/Shop'){
+    //   localStorage.setItem('shopTabs','shoplist')
+    // }else if(this.$route.path=='/printlist'){
+    //     localStorage.setItem('shopTabs','printlist')
+    // }else if(this.$route.path=='/tiplist'){
+    //     localStorage.setItem('shopTabs','tiplist')
+    // }
   },
   methods:{
+    setFn(){
+      this.activenum=localStorage.getItem('shopTabs')
+    },
     changetabs(way){
-      this.activenum=way
+      localStorage.setItem('shopTabs',way)
       this.$router.push('/'+way)
     },
     addPrint(){
