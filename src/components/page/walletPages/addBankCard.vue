@@ -160,6 +160,10 @@ import "../../../../static/css/newStyle.css"
           this.$message.error("手机号不能为空！");
           return false
         }
+        
+        if(this.account_sn.length<16 || this.account_sn.length>19){
+          this.$message.error("请输入16-19位银行卡账号号码！");
+        }
         vm.$axios({
           method:'post',
           url:url,

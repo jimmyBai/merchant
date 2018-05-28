@@ -154,7 +154,7 @@
                 <div><span v-text="detailinfo.subtotal_amount"></span></div>
               </li>
               <li class="c_w">
-                <div>平台费</div>
+                <div>订单平台费</div>
                 <div><span v-text="detailinfo.service_fee"></span></div>
               </li>
               <li class="c_w">

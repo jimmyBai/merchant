@@ -10,7 +10,7 @@
           <div class="tabslist-head">
             <div :class="{'is-active':activenum=='shoplist'}" @click="changetabs('shoplist')" class="tabtar-item ">一般设置</div>
             <div :class="{'is-active':activenum=='printlist'}" @click="changetabs('printlist')" class="tabtar-item ">打印设置</div>
-           <div :class="{'is-active':activenum=='tiplist'}" @click="changetabs('tiplist')" class="tabtar-item">小费</div>
+           <div :class="{'is-active':activenum=='tiplist'}" @click="changetabs('tiplist')" class="tabtar-item">小费设置</div>
           </div>
           <div class="nav-rbtn" v-if="activenum=='printlist'">
             <div class="tdbtn-add" @click="addPrint">

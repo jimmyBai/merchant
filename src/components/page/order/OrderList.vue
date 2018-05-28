@@ -76,7 +76,7 @@ import searchView from './Seacrhtips'
         orderinfo:{},
         options: [{
           value: '-1',label: '全部'}, {
-          value: '0',label: '待付款'}, {
+          value: '0',label: '未付款'}, {
           value: '1',label: '待接单'}, {
           value: '2',label: '待配送'}, {
           value: '3',label: '派送中'}, {

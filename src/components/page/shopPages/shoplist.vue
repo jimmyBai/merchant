@@ -114,10 +114,10 @@
         </div>
         <div class="line">
           <div class="title">配送范围：</div>
-          <div class="content"><input type="tel" v-model="ListData.delivery_range" /></div>
+          <div class="content"><input type="tel" v-model="ListData.delivery_range" />&nbsp;&nbsp;KM</div>
         </div>
         <div class="line">
-          <div class="title">配送时间：</div>
+          <div class="title"><em>*&nbsp;&nbsp;</em>配送时间：</div>
           <div class="content" style="width: 222px">
             <el-time-select v-model="estimated_time" style="width: 222px;" :editable="false" :picker-options="{ start: '00:05',step: '00:05',end: '02:30'}" placeholder="选择时间">
             </el-time-select>
@@ -747,4 +747,9 @@ import myMap from '../mapPages/myMap'
 el-scrollbar__view .disabled{color:#e4e7ed }
 
 .baidubtn{  width: 74px!important;}
+.title em{
+  font-style: normal;
+  /* margin-right: 5px; */
+  color: #ac5397;
+}
 </style>
