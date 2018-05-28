@@ -60,11 +60,11 @@
             <!-- collection -->
             <div class="adduser-itemBox">
               <div class="adduser-class">
-                <div class="classtitle"><em>*</em>重量&nbsp;(KG)</div>
+                <div class="classtitle"><em>*</em>重量&nbsp;(kg)</div>
                 <div class="classcontent"><input type="text" v-model="weight"></div>
               </div>
               <div class="adduser-producer">
-                <div class="producertitle"><em>*</em>容量&nbsp;(ML)</div>
+                <div class="producertitle"><em>*</em>容量&nbsp;(ml)</div>
                 <div class="producercontent"><input type="text" v-model="capacity"></div>
               </div>
             </div>
