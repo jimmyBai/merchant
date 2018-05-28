@@ -23,28 +23,28 @@
             <div class="adduser-item">
               <div class="itemline">
                 <div class="itemtitle">户名</div>
-                <div class="itemcontent"><input type="text" v-model="account_name"></div>
+                <div class="itemcontent"><input placeholder="请输入姓名" type="text" v-model="account_name"></div>
               </div>
             </div>
             <!-- 开户行 -->
             <div class="adduser-item">
               <div class="itemline">
                 <div class="itemtitle">开户行</div>
-                <div class="itemcontent"><input type="text" v-model="account_bank"></div>
+                <div class="itemcontent"><input type="text" placeholder="请输入开户行" v-model="account_bank"></div>
               </div>
             </div>
             <!-- 账号 -->
             <div class="adduser-item">
               <div class="itemline">
                 <div class="itemtitle">账号</div>
-                <div class="itemcontent"><input type="text" maxlength="19" v-model="account_sn"></div>
+                <div class="itemcontent"><input type="tel" placeholder="请输入16-19位银行卡号" maxlength="19" v-model="account_sn"></div>
               </div>
             </div>
             <!-- 预留手机号 -->
             <div class="adduser-item">
               <div class="itemline">
                 <div class="itemtitle">预留手机号</div>
-                <div class="itemcontent"><input type="text" v-model="phone"></div>
+                <div class="itemcontent"><input type="tel" placeholder="请输入手机号" v-model="phone"></div>
               </div>
             </div>
             <!-- 保存/取消 -->

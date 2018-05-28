@@ -60,11 +60,11 @@
             <!-- collection -->
             <div class="adduser-itemBox">
               <div class="adduser-class">
-                <div class="classtitle"><em>*</em>重量&nbsp;(KG)</div>
+                <div class="classtitle"><em>*</em>重量&nbsp;(kg)</div>
                 <div class="classcontent"><input type="text" v-model="weight"></div>
               </div>
               <div class="adduser-producer">
-                <div class="producertitle"><em>*</em>容量&nbsp;(ML)</div>
+                <div class="producertitle"><em>*</em>容量&nbsp;(ml)</div>
                 <div class="producercontent"><input type="text" v-model="capacity"></div>
               </div>
             </div>
@@ -144,7 +144,7 @@ import "../../../../static/css/newStyle.css"
     watch:{
       name_en(nVal,oVal){
         if(nVal){
-          this.name_en=nVal.toString().replace(/[^a-zA-Z^0-9^\s]/g,'');
+          this.name_en=nVal.toString().replace(/[^a-zA-Z^0-9]/g,'');
         }
       },
       place(nVal,oVal){
@@ -159,22 +159,22 @@ import "../../../../static/css/newStyle.css"
       },
       weight(nVal,oVal){
         if(nVal){
-          this.weight=nVal.toString().replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1');
+          this.weight=nVal.toString().replace(/^\D*([1-9]\d*|0\.?\d{0,2})?.*$/,'$1');
         }
       },
       capacity(nVal,oVal){
         if(nVal){
-          this.capacity=nVal.toString().replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1');
+          this.capacity=nVal.toString().replace(/^\D*([1-9]\d*|0\.?\d{0,2})?.*$/,'$1');
         }
       },
       price(nVal,oVal){
         if(nVal){
-          this.price=nVal.toString().replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1');
+          this.price=nVal.toString().replace(/^\D*([1-9]\d*|0\.?\d{0,2})?.*$/,'$1');
         }
       },
       special_price(nVal,oVal){
         if(nVal){
-          this.special_price=nVal.toString().replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1');
+          this.special_price=nVal.toString().replace(/^\D*([1-9]\d*|0\.?\d{0,2})?.*$/,'$1');
         }
       },
       inventory(nVal,oVal){

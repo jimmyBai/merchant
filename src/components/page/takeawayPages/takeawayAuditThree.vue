@@ -3,7 +3,7 @@
     <!-- infoList -->
     <div class="listtable">
       <div class="list-search">
-        
+
         <div class="ls-left">
           <div class="form-tabel">
             <div class="td-title">外送商品表</div>
@@ -13,11 +13,10 @@
             </div>
           </div>
         </div>
-        
+
       </div>
 
       <el-table stripe :data="ListData">
-        <el-table-column width="80" prop="product_id" label="ID"></el-table-column>
         <el-table-column width="80" prop="product_name" label="商品名称"></el-table-column>
         <el-table-column width="80" prop="remark" label="审核时间"></el-table-column>
         <el-table-column prop="remark" label="拒绝原因"></el-table-column>
@@ -92,7 +91,8 @@ export default {
       params={
         product_name: vm.product_name,
         page: vm.page,
-        length:vm.length
+        length:vm.length,
+        type:3
       };
       vm.$axios.get(url,{params}).then((res)=>{
         if(res.data.error_code=='0'){

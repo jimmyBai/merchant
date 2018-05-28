@@ -18,11 +18,10 @@
             <i class="el-icon-circle-plus-outline"></i><span>添加</span>
           </div>
         </div> -->
-        
+
       </div>
 
       <el-table stripe :data="ListData">
-        <el-table-column prop="product_id" label="ID"></el-table-column>
         <el-table-column prop="product_name" label="商品名称"></el-table-column>
         <el-table-column prop="name" label="分类"></el-table-column>
         <el-table-column prop="sale_price" label="单价"></el-table-column>
@@ -103,7 +102,8 @@ export default {
       params={
         product_name: vm.product_name,
         page: vm.page,
-        length:vm.length
+        length:vm.length,
+        type:2
       };
       vm.$axios.get(url,{params}).then((res)=>{
         if(res.data.error_code=='0'){

@@ -4,7 +4,7 @@
       <div class="memberimg">
         <img src="../../../static/img/membertopimg.png" />
       </div>
-      <div class="memberphoto" @click="changeportrait('1')">
+      <div class="memberphoto" @click="isdialogShow=!isdialogShow">
         <img src="../../../static/img/membericon.png" />
       </div>
     </div>
@@ -50,15 +50,14 @@
           <div class="twocode">
             <span class="title">二维码</span>
             <span class="prompt">顾客将通过扫描二维码进行小费支付</span>
-            
+
             <!-- 显示二维码 -->
             <div class="response" v-show="isqrcodeShow">
               <div id="qrcode" class="qrcode"></div>
             </div>
-
-            <input type="button" v-if="istwocode" value="点击生成二维码" @click="commontwocode('1')">
-            <input type="button" v-if="istwocode2" value="点击下载" @click="commontwocode('2')">
-            <input type="button" value="删除" @click="commontwocode('3')">
+            <input type="button" v-if="!isqrcodeShow" value="点击生成二维码" @click="commontwocode('1')">
+            <input type="button" v-if="isqrcodeShow" value="点击下载" @click="commontwocode('2')">
+            <input type="button" v-if="isqrcodeShow&&ListData.tip_status==1" value="删除" @click="commontwocode('3')">
           </div>
         </el-col>
         <el-col :span="14" class="bright">
@@ -151,21 +150,17 @@
     <!-- 拍照/上传 -->
     <div class="dialogbox" v-if="isdialogShow">
       <div class="dialoglist">
-        <span class="photography" @click="changeportrait('2')">拍照</span>
-        <span class="upload" @click="changeportrait('3')">本地上传</span>
+        <span class="photography" @click="changeImg('1')">拍照</span>
+        <span class="upload" @click="changeImg('2')">本地上传</span>
       </div>
       <div class="dialoglist2">
-        <span class="cancel" @click="changeportrait('4')">取消</span>
+        <span class="cancel" @click="isdialogShow=!isdialogShow">取消</span>
       </div>
     </div>
 
-    <!-- 保存 -->
-    <div class="dialogsave" v-if="isdialogShow2">
-      <span>已保存到系统相册</span>
-    </div>
 
     <!-- 遮罩层 -->
-    <div class="mask" v-if="ismaskShow" @click="clickdownMask"></div>
+    <div class="mask" v-if="isdialogShow" @click="isdialogShow=!isdialogShow"></div>
 
   </div>
 </template>
@@ -186,10 +181,6 @@ import "../../../static/js/jquery.qrcode.js"
         ListData:[],
         reListData:[],
         isdialogShow: false,
-        isdialogShow2: false,
-        ismaskShow: false,
-        istwocode: true,
-        istwocode2: false,
         isqrcodeShow: false,
         page: "1", //页码，默认为1
         length: "10", //每页记录数，默认为10
@@ -205,73 +196,40 @@ import "../../../static/js/jquery.qrcode.js"
           start_time: "", //开始时间
           end_time: "" //结束时间
         },
-        statistics: []
+        statistics: [],
+        canvasQr:''
       }
     },
     created(){
-      
+
     },
     computed:{
-      UID(){
-        return this.$store.state.uid
-      },
       userName(){
         return this.$store.state.username
       },
       userToken(){
         return this.$store.state.token
       }
-      
+
     },
     mounted:function(){
       this.getlistData()
-      this._getQart()
       this.gettipData()
     },
     methods:{
-      
-      _getQart(){
-        // let vm =this;
-        // // 参数
-        // var qrcode = new QRCode('qrcode', {
-        //   text: 'your content',
-        //   width: 160,
-        //   height: 160,
-        //   colorDark : '#000000',
-        //   colorLight : '#ffffff',
-        //   correctLevel : QRCode.CorrectLevel.H,
-        //   uid: vm.UID,
-        //   username: vm.userName,
-        //   token: vm.userToken
-        // });
-        //   console.log(vm.UID);
-        //   console.log(vm.userName);
-        //   console.log(vm.userToken);
-        // // API
-        // qrcode.clear();
-        // qrcode.makeCode(vm.UID+'\n'+vm.userName+'\n'+vm.userToken);
-
+      setQrcode(){
         let vm =this;
-        $(function(){
-          jQuery('#qrcode').qrcode({
-            render: "canvas",  
-            // text: vm.UID+"\n"+vm.userName+"\n"+vm.userToken,
-            text: vm.UID,
-            width: "160", //二维码的宽度  
-            height: "160", //二维码的高度  
-            background: "#ffffff", //二维码的后景色  
-            foreground: "#4c3d7b", //二维码的前景色
-            correctLevel: 3, //纠错等级
-            src: '../../../static/img/018Logo.png', //二维码中间的图片
-            uid: vm.UID,
-            username: vm.userName,
-            token: vm.userToken
-          });
-
-          // console.log(vm.UID);
-          // console.log(vm.userName);
-          // console.log(vm.userToken);
-        })
+        vm.canvasQr=''
+        vm.canvasQr=$('#qrcode').qrcode({
+          render: "canvas",
+          text: vm.$store.state.uid.toString(),
+          width: "160", //二维码的宽度
+          height: "160", //二维码的高度
+          background: "#ffffff", //二维码的后景色
+          foreground: "#4c3d7b", //二维码的前景色
+          correctLevel: 3, //纠错等级
+          src: '../../../static/img/018Logo.png', //二维码中间的图片
+        });
       },
       // 获取小费记录数据
       gettipData(){
@@ -280,7 +238,7 @@ import "../../../static/js/jquery.qrcode.js"
         let vm=this,url='/api/web/tip/list',params={
           page: vm.page,
           length: vm.length,
-          uid: vm.UID,
+          uid: vm.$store.state.uid,
           search:{
             content: vm.search.content
           }
@@ -306,72 +264,62 @@ import "../../../static/js/jquery.qrcode.js"
         }).catch(err => {
           console.log(err);
         });
-       
-      }, 
-      
+
+      },
+      //选择头像图片
+      changeImg(){
+        let vm=this;
+        vm.$message({
+          message: '暂时不支持头像上传',
+          type: 'success'
+        });
+        vm.isdialogShow=false
+      },
       getlistData(){
         let vm =this,url='/api/web/authority/user/info',params={'id':''};
         vm.$axios.get(url,{params}).then((res)=>{
           if(res.data.error_code=='0'){
             vm.ListData=res.data.data
+            if(vm.ListData.tip_status){
+              vm.setQrcode()
+            }
           }else{
             vm.$message.error(res.data.message);
-            console.log(res.data.message)
           }
         }).catch(err => {
           vm.$message.error(err);
         });
       },
-      // 更换头像
-      changeportrait(way){
-        let vm = this;
-        if(way==1){
-          vm.isdialogShow = true;
-          vm.ismaskShow = true;
-        }
-        if(way==2){
-          vm.isdialogShow = false;
-          vm.ismaskShow = false;
-        }
-        if(way==3){
-          vm.isdialogShow = false;
-          vm.ismaskShow = false;
-        }
-        if(way==4){
-          vm.isdialogShow = false;
-          vm.ismaskShow = false;
-        }
-
+      //二维码生成图片
+      canvasToImage(){
+        var qrsrc = this.canvasQr.find('canvas').get(0).toDataURL("image/png");
+        var a = document.createElement('a')
+        var event = new MouseEvent('click')
+        a.download =this.ListData.username||this.ListData.phone
+        // 将生成的URL设置为a.href属性
+        a.href = qrsrc
+        // 触发a的单击事件
+        a.dispatchEvent(event)
+        this.$message({
+          message: '二维码已保存',
+          type: 'success'
+        });
       },
-
       // 生成二维码
       commontwocode(way){
         let vm = this;
-        if(way==1){
-          vm.istwocode = false
-          vm.istwocode2 = true
-          vm.isqrcodeShow = true
+        //如果 tip_status==0 不能生成二维码
+        if(vm.ListData.tip_status&&vm.ListData.tip_status==1){
+          if(way==1){
+            vm.isqrcodeShow = true
+          }else if(way==2){
+            this.canvasToImage()
+          }else{
+            vm.isqrcodeShow = false
+          }
+        }else{
+          vm.$message.error('您还没有设置小费，请先设置小费');
         }
-        if(way!=1){
-          // vm.isdialogShow2 = true;
-          // vm.ismaskShow = true;
-        }
-        // 清除二维码
-        if(way==3&&way!=1){
-          vm.isqrcodeShow = false
-          vm.istwocode = true
-          vm.istwocode2 = false
-          vm.isdialogShow2 = false
-          vm.ismaskShow = false
-        }
-      },
-      
-      // 遮罩层
-      clickdownMask(){
-        let vm = this;
-        vm.isdialogShow = false;
-        vm.isdialogShow2 = false;
-        vm.ismaskShow = false;
       },
       // 分页
       handleCurrentChange(val){
@@ -416,265 +364,48 @@ i.dtitle{ background-position: 0px -20px;}
 .group { font-size: 16px; text-align: center}
 
 
-.twocode{
-  margin-top: 10px;
-  text-align: center;
-}
-.twocode .title{
-  display: block;
-  color: #aa96b1;
-  font-size: 16px;
-}
-.twocode .prompt{
-  display: block;
-  margin-top: 5px;
-  font-size: 12px;
-}
-.twocode input{
-  cursor: pointer;
-  background: #ac5397;
-  height: 40px;
-  line-height: 40px;
-  color: #fff;
-  display: inline-block;
-  width: 200px;
-  text-align: center;
-  border: 0;
-  font-size: 12px;
-  margin-top: 20px;
-  -webkit-appearance: none;
-}
-
-.databox{
-
-}
-.databox .title{
-  width: 100%;
-  height: 40px;
-  line-height: 40px;
-  margin-top: 20px;
-  background: #331f3a;
-  position: relative;
-}
-.databox .title img{
-  width: 20px;
-  position: absolute;
-  top: 50%;
-  left: 20px;
-  transform: translateY(-50%);
-}
-.databox .title span{
-  margin-left: 50px;
-}
-
-.tipimgshow{
-  width: 100%;
-  height: 100px;
-  background: #462747;
-  position: relative;
-}
-.imgleft{
-  width: 40%;
-  height: 100px;
-  float: left;
-}
-.imgright{
-  width: 60%;
-  height: 100px;
-  float: left;
-}
-.insideleft{
-  width: 50%;
-  float: left;
-  text-align: center;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.protect{
-  width: 30%;
-}
-.insideleft img{
-  width: 60px;
-  float: right;
-  padding-right: 10px;
-}
-.insideright{
-  width: 50%;
-  float: right;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.protectnum{
-  width: 70%;
-}
-.insideright span{
-  display: block;
-}
-
-.tiplist{
-  height: auto;
-  background: #462747;
-  padding: 0 20px;
-  padding-bottom: 20px;
-}
-.tiplist .tiptitle{
-  width: 100%;
-}
-.tipspan{
-  color: #f8e2ff;
-}
-.tiptitle input{
-  border-radius: 1px;
-  background: none;
-  padding: 3px;
-  border: 1px solid #48344e;
-  background: #2e1c34;
-  height: 18px;
-  line-height: 18px;
-  text-indent: 5px;
-  color: #f8e2ff;
-  width: 150px;
-  margin-left: 10px;
-  -webkit-appearance: none;
-}
-.search-icon{
-  cursor: pointer;
-  border-radius: 1px;
-  border: 1px solid #48344e;
-  padding: 3px;
-  height: 18px;
-  display: inline-block;
-  width: 18px;
-  text-align: center;
-  position: relative;
-  top: 1px;
-}
-.search-icon{
-  line-height: 18px;
-}
-
-::-webkit-input-placeholder{
-　font-size: 12px;
-}
-:-moz-placeholder{
-　font-size: 12px;
-}
-::-moz-placeholder{
-　font-size: 12px;
-}
-:-ms-input-placeholder{
-　font-size: 12px;
-}
-
-
+.twocode{ margin-top: 10px;text-align: center;}
+.twocode .title{ display: block;  color: #aa96b1; font-size: 16px;}
+.twocode .prompt{ display: block; margin-top: 5px; font-size: 12px;}
+.twocode input{ cursor: pointer; background: #ac5397; height: 40px; line-height: 40px; color: #fff; display: inline-block; width: 200px; text-align: center; border: 0; font-size: 12px; margin-top: 20px; -webkit-appearance: none;}
+.databox{}
+.databox .title{ width: 100%;  height: 40px; line-height: 40px; margin-top: 20px; background: #331f3a; position: relative;}
+.databox .title img{ width: 20px; position: absolute; top: 50%; left: 20px; transform: translateY(-50%);}
+.databox .title span{ margin-left: 50px;}
+.tipimgshow{ width: 100%; height: 100px; background: #462747; position: relative;}
+.imgleft{ width: 40%; height: 100px; float: left;}
+.imgright{ width: 60%; height: 100px; float: left;}
+.insideleft{ width: 50%; float: left; text-align: center; position: relative; top: 50%; transform: translateY(-50%);}
+.protect{ width: 30%;}
+.insideleft img{ width: 60px; float: right; padding-right: 10px;}
+.insideright{ width: 50%; float: right; position: relative; top: 50%; transform: translateY(-50%);}
+.protectnum{ width: 70%;}
+.insideright span{ display: block;}
+.tiplist{ height: auto;  background: #462747;  padding: 0 20px;  padding-bottom: 20px;}
+.tiplist .tiptitle{ width: 100%;}
+.tipspan{  color: #f8e2ff;}
+.tiptitle input{ border-radius: 1px;  background: none;  padding: 3px;  border: 1px solid #48344e;  background: #2e1c34;  height: 18px;  line-height: 18px;  text-indent: 5px;  color: #f8e2ff;  width: 150px;  margin-left: 10px;  -webkit-appearance: none;}
+.search-icon{ cursor: pointer; border-radius: 1px; border: 1px solid #48344e;  padding: 3px;  height: 18px;  display: inline-block; width: 18px; text-align: center; position: relative; top: 1px;}
+.search-icon{ line-height: 18px;}
+::-webkit-input-placeholder{　font-size: 12px;}
+:-moz-placeholder{　font-size: 12px;}
+::-moz-placeholder{　font-size: 12px;}
+:-ms-input-placeholder{　font-size: 12px;}
 /* dialog --拍照/上传 */
-.dialogbox{
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  width: 300px;
-  height: 147px;
-  z-index: 100;
-}
-.dialoglist{
-  width: 100%;
-  height: 102px;
-}
-.photography{
-  display: block;
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  background: #331f3a;
-  color: #ffffff;
-  text-align: center;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-.upload{
-  display: block;
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  background: #331f3a;
-  color: #ffffff;
-  text-align: center;
-  margin-top: 2px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-.dialoglist2{
-  width: 100%;
-  height: 40px;
-  border-radius: 5px;
-}
-.cancel{
-  display: block;
-  width: 100%;
-  height: 40px;
-  line-height: 40px;
-  background: #331f3a;
-  color: #ac5397;
-  text-align: center;
-  margin-top: 5px;
-  border-radius: 10px;
-}
+.dialogbox{ position: fixed; top: 0; left: 0; right: 0; bottom: 0; margin: auto; width: 300px; height: 147px; z-index: 100;}
+.dialoglist{ width: 100%; height: 102px;}
+.photography{ display: block; width: 100%; height: 50px; line-height: 50px; background: #331f3a; color: #ffffff;  text-align: center;  border-top-left-radius: 10px;  border-top-right-radius: 10px;}
+.upload{ display: block;  width: 100%;  height: 50px; line-height: 50px; background: #331f3a; color: #ffffff; text-align: center;  margin-top: 2px;  border-bottom-left-radius: 10px;  border-bottom-right-radius: 10px;}
+.dialoglist2{ width: 100%;  height: 40px;  border-radius: 5px;}
+.cancel{ display: block; width: 100%; height: 40px; line-height: 40px; background: #331f3a; color: #ac5397;  text-align: center; margin-top: 5px;  border-radius: 10px;}
 
 /* dialog --保存二维码 */
-.dialogsave{
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  width: 300px;
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-  background: #ffffff;
-  border-radius: 10px;
-  z-index: 100;
-  color: #2e1c34;
-  font-size: 16px;
-}
-
-
+.dialogsave{ position: fixed; top: 0; left: 0; right: 0;  bottom: 0;  margin: auto;
+  width: 300px;  height: 40px;  line-height: 40px;  text-align: center;  background: #ffffff;  border-radius: 10px; z-index: 100; color: #2e1c34;  font-size: 16px;}
 /* dialog --遮罩层 */
-.mask{
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  text-align: center;
-  background: #000;
-  opacity: 0.5;
-  z-index: 99;
-}
-
-
-.response{
-  width: 100%;
-  height: 168px;
-  text-align: center;
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-}
-.qrcode{
-  width: 164px;
-  height: 162px;
-  background: #ffffff;
-  padding-top: 2px;
-}
-.apcolor{
-  color: #ffffff;
-}
+.mask{ position: fixed; top: 0; bottom: 0; left: 0;  right: 0; text-align: center; background: #000;  opacity: 0.5;  z-index: 99;}
+.response{ width: 100%; height: 168px; text-align: center; margin-top: 15px; display: flex; display: -webkit-flex;-webkit-align-content: center; justify-content: center;}
+.qrcode{ width: 164px; height: 162px; background: #ffffff; padding-top: 2px;}
+.apcolor{ color: #ffffff;}
 
 </style>
