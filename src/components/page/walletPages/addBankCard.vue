@@ -37,7 +37,7 @@
             <div class="adduser-item">
               <div class="itemline">
                 <div class="itemtitle">账号</div>
-                <div class="itemcontent"><input type="text" v-model="account_sn"></div>
+                <div class="itemcontent"><input type="text" maxlength="19" v-model="account_sn"></div>
               </div>
             </div>
             <!-- 预留手机号 -->
@@ -85,7 +85,7 @@ import "../../../../static/css/newStyle.css"
         phone: '',
         bank_id: '',
         usertions: []
-      
+
       }
     },
     watch:{
@@ -160,9 +160,9 @@ import "../../../../static/css/newStyle.css"
           this.$message.error("手机号不能为空！");
           return false
         }
-        
         if(this.account_sn.length<16 || this.account_sn.length>19){
           this.$message.error("请输入16-19位银行卡账号号码！");
+          return
         }
         vm.$axios({
           method:'post',
@@ -170,12 +170,12 @@ import "../../../../static/css/newStyle.css"
           data:params
         }).then((res)=>{
           if(res.data.error_code=='0'){
-            
+
             vm.$message({
               message: '添加银行卡成功,请等待审核!',
               type: 'success'
             });
-            
+
             //执行父组件关闭方法
             let data = {
               isBankCardStatus:false,
@@ -183,7 +183,7 @@ import "../../../../static/css/newStyle.css"
             };
             //执行父组件方法
             this.$emit('pviewbankcard',data,'');
-          
+
           }else{
             vm.$message.error(res.data.message);
           }

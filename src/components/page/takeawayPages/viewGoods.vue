@@ -95,7 +95,7 @@
             <div class="popsaveline" @click="clickSaveInfo()">
               <span>保存</span>
             </div>
-            
+
           </div>
         </div>
         <div class="message-box_btns">
@@ -144,7 +144,7 @@ import "../../../../static/css/newStyle.css"
     watch:{
       name_en(nVal,oVal){
         if(nVal){
-          this.name_en=nVal.toString().replace(/[^a-zA-Z^0-9]/g,'');
+          this.name_en=nVal.toString().replace(/[^a-zA-Z^0-9^\s]/g,'');
         }
       },
       place(nVal,oVal){

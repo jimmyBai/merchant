@@ -154,13 +154,6 @@
                 <div><span v-text="detailinfo.subtotal_amount"></span></div>
               </li>
               <li class="c_w">
-<<<<<<< HEAD
-                <div>订单平台费</div>
-                <div><span v-text="detailinfo.service_fee"></span></div>
-              </li>
-              <li class="c_w">
-=======
->>>>>>> d7b263641809b13e2c027be13f51c57022f0c459
                 <div>配送</div>
                 <div><span v-text="detailinfo.delivery_fee"></span></div>
               </li>

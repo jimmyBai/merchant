@@ -58,7 +58,9 @@ export default {
         let vm = this;
         vm.isTakeawayShow=data.isTakeawayStatus;
         if(data[0].status&&data[0].status=='refresh'){
-          this.getlistData()
+          let NewPage = '_empty' + '?time=' + new Date().getTime()/1000
+          this.$router.push(NewPage)
+          this.$router.go(-1)
         }
       },
       changetabs(way){
