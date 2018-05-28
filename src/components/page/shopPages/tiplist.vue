@@ -7,11 +7,11 @@
         <div class="line">
           <div class="title"><em>*&nbsp;&nbsp;</em>默认小费金额</div>
           <div class="content">
-            <input type="text" class="firstIp" v-model="amount_setting[0]" value="0.00" placeholder="0.00" /><span>元</span>
-            <input type="text" v-model="amount_setting[1]" value="0.00" placeholder="0.00" /><span>元</span>
-            <input type="text" v-model="amount_setting[2]" value="0.00" placeholder="0.00" /><span>元</span>
-            <input type="text" v-model="amount_setting[3]" value="0.00" placeholder="0.00" /><span>元</span>
-            <input type="text" v-model="amount_setting[4]" value="0.00" placeholder="0.00" /><span>元</span>
+            <input type="text" class="firstIp" v-model="amount_setting[0]" placeholder="0.00" /><span>元</span>
+            <input type="text" v-model="amount_setting[1]" placeholder="0.00" /><span>元</span>
+            <input type="text" v-model="amount_setting[2]" placeholder="0.00" /><span>元</span>
+            <input type="text" v-model="amount_setting[3]" placeholder="0.00" /><span>元</span>
+            <input type="text" v-model="amount_setting[4]" placeholder="0.00" /><span>元</span>
             <span class="tipprompt">请输入5个默认可选小费金额</span>
           </div>
         </div>
@@ -53,7 +53,7 @@ export default {
       ListData: [],
       is_custom: '',
       status: '',
-      greetings: '',
+      greetings: '您的满意，是我们最大的动力！',
       amount_setting: []
     }
   },
@@ -188,19 +188,15 @@ export default {
 
   ::-webkit-input-placeholder{
   　font-size: 12px;
-    color: #fff;
   }
   :-moz-placeholder{
   　font-size: 12px;
-    color: #fff;
   }
   ::-moz-placeholder{
   　font-size: 12px;
-    color: #fff;
   }
   :-ms-input-placeholder{
   　font-size: 12px;
-    color: #fff;
   }
 
 </style>

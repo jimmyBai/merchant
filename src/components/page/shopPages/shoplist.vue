@@ -51,31 +51,31 @@
 
         <div class="line notSame">
           <div class="title">店铺地址：</div>
-          <div class="content"><input type="text" v-model="pCity" disabled="disabled" /></div>
+          <div class="content"><input type="text" v-model="ListData.address" /></div>
           <!-- andy -->
           <div class="baidumap">
             <input type="button" class="baidubtn" value="打开地图" @click="openMap">
           </div>
         </div>
         <div class="line dzhome">
-          <input type="text" v-model="ListData.address">
+          <input type="text" v-model="ListData.address_detail">
         </div>
-
+        
         <div class="line">
           <div class="title">联系电话：</div>
-          <div class="content"><input type="text" v-model="ListData.telephone" @focus="selectval($event)" /></div>
+          <div class="content"><input type="text" v-model="ListData.telephone"/></div>
         </div>
 
         <div class="line">
           <div class="title">最低人均消费：</div>
           <div class="content">
-            <input type="text" ref="input" v-model="ListData.consumption_min" @focus="selectval($event)" @blur="autoval(1)" @change="inputchange('1')" />
+            <input type="text" ref="input" v-model="ListData.consumption_min" @focus="selectval($event)" @blur="autoval(1)" />
           </div>
         </div>
         <div class="line">
           <div class="title">最高人均消费：</div>
           <div class="content">
-            <input type="text" v-model="ListData.consumption_max" @focus="selectval($event)" @blur="autoval(2)" @change="inputchange('2')" />
+            <input type="text" v-model="ListData.consumption_max" @focus="selectval($event)" @blur="autoval(2)" />
           </div>
         </div>
 
@@ -114,19 +114,50 @@
         </div>
         <div class="line">
           <div class="title">配送范围：</div>
-          <div class="content"><input type="tel" v-model="ListData.delivery_range" />&nbsp;&nbsp;KM</div>
+          <div class="content"><input type="tel" v-model="ListData.delivery_range" placeholder="请输入最大配送范围" />&nbsp;&nbsp;km</div>
         </div>
         <div class="line">
           <div class="title"><em>*&nbsp;&nbsp;</em>配送时间：</div>
-          <div class="content" style="width: 222px">
-            <el-time-select v-model="estimated_time" style="width: 222px;" :editable="false" :picker-options="{ start: '00:05',step: '00:05',end: '02:30'}" placeholder="选择时间">
-            </el-time-select>
+          <div class="content">  <!-- style="width: 222px" -->
+            <el-time-select v-model="estimated_time" style="width: 222px;" :editable="false" :picker-options="{ start: '00:00',step: '00:05',end: '01:30'}" placeholder="选择时间">
+            </el-time-select>&nbsp;&nbsp;<span>分钟</span>
           </div>
         </div>
         <div class="line">
           <div class="title">座位数量：</div>
           <div class="content"><input type="tel" v-model="ListData.seat_number" @focus="selectval($event)" /></div>
         </div>
+        
+        <!-- 新增运费设置 -->
+        <div class="leobox leolist">
+          <div class="leotitle">距离运费设置：</div>
+          <div>
+            <div class="leocontent" v-for="(item,index) in distancelist" :key="index">
+              <div class="first">
+                <input type="text" v-model="item.one" class="inputkm"><span class="smallkm">km</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>-</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" v-model="item.two" class="inputkm"><span class="smallkm">km</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="smallrmb">￥</span><input v-model="item.three" type="text" class="inputmy">
+                <i class="el-icon-circle-plus" v-if="index==0" @click="savekm(item,index)"></i>
+                <i class="el-icon-error" v-if="distancelist.length>1&&index>0" @click="cancelkm(item,index)"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 新增重量设置 -->
+        <div class="leobox leolist">
+          <div class="leotitle">重量运费设置：</div>
+          <div>
+            <div class="leocontent" v-for="(item,index) in weightlist" :key="index">
+              <div class="first">
+                <input type="text" v-model="item.one" class="inputkm"><span class="smallkm smallkg">kg</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>-</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" v-model="item.two" class="inputkm"><span class="smallkm smallkg">kg</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="smallrmb smallkg">￥</span><input v-model="item.three" type="text" class="inputmy">
+                <i class="el-icon-circle-plus" v-if="index==0" @click="savekg(item,index)"></i>
+                <i class="el-icon-error" v-if="weightlist.length>1&&index>0" @click="cancelkg(item,index)"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
         <div class="line shopline">
           <div class="title">营业时间：</div>
           <div class="content timetep">
@@ -173,11 +204,16 @@
 
     <!-- 用户跳转打印机/小费 -->
     <div class="go-other" v-show="isgoother">
-      <div class="title"><span>是否设置打印机/小费</span></div>
-      <div class="btn">
-        <span class="cancel" @click="gohide('1')">取消</span>
-        <span class="printer" @click="gohide('2')">设置打印机</span>
-        <span class="tip" @click="gohide('3')">设置小费</span>
+      <div class="title"><span>保存成功</span><span class="icon" @click="downdialog"><i class="el-icon-circle-close-outline"></i></span></div>
+      <div class="content">
+        <span class="text">
+          <span>我们还需要设置打印机和小费,请选择设置：</span>
+        </span>
+        <span class="btn">
+          <span class="printer" @click="gohide('1')">打印设置</span>
+          <span class="tip" @click="gohide('2')">小费</span>
+          <span class="neednot" @click="gohide('3')">暂时不用</span>
+        </span>
       </div>
     </div>
 
@@ -237,7 +273,13 @@ import myMap from '../mapPages/myMap'
         pCity: '',
         estimated_time:'',
         isgoother: false,
-        ismaskShow: false
+        ismaskShow: false,
+        distancelist: [
+          {one: '', two: '', three: ''}
+        ],
+        weightlist: [
+          {one: '', two: '', three: ''}
+        ]
       }
     },
     created(){
@@ -254,7 +296,7 @@ import myMap from '../mapPages/myMap'
           if(/^\d+(\.\d+)?$/.test(cVal)){
 
           }else{
-            return this.ListData.consumption_max=cVal.replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1')
+            return this.ListData.consumption_max=cVal.replace(/^\D*([1-9]\d|0?\.?\d{0,2})?.*$/,'$1')
           }
         }
       },
@@ -263,27 +305,8 @@ import myMap from '../mapPages/myMap'
           if(/^\d+(\.\d+)?$/.test(cVal)){
 
           }else{
-            return this.ListData.consumption_min=cVal.replace(/^\D*([1-9]\d*\.?\d{0,2})?.*$/,'$1')
+            return this.ListData.consumption_min=cVal.replace(/^\D*([1-9]\d*|0?\.?\d{0,2})?.*$/,'$1')
           }
-
-          // let vm = this;
-          // let reg = /^[1-9]\d*(\.\d{0,2})?$|^0(\.\d{0,2})?$|^-([1-9]{1}\d*(\.\d{0,2})?)?$|^-(0(\.\d{0,2})?)?$/;
-          // let input = vm.$refs.input;
-
-          // var oldValue = '';
-          // input.addEventListener('input',function(){
-          //   console.log(input.value)
-          //   if(input.value && !reg.test(input.value)){
-          //     input.value = oldValue;
-          //   }
-          //   oldValue = input.value;
-          // });
-
-          // input.addEventListener('change',function(){
-          //   if(input.value.endsWith('.') || input.value.endsWith('-')){
-          //     input.value = input.value.slice(0,-1);
-          //   }
-          // });
 
         }
       }
@@ -292,21 +315,40 @@ import myMap from '../mapPages/myMap'
       this.getlistData();
     },
     methods:{
+      savekg(){
+        this.weightlist.push({one: '', two: '',three: ''})
+      },
+      cancelkg(item,index){
+        this.weightlist.splice(index,1)
+      },
+      savekm(){
+        this.distancelist.push({one: '', two: '',three: ''})
+      },
+      cancelkm(item,index){
+        this.distancelist.splice(index,1)
+      },
+      downdialog(){
+        let vm = this;
+        vm.isgoother = false
+        vm.ismaskShow = false
+        this.getlistData();
+      },
       gohide(way){
         let vm = this;
         if(way == 1){
           vm.isgoother = false
           vm.ismaskShow = false
-        }else if(way == 2){
-          vm.isgoother = false
-          vm.ismaskShow = false
           localStorage.setItem('shopTabs','printlist')
           vm.$router.push('/printlist');
-        }else if(way == 3){
+        }else if(way == 2){
           vm.isgoother = false
           vm.ismaskShow = false
           localStorage.setItem('shopTabs','tiplist')
           vm.$router.push('/tiplist');
+        }else if(way == 3){
+          vm.isgoother = false
+          vm.ismaskShow = false
+          this.getlistData();
         }
       },
       clickdownMask(){
@@ -346,6 +388,7 @@ import myMap from '../mapPages/myMap'
           vm.ListData.lat=data[0].point.lat
           vm.ListData.lng=data[0].point.lng
         }
+        console.log(vm.pCity)
       },
       // 打开百度地图
       openMap(data){
@@ -356,14 +399,8 @@ import myMap from '../mapPages/myMap'
           address:vm.ListData.address,
           pCity:vm.pCity
         };
-        // console.log(vm.cityMap)
         vm.mapShow = true;
-      },
-      inputchange(){
-        let vm = this;
-        if(this.ListData.consumption_max<this.ListData.consumption_min){
-          vm.$message.error('最高消费不能小于最低消费！');
-        }
+        console.log(vm.cityMap)
       },
       selectval(event){
         event.currentTarget.select();
@@ -372,8 +409,7 @@ import myMap from '../mapPages/myMap'
         let vm = this;
         if(way!=2){
           this.ListData.consumption_min=(this.ListData.consumption_min*1).toFixed(2)
-        }
-        if(way!=1){
+        }else if(way!=1){
           this.ListData.consumption_max=(this.ListData.consumption_max*1).toFixed(2)
         }
       },
@@ -552,6 +588,7 @@ import myMap from '../mapPages/myMap'
             vm.imgVO=vm.ListData.banner
             vm.recommend=vm.ListData.recommend
             vm.business_time=vm.ListData.business_time
+            vm.ListData.delivery_range?vm.ListData.delivery_range:vm.ListData.delivery_range=10
             if(vm.business_time.length>0){
               vm.business_time.forEach(item=>{
                 let startWeek={
@@ -580,7 +617,7 @@ import myMap from '../mapPages/myMap'
                 if(!timearray[1]){
                   backMin=0
                 }else{
-                  backMin=timearray[1]*6
+                  backMin=(('0.'+timearray[1])*60).toFixed(0)
                 }
               }
               if(backHour<10){backHour='0'+backHour}
@@ -706,7 +743,8 @@ import myMap from '../mapPages/myMap'
           'lat':vm.ListData.lat,
           'lng':vm.ListData.lng,
           'delivery_range':vm.ListData.delivery_range,
-          'delivery_time':timesStr
+          'delivery_time':timesStr,
+          'address_detail':vm.ListData.address_detail
         }
 
         vm.$axios({
@@ -798,8 +836,8 @@ el-scrollbar__view .disabled{color:#e4e7ed }
   right: 0;
   bottom: 0;
   margin: auto;
-  width: 300px;
-  height: 150px;
+  width: 400px;
+  height: 160px;
   background: #34203a;
   z-index: 100;
 }
@@ -807,22 +845,64 @@ el-scrollbar__view .disabled{color:#e4e7ed }
   width: 100%;
   height: 40px;
   line-height: 40px;
+  font-size: 14px;
   text-align: center;
   background: -webkit-gradient(linear, 0 0, 0 bottom, from(#433249), to(#38293d));
 }
-.go-other .btn{ display: flex;display: -webkit-flex;align-items: center;-webkit-align-items:center; justify-content: center;
-  padding: 40px 10px 10px 10px;
+.go-other .icon{
+  position: absolute;
+  right: 20px;
+  font-size: 20px;
 }
-.go-other .btn>span{
-  flex: 1; -webkit-flex:1;
+.go-other .content .text{
+  display: block;
+  height: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #fff;
+  padding: 20px 40px;
+}
+.go-other .content .btn{
+  display: block;
+  height: 35px;
+  padding: 0 40px;
+}
+.go-other .btn .printer{
+  display: block;
+  width: 30%;
   height: 35px;
   line-height: 35px;
   text-align: center; 
   color: #fff;
   background: #ac5397;
   cursor: pointer;
-  margin:0 2%;
+  float: left;
+  margin-right: 16px;
 }
+.go-other .btn .tip{
+  display: block;
+  width: 30%;
+  height: 35px;
+  line-height: 35px;
+  text-align: center; 
+  color: #fff;
+  background: #ac5397;
+  cursor: pointer;
+  float: left;
+  margin-right: 10px;
+}
+.go-other .btn .neednot{
+  display: block;
+  width: 30%;
+  height: 35px;
+  line-height: 35px;
+  text-align: center; 
+  color: #fff;
+  background: #ac5397;
+  cursor: pointer;
+  float: right;
+}
+
 .mask{
   position: fixed;
   top: 0;
@@ -833,5 +913,93 @@ el-scrollbar__view .disabled{color:#e4e7ed }
   background: #000;
   opacity: 0.5;
   z-index: 99;
+}
+
+
+.leobox{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  display: -webkit-flex;
+  margin: 15px 0;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-items: center;
+}
+.leolist{
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -webkit-align-items: flex-start;
+}
+
+.leotitle{
+  min-width: 90px;
+  height: 33px;
+  line-height: 33px;
+  text-align: left;
+}
+.leocontent{
+  margin-bottom: 10px;
+}
+.leobox .inputkm{
+  border: 1px solid #706375;
+  background: none;
+  outline: none;
+  height: 30px;
+  line-height: 30px;
+  width: 80px;
+  padding: 0 10px;
+  color: #fff;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.leobox .inputmy{
+  border: 1px solid #706375;
+  background: none;
+  outline: none;
+  height: 30px;
+  line-height: 30px;
+  width: 80px;
+  padding: 0 10px;
+  color: #fff;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.leobox .smallkm{
+  padding: 8px 5px;
+  background: #ac5397;
+  color: #ffffff;
+  position: relative;
+  top: 1px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.leobox .smallkg{
+  padding: 8px 7px;
+}
+.leobox .smallrmb{
+  padding: 8px 8px;
+  background: #ac5397;
+  color: #ffffff;
+  position: relative;
+  top: 1px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.leobox .el-icon-circle-plus{
+  font-size: 24px;
+  color: #ac5397;
+  position: relative;
+  top: 4px;
+  left: 20px;
+}
+.leobox .el-icon-error{
+  font-size: 21px;
+  color: #ac5397;
+  position: relative;
+  top: 2px;
+  left: 22px;
 }
 </style>

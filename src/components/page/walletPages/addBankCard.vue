@@ -50,7 +50,7 @@
             <!-- 保存/取消 -->
             <div class="btnBox">
               <div class="saveline" @click="clickSaveInfo">
-                <span>递交</span>
+                <span>提交</span>
               </div>
               <div class="cancelline" @click="clickCancelInfo">
                 <span>取消</span>

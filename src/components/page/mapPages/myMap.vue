@@ -2,7 +2,7 @@
   <div class="myMap-andy">
     <div class="el-message-box__wrapper">
       <div class="el-message-box">
-
+        
         <div class="message-box_header">
           <div class="message-box_title"><span v-text='msgtitle'></span></div>
           <div class="message-box_closebtn" @click="closepop"><i class="el-message-box__close el-icon-close"></i></div>
@@ -22,12 +22,12 @@
                   <span v-text="item.address"></span>
                 </li>
               </ul>
-
+              
             </div>
                 
             <div class="mapbottom"></div>
           </div>
-
+          
         </div>
 
       </div>
