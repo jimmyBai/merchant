@@ -218,28 +218,28 @@ export default new Router({
             path:'/takeaway',
             meta:{keepAlive:true},
             component:resolve=>require(['../components/page/Takeaway.vue'],resolve),
-            // children:[
-            //   {
-            //     path:'/',
-            //     meta:{keepAlive:true},
-            //     component:resolve=>require(['../components/page/takeawayPages/takeawayAuditOne.vue'],resolve),
-            //   },
-            //   {
-            //     path:'/takeawayAuditOne',
-            //     meta:{keepAlive:true},
-            //     component:resolve=>require(['../components/page/takeawayPages/takeawayAuditOne.vue'],resolve),
-            //   },
-            //   {
-            //     path:'/takeawayAuditTwo',
-            //     meta:{keepAlive:true},
-            //     component:resolve=>require(['../components/page/takeawayPages/takeawayAuditTwo.vue'],resolve),
-            //   },
-            //   {
-            //     path:'/takeawayAuditThree',
-            //     meta:{keepAlive:true},
-            //     component:resolve=>require(['../components/page/takeawayPages/takeawayAuditThree.vue'],resolve),
-            //   }
-            // ]
+            children:[
+              {
+                path:'/',
+                meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/takeawayPages/takeawayAuditOne.vue'],resolve),
+              },
+              {
+                path:'/takeawayAuditOne',
+                meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/takeawayPages/takeawayAuditOne.vue'],resolve),
+              },
+              {
+                path:'/takeawayAuditTwo',
+                meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/takeawayPages/takeawayAuditTwo.vue'],resolve),
+              },
+              {
+                path:'/takeawayAuditThree',
+                meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/takeawayPages/takeawayAuditThree.vue'],resolve),
+              }
+            ]
           },
           {
             path:'/permission',
