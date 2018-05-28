@@ -3,7 +3,7 @@
     <!-- infoList -->
     <div class="listtable">
       <div class="list-search">
-        
+
         <div class="ls-left">
           <div class="form-tabel">
             <div class="td-title">外送商品表</div>
@@ -13,7 +13,7 @@
             </div>
           </div>
         </div>
-        
+
       </div>
 
       <el-table stripe :data="ListData">
@@ -46,10 +46,10 @@
     <div class="pagination">
       <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
-    
+
     <!-- 添加/查看商品 -->
     <view-goods v-if="isTakeawayShow" :fromParent="fromParent" @viewevent="viewevent"></view-goods>
-    
+
   </div>
 </template>
 
@@ -97,7 +97,8 @@ export default {
       params={
         product_name: vm.product_name,
         page: vm.page,
-        length:vm.length
+        length:vm.length,
+        type:1
       };
       vm.$axios.get(url,{params}).then((res)=>{
         if(res.data.error_code=='0'){

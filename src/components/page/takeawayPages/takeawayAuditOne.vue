@@ -18,7 +18,7 @@
             <i class="el-icon-circle-plus-outline"></i><span>添加</span>
           </div>
         </div> -->
-        
+
       </div>
 
       <el-table stripe :data="ListData">
@@ -103,7 +103,8 @@ export default {
       params={
         product_name: vm.product_name,
         page: vm.page,
-        length:vm.length
+        length:vm.length,
+        type:2
       };
       vm.$axios.get(url,{params}).then((res)=>{
         if(res.data.error_code=='0'){
