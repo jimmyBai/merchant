@@ -285,9 +285,11 @@ import myMap from '../mapPages/myMap'
           let newpmend=item.pm_end.replace(":",'')
           //结束时间为0开头
           if(newpmend.toString().substr(0,1)<=0){
-            if(newpmend.toString()>=newambegin.toString()){
-              vm.$message.error('下午结束时间必须小于上午开始时间')
-              item.pm_end=''
+            if(newambegin.toString()){
+              if(newpmend.toString()>=newambegin.toString()){
+                vm.$message.error('下午结束时间必须小于上午开始时间')
+                item.pm_end=''
+              }
             }
           }else{
             if(newpmend.toString()<newpmbegin.toString()){

@@ -96,6 +96,8 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .btn-c-finish{background:#22baa1}
 .btn-c-waring{background:#ff7e16}
 
+/**首页菜单**/
+.menuul li i{ background: url("./../img/menuicon.png") no-repeat; margin: 0 auto; display: inline-block; content: ''}
 /**店铺**/
 .shopcontent .el-input--prefix .el-input__inner{ height: 30px; line-height: 30px; border-radius: 3px; background: none;border: 1px solid #706375; color: #fff}
 .shopcontent .el-input__icon{ line-height: 30px}
@@ -167,7 +169,7 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 /**常用头像**/
 .userinfo{ margin-left: 20px;border-top: 1px solid #48344d;}
 .userinfo ul li{ display: flex; display: -webkit-flex;align-items: center; -webkit-align-items: center; height: 32px; line-height: 32px;  border-bottom: 1px solid #48344d;}
-.userinfo ul li i{ margin-right:5px;background: url("../img/userinfo-iocn.png") no-repeat; width: 20px; height: 20px; display: inline-block; background-size: cover; content:'';}
+.userinfo ul li i{ margin-right:5px;background: url("./../img/userinfo-iocn.png") no-repeat; width: 20px; height: 20px; display: inline-block; background-size: cover; content:'';}
 .userinfo i.i-time{ background-position: 0 0px;}
 .userinfo i.i-realname{ background-position: 0px -20px;}
 .userinfo i.i-nikename{ background-position: 0px -40px;}
@@ -180,7 +182,7 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 /**右侧公共查询***/
 .right_seachBar{ position: absolute; top:27px; right: 0; display: flex}
 .right_seachBar .arrorbox>span{ display: inline-block; background:#4d2e57; padding: 5px 10px;width:15px; height:20px; text-align: center;line-height: 20px; }
-.right_seachBar .arrorbox>span>i.icon-toogle{background:url("../../static/img/toggle.png") no-repeat; background-size:contain
+.right_seachBar .arrorbox>span>i.icon-toogle{background:url("../img/toggle.png") no-repeat; background-size:contain
 ; display: inline-block; width: 15px; height: 20px;}
 .rsea-box{ width: 460px; background: #4d2e57; padding: 10px 5px;border: 1px solid #48344f; border-radius: 0 0 0 3px}
 .res-head{ height: 30px; line-height: 30px; text-align: center; font-weight: bold;}

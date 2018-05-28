@@ -51,7 +51,7 @@
                 <span :class="{'isselect':isB,'isselect2':!isB}" @click="traderoom('2',$event)">交易汇总</span>
               </div>
 
-              
+
             </div>
           </li>
         </ul>
@@ -224,7 +224,6 @@ export default {
 .phoneli{ background:#2e1c34}
 .menuul{}
 .menuul li span{ display: block}
-.menuul li i{ background: url("../../static/img/menuicon.png") no-repeat; margin: 0 auto; display: inline-block; content: ''}
 .menuul li .icon-menu00{background-position: 0px -175px;width: 25px; height: 25px; background-size: cover;}
 .menuul li .icon-menu01{background-position: 0px 0px;width: 25px; height: 25px; background-size: cover;}
 .menuul li .icon-menu02{background-position: 0px -25px;width: 25px; height: 25px; background-size: cover;}
