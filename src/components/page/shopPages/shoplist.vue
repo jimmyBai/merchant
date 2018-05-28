@@ -171,6 +171,19 @@
       </div>
     </div>
 
+    <!-- 用户跳转打印机/小费 -->
+    <!-- <div class="go-other">
+      <div class="title"><span>是否设置打印机/小费</span></div>
+      <div class="btn">
+        <input type="button" value="取消">
+        <input type="button" value="设置打印机">
+        <input type="button" value="设置小费">
+      </div>
+    </div>
+
+    <!-- 遮罩层 -->
+    <!-- <div class="mask" v-if="ismaskShow" @click="clickdownMask"></div> --> -->
+
     <!-- 百度地图 -->
     <my-map v-if="mapShow" :pcityMap="cityMap" @viewMap='pviewMap'></my-map>
 
