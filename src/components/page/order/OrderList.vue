@@ -76,7 +76,7 @@ import searchView from './Seacrhtips'
         orderinfo:{},
         options: [{
           value: '-1',label: '全部'}, {
-          value: '0',label: '待付款'}, {
+          value: '0',label: '未付款'}, {
           value: '1',label: '待接单'}, {
           value: '2',label: '待配送'}, {
           value: '3',label: '派送中'}, {
@@ -117,19 +117,7 @@ import searchView from './Seacrhtips'
         }).then((res)=>{
           if(res.data.error_code=='0'){
             if(res.data.data.list) {
-              let dateArray=[]
-              if(res.data.data.list.length>0){
-                res.data.data.list.forEach(item=>{
-                  if(item.order_status==7||item.order_status==0){
-
-                  }else{
-                    dateArray.push(item)
-                  }
-
-                })
-              }
-
-              vm.ListData = dateArray
+              vm.ListData = res.data.data.list
             }
             vm.total=Number(res.data.data.total);
             vm.pages=Number(res.data.data.pages);

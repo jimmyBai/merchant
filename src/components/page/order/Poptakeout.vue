@@ -154,10 +154,6 @@
                 <div><span v-text="detailinfo.subtotal_amount"></span></div>
               </li>
               <li class="c_w">
-                <div>平台费</div>
-                <div><span v-text="detailinfo.service_fee"></span></div>
-              </li>
-              <li class="c_w">
                 <div>配送</div>
                 <div><span v-text="detailinfo.delivery_fee"></span></div>
               </li>
@@ -168,6 +164,14 @@
               <li class="c_w">
                 <div>支付金额</div>
                 <div class="paycolor"><span v-text="detailinfo.pay_amount"></span></div>
+              </li>
+              <li class="c_w btborder">
+                <div>平台服务费</div>
+                <div><span v-text="detailinfo.service_fee"></span></div>
+              </li>
+              <li class="c_w">
+                <div>商户实收金额</div>
+                <div class="paycolor"><span v-text="(detailinfo.pay_amount-detailinfo.service_fee).toFixed(2)"></span></div>
               </li>
               <li class="c_w btborder">
                 <div>支付方式</div>
