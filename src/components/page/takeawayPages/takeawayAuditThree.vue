@@ -17,7 +17,6 @@
       </div>
 
       <el-table stripe :data="ListData">
-        <el-table-column width="80" prop="product_id" label="ID"></el-table-column>
         <el-table-column width="80" prop="product_name" label="商品名称"></el-table-column>
         <el-table-column width="80" prop="remark" label="审核时间"></el-table-column>
         <el-table-column prop="remark" label="拒绝原因"></el-table-column>

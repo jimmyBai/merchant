@@ -204,9 +204,6 @@ import "../../../static/js/jquery.qrcode.js"
 
     },
     computed:{
-      UID(){
-        return this.$store.state.uid
-      },
       userName(){
         return this.$store.state.username
       },
@@ -225,17 +222,13 @@ import "../../../static/js/jquery.qrcode.js"
         vm.canvasQr=''
         vm.canvasQr=$('#qrcode').qrcode({
           render: "canvas",
-          // text: vm.UID+"\n"+vm.userName+"\n"+vm.userToken,
-          text: vm.UID,
+          text: vm.$store.state.uid.toString(),
           width: "160", //二维码的宽度
           height: "160", //二维码的高度
           background: "#ffffff", //二维码的后景色
           foreground: "#4c3d7b", //二维码的前景色
           correctLevel: 3, //纠错等级
           src: '../../../static/img/018Logo.png', //二维码中间的图片
-          uid: vm.UID,
-          username: vm.userName,
-          token: vm.userToken
         });
       },
       // 获取小费记录数据
@@ -245,7 +238,7 @@ import "../../../static/js/jquery.qrcode.js"
         let vm=this,url='/api/web/tip/list',params={
           page: vm.page,
           length: vm.length,
-          uid: vm.UID,
+          uid: vm.$store.state.uid,
           search:{
             content: vm.search.content
           }
