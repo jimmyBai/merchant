@@ -24,8 +24,8 @@
         <el-table-column label="手机号" prop="phone"></el-table-column>
         <el-table-column label="商品数量" prop="totalnum"></el-table-column>
         <el-table-column label="配送费" prop="delivery_fee"></el-table-column>
-        <el-table-column label="商品金额" prop="goodsprice"></el-table-column>
-        <el-table-column label="付款金额" prop="payprice"></el-table-column>
+        <el-table-column label="商品金额" prop="product_total_price"></el-table-column>
+        <el-table-column label="付款金额" prop="order_paid_price"></el-table-column>
         <el-table-column label="订单状态" align="right">
           <template slot-scope="scope">
             <div class="tdbtn-box">
@@ -132,10 +132,10 @@ import searchView from './Seacrhtips'
                   totalnum+=parseInt(goods.num)
                   goodsprice+=goods.num*goods.price
                 })
-                payprice=(goodsprice/1)+(item.delivery_fee/1)
-                vm.$set(item,'goodsprice',goodsprice.toFixed(2))
+                // payprice=(goodsprice/1)+(item.delivery_fee/1)
+                // vm.$set(item,'goodsprice',goodsprice.toFixed(2))
                 vm.$set(item,'totalnum',totalnum)
-                vm.$set(item,'payprice',payprice.toFixed(2))
+                // vm.$set(item,'payprice',payprice.toFixed(2))
               }
             })
 

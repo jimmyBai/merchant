@@ -24,7 +24,7 @@
         <el-table-column prop="weight" label="重量"></el-table-column>
         <el-table-column prop="capacity" label="容量"></el-table-column>
         <el-table-column prop="status" label="产品状态"></el-table-column>
-        <el-table-column prop="remark" label="递交时间"></el-table-column>
+        <el-table-column prop="create_time" label="递交时间"></el-table-column>
         <el-table-column width="180">
           <template slot-scope="scope">
             <div class="tdBtn-box">
@@ -92,12 +92,11 @@ export default {
     // 获取数据
     getlistData(){
       this.ListData = []
-      let vm = this,url='/api/web/product/list',
+      let vm = this,url='/api/web/product/audit',
       params={
         product_name: vm.product_name,
         page: vm.page,
-        length:vm.length,
-        type:1
+        length:vm.length
       };
       vm.$axios.get(url,{params}).then((res)=>{
         if(res.data.error_code=='0'){
@@ -131,6 +130,7 @@ export default {
     },
     vieweditor(id){
       this.isTakeawayShow = true;
+  console.log(id)
       this.fromParent=id.toString();
     },
     // 删除

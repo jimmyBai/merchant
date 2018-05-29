@@ -2,12 +2,12 @@
   <div class="myMap-andy">
     <div class="el-message-box__wrapper">
       <div class="el-message-box">
-        
+
         <div class="message-box_header">
           <div class="message-box_title"><span v-text='msgtitle'></span></div>
           <div class="message-box_closebtn" @click="closepop"><i class="el-message-box__close el-icon-close"></i></div>
         </div>
-        
+
         <div class="mapView_content">
           <div class="mapmain">
             <!--地图容器-->
@@ -16,25 +16,24 @@
           <!-- 地图地址列表 -->
           <div class="maplist">
             <div class="mappane">
-              
+
               <ul>
                 <li v-for="(item,index) in listArray" @click='getNowLocation(item)' class="textmap">
                   <span v-text="item.address"></span>
                 </li>
               </ul>
-              
+
             </div>
-                
+
             <div class="mapbottom"></div>
           </div>
-          
+
         </div>
 
       </div>
     </div>
     <div class="v-modal" style="z-index: 99;"></div>
   </div>
-  
 </template>
 
 <script>
@@ -55,7 +54,6 @@ import {MP} from '../../../../static/js/newMap.js'
       pcityMap: Object
     },
     mounted(){
-      console.log(this.pcityMap);
       let vm = this;
       vm.initMap();
     },
@@ -76,7 +74,7 @@ import {MP} from '../../../../static/js/newMap.js'
             this.addMapControl();
           }
         }
-        
+
         // this.setMapEvent(); //设置地图事件
         // this.addMapControl(); //向地图添加控件
         // this.addMarker(); //向地图中添加marker
@@ -95,7 +93,7 @@ import {MP} from '../../../../static/js/newMap.js'
         gc.getLocation(point, function(rs){
           var addComp = rs.addressComponents;
         });
-        
+
         var myKeys = ["酒店","广场","大厦","银行","公园","学校","景点","加油站","停车场","咖啡厅"];
         var mPoint = new BMap.Point(point.lng,point.lat);
         var circle = new BMap.Circle(mPoint,100,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.3, strokeOpacity: 0.3});
@@ -178,7 +176,7 @@ import {MP} from '../../../../static/js/newMap.js'
               renderOptions: {map: map, autoViewport: false}
             });
             local.searchNearby(myKeys,mPoint,100);
-            
+
             // 获取坐标数据
             var v = setInterval((x)=>{
               if(local.wf){
@@ -188,13 +186,13 @@ import {MP} from '../../../../static/js/newMap.js'
                 vm.listArray.push(ele);
               })
             },1500);
-            
+
           }else{
             alert('failed'+this.getStatus());
           }
         },{enableHighAccuracy: true});
       },
-      
+
       //设置地图事件
       setMapEvent(){
         map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
@@ -249,44 +247,22 @@ import {MP} from '../../../../static/js/newMap.js'
           alert(e.message);
         });
         map.addControl(geolocationControl);
-        
+
       },
-
-      //创建marker
-      //addMarker(){
-      
-      // },
-      //创建InfoWindow
-      //createInfoWindow(i){
-
-      // },
-      //创建一个Icon
-      // createIcon(json){
-
-      // },
 
       closepop(){
         //执行父组件关闭方法
         let data = this.pcityMap;
-        console.log(data);
+        console.log(data)
         //执行父组件方法
         this.$emit('viewMap',data,'');
       },
       getNowLocation(item){
         let data = item;
-        console.log(data);
         //执行父组件方法
         this.$emit('viewMap',data,'');
       },
-      // clickEttach(){
-      //   //执行父组件关闭方法
-      //   let data = {
-      //     mapShowStatus:false
-      //   };
-      //   //执行父组件方法
-      //   this.$emit('viewMap',data,'');
-      // }
-      
+
     }
   }
 
@@ -376,6 +352,6 @@ import {MP} from '../../../../static/js/newMap.js'
 
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap; 
+    white-space: nowrap;
   }
 </style>

@@ -87,12 +87,11 @@ export default {
     // 获取数据
     getlistData(){
       this.ListData = []
-      let vm = this,url='/api/web/product/list',
+      let vm = this,url='/api/web/product/audit-denied',
       params={
         product_name: vm.product_name,
         page: vm.page,
         length:vm.length,
-        type:3
       };
       vm.$axios.get(url,{params}).then((res)=>{
         if(res.data.error_code=='0'){

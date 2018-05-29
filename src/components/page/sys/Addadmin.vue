@@ -46,7 +46,7 @@
             <div class="adduser-item">
               <div class="itemline">
                 <div class="itemtitle"><em>*</em>登录密码</div>
-                <div class="itemcontent"><input type="text" v-model="password"></div>
+                <div class="itemcontent"><input type="password" v-model="password"></div>
               </div>
             </div>
             <div class="popsaveline" @click="addroleFn">

@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    
+
     <div class="databox">
       <div class="title">
         <span>实时数据</span>
@@ -137,8 +137,8 @@ export default {
       let vm=this,url='/api/web/tip/list',params={
         page: vm.page,
         length: vm.length,
-        uid: vm.UID,
         search:{
+          uid: vm.UID,
           content: vm.search.content,
           start_time: vm.search.start_time,
           end_time: vm.search.end_time

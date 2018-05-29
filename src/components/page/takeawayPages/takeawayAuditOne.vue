@@ -29,7 +29,7 @@
         <el-table-column prop="weight" label="重量"></el-table-column>
         <el-table-column prop="capacity" label="容量"></el-table-column>
         <el-table-column prop="status" label="产品状态"></el-table-column>
-        <el-table-column prop="remark" label="递交时间"></el-table-column>
+        <el-table-column prop="create_time" label="递交时间"></el-table-column>
         <el-table-column prop="remark" label="审核时间"></el-table-column>
         <el-table-column width="180">
           <template slot-scope="scope">
@@ -103,7 +103,6 @@ export default {
         product_name: vm.product_name,
         page: vm.page,
         length:vm.length,
-        type:2
       };
       vm.$axios.get(url,{params}).then((res)=>{
         if(res.data.error_code=='0'){

@@ -2,7 +2,7 @@
   <div class="main">
     <div class="listtable">
       <div class="list-search">
-        
+
         <div class="ls-left">
           <div class="form-tabel">
             <el-row class="res-content-line">
@@ -36,10 +36,11 @@
       </div>
 
       <el-table stripe :data="ListData">
-        <el-table-column prop="sn" label="订单号"></el-table-column>
+        <el-table-column prop="sn" label="订单号/账户号码"></el-table-column>
         <el-table-column prop="type" label="支出类型"></el-table-column>
         <el-table-column prop="amount" label="支出金额"></el-table-column>
         <el-table-column prop="expense_time" label="支出时间"></el-table-column>
+        <el-table-column prop="status" label="结算状态"></el-table-column>
       </el-table>
       <div class="list-bottom"></div>
     </div>
@@ -50,7 +51,7 @@
     </div>
 
   </div>
-    
+
 </template>
 <script>
 // andy
@@ -129,7 +130,7 @@ import "../../../../static/css/newStyle.css"
       }
 
     }
-    
+
   }
 
 </script>
@@ -145,5 +146,5 @@ import "../../../../static/css/newStyle.css"
   .td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
 
 
-  
+
 </style>

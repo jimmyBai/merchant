@@ -37,9 +37,10 @@
                       <div class="itemtitle">
                         <span>配送时间：</span>
                       </div>
-                      <div class="itemcontent">
+                      <div class="itemcontent timeline">
                         <el-time-select v-if="detailinfo.order_status==2" v-model="estimated_time" :editable="false" :picker-options="{ start: '00:05',step: '00:05',end: '02:30'}" placeholder="选择时间">
                         </el-time-select>
+                        <span class="timeunit" v-if="detailinfo.order_status==2">分钟</span>
                         <span v-if="detailinfo.order_status==3" v-text="estimated_time"></span>
                       </div>
                     </li>
@@ -314,6 +315,7 @@ import {fetchPost} from '../../../../static/js/fetch.js';
                 vm.delivery_phone = vm.detailinfo.delivery_phone
                 vm.estimated_time = vm.detailinfo.estimated_time
               }else if(vm.detailinfo.order_status==2){
+                vm.estimated_time = ''
                 //当订单状态为待派送的时候 获取打印机列表
                 vm.getprintList()  //获取打印机列表
               }
@@ -495,14 +497,16 @@ em{ font-style: normal; margin-right: 5px; color: #ac5397}
 .deliverItem ul li input{font-size:12px; outline:none;border: none; background: none; color: #fff;width: 100%}
 
 .deliverItem ul li input::-webkit-input-placeholder{  color:#fff;}
-.deliverItem ul li .itemcontent{ flex: 1.5}
+.deliverItem ul li .itemcontent{ flex: 1.5;-webkit-flex: 1.5}
 .deliverItem ul li.savebtn>div{ text-align: center; display: block;width: 100%; cursor: pointer}
 
+.deliverItem ul li .timeline{ display: flex; display: -webkit-flex; align-items: center;-webkit-align-items: center}
+.deliverItem ul li .timeline .timeunit{ display: block;width: 30px}
 /**确认送达提示**/
 .deliverItem ul li.smsline>span{ display: block}
 .deliverItem ul li.smsline>div{ flex: 1;-webkit-flex: 1}
 .deliverItem ul li.smsline .itemtitle{ padding:0 10px}
-.deliverItem ul li.smsline .itemcontent{width: 60px; text-align: center; display: block; height: 36px; line-height: 36px; cursor: pointer; background: #144a40}
+.deliverItem ul li.smsline .itemcontent{width: 60px; text-align: center; display: block; height: 36px; line-height: 36px; cursor: pointer; background: #137161}
 .deliverItem ul li.smslinetips{height: 18px; line-height: 18px; color: #fff; font-size: 11px; border-radius: 0 0 3px 3px; border-top: 1px solid #13463c}
 .deliverItem ul li.smsline{ border-radius: 3px 3px 0 0;padding: 0}
 

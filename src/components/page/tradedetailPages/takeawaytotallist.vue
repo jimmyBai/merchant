@@ -1,13 +1,13 @@
 <template>
   <div class="main">
-    
+
     <div class="databox">
       <div class="title">
         <span>实时数据</span>
       </div>
       <div class="content">
         <div class="tipimgshow">
-          
+
           <div class="imgcontent">
             <div class="insideleft">
               <img class="phoneimg" src="../../../../static/img/tipone.png" alt="">
@@ -88,7 +88,7 @@
               </el-row>
             </div>
           </div>
-          
+
         </div>
         <div class="tiplist_two">
           <el-table stripe :data="ListData">
@@ -96,7 +96,7 @@
             <el-table-column width="140" prop="time" label="时间"></el-table-column>
             <el-table-column prop="username" label="用户名"></el-table-column>
             <el-table-column prop="product_price" label="商品总额"></el-table-column>
-            <el-table-column prop="delivery_price" label="费送费"></el-table-column>
+            <el-table-column prop="delivery_price" label="配送费"></el-table-column>
             <el-table-column prop="prepaid_card_price" label="充值卡"></el-table-column>
             <el-table-column prop="paid_price" label="实付金额"></el-table-column>
             <el-table-column prop="platform_price" label="平台服务费"></el-table-column>
@@ -104,8 +104,8 @@
             <el-table-column prop="payment" label="支付方式"></el-table-column>
             <el-table-column prop="status" label="状态"></el-table-column>
           </el-table>
-        </div>  
-        
+        </div>
+
       </div>
     </div>
 
@@ -167,7 +167,6 @@ export default {
       let vm=this,url='/api/web/report/summary/takeout-sales',params={
         page: vm.page,
         length: vm.length,
-        uid: vm.UID,
         search:{
           content: vm.search.content,
           start_time: vm.search.start_time,
@@ -272,7 +271,7 @@ export default {
   float: right;
 }
 .phoneimg{
-  
+
 }
 .insideright{
   width: 50%;

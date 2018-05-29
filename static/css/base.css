@@ -87,8 +87,8 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .itemline-2 li{ background:#e0741c;}
 .itemline-2 li.savebtn{background:#b95e15 }
 .itemline-3 li{ background:#1ea28b;}
-.itemline-3 li.savebtn{background:#177c6a }
-.itemline-3 li.smsline{background:#177c6a; display: flex; display: -webkit-flex;}
+.itemline-3 li.savebtn{background:#0c6455 }
+.itemline-3 li.smsline{background:#187c6b; display: flex; display: -webkit-flex;}
 .itemline-3 li.smslinetips{background:#177c6a;}
 /**按钮状态**/
 .btn-c-error{ background:#f25657}
@@ -221,6 +221,7 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .shopline .el-date-editor.el-input,.shopline  .el-date-editor.el-input__inner{width: 100%}
 /*订单详情*/
 .deliverItem .el-input__inner{ border-radius: 0; background: none; border: none; color: #fff; font-size: 12px;}
+.deliverItem .timeline .el-input__inner{ padding-right: 0}
 .deliverItem input.el-input__inner::-webkit-input-placeholder{  color:#fff;}
 .deliverItem .el-select .el-input.is-focus .el-input__inner ,.deliverItem .el-select .el-input__inner:focus{ border-color: #706375;}
 .deliverItem .el-date-editor.el-input,.deliverItem  .el-date-editor.el-input__inner{width: 100%}

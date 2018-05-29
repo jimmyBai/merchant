@@ -238,8 +238,8 @@ import "../../../static/js/jquery.qrcode.js"
         let vm=this,url='/api/web/tip/list',params={
           page: vm.page,
           length: vm.length,
-          uid: vm.$store.state.uid,
           search:{
+            uid: vm.$store.state.uid,
             content: vm.search.content
           }
         };

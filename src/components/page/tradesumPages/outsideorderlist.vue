@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    
+
     <div class="databox">
       <div class="title">
         <span>实时数据</span>
@@ -70,7 +70,7 @@
                   <input type="text" v-model="search.content" placeholder="请输入商品名称" />
                   <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
                 </div>
-                  
+
               </div>
             </div>
 
@@ -85,7 +85,7 @@
             <el-table-column prop="total_price" label="总额"></el-table-column>
           </el-table>
         </div>
-        
+
       </div>
     </div>
 
@@ -142,7 +142,6 @@ export default {
       let vm=this,url='/api/web/report/summary/takeout-products',params={
         page: vm.page,
         length: vm.length,
-        uid: vm.UID,
         search:{
           type: vm.search.type.id,
           content: vm.search.content
@@ -187,7 +186,7 @@ export default {
       vm.$axios.get(url,{params}).then((res)=>{
         if(res.data.error_code=='0'){
           vm.options=res.data.data
-          
+
           if(vm.ListData){vm.settypelist()}
         }else{
           vm.$message.error(res.data.message);

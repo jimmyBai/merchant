@@ -58,12 +58,12 @@
           </div>
         </div>
         <div class="line dzhome">
-          <input type="text" v-model="ListData.address_detail">
+          <input type="text" v-model="ListData.address_detail" style="width: 400px">
         </div>
-        
+
         <div class="line">
-          <div class="title">联系电话：</div>
-          <div class="content"><input type="text" v-model="ListData.telephone"/></div>
+          <div class="title">店铺座机：</div>
+          <div class="content"><input type="tel" v-model="ListData.telephone"/></div>
         </div>
 
         <div class="line">
@@ -127,9 +127,9 @@
           <div class="title">座位数量：</div>
           <div class="content"><input type="tel" v-model="ListData.seat_number" @focus="selectval($event)" /></div>
         </div>
-        
+
         <!-- 新增运费设置 -->
-        <div class="leobox leolist">
+        <div class="leobox leolist" v-if="false">
           <div class="leotitle">距离运费设置：</div>
           <div>
             <div class="leocontent" v-for="(item,index) in distancelist" :key="index">
@@ -143,7 +143,7 @@
           </div>
         </div>
         <!-- 新增重量设置 -->
-        <div class="leobox leolist">
+        <div class="leobox leolist" v-if="false">
           <div class="leotitle">重量运费设置：</div>
           <div>
             <div class="leocontent" v-for="(item,index) in weightlist" :key="index">
@@ -219,7 +219,7 @@
 
     <!-- 遮罩层 -->
     <div class="mask" v-if="ismaskShow" @click="clickdownMask"></div>
-    
+
     <!-- 百度地图 -->
     <my-map v-if="mapShow" :pcityMap="cityMap" @viewMap='pviewMap'></my-map>
 
@@ -270,7 +270,6 @@ import myMap from '../mapPages/myMap'
         dosave: true,
         mapShow: false,
         cityMap:{},
-        pCity: '',
         estimated_time:'',
         isgoother: false,
         ismaskShow: false,
@@ -381,26 +380,25 @@ import myMap from '../mapPages/myMap'
       pviewMap(...data){
         let vm = this;
         vm.cityMap=data[0]
+        //如果是关闭
+        //vm.$set(vm.ListData,'address',data[0].province+data[0].city)
         vm.$set(vm.ListData,'address',data[0].address)
-        vm.mapShow=data[1];
-        vm.pCity=data[0].province+data[0].city
+        vm.mapShow=false;
         if(data[0].point&&data[0].point.lat&&data[0].point.lng){
           vm.ListData.lat=data[0].point.lat
           vm.ListData.lng=data[0].point.lng
         }
-        console.log(vm.pCity)
       },
       // 打开百度地图
-      openMap(data){
+      openMap(){
         let vm = this;
         vm.cityMap={
           lng:vm.ListData.lng,
           lat:vm.ListData.lat,
           address:vm.ListData.address,
-          pCity:vm.pCity
+          //city:vm.ListData.address
         };
         vm.mapShow = true;
-        console.log(vm.cityMap)
       },
       selectval(event){
         event.currentTarget.select();
@@ -724,7 +722,7 @@ import myMap from '../mapPages/myMap'
           vm.$message.error('店铺时间必须设置！');
           return false
         }
-        if(vm.ListData.consumption_max<vm.ListData.consumption_min){
+        if(parseFloat(vm.ListData.consumption_max)<parseFloat(vm.ListData.consumption_min)){
           vm.$message.error('最高消费不能小于最低消费！');
           return false
         }
@@ -872,7 +870,7 @@ el-scrollbar__view .disabled{color:#e4e7ed }
   width: 30%;
   height: 35px;
   line-height: 35px;
-  text-align: center; 
+  text-align: center;
   color: #fff;
   background: #ac5397;
   cursor: pointer;
@@ -884,7 +882,7 @@ el-scrollbar__view .disabled{color:#e4e7ed }
   width: 30%;
   height: 35px;
   line-height: 35px;
-  text-align: center; 
+  text-align: center;
   color: #fff;
   background: #ac5397;
   cursor: pointer;
@@ -896,7 +894,7 @@ el-scrollbar__view .disabled{color:#e4e7ed }
   width: 30%;
   height: 35px;
   line-height: 35px;
-  text-align: center; 
+  text-align: center;
   color: #fff;
   background: #ac5397;
   cursor: pointer;

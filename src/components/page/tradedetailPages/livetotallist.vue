@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    
+
     <div class="databox">
       <div class="title">
         <span>实时数据</span>
@@ -147,7 +147,6 @@ export default {
       let vm=this,url='/api/web/report/summary/live-sales',params={
         page: vm.page,
         length: vm.length,
-        uid: vm.UID,
         search:{
           name: vm.search.name,
           start_time: vm.search.start_time,
