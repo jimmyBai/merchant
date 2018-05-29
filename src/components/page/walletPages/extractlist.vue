@@ -27,7 +27,10 @@
                 <div class="itemtitle">银行账户：</div>
                 <div class="classcontent">
                   <el-select v-model="account_id" value-key='id' placeholder="请选择">
-                    <el-option v-for="item in usertions" :key="item.id" :label="item.name" :value='item'></el-option>
+                    <el-option v-for="item in usertions" :key="item.id" :label="item.name" :value='item'>
+                      <span style="float: left">{{ item.name }}</span>
+                      <span style="float: right; color: #8492a6; font-size: 13px">{{ item.account_sn }}</span>
+                    </el-option>
                   </el-select>
                 </div>
               </div>
@@ -41,7 +44,7 @@
                 <span>取消</span>
               </div>
             </div>
-            
+
 
           </div>
         </div>
@@ -136,7 +139,7 @@ export default {
           data: params
         }).then((res)=>{
           if(res.data.error_code=='0'){
-            
+
             vm.$message({
               message: '提交审核成功,请等待审核!',
               type: 'success'
@@ -161,7 +164,7 @@ export default {
         //执行父组件方法
         this.$emit('pviewex',data,'');
       }
-      
+
     },
     closepop(){
       //执行父组件关闭方法
@@ -171,7 +174,7 @@ export default {
       //执行父组件方法
       this.$emit('pviewex',data,'');
     }
-    
+
   }
 }
 </script>
@@ -184,8 +187,8 @@ export default {
   .message-box_closebtn{ position: absolute; right: 0; display: inline-block; height: 40px; width: 40px; text-align: center; cursor: pointer}
   .message-box_title{ font-size: 16px;}
   .message-box_content{ padding: 20px}
-  
-      
+
+
 
   .itemtitletwo{
     margin-bottom: 15px;
@@ -208,8 +211,8 @@ export default {
     font-size: 12px;
     color: #fff;
   }
-  .popsavert{ 
-    width: 40%; 
+  .popsavert{
+    width: 40%;
     height: 30px;
     line-height: 30px;
     float: right;
@@ -217,6 +220,6 @@ export default {
     background: #ac5397;
     font-size: 12px;
     color: #fff;
-  }   
+  }
 
 </style>

@@ -4,8 +4,10 @@
       <div class="memberimg">
         <img src="../../../static/img/membertopimg.png" />
       </div>
-      <div class="memberphoto" @click="isdialogShow=!isdialogShow">
-        <img src="../../../static/img/membericon.png" />
+      <div class="memberphoto">
+        <input type="file" class="myfile" @change="changeImg" accept=".gif,.jpg,.jpeg,.png">
+        <img v-if="ListData.head_portrait&&ListData.head_portrait.replace(/\s/,'')" :src="ListData.head_portrait" />
+        <img v-else src="../../../static/img/membericon.png" />
       </div>
     </div>
     <div class="memberboxcontent">
@@ -129,7 +131,7 @@
                 </div>
                 <el-table stripe :data="reListData">
                   <el-table-column width="60" prop="username" label="用户名"></el-table-column>
-                  <el-table-column prop="phone" label="手机号码"></el-table-column>
+                  <!--<el-table-column prop="phone" label="手机号码"></el-table-column>-->
                   <el-table-column prop="amount" label="小费金额"></el-table-column>
                   <el-table-column width="80" prop="payment" label="支付方式"></el-table-column>
                   <el-table-column prop="pay_time" label="支付时间"></el-table-column>
@@ -197,7 +199,8 @@ import "../../../static/js/jquery.qrcode.js"
           end_time: "" //结束时间
         },
         statistics: [],
-        canvasQr:''
+        canvasQr:'',
+        userImg:'../../../static/img/membericon.png'
       }
     },
     created(){
@@ -268,12 +271,68 @@ import "../../../static/js/jquery.qrcode.js"
       },
       //选择头像图片
       changeImg(){
-        let vm=this;
-        vm.$message({
-          message: '暂时不支持头像上传',
-          type: 'success'
+        let vm=this,imgobj=event.target.files[0], maxSize=1024*300, maxWidth=200,maxHeight=200;
+        if(imgobj.size>maxSize){
+          vm.$message.error('请上传小于300kb的图片');
+          return
+        }
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          //加载图片获取图片真实宽度和高度
+          var image = new Image()
+          image.src = e.target.result;
+          image.onload=function(){
+            if((image.width/image.height).toFixed(2)==(maxWidth/maxHeight).toFixed(2)){
+              imgobj={img:e.target.result}
+              vm.ListData.head_portrait=imgobj.img
+              vm.imgupload(imgobj.img)
+            }else{
+              vm.$message.error('图片尺寸不对');
+            }
+          };
+        };
+        reader.readAsDataURL(imgobj);
+      },
+      //上传图片
+      imgupload(img){
+        let vm =this,imgarray=[img],url='/api/web/setting/upload',params={type:5,files:imgarray};
+        vm.$axios({
+          method:'post',
+          url:url,
+          data: params
+        }).then((res)=>{
+          if(res.data.error_code=='0'){
+            if(res.data.data&&res.data.data.length>0){
+              vm.ListData.head_portrait=res.data.data[0]
+              vm.setImg(vm.ListData.head_portrait)
+            }
+          }else{
+            vm.$message.error(res.data.message);
+
+          }
+        }).catch(err => {
+            console.log(err);
         });
-        vm.isdialogShow=false
+      },
+      //更改图片
+      setImg(img){
+        let vm =this,url='/api/web/my/change-head-portrait',params={head_portrait:img};
+        vm.$axios({
+          method:'post',
+          url:url,
+          data: params
+        }).then((res)=>{
+          if(res.data.error_code=='0'){
+            vm.$message({
+              message: '头像修改成功！',
+              type: 'success'
+            });
+          }else{
+              vm.$message.error(res.data.message);
+          }
+        }).catch(err => {
+            console.log(err);
+        });
       },
       getlistData(){
         let vm =this,url='/api/web/authority/user/info',params={'id':''};
@@ -334,11 +393,12 @@ import "../../../static/js/jquery.qrcode.js"
   }
 </script>
 <style scoped>
+input.myfile{ z-index: 8; opacity: 0; width: 100%; height: 100%; margin: 0;padding: 0; position: absolute; left: 0; top: 0; border: none}
 .memberboxhead{ background:#462747;  margin: 0 auto; position: relative; z-index: 2 }
 .memberboxhead .memberimg{ padding: 20px 0; height: 155px; margin: 0 auto; text-align: center}
 .memberboxhead .memberimg img{height: 100%; background-size: cover}
 .memberphoto{ position: absolute; height: 130px; width: 130px; bottom: -25px; left: 50px}
-.memberphoto img { width: 100%; background-size: cover}
+.memberphoto img { width: 100%; background-size: cover;border-radius: 100%}
 .nameline{ text-align: center; height: 50px; line-height: 50px}
 .nameline .name{ font-size: 24px;}
 .nameline .line{ margin: 0 5px}

@@ -13,7 +13,7 @@
               <img class="phoneimg" src="../../../../static/img/tipone.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.amount" class="apcolor"></span>
+              <span v-text="statistics.total_price" class="apcolor"></span>
               <span>总小费金额</span>
             </div>
           </div>
@@ -22,7 +22,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.paid" class="apcolor"></span>
+              <span v-text="statistics.pay_times" class="apcolor"></span>
               <span>支付人次</span>
             </div>
           </div>
@@ -31,7 +31,7 @@
               <img src="../../../../static/img/tiptwo.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.receive" class="apcolor"></span>
+              <span v-text="statistics.to_member_times" class="apcolor"></span>
               <span>收取店员人数</span>
             </div>
           </div>
@@ -77,12 +77,13 @@
         </div> -->
         <el-table stripe :data="ListData">
           <el-table-column width="120" prop="username" label="用户名"></el-table-column>
-          <el-table-column prop="phone" label="手机号码"></el-table-column>
-          <el-table-column width="120" prop="store_username" label="管理员"></el-table-column>
+         <!-- <el-table-column prop="phone" label="手机号码"></el-table-column>-->
+          <el-table-column width="120" prop="manager" label="管理员"></el-table-column>
           <el-table-column width="120" prop="store_user_role" label="角色"></el-table-column>
           <el-table-column width="120" prop="amount" label="小费金额"></el-table-column>
-          <el-table-column width="120" prop="payment" label="支付方式"></el-table-column>
-          <el-table-column prop="pay_time" label="支付时间"></el-table-column>
+          <el-table-column width="120" prop="pay_type" label="支付方式"></el-table-column>
+          <el-table-column prop="create_time" label="支付时间"></el-table-column>
+          <el-table-column prop="status" label="状态"></el-table-column>
         </el-table>
       </div>
 
@@ -134,12 +135,11 @@ export default {
     gettipData(){
       this.ListData = []
       this.statistics = []
-      let vm=this,url='/api/web/tip/list',params={
+      let vm=this,url='/api/web/report/summary/tip-sales',params={
         page: vm.page,
         length: vm.length,
         search:{
-          uid: vm.UID,
-          content: vm.search.content,
+          name: vm.search.content,
           start_time: vm.search.start_time,
           end_time: vm.search.end_time
         }
@@ -150,9 +150,9 @@ export default {
         data:params
       }).then((res)=>{
         if(res.data.error_code=='0'){
-          if(res.data.data.list){
-            vm.ListData=res.data.data.list
-            vm.statistics=res.data.data.statistics
+          if(res.data.data.report_data){
+            vm.ListData=res.data.data.report_data.list
+            vm.statistics=res.data.data.summary_data
           }
           vm.total=Number(res.data.data.total);
           vm.pages=Number(res.data.data.pages);
@@ -188,7 +188,7 @@ export default {
 .ls-right .ls-r-btn span{ margin-left: 5px}
 .ls-left .form-tabel{ display: flex;display: -webkit-flex; align-items: center; -webkit-align-items: center; padding-bottom: 10px}
 .form-tabel .td-title{ margin-right: 5px; color: #f8e2ff}
-.form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px;margin-left: 20px;}
+.form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; max-width: 150px;margin-left: 20px;}
 .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center;}
 .td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
 
