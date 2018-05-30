@@ -273,7 +273,7 @@ import {fetchPost} from '../../../../static/js/fetch.js';
             type: 'success'
           });
           vm.timeCut(60)
-          if(window.location.href.indexOf('uat.')>=0||window.location.href.indexOf('dev.')>=0){
+          if(window.location.href.indexOf('uat.')<0||window.location.href.indexOf('dev.')<0){
             vm.code='123456'
           }
           }else{
@@ -379,6 +379,13 @@ import {fetchPost} from '../../../../static/js/fetch.js';
             vm.$message.error('请完善配送员信息！');
             return
           }
+          //如果选择了打印 打印机必须选择
+          if(vm.printCheck){
+            if(!vm.printvalue){
+              vm.$message.error('请选择打印机！');
+              return
+            }
+          }
         }
         vm.$axios({
           method:'post',
@@ -387,11 +394,7 @@ import {fetchPost} from '../../../../static/js/fetch.js';
         }).then((res)=>{
           if(res.data.error_code=='0'){
             //如果选择了打印 打印机必须选择
-            if(vm.printCheck){
-              if(!vm.printvalue){
-                vm.$message.error('请选择打印机！');
-                return
-              }
+            if(vm.printCheck&&vm.detailinfo.order_status==2){
               vm.printOrder()
             }
             vm.$message({

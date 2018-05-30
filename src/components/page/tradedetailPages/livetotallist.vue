@@ -115,7 +115,7 @@ export default {
   data () {
     return {
       ishowSearch: false,
-      ListData:'',
+      ListData:[],
       summary_data:'',
       page: "1", //页码，默认为1
       length: "10", //每页记录数，默认为10
@@ -142,7 +142,7 @@ export default {
   methods:{
     // 获取小费记录数据
     gettipData(){
-      this.ListData = ''
+      this.ListData = []
       this.summary_data = {'total_price':0,'package_price':0,'user_pay_price':0,'platform_price':0}
       let vm=this,url='/api/web/report/summary/live-sales',params={
         page: vm.page,

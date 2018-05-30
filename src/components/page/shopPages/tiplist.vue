@@ -11,7 +11,7 @@
             <input type="tel" v-model="amount_setting[1]" placeholder="0.00" /><span>元</span>
             <input type="tel" v-model="amount_setting[2]" placeholder="0.00" /><span>元</span>
             <input type="tel" v-model="amount_setting[3]" placeholder="0.00" /><span>元</span>
-            <input type="tel" v-model="amount_setting[4]" placeholder="0.00" /><span>元</span>
+            <input type="text" v-model="amount_setting[4]" placeholder="0.00" /><span>元</span>
             <span class="tipprompt">请输入5个默认可选小费金额</span>
           </div>
         </div>
@@ -90,15 +90,15 @@ export default {
     },
     // 保存
     savetipdata(){
-      let vm=this,url='/api/web/tip/save',
+      let vm=this,url='/api/web/tip/save',params;
+      if(vm.greetings==''){
+        vm.greetings='您的满意，是我们最大的动力！'
+      }
       params={
         amount_setting:vm.amount_setting,
         greetings:vm.greetings,
         is_custom:vm.is_custom?1:0,
         status:vm.status?1:0
-      }
-      if(vm.greetings==''){
-        vm.greetings='您的满意，是我们最大的动力！'
       }
       if(parseFloat(vm.amount_setting[0])>0&&parseFloat(vm.amount_setting[1])>0&&parseFloat(vm.amount_setting[3])>0&&parseFloat(vm.amount_setting[3])>0&&parseFloat(vm.amount_setting[4])>0){
 
@@ -112,16 +112,16 @@ export default {
         data:params
       }).then((res)=>{
         if(res.data.error_code=='0'){
-          vm.$message({
-            message: '修改数据成功,请等待审核!',
-            type: 'success'
-          });
+        vm.$message({
+          message: '小费设置成功!',
+          type: 'success'
+        });
           vm.getclassinfo()
         }else{
           vm.$message.error(res.data.message);
         }
       }).catch(err => {
-        console.log(err);
+          console.log(err);
       });
     }
 

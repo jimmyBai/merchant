@@ -130,7 +130,7 @@ export default {
   data () {
     return {
       ishowSearch: false,
-      ListData: '',
+      ListData: [],
       statistics: '',
       page: "1", //页码，默认为1
       length: "10", //每页记录数，默认为10
@@ -162,7 +162,7 @@ export default {
   methods:{
     // 获取外送统计数据
     gettipData(){
-      this.ListData = ''
+      this.ListData = []
       this.statistics = {'total_price':0,'product_price':0,'delivery_price':0,'paid_price':0,'platform_price':0}
       let vm=this,url='/api/web/report/summary/takeout-sales',params={
         page: vm.page,

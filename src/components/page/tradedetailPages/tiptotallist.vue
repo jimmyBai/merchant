@@ -22,7 +22,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="'¥'+statistics.pay_times" class="apcolor"></span>
+              <span v-text="statistics.pay_times" class="apcolor"></span>
               <span>支付人次</span>
             </div>
           </div>
@@ -106,7 +106,7 @@ export default {
   data () {
     return {
       ishowSearch: false,
-      ListData:'',
+      ListData:[],
       statistics:'',
       page: "1", //页码，默认为1
       length: "10", //每页记录数，默认为10
@@ -133,7 +133,7 @@ export default {
   methods:{
     // 获取小费记录数据
     gettipData(){
-      this.ListData = ''
+      this.ListData = []
       this.statistics = {'total_price':0,'pay_times':0,'to_member_times':0}
       let vm=this,url='/api/web/report/summary/tip-sales',params={
         page: vm.page,

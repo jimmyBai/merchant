@@ -164,15 +164,15 @@ export default {
     //联系客服
     servicephone(){
       let phonepop=`<div class="phonepop">
-      <div class="phonepopline">
-        <div class="p-title">客服电话</div>
-        <div class="p-content">400-888-8888</div>
-      </div>
-      <div class="phonepopline">
-        <div class="p-title">客服邮箱</div>
-        <div class="p-content">admin@018.com</div>
-      </div>
-    </div>`
+          <div class="phonepopline">
+            <div class="p-title">客服电话</div>
+            <div class="p-content">400-888-8888</div>
+          </div>
+          <div class="phonepopline">
+            <div class="p-title">客服邮箱</div>
+            <div class="p-content">admin@018.com</div>
+          </div>
+        </div>`
       this.$alert(phonepop,'联系客服', {
         dangerouslyUseHTMLString: true,
         center: true,
@@ -186,11 +186,11 @@ export default {
     traderoom(way){
       let vm = this;
       if(way == 1){
-        vm.$router.push('/tradedetail');
         vm.isA = true;
+        vm.$router.push('/tradedetail');
       }else{
-        vm.$router.push('/tradesum');
         vm.isA = false;
+        vm.$router.push('/tradesum');
       }
 
     }

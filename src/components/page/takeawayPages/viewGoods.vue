@@ -83,17 +83,17 @@
             <!-- collection -->
             <div class="adduser-itemBox">
               <div class="adduser-class notSame">
-                <div class="notSametitle" v-model="track"><em>*</em>库存跟踪</div>
-                <el-switch v-model="inventory_track" active-color="rgb(96,58,108)" inactive-color="#7e7c7c" class="el_switch"></el-switch>
+                <div class="notSametitle">库存跟踪</div>
+                <el-switch v-model="track" active-color="rgb(96,58,108)" inactive-color="#7e7c7c" class="el_switch"></el-switch>
               </div>
               <div class="adduser-producer">
                 <div class="producertitle">库存数量</div>
-                <div class="producercontent"><input type="text" v-model="inventory"></div>
+                <div class="producercontent"><input type="text" :disabled="!track" v-model="inventory"></div>
               </div>
             </div>
             <!-- 保存 -->
             <div class="popsaveline" @click="clickSaveInfo()">
-              <span>保存</span>
+              <span v-text="issvaetext"></span>
             </div>
 
           </div>
@@ -117,6 +117,7 @@ import "../../../../static/css/newStyle.css"
     data () {
       return {
         msgtitle: '添加',
+        issvaetext:'保存',
         priceStatus: true,
         usertions: [],
         typelist: '',
@@ -131,14 +132,14 @@ import "../../../../static/css/newStyle.css"
         price: '',
         special_price: '',
         is_use_special_price: false,
-        track: '',
-        inventory_track: false,
+        track: false,
         inventory: '',
         listdata:''
       }
     },
     props: {
-      fromParent: String
+      fromParent: String,
+      isrefuse:Boolean
     },
     watch:{
       name_en(nVal,oVal){
@@ -146,11 +147,11 @@ import "../../../../static/css/newStyle.css"
           this.name_en=nVal.toString().replace(/[^a-zA-Z^0-9^\s]/g,'');
         }
       },
-      place(nVal,oVal){
+      /*place(nVal,oVal){
         if(nVal){
           this.place=nVal.toString().replace(/[^\u4e00-\u9fa5]/g,'');
         }
-      },
+      },*/
       years(nVal,oVal){
         if(nVal){
           this.years=nVal.toString().replace(/[^0-9]*/g,'');
@@ -185,10 +186,19 @@ import "../../../../static/css/newStyle.css"
     mounted:function(){
       // 判断页面
       this.getclassinfo();
-      if(this.fromParent){
+      //判断是审核拒绝修改页面还是其他
+      if(this.isrefuse){
         this.msgtitle = '查看/编辑商品'
-        this.getGoodsInfo();
-      }else{}
+        this.issvaetext='重新提交'
+        this.getEditInfo();
+      }else{
+        if(this.fromParent){
+          this.msgtitle = '查看/编辑商品'
+          this.getGoodsInfo();
+        }else{
+
+        }
+      }
     },
     methods:{
       // 获取修改信息
@@ -209,9 +219,8 @@ import "../../../../static/css/newStyle.css"
             vm.capacity=res.data.data.capacity
             vm.price=res.data.data.price
             vm.special_price=res.data.data.special_price
-            vm.is_use_special_price=res.data.data.is_use_special_price
-            vm.track=res.data.data.track
-            vm.inventory_track=res.data.data.inventory_track
+            res.data.data.is_use_special_price==0?vm.is_use_special_price=true:vm.is_use_special_price=false
+            res.data.data.track==0?vm.track=true:vm.track=false
             vm.inventory=res.data.data.inventory
             if(vm.usertions){vm.settypelist()}
           }else{
@@ -220,6 +229,34 @@ import "../../../../static/css/newStyle.css"
         }).catch(err => {
           console.log(err);
         });
+      },
+      getEditInfo(){
+        let vm =this,
+          url='/api/web/product/denied-info',
+          params={'id':this.fromParent};
+        vm.$axios.get(url,{params}).then((res)=>{
+          if(res.data.error_code=='0'){
+          vm.listdata=res.data.data
+          vm.name=res.data.data.name
+          vm.name_en=res.data.data.en_name
+          vm.describe=res.data.data.describe
+          vm.place=res.data.data.place
+          vm.years=res.data.data.years
+          vm.brand=res.data.data.brand
+          vm.weight=res.data.data.weight
+          vm.capacity=res.data.data.capacity
+          vm.price=res.data.data.market_price
+          vm.special_price=res.data.data.special_price
+          res.data.data.is_use_special_price==0?vm.is_use_special_price=true:vm.is_use_special_price=false
+          res.data.data.inventory_track==0?vm.track=true:vm.track=false
+          vm.inventory=res.data.data.inventory
+          if(vm.usertions){vm.settypelist()}
+        }else{
+          vm.$message.error(res.data.message);
+        }
+      }).catch(err => {
+          console.log(err);
+      });
       },
       // 获取下拉列表的值
       settypelist(){
@@ -287,14 +324,25 @@ import "../../../../static/css/newStyle.css"
           special_price:vm.special_price,
           inventory:vm.inventory,
           capacity:vm.capacity,
-          is_use_special_price:vm.is_use_special_price?'on':'off',
-          inventory_track:vm.inventory_track?'on':'off',
+          is_use_special_price:vm.is_use_special_price?1:0,
+          track:vm.track?1:0,
+          inventory_track:vm.track?1:0,
         }
-        if(this.fromParent){
-          url='/api/web/product/update';
-          params.product.product_id=vm.fromParent;
+        //如果是审核拒绝之后修改
+        if(this.isrefuse){
+          if(this.listdata.product_id>0){
+            url='/api/web/product/update';
+            params.product.product_id=vm.listdata.product_id;
+          }else{
+            url='/api/web/product/create';
+          }
         }else{
-          url='/api/web/product/create';
+          if(this.fromParent){
+            url='/api/web/product/update';
+            params.product.product_id=vm.fromParent;
+          }else{
+            url='/api/web/product/create';
+          }
         }
         vm.$axios({
           method:'post',
