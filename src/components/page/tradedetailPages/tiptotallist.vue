@@ -106,8 +106,8 @@ export default {
   data () {
     return {
       ishowSearch: false,
-      ListData: [],
-      statistics: [],
+      ListData:'',
+      statistics:'',
       page: "1", //页码，默认为1
       length: "10", //每页记录数，默认为10
       page:0,
@@ -133,8 +133,8 @@ export default {
   methods:{
     // 获取小费记录数据
     gettipData(){
-      this.ListData = []
-      this.statistics = []
+      this.ListData = ''
+      this.statistics = {'total_price':0,'pay_times':0,'to_member_times':0}
       let vm=this,url='/api/web/report/summary/tip-sales',params={
         page: vm.page,
         length: vm.length,

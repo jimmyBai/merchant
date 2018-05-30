@@ -30,7 +30,7 @@
         <el-table-column prop="capacity" label="容量"></el-table-column>
         <el-table-column prop="status" label="产品状态"></el-table-column>
         <el-table-column prop="create_time" label="递交时间"></el-table-column>
-        <el-table-column prop="remark" label="审核时间"></el-table-column>
+        <el-table-column prop="audit_time" label="审核时间"></el-table-column>
         <el-table-column width="180">
           <template slot-scope="scope">
             <div class="tdBtn-box">

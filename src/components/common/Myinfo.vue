@@ -198,7 +198,7 @@ import "../../../static/js/jquery.qrcode.js"
           start_time: "", //开始时间
           end_time: "" //结束时间
         },
-        statistics: [],
+        statistics: '',
         canvasQr:'',
         userImg:'../../../static/img/membericon.png'
       }
@@ -237,7 +237,7 @@ import "../../../static/js/jquery.qrcode.js"
       // 获取小费记录数据
       gettipData(){
         this.reListData = []
-        this.statistics = []
+        this.statistics = {'amount':0,'paid':0}
         let vm=this,url='/api/web/tip/list',params={
           page: vm.page,
           length: vm.length,

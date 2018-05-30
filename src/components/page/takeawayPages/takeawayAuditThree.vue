@@ -17,10 +17,10 @@
       </div>
 
       <el-table stripe :data="ListData">
-        <el-table-column width="80" prop="product_name" label="商品名称"></el-table-column>
-        <el-table-column width="80" prop="remark" label="审核时间"></el-table-column>
+        <el-table-column prop="product_name" label="商品名称"></el-table-column>
+        <el-table-column prop="create_time" label="审核时间"></el-table-column>
         <el-table-column prop="remark" label="拒绝原因"></el-table-column>
-        <el-table-column width="180">
+        <!--<el-table-column width="180">
           <template slot-scope="scope">
             <div class="tdBtn-box">
               <div class="tdbtn-view newView" @click="vieweditor(scope.row.product_id)">
@@ -31,7 +31,7 @@
               </div>
             </div>
           </template>
-        </el-table-column>
+        </el-table-column>-->
       </el-table>
       <div class="list-bottom"></div>
     </div>
