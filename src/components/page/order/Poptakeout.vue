@@ -71,7 +71,7 @@
                     <!--确认送达-->
                     <li class="smsline" v-if="detailinfo.order_status==3">
                       <div class="itemtitle">
-                        <span><input type="tel" v-model="code" placeholder="请输入验证码" /></span>
+                        <span><input type="tel" maxlength="6" v-model="code" placeholder="请输入验证码" /></span>
                       </div>
                       <div class="itemcontent" @click.stop="candotime&&sendSMS()">
                         <span ref="codetime">重新发送</span>
@@ -260,7 +260,7 @@ import {fetchPost} from '../../../../static/js/fetch.js';
       },
       //发送确认收货验证码
       sendSMS(){
-        let vm =this,url='/api/web/sms/send',params={'phone':vm.detailinfo.phone,'type':2};
+        let vm =this,url='/api/web/sms/send',params={'phone':vm.detailinfo.phone,'type':2,'others':{'order_sn':this.orderinfo.orderid}};
         this.candotime=false;
         vm.$axios({
           method:'post',
@@ -379,14 +379,6 @@ import {fetchPost} from '../../../../static/js/fetch.js';
             vm.$message.error('请完善配送员信息！');
             return
           }
-          //如果选择了打印 打印机必须选择
-          if(vm.printCheck){
-            if(!vm.printvalue){
-             vm.$message.error('请选择打印机！');
-             return
-            }
-            vm.printOrder()
-          }
         }
         vm.$axios({
           method:'post',
@@ -394,6 +386,14 @@ import {fetchPost} from '../../../../static/js/fetch.js';
           data: params
         }).then((res)=>{
           if(res.data.error_code=='0'){
+            //如果选择了打印 打印机必须选择
+            if(vm.printCheck){
+              if(!vm.printvalue){
+                vm.$message.error('请选择打印机！');
+                return
+              }
+              vm.printOrder()
+            }
             vm.$message({
               message: '操作成功！',
               type: 'success'

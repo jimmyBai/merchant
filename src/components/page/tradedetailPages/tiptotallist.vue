@@ -13,7 +13,7 @@
               <img class="phoneimg" src="../../../../static/img/tipone.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.total_price" class="apcolor"></span>
+              <span v-text="'¥'+statistics.total_price" class="apcolor"></span>
               <span>总小费金额</span>
             </div>
           </div>
@@ -22,7 +22,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.pay_times" class="apcolor"></span>
+              <span v-text="'¥'+statistics.pay_times" class="apcolor"></span>
               <span>支付人次</span>
             </div>
           </div>

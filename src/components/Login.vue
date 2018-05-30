@@ -46,7 +46,7 @@ export default {
       this.password=JSON.parse(localStorage.getItem('LOGININFO')).password
     }
     //如果是DEV或者UAT环境默认一个登录账号
-    if(window.location.href.indexOf('uat.')>=0||window.location.href.indexOf('dev.')>=0){
+    if(window.location.href.indexOf('uat.')<0||window.location.href.indexOf('dev.')<0){
       this.phone='13800138222'
     }
   },
@@ -82,8 +82,9 @@ export default {
             this.$store.dispatch('addToken',res.data.data.token);
             localStorage.setItem("uid",res.data.data.uid)
             this.$store.dispatch('addUID',res.data.data.uid);
-            sessionStorage.setItem('USERNAME',res.data.data.name||'')
-            this.$store.dispatch('addusername',res.data.data.name||'');
+            localStorage.setItem('USERINFO',JSON.stringify(res.data.data))
+            this.$store.dispatch('addLoginInfo',res.data.data||{});
+
           }
           vm.$router.push('/main')
         }else{

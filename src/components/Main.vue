@@ -45,13 +45,10 @@
               <span v-text="item.name"></span>
               <img src="../../static/img/leftarrow.png" v-if="!isdradeShow&&item.userid==4" class="ltimg" >
               <img src="../../static/img/downarrow.png" v-if="isdradeShow&&item.userid==4" class="dnimg">
-
               <div class="newmenu" v-if="isdradeShow&&item.userid==4">
                 <span :class="{'isselect':!isA}" @click="traderoom('1')">交易明细</span>
                 <span :class="{'isselect':isA}" @click="traderoom('2')">交易汇总</span>
               </div>
-
-
             </div>
           </li>
         </ul>
@@ -85,7 +82,14 @@ export default {
     }
   },
   mounted:function(){
-
+      //如果非管理员进来不展示权限
+      if(this.isAdmin!=1){
+         this.menuArray.forEach((item,index)=>{
+           if(item.userid==6){
+              this.menuArray.splice(index,1)
+            }
+         })
+      }
   },
   watch: {
     $route(){
@@ -94,7 +98,10 @@ export default {
   },
   computed:{
     username(){
-      return this.$store.state.username
+      return this.$store.state.userInfo.name
+    },
+    isAdmin(){
+      return this.$store.state.userInfo.is_admin
     }
   },
   methods:{
@@ -140,6 +147,7 @@ export default {
       if(way=='login'){
         localStorage.removeItem('token')
         localStorage.removeItem('uid')
+        localStorage.removeItem('USERINFO')
         sessionStorage.clear()
         vm.$store.state.token=''
         vm.$store.state.uid=''

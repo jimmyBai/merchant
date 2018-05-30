@@ -75,7 +75,7 @@
                 <div class="classcontent"><input type="text" placeholder="￥" v-model="price"></div>
               </div>
               <div class="adduser-producer">
-                <div class="producertitle"><em>*</em>特价</div>
+                <div class="producertitle">特价</div>
                 <div class="producercontent changeInput"><input type="text" placeholder="￥" v-model="special_price" :disabled="!is_use_special_price"></div>
                 <el-switch v-model="is_use_special_price" active-color="rgb(96,58,108)" inactive-color="#7e7c7c"></el-switch>
               </div>
@@ -87,7 +87,7 @@
                 <el-switch v-model="inventory_track" active-color="rgb(96,58,108)" inactive-color="#7e7c7c" class="el_switch"></el-switch>
               </div>
               <div class="adduser-producer">
-                <div class="producertitle"><em>*</em>库存数量</div>
+                <div class="producertitle">库存数量</div>
                 <div class="producercontent"><input type="text" v-model="inventory"></div>
               </div>
             </div>

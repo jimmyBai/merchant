@@ -31,7 +31,7 @@
               <img src="../../../../static/img/tiptwo.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.sales_price" class="apcolor"></span>
+              <span v-text="'¥'+statistics.sales_price" class="apcolor"></span>
               <span>总销售额</span>
             </div>
           </div>

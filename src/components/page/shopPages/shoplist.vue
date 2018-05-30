@@ -110,7 +110,7 @@
         </div>
         <div class="line">
           <div class="title">店铺描述：</div>
-          <div class="content"><div class="mytextarea"><textarea maxlength="240" v-model="ListData.describe" ></textarea></div></div>
+          <div class="content"><div class="mytextarea"><textarea maxlength="250" v-model="ListData.describe" ></textarea></div></div>
         </div>
         <div class="line">
           <div class="title">配送范围：</div>

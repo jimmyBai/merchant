@@ -13,7 +13,7 @@
               <img class="phoneimg" src="../../../../static/img/tipone.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.total_price" class="apcolor"></span>
+              <span v-text="'¥'+statistics.total_price" class="apcolor"></span>
               <span>总额</span>
             </div>
           </div>
@@ -22,7 +22,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.product_price" class="apcolor"></span>
+              <span v-text="'¥'+statistics.product_price" class="apcolor"></span>
               <span>商品总额</span>
             </div>
           </div>
@@ -31,7 +31,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.delivery_price" class="apcolor"></span>
+              <span v-text="'¥'+statistics.delivery_price" class="apcolor"></span>
               <span>配送费</span>
             </div>
           </div>
@@ -40,7 +40,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.paid_price" class="apcolor"></span>
+              <span v-text="'¥'+statistics.paid_price" class="apcolor"></span>
               <span>实付金额</span>
             </div>
           </div>
@@ -49,7 +49,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.platform_price" class="apcolor"></span>
+              <span v-text="'¥'+statistics.platform_price" class="apcolor"></span>
               <span>平台服务费</span>
             </div>
           </div>

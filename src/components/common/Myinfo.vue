@@ -109,7 +109,7 @@
                     <img src="../../../static/img/tipone.png" alt="">
                   </div>
                   <div class="insideright">
-                    <span v-text="statistics.amount" class="apcolor"></span>
+                    <span v-text="'¥'+statistics.amount" class="apcolor"></span>
                     <span>总小费金额</span>
                   </div>
                 </div>
