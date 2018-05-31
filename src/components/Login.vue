@@ -46,10 +46,6 @@ export default {
       this.phone=JSON.parse(localStorage.getItem('LOGININFO')).phone
       this.password=JSON.parse(localStorage.getItem('LOGININFO')).password
     }
-    //如果是DEV或者UAT环境默认一个登录账号
-    if(window.location.href.indexOf('uat.')<0||window.location.href.indexOf('dev.')<0){
-      this.phone='13800138222'
-    }
   },
   methods:{
   	goin(){
