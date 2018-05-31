@@ -72,7 +72,10 @@
 
     },
     mounted:function(){
-
+        if(window.location.href.indexOf('pro.')>=0){
+          this.sn_num=''
+          this.key=''
+        }
     },
     methods:{
       closepop(){

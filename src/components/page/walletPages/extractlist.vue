@@ -11,7 +11,7 @@
             <!-- 可提取金额 -->
             <div class="adduser-item">
               <div class="itemline">
-                <div class="itemtitle itemtitletwo">可提取金额：&nbsp;&nbsp;<span v-text="ListData.balance"></span>RMB</div>
+                <div class="itemtitle itemtitletwo">可提取金额：¥<span v-text="ListData.balance"></span></div>
               </div>
             </div>
             <!-- 提取金额 -->
@@ -68,7 +68,7 @@ export default {
       usertions: [],
       trade_amount: '',
       account_id: '',
-      ListData: []
+      ListData:''
     }
   },
   watch:{
@@ -102,7 +102,7 @@ export default {
     },
     // 获取余额数据
     getlistData(){
-      this.ListData = []
+      this.ListData = {'balance':0.00}
       let vm = this,url='/api/web/wallet/balance',
       params={};
       vm.$axios.get(url,{params}).then((res)=>{

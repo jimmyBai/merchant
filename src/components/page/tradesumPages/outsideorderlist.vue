@@ -65,12 +65,12 @@
                 </div>
                 <div class="td-content">
                   <el-select v-model="search.type" placeholder="全部" value-key='id' class="osselect">
+                      <el-option :key="''" :label="'全部'" :value="''"></el-option>
                       <el-option v-for="item in options" :key="item.id" :label="item.name" :value='item'></el-option>
                   </el-select>
                   <input type="text" v-model="search.content" placeholder="请输入商品名称" />
                   <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
                 </div>
-
               </div>
             </div>
 

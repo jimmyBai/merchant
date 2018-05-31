@@ -26,7 +26,7 @@
               <span>支付人次</span>
             </div>
           </div>
-          <div class="imgright">
+          <div class="imgcontent">
             <div class="insideleft">
               <img src="../../../../static/img/tiptwo.png" alt="">
             </div>
@@ -35,7 +35,15 @@
               <span>收取店员人数</span>
             </div>
           </div>
-
+          <div class="imgright">
+            <div class="insideleft">
+              <img src="../../../../static/img/tipthree.png" alt="">
+            </div>
+            <div class="insideright">
+              <span v-text="'¥'+statistics.platform_price" class="apcolor"></span>
+              <span>平台服务费</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -76,12 +84,13 @@
           <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
         </div> -->
         <el-table stripe :data="ListData">
-          <el-table-column width="120" prop="username" label="用户名"></el-table-column>
+          <el-table-column prop="username" label="用户名"></el-table-column>
          <!-- <el-table-column prop="phone" label="手机号码"></el-table-column>-->
-          <el-table-column width="120" prop="manager" label="管理员"></el-table-column>
-          <el-table-column width="120" prop="store_user_role" label="角色"></el-table-column>
-          <el-table-column width="120" prop="amount" label="小费金额"></el-table-column>
-          <el-table-column width="120" prop="pay_type" label="支付方式"></el-table-column>
+          <el-table-column prop="manager" label="管理员"></el-table-column>
+          <el-table-column prop="store_user_role" label="角色"></el-table-column>
+          <el-table-column prop="amount" label="小费金额"></el-table-column>
+          <el-table-column prop="pay_type" label="支付方式"></el-table-column>
+          <el-table-column prop="platform_price" label="平台服务费"></el-table-column>
           <el-table-column prop="create_time" label="支付时间"></el-table-column>
           <el-table-column prop="status" label="状态"></el-table-column>
         </el-table>
@@ -134,7 +143,7 @@ export default {
     // 获取小费记录数据
     gettipData(){
       this.ListData = []
-      this.statistics = {'total_price':0,'pay_times':0,'to_member_times':0}
+      this.statistics = {'total_price':0,'pay_times':0,'to_member_times':0,'platform_price':0}
       let vm=this,url='/api/web/report/summary/tip-sales',params={
         page: vm.page,
         length: vm.length,
