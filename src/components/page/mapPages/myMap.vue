@@ -22,7 +22,7 @@
                   <span v-text="item.address"></span>
                 </li>
               </ul>
-
+              
             </div>
 
             <div class="mapbottom"></div>

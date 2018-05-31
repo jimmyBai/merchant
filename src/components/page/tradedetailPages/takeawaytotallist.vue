@@ -62,28 +62,28 @@
           <div class="ls-left">
             <div class="form-tabel">
               <el-row class="res-content-line">
-                <el-col :span="4"><div class="td-title">外送商品销售列表</div></el-col>
-                <el-col :span="3"><div class="res-title">筛选时间：</div></el-col>
-                <el-col :span="5">
-                    <div class="res-input">
+                <el-col :span="5"><div class="td-title">外送商品销售列表</div></el-col>
+                <el-col :span="4"><div class="res-title">筛选时间：</div></el-col>
+                <el-col :span="6">
+                  <div class="res-input">
                     <el-date-picker :editable="false" v-model="search.start_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
-                    </div>
+                  </div>
                 </el-col>
                 <el-col :span="1"><div class="res-line">至</div></el-col>
-                <el-col :span="5">
-                    <div class="res-input">
+                <el-col :span="6">
+                  <div class="res-input">
                     <el-date-picker :editable="false" v-model="search.end_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
-                    </div>
+                  </div>
                 </el-col>
-                <el-col :span="2"><div class="res-title">状态：</div></el-col>
+                <el-col :span="3"><div class="res-title">状态：</div></el-col>
                 <el-col :span="13">
-                    <div class="td-content">
-                      <el-select v-model="search.status" placeholder="全部" class="osselect">
-                          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                      </el-select>
-                      <input type="text" v-model="search.content" placeholder="请输入名称/手机号" />
-                      <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
-                    </div>
+                  <div class="td-content tb-es">
+                    <el-select v-model="search.status" placeholder="全部" class="osselect">
+                      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                    </el-select>
+                    <input type="text" v-model="search.content" placeholder="请输入名称/手机号" />
+                    <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
+                  </div>
                 </el-col>
               </el-row>
             </div>

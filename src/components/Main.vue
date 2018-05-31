@@ -45,10 +45,12 @@
               <span v-text="item.name"></span>
               <img src="../../static/img/leftarrow.png" v-if="!isdradeShow&&item.userid==4" class="ltimg" >
               <img src="../../static/img/downarrow.png" v-if="isdradeShow&&item.userid==4" class="dnimg">
+              
               <div class="newmenu" v-if="isdradeShow&&item.userid==4">
                 <span :class="{'isselect':!isA}" @click="traderoom('1')">交易明细</span>
                 <span :class="{'isselect':isA}" @click="traderoom('2')">交易汇总</span>
               </div>
+              
             </div>
           </li>
         </ul>

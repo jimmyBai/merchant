@@ -69,7 +69,7 @@
         <div class="line">
           <div class="title">最低人均消费：</div>
           <div class="content">
-            <input type="text" ref="input" v-model="ListData.consumption_min" @focus="selectval($event)" @blur="autoval(1)" />
+            <input type="text" v-model="ListData.consumption_min" @focus="selectval($event)" @blur="autoval(1)" />
           </div>
         </div>
         <div class="line">
