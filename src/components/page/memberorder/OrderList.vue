@@ -52,7 +52,7 @@
                       <span v-text="items.name"></span>
                     </div>
                     <div class="vgoodsnum">
-                      <span class="goodsprice" v-text="'¥'+items.num.toFixed(2)"></span>
+                      <span class="goodsprice" v-text="'¥'+parseFloat(items.price).toFixed(2)"></span>
                     </div>
                   </div>
                 </div>
@@ -123,7 +123,7 @@
               if(item.products&&item.products.length>0){
                 var totalnum=0
                 item.products.forEach(goods=>{
-                  totalnum+=goods.num
+                  totalnum+=parseFloat(goods.num)
                 })
                 vm.$set(item,'totalnum',totalnum)
               }
