@@ -26,9 +26,9 @@
               <img class="wenhaoimg" style="cursor:pointer;" src="../../../static/img/wenhao.png" @click="showwenhao" />
             </span>
           </div>
-          <span class="wenhaopt" v-if="iswenhaoHide">这是不可提现的金额</span>
+          <span class="wenhaopt" v-if="iswenhaoHide">每笔收入金额需要七天时间解冻，解冻后转到账户余额即可提现</span>
         </div>
-        
+
         <!-- <div class="moneyright">
           <div class="moneyshow">
             <span class="moneynum rtmy">
@@ -61,12 +61,12 @@
 
       </div>
     </div>
-    
+
     <!-- 添加银行卡 -->
     <add-bank-card v-if="isBankCardShow" :fromParent="fromParent" @pviewbankcard="viewbankcard"></add-bank-card>
     <!-- 银行卡递交提示 -->
     <info-prompt v-if="isPromptShow" @pviewprompt="viewprompt"></info-prompt>
-    
+
     <!-- 提现 -->
     <extractlist v-if="isexShow" @pviewex="viewex"></extractlist>
 
@@ -140,7 +140,7 @@ export default {
       vm.isBankCardShow=data[0].isBankCardStatus;
       if(data[0].status&&data[0].status=='refresh'){
         vm.isPromptShow=!vm.isBankCardShow
-        
+
         if(!this.$router.push('/bankCardlist')){
           this.$router.push('/bankCardlist');
           this.activenum='bankCardlist'
@@ -150,7 +150,7 @@ export default {
           this.$router.push(NewPage);
           this.$router.go(-1);
         }
-        
+
         setTimeout(function(){
           vm.isPromptShow = false;
         },2000);
@@ -274,29 +274,10 @@ export default {
     border-color: #724480;
     -webkit-appearance:none;
   }
-  
-  .wenhaoimg{
-    width: 20px;
-    height: 20px;
-  }
-  .wenhaotext{
-    position: relative;
-    top: -2px;
-  }
-  .wenhaotext2{
-    position: relative;
-    top: -4px;
-  }
-  .wenhaopt{
-    display: block;
-    position: absolute;
-    bottom: 30px;
-    color: #fff;
-    width: 140px;
-    height: 20px;
-    line-height: 20px;
-    border: 1px solid #706375;
-    text-align: center;
-    border-radius: 0.5rem;
-  }
+
+  .wenhaoimg{ width: 20px;  height: 20px; }
+  .wenhaotext{ position: relative;  top: -2px; }
+  .wenhaotext2{  position: relative; top: -4px; }
+  .wenhaopt{ display: block;  position: absolute;   bottom: 30px;   color: #fff;   height: 20px;   line-height: 20px;    border: 1px solid #706375;
+    text-align: center; padding:0 10px;border-radius: 0.5rem;  }
 </style>
