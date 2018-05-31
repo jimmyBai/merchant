@@ -131,10 +131,10 @@
                   <span class="search-icon" @click="searchlist"><i class="el-icon-search"></i></span>
                 </div>
                 <el-table stripe :data="reListData">
-                  <el-table-column width="60" prop="username" label="用户名"></el-table-column>
+                  <el-table-column width="120"  prop="username" label="用户名"></el-table-column>
                   <!--<el-table-column prop="phone" label="手机号码"></el-table-column>-->
-                  <el-table-column prop="amount" label="小费金额"></el-table-column>
-                  <el-table-column width="80" prop="payment" label="支付方式"></el-table-column>
+                  <el-table-column width="100" prop="amount" label="小费金额"></el-table-column>
+                  <el-table-column width="100" prop="payment" label="支付方式"></el-table-column>
                   <el-table-column prop="pay_time" label="支付时间"></el-table-column>
                 </el-table>
               </div>
