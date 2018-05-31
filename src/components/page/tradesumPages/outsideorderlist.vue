@@ -138,7 +138,7 @@ export default {
     // 获取小费记录数据
     gettipData(){
       this.ListData = []
-      this.statistics = []
+      this.statistics = {'product_num':0,'sales_num':0,'sales_price':0}
       let vm=this,url='/api/web/report/summary/takeout-products',params={
         page: vm.page,
         length: vm.length,

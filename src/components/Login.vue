@@ -1,5 +1,5 @@
 <template>
-  <div class="loginpage">
+  <div class="loginpage" v-loading="loading">
     <div class="loginbox">
         <div class="login-left">
           <img src='../../static/img/logo.png' alt="" title="018">
@@ -36,6 +36,7 @@ export default {
       phone:'',
       password:'',
       canLogin:false,
+      loading:false
     }
   },
   watch:{
@@ -70,11 +71,13 @@ export default {
   		  return false
       }
       sessionStorage.removeItem('LOGIN_STATUS')
+      this.loading=true
       vm.$axios({
         method:'post',
         url:url,
         data: params
       }).then((res)=>{
+        this.loading=false
         if(res.data.error_code=='0'){
           //吧获取到的Token缓存到状态管理器
           if(res.data.data){
@@ -90,8 +93,8 @@ export default {
         }else{
           vm.$message.error(res.data.message);
         }
-
       }).catch(err => {
+        this.loading=false
         console.log(err);
       });
 

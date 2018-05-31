@@ -195,7 +195,7 @@ import {fetchPost} from '../../../../static/js/fetch.js';
     data () {
       return {
         msgtitle:"",
-        detailinfo:"",
+        detailinfo:{'total_amount':0.00},
         productList:'',
         estimated_time:'',
         deliver_man:'',
@@ -273,9 +273,9 @@ import {fetchPost} from '../../../../static/js/fetch.js';
             type: 'success'
           });
           vm.timeCut(60)
-          if(window.location.href.indexOf('uat.')<0||window.location.href.indexOf('dev.')<0){
+          /*if(window.location.href.indexOf('dev.')<0){
             vm.code='123456'
-          }
+          }*/
           }else{
             vm.$message.error(res.data.message);
             vm.candotime=true;

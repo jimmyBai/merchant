@@ -17,7 +17,7 @@
         <el-table-column prop="product_name" label="商品名称"></el-table-column>
         <el-table-column prop="create_time" label="审核时间"></el-table-column>
         <el-table-column prop="remark" label="拒绝原因"></el-table-column>
-        <el-table-column width="180">
+        <el-table-column width="180" v-if="false">
           <template slot-scope="scope">
             <div class="tdBtn-box">
               <div class="tdbtn-view newView" @click="vieweditor(scope.row.id)">
