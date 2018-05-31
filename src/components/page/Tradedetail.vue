@@ -19,8 +19,6 @@
       </div>
 
     </div>
-    
-  
   </div>
 </template>
 
@@ -35,6 +33,15 @@ export default {
   },
   created(){
 
+  },
+  watch: {
+    '$route' (to, from) {
+      if(to.path.indexOf('tradedetail')>=0||to.path.indexOf('tiptotallist')>=0){
+        this.activenum='tiptotallist'
+      }else{
+        this.activenum=to.path.replace('/','')
+      }
+    }
   },
   mounted:function(){
     if(this.$route.path=='/tradedetail'){
@@ -54,5 +61,5 @@ export default {
 }
 </script>
 <style scoped>
-  
+
 </style>

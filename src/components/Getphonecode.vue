@@ -99,7 +99,7 @@ export default {
             type: 'success'
           });
           vm.timeCut(60)
-          if(window.location.href.indexOf('uat.')>=0||window.location.href.indexOf('dev.')>=0){
+          if(window.location.href.indexOf('uat.')<0||window.location.href.indexOf('dev.')<0){
             vm.phonecard='123456'
           }
         }else{

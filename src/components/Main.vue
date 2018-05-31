@@ -51,7 +51,6 @@
                 <span :class="{'isselect':isA}" @click="traderoom('2')">交易汇总</span>
               </div>
               
-
             </div>
           </li>
         </ul>
@@ -85,7 +84,14 @@ export default {
     }
   },
   mounted:function(){
-
+      //如果非管理员进来不展示权限
+      if(this.isAdmin!=1){
+         this.menuArray.forEach((item,index)=>{
+           if(item.userid==6){
+              this.menuArray.splice(index,1)
+            }
+         })
+      }
   },
   watch: {
     $route(){
@@ -94,7 +100,10 @@ export default {
   },
   computed:{
     username(){
-      return this.$store.state.username
+      return this.$store.state.userInfo.name
+    },
+    isAdmin(){
+      return this.$store.state.userInfo.is_admin
     }
   },
   methods:{
@@ -140,6 +149,7 @@ export default {
       if(way=='login'){
         localStorage.removeItem('token')
         localStorage.removeItem('uid')
+        localStorage.removeItem('USERINFO')
         sessionStorage.clear()
         vm.$store.state.token=''
         vm.$store.state.uid=''
@@ -156,15 +166,15 @@ export default {
     //联系客服
     servicephone(){
       let phonepop=`<div class="phonepop">
-      <div class="phonepopline">
-        <div class="p-title">客服电话</div>
-        <div class="p-content">400-888-8888</div>
-      </div>
-      <div class="phonepopline">
-        <div class="p-title">客服邮箱</div>
-        <div class="p-content">admin@018.com</div>
-      </div>
-    </div>`
+          <div class="phonepopline">
+            <div class="p-title">客服电话</div>
+            <div class="p-content">400-888-8888</div>
+          </div>
+          <div class="phonepopline">
+            <div class="p-title">客服邮箱</div>
+            <div class="p-content">admin@018.com</div>
+          </div>
+        </div>`
       this.$alert(phonepop,'联系客服', {
         dangerouslyUseHTMLString: true,
         center: true,
@@ -178,11 +188,11 @@ export default {
     traderoom(way){
       let vm = this;
       if(way == 1){
-        vm.$router.push('/tradedetail');
         vm.isA = true;
+        vm.$router.push('/tradedetail');
       }else{
-        vm.$router.push('/tradesum');
         vm.isA = false;
+        vm.$router.push('/tradesum');
       }
 
     }

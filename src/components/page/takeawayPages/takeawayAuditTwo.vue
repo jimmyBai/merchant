@@ -25,18 +25,18 @@
         <el-table-column prop="capacity" label="容量"></el-table-column>
         <el-table-column prop="status" label="产品状态"></el-table-column>
         <el-table-column prop="create_time" label="递交时间"></el-table-column>
-        <el-table-column width="180">
-          <template slot-scope="scope">
-            <div class="tdBtn-box">
-              <div class="tdbtn-view newView" @click="vieweditor(scope.row.product_id)">
-                <i class="el-icon-view"></i><span>查看/编辑</span>
-              </div>
-              <div class="tdBtn-view" @click="removeThis(scope.row.product_id)">
-                <i class="el-icon-delete"></i>&nbsp;&nbsp;<span>删除</span>
-              </div>
-            </div>
-          </template>
-        </el-table-column>
+        <!--<el-table-column width="180">-->
+          <!--<template slot-scope="scope">-->
+            <!--<div class="tdBtn-box">-->
+              <!--<div class="tdbtn-view newView" @click="vieweditor(scope.row.product_id)">-->
+                <!--<i class="el-icon-view"></i><span>查看/编辑</span>-->
+              <!--</div>-->
+              <!--<div class="tdBtn-view" @click="removeThis(scope.row.product_id)">-->
+                <!--<i class="el-icon-delete"></i>&nbsp;&nbsp;<span>删除</span>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</template>-->
+        <!--</el-table-column>-->
       </el-table>
       <div class="list-bottom"></div>
     </div>

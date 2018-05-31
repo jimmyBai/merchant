@@ -3,7 +3,6 @@
     <!-- infoList -->
     <div class="listtable">
       <div class="list-search">
-
         <div class="ls-left">
           <div class="form-tabel">
             <div class="td-title">外送商品表</div>
@@ -13,20 +12,18 @@
             </div>
           </div>
         </div>
-
       </div>
-
       <el-table stripe :data="ListData">
-        <el-table-column width="80" prop="product_name" label="商品名称"></el-table-column>
-        <el-table-column width="80" prop="remark" label="审核时间"></el-table-column>
+        <el-table-column prop="product_name" label="商品名称"></el-table-column>
+        <el-table-column prop="create_time" label="审核时间"></el-table-column>
         <el-table-column prop="remark" label="拒绝原因"></el-table-column>
         <el-table-column width="180">
           <template slot-scope="scope">
             <div class="tdBtn-box">
-              <div class="tdbtn-view newView" @click="vieweditor(scope.row.product_id)">
+              <div class="tdbtn-view newView" @click="vieweditor(scope.row.id)">
                 <i class="el-icon-view"></i><span>查看/编辑</span>
               </div>
-              <div class="tdBtn-view" @click="removeThis(scope.row.product_id)">
+              <div class="tdBtn-view" @click="removeThis(scope.row.id)">
                 <i class="el-icon-delete"></i>&nbsp;&nbsp;<span>删除</span>
               </div>
             </div>
@@ -35,14 +32,12 @@
       </el-table>
       <div class="list-bottom"></div>
     </div>
-
     <!-- 分页 -->
     <div class="pagination">
       <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
-
     <!-- 添加/查看商品 -->
-    <view-goods v-if="isTakeawayShow" :fromParent="fromParent" @viewevent="viewevent"></view-goods>
+    <view-goods v-if="isTakeawayShow" :fromParent="fromParent" :isrefuse="isrefuse" @viewevent="viewevent"></view-goods>
 
   </div>
 </template>
@@ -66,11 +61,10 @@ export default {
       per_page:0,
       total:0,
       total_page:0,
-      value1: true,
-      value2: true,
       isTakeawayShow: false,
       index: '',
-      fromParent:''
+      fromParent:'',
+      isrefuse:true
     }
   },
   mounted:function(){
@@ -119,10 +113,6 @@ export default {
       this.page=val
       this.getlistData();
     },
-    clickadd(){
-      this.fromParent=''
-      this.isTakeawayShow = true;
-    },
     vieweditor(id){
       this.isTakeawayShow = true;
       this.fromParent=id.toString();
@@ -130,8 +120,8 @@ export default {
     // 删除
     removeThis(id){
       let vm = this,
-      url='/api/web/product/delete',
-      params={'product_id':id}
+      url='/api/web/product/del-audit',
+      params={'id':id}
       vm.$axios({
         method:'post',
         data:params,

@@ -110,7 +110,7 @@
         </div>
         <div class="line">
           <div class="title">店铺描述：</div>
-          <div class="content"><div class="mytextarea"><textarea maxlength="240" v-model="ListData.describe" ></textarea></div></div>
+          <div class="content"><div class="mytextarea"><textarea maxlength="250" v-model="ListData.describe" ></textarea></div></div>
         </div>
         <div class="line">
           <div class="title">配送范围：</div>
@@ -817,7 +817,7 @@ import myMap from '../mapPages/myMap'
 .logobox i{ font-size: 24px;}
 .logobox>div{ position: relative; height: 100%; display: flex; display: -webkit-flex; align-items: center; -webkit-align-items: center;justify-content: center;-webkit-justify-content: center}
 .line .title{ min-width: 80px; text-align: right}
-.logobox>div img{width: 100%;min-width:135px}
+.logobox>div img{width: 100%;min-width:135px; height: 100%}
 .time-select-item{ color:#e4e7ed }
 el-scrollbar__view .disabled{color:#e4e7ed }
 

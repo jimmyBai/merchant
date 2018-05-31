@@ -166,11 +166,6 @@ export default new Router({
             ]
           },
           {
-            path:'/export',
-            meta:{keepAlive:true},
-            component:resolve=>require(['../components/page/Export.vue'],resolve)
-          },
-          {
             path:'/tradedetail',
             meta:{keepAlive:true},
             component:resolve=>require(['../components/page/Tradedetail.vue'],resolve),

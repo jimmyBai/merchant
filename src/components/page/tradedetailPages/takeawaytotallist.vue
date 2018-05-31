@@ -13,7 +13,7 @@
               <img class="phoneimg" src="../../../../static/img/tipone.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.total_price" class="apcolor"></span>
+              <span v-text="'¥'+statistics.total_price" class="apcolor"></span>
               <span>总额</span>
             </div>
           </div>
@@ -22,7 +22,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.product_price" class="apcolor"></span>
+              <span v-text="'¥'+statistics.product_price" class="apcolor"></span>
               <span>商品总额</span>
             </div>
           </div>
@@ -31,7 +31,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.delivery_price" class="apcolor"></span>
+              <span v-text="'¥'+statistics.delivery_price" class="apcolor"></span>
               <span>配送费</span>
             </div>
           </div>
@@ -40,7 +40,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.paid_price" class="apcolor"></span>
+              <span v-text="'¥'+statistics.paid_price" class="apcolor"></span>
               <span>实付金额</span>
             </div>
           </div>
@@ -49,7 +49,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="statistics.platform_price" class="apcolor"></span>
+              <span v-text="'¥'+statistics.platform_price" class="apcolor"></span>
               <span>平台服务费</span>
             </div>
           </div>
@@ -131,7 +131,7 @@ export default {
     return {
       ishowSearch: false,
       ListData: [],
-      statistics: [],
+      statistics: '',
       page: "1", //页码，默认为1
       length: "10", //每页记录数，默认为10
       page:0,
@@ -163,7 +163,7 @@ export default {
     // 获取外送统计数据
     gettipData(){
       this.ListData = []
-      this.statistics = []
+      this.statistics = {'total_price':0,'product_price':0,'delivery_price':0,'paid_price':0,'platform_price':0}
       let vm=this,url='/api/web/report/summary/takeout-sales',params={
         page: vm.page,
         length: vm.length,
