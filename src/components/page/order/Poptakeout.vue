@@ -96,11 +96,20 @@
                       </div>
                     </li>
                     <li class="savebtn">
-                      <div @click="orderFn(0)">
+                      <div @click="showReason=!showReason">
                         <span>取消订单</span>
                       </div>
                     </li>
+                    <li class="reasonli" v-if="showReason">
+                      <textarea v-model="reason" placeholder="请输入取消原因" maxlength="30"></textarea>
+                    </li>
+                    <li class="savebtn" v-if="showReason">
+                      <div @click="orderFn(0)">
+                        <span>提交</span>
+                      </div>
+                    </li>
                   </ul>
+
                 </div>
               </div>
 
@@ -205,6 +214,8 @@ import {fetchPost} from '../../../../static/js/fetch.js';
         printvalue:'',
         printList:[],
         candotime:true,
+        reason:'',
+        showReason:false,
         code:'',
           USER:"sheep@yottaspace.cn",//必填，飞鹅云 www.feieyun.cn后台注册的账号名
           UKEY:"hgfZmCRytUsZPese",//必填，飞鹅云后台注册账号后生成的UKEY
@@ -424,6 +435,11 @@ import {fetchPost} from '../../../../static/js/fetch.js';
           url='/api/web/order/accept'
         }else{
           url='/api/web/order/cancel'
+          params.reason=vm.reason
+          if(!vm.reason.replace(/\s/g,'')){
+            vm.$message.error('取消订单必须填写原因！');
+            return
+          }
         }
         vm.$axios({
           method:'post',
@@ -517,4 +533,8 @@ em{ font-style: normal; margin-right: 5px; color: #ac5397}
 .printcheckbox{ display: flex;display:-webkit-flex; align-items: center;-webkit-align-items: center}
 .checkIcon{ height: 12px;width: 12px; font-size: 12px; display: inline-block;content: ''; border-radius: 2px; border: 1px solid #fff; background: #b95e15}
 .printcheckbox>span{ margin-left: 5px}
+/**取消原因**/
+.deliverItem ul li.reasonli{background: #8e680c; height: 40px; padding: 5px 10px}
+ul li.reasonli textarea{width: 100%; font-size: 12px; color: #fff; width: 100%; -webkit-appearance: none; resize: none; border: none; background: none; }
+ul li.reasonli textarea::placeholder{ color: #fff}
 </style>

@@ -425,8 +425,8 @@ import myMap from '../mapPages/myMap'
           imgobj=event.target.files[0],
           // maxSize=1024*1024*2,
           maxSize=1024*300*1,
-          maxWidth=400,
-          maxHeight=300;
+          maxWidth=750,
+          maxHeight=330;
         if(way!=3){
           //判断图片张数
           if(!item){
