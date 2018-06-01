@@ -56,7 +56,7 @@
             <!-- 显示二维码 -->
             <div class="response" v-show="isqrcodeShow">
               <div id="qrcode" class="qrcode"></div>
-              <img  :src="qrurl"/>
+              <img v-if="qrurl" style="height: 160px; width: 160px; border:2px solid #fff" :src="qrurl"/>
             </div>
             <input type="button" v-if="!isqrcodeShow" value="点击生成二维码" @click="commontwocode('1')">
             <input type="button" v-if="isqrcodeShow" value="点击下载" @click="commontwocode('2')">
@@ -229,8 +229,8 @@ export default {
       vm.canvasQr=$('#qrcode').qrcode({
         render: "canvas",
         text: vm.$store.state.uid.toString(),
-        width: "160", //二维码的宽度
-        height: "160", //二维码的高度
+        width: "500", //二维码的宽度
+        height: "500", //二维码的高度
         background: "#ffffff", //二维码的后景色
         foreground: "#4c3d7b", //二维码的前景色
         correctLevel: 3, //纠错等级

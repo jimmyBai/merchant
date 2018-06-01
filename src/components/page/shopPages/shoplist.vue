@@ -114,13 +114,17 @@
         </div>
         <div class="line">
           <div class="title">配送范围：</div>
-          <div class="content"><input type="tel" v-model="ListData.delivery_range" placeholder="请输入最大配送范围" />&nbsp;&nbsp;km</div>
+          <div class="content"><input type="tel" v-model="ListData.delivery_range" placeholder="请输入最大配送范围" />&nbsp;&nbsp;米</div>
         </div>
         <div class="line">
-          <div class="title"><em>*&nbsp;&nbsp;</em>配送时间：</div>
+          <div class="title">配送起步价：</div>
+          <div class="content"><input type="tel" v-model="ListData.delivery_start_price" placeholder="请输入配送最低起步价" />&nbsp;&nbsp;元</div>
+        </div>
+        <div class="line">
+          <div class="title">配送时间：</div>
           <div class="content">  <!-- style="width: 222px" -->
             <el-time-select v-model="estimated_time" style="width: 222px;" :editable="false" :picker-options="{ start: '00:00',step: '00:05',end: '01:30'}" placeholder="选择时间">
-            </el-time-select>&nbsp;&nbsp;<span>分钟</span>
+            </el-time-select>&nbsp;&nbsp;<span>&nbsp;&nbsp;分钟</span>
           </div>
         </div>
         <div class="line">
@@ -287,7 +291,7 @@ import myMap from '../mapPages/myMap'
     watch:{
       'ListData.telephone'(cVal,oVal){
         if(cVal){
-          return this.ListData.telephone=cVal.replace(/\D/,'')
+          return this.ListData.telephone=cVal.replace(/[^0-9\-]/,'')
         }
       },
       'ListData.consumption_max'(cVal,oVal){
@@ -295,7 +299,7 @@ import myMap from '../mapPages/myMap'
           if(/^\d+(\.\d+)?$/.test(cVal)){
 
           }else{
-            return this.ListData.consumption_max=cVal.replace(/^\D*([1-9]\d|0?\.?\d{0,2})?.*$/,'$1')
+            return this.ListData.consumption_max=cVal.replace(/^\D*([0-9]\d\.?\d{0,2})?.*$/,'$1')
           }
         }
       },
@@ -304,9 +308,14 @@ import myMap from '../mapPages/myMap'
           if(/^\d+(\.\d+)?$/.test(cVal)){
 
           }else{
-            return this.ListData.consumption_min=cVal.replace(/^\D*([1-9]\d*|0?\.?\d{0,2})?.*$/,'$1')
+            return this.ListData.consumption_min=cVal.replace(/^\D*([0-9]\d*\d{0,2})?.*$/,'$1')
           }
 
+        }
+      },
+      'ListData.delivery_start_price'(cVal,oVal){
+        if(cVal){
+          return this.ListData.delivery_start_price=cVal.replace(/^\D*([0-9]\d*\.?\d{0,2})?.*$/,'$1')
         }
       }
     },
@@ -709,21 +718,22 @@ import myMap from '../mapPages/myMap'
               if(timelineobj.interval.begin&&timelineobj.interval.end){
                 if((item.am_begin&&item.am_end)||(item.pm_begin&&item.pm_end)){
                   business.push(timelineobj)
-                }else{
                   flag=true
                 }
-              }else{
-                flag=true
               }
             }
           })
         }
-        if(flag){
+        if(!flag){
           vm.$message.error('店铺时间必须设置！');
           return false
         }
         if(parseFloat(vm.ListData.consumption_max)<parseFloat(vm.ListData.consumption_min)){
           vm.$message.error('最高消费不能小于最低消费！');
+          return false
+        }
+        if(parseFloat(vm.ListData.delivery_start_price)<=0){
+          vm.$message.error('配送最低起步价必须大于0！');
           return false
         }
         params={
@@ -742,7 +752,8 @@ import myMap from '../mapPages/myMap'
           'lng':vm.ListData.lng,
           'delivery_range':vm.ListData.delivery_range,
           'delivery_time':timesStr,
-          'address_detail':vm.ListData.address_detail
+          'address_detail':vm.ListData.address_detail,
+          'delivery_start_price':vm.ListData.delivery_start_price
         }
 
         vm.$axios({
