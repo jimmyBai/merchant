@@ -63,7 +63,7 @@
 
         <div class="line">
           <div class="title">店铺座机：</div>
-          <div class="content"><input type="tel" v-model="ListData.telephone"/></div>
+          <div class="content"><input type="tel" maxlength="20" v-model="ListData.telephone"/></div>
         </div>
 
         <div class="line">
@@ -753,7 +753,7 @@ import myMap from '../mapPages/myMap'
           'delivery_range':vm.ListData.delivery_range,
           'delivery_time':timesStr,
           'address_detail':vm.ListData.address_detail,
-          'delivery_start_price':vm.ListData.delivery_start_price
+          'delivery_start_price':parseFloat(vm.ListData.delivery_start_price).toFixed(2)
         }
 
         vm.$axios({
