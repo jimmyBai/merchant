@@ -210,6 +210,11 @@ export default new Router({
             ]
           },
           {
+            path:'/livereport',
+            meta:{keepAlive:true},
+            component:resolve=>require(['../components/page/report/Livetotal.vue'],resolve),
+          },
+          {
             path:'/takeaway',
             meta:{keepAlive:true},
             component:resolve=>require(['../components/page/Takeaway.vue'],resolve),

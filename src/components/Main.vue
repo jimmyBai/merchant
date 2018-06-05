@@ -45,12 +45,13 @@
               <span v-text="item.name"></span>
               <img src="../../static/img/leftarrow.png" v-if="!isdradeShow&&item.userid==4" class="ltimg" >
               <img src="../../static/img/downarrow.png" v-if="isdradeShow&&item.userid==4" class="dnimg">
-              
+
               <div class="newmenu" v-if="isdradeShow&&item.userid==4">
-                <span :class="{'isselect':!isA}" @click="traderoom('1')">交易明细</span>
-                <span :class="{'isselect':isA}" @click="traderoom('2')">交易汇总</span>
+                <span :class="{'isselect':navIndex==1}" @click="traderoom('1')">交易明细</span>
+                <span :class="{'isselect':navIndex==2}" @click="traderoom('2')">交易汇总</span>
+                <span :class="{'isselect':navIndex==3}" @click="traderoom('3')">直播总汇报表</span>
               </div>
-              
+
             </div>
           </li>
         </ul>
@@ -80,7 +81,7 @@ export default {
         {'name':'信息','userid':8,'icon':'08'},
       ],
       isdradeShow:false,
-      isA: true,
+      navIndex: '',
     }
   },
   mounted:function(){
@@ -187,12 +188,16 @@ export default {
     },
     traderoom(way){
       let vm = this;
+      vm.navIndex=way
       if(way == 1){
         vm.isA = true;
         vm.$router.push('/tradedetail');
+      }else if(way == 2){
+        vm.isA = true;
+        vm.$router.push('/tradesum');
       }else{
         vm.isA = false;
-        vm.$router.push('/tradesum');
+        vm.$router.push('/livereport');
       }
 
     }
@@ -237,8 +242,8 @@ export default {
 .popmyinfo ul.iconul li{ text-align: left; padding: 3px 10px; padding-left: 15px}
 
 .newmenu{ margin-top: 20px;}
-.newmenu span{ margin-top: 10px;}
+.leftmenubar ul li.active .newmenu span{ margin-top: 10px; color: #aa96b1}
 .pmenu .ltimg{ width: 6px;  position: absolute; top: 26px; right: 10px;}
 .pmenu .dnimg{ width: 12px; position: absolute; top: 32px; right: 8px;}
-.leftmenubar ul li .isselect{ color: #aa96b1;}
+.leftmenubar ul li.active .newmenu .isselect{ color: #f6e2fd;}
 </style>
