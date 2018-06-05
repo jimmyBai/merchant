@@ -238,3 +238,17 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 ::-webkit-scrollbar { width: 5px; height: 5px;}
 ::-webkit-scrollbar-thumb {border-radius: 5px; -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2); background: #535353;}
 ::-webkit-scrollbar-track {-webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.2);  border-radius: 5px; background: #EDEDED;}
+
+/**直播报表**/
+.livereportbar>div .el-input{ font-size: 12px}
+.livereportbar>div .el-input__icon{ line-height: 26px}
+.livereportbar>div .el-input__inner{ font-size: 12px; height: 26px; line-height: 26px;border-radius:1px;background: #2e1c34;color: #f8e2ff;border:1px solid #48344e; }
+.livereportbar>div .el-input__inner:focus{ border:1px solid #48344e;}
+.el-date-picker__time-header{ border-bottom: none}
+.el-date-picker__time-header .el-input--small .el-input__inner{ font-size: 12px;border-radius:1px;background: #2e1c34;color: #f8e2ff;border:1px solid #48344e; }
+.el-date-table td.current:not(.disabled) span{ background:#2e1c34 }
+.el-date-table td.today span{ color: #f8e2ff}
+.el-date-picker__header-label.active, .el-date-picker__header-label:hover {  color: #f8e2ff;}
+.el-picker-panel__footer{ background: none}
+.el-picker-panel__footer .el-button,.el-button.is-plain:focus, .el-button.is-plain:hover{background: #2e1c34; border:1px solid #48344e}
+.el-button--text , .el-button--text:focus, .el-button--text:hover{ color: #f8e2ff; display: inline-block; min-width: 60px; text-align: center}
