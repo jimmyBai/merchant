@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-  
+
     <div class="listtable">
       <div class="list-search">
 
@@ -62,7 +62,7 @@
     </div>
 
   </div>
-    
+
 </template>
 <script>
 // andy
@@ -90,7 +90,7 @@ import "../../../../static/css/newStyle.css"
           {value: 'seat',label: '订座'},
           {value: 'vip_member',label: '直播会员'},
           {value: 'prepaid_card',label: '充值卡'},
-          {value: 'tip',label: '消费'}
+          {value: 'tip',label: '小费'}
         ]
 
       }
@@ -158,7 +158,7 @@ import "../../../../static/css/newStyle.css"
   .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
   .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center;}
   .td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
-  
+
   .orstatus{
     float: left;
   }

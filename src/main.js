@@ -51,15 +51,18 @@ axios.defaults.timeout = 30000;
 axios.defaults.responseType = 'json';
 //全局请求配置
 axios.interceptors.request.use(config=>{
+  store.dispatch('changeLoading',true);
   if(store.state.token){
     Object.assign(config.headers, {'token': store.state.token,'uid': store.state.uid});
   }
   return config;
 },error=>{
+  store.dispatch('changeLoading',false);
   return Promise.reject(error);
 })
 
 axios.interceptors.response.use(function (response) {
+  store.dispatch('changeLoading',false);
   //code=100005 令牌错误
   if(response.request.response.error_code=='100005'){
     localStorage.clear()
@@ -73,6 +76,8 @@ axios.interceptors.response.use(function (response) {
 
   return response;
 }, function (error) {
+
+  store.dispatch('changeLoading',false);
   return Promise.reject(error);
 });
 //关闭生产模式下给出的提示

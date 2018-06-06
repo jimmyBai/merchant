@@ -252,3 +252,10 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .el-picker-panel__footer{ background: none}
 .el-picker-panel__footer .el-button,.el-button.is-plain:focus, .el-button.is-plain:hover{background: #2e1c34; border:1px solid #48344e}
 .el-button--text , .el-button--text:focus, .el-button--text:hover{ color: #f8e2ff; display: inline-block; min-width: 60px; text-align: center}
+.el-month-table td.disabled .cell,.el-year-table td.disabled .cell , .el-date-table td.disabled div{ background:#2d2330 }
+.el-picker-panel__icon-btn{ color:#aa96b1 }
+
+/**全局loading**/
+.fullpage{ position: absolute;width: 100%;height: 100%; z-index: 2000; background-color: rgba(0, 0, 0, 0.8); display: flex;justify-content:center;-webkit-justify-content: center; display: -webkit-flex;align-items: center;-webkit-align-items: center}
+.loadingImg{ color: #ac5397; display: flex;display: -webkit-flex; align-items: center; font-size: 14px}
+.loadingImg i{ color:#ac5397 ;font-size: 32px; margin-right: 5px}

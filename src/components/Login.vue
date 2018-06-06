@@ -1,5 +1,5 @@
 <template>
-  <div class="loginpage" v-loading="loading">
+  <div class="loginpage">
     <div class="loginbox">
         <div class="login-left">
           <img src='../../static/img/logo.png' alt="" title="018">
@@ -35,8 +35,7 @@ export default {
       ischeck:false,
       phone:'',
       password:'',
-      canLogin:false,
-      loading:false
+      canLogin:false
     }
   },
   watch:{
@@ -67,7 +66,6 @@ export default {
   		  return false
       }
       sessionStorage.removeItem('LOGIN_STATUS')
-      this.loading=true
       vm.$axios({
         method:'post',
         url:url,
@@ -90,7 +88,6 @@ export default {
           vm.$message.error(res.data.message);
         }
       }).catch(err => {
-        this.loading=false
         console.log(err);
       });
 

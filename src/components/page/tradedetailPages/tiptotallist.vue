@@ -88,7 +88,7 @@
          <!-- <el-table-column prop="phone" label="手机号码"></el-table-column>-->
           <el-table-column prop="manager" label="管理员"></el-table-column>
           <el-table-column prop="store_user_role" label="角色"></el-table-column>
-          <el-table-column prop="amount" label="小费金额"></el-table-column>
+          <el-table-column prop="amount|formatMoney" label="小费金额"></el-table-column>
           <el-table-column prop="pay_type" label="支付方式"></el-table-column>
           <el-table-column prop="platform_price" label="平台服务费"></el-table-column>
           <el-table-column prop="create_time" label="支付时间"></el-table-column>
@@ -138,6 +138,13 @@ export default {
   },
   mounted:function(){
     this.gettipData()
+  },
+  filters: {
+    formatMoney: function (value) {
+      if (!value) return ''
+      let date = value.toString()
+      return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    }
   },
   methods:{
     // 获取小费记录数据

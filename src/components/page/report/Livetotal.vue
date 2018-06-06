@@ -5,9 +5,9 @@
     </div>
     <div class="livereportbar">
       <div class="title">时间范围</div>
-      <el-date-picker :editable="false" v-model="startTime" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
+      <el-date-picker :editable="false" v-model="startTime" :picker-options="pickerstar" value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
       <span>至</span>
-      <el-date-picker :editable="false" v-model="endTime" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
+      <el-date-picker :editable="false" v-model="endTime" :picker-options="pickerend" value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
       <div class="search-icon" @click="searchlist"><i class="el-icon-search"></i></div>
     </div>
     <div class="echartBox">
@@ -49,16 +49,33 @@ import echarts from'../../../../static/js/echarts.js'
 export default {
   data () {
     return {
-      startTime:'',
-      endTime:'',
-      chartData:'',
-      chartZoom:'',
-      xAxis:'',
-      tableData:''
+      startTime: '',
+      endTime: '',
+      chartData: '',
+      chartZoom: '',
+      xAxis: '',
+      tableData: '',
+      pickerstar: {
+        disabledDate:(time)=> {
+          if (this.endTime&&this.endTime != "") {
+              return time.getTime() > Date.now() || time.getTime() > new Date(this.endTime).getTime()|| time.getTime() < new Date(this.endTime).getTime()-(1000*24*60*60*30);
+          }else {
+             return time.getTime() > Date.now();
+          }
+        }
+      },
+      pickerend: {
+        disabledDate:(time)=>{
+          if (this.startTime&&this.startTime != "") {
+            return time.getTime() < new Date(this.startTime).getTime() - (1000 * 24 * 60 * 60 ) || time.getTime() > Date.now() || time.getTime() > new Date(this.startTime).getTime() + (1000 * 24 * 60 * 60 * 30);
+          }else{
+            return time.getTime() > Date.now()
+          }
+        }
+      }
     }
   },
   created(){
-
   },
   mounted:function(){
     this.getlistData()
@@ -88,12 +105,21 @@ export default {
       });
     },
     searchlist(){
-      this.getlistData()
+      let vm =this;
+     if(vm.endTime&&vm.startTime){
+       this.getlistData()
+     }else{
+       vm.$message.error('请填写查询时间');
+     }
+
     },
     //获取Echarts
     setEchart(){
       let vm =this;
       var myChart = echarts.init(document.getElementById('main'));
+          myChart.showLoading({
+            text: "图表数据正在努力加载..."
+          });
       // 指定图表的配置项和数据
       var option = {
         title: {
@@ -220,7 +246,7 @@ export default {
 
         }]
       };
-
+      myChart.hideLoading();
       // 使用刚指定的配置项和数据显示图表。
       myChart.setOption(option);
     }
