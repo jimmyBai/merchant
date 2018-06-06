@@ -46,7 +46,6 @@
 
 <script>
 import echarts from'../../../../static/js/echarts.js'
-import data from'./aqi-beijing.json'
 export default {
   data () {
     return {
@@ -196,13 +195,10 @@ export default {
 
         },
         dataZoom: [
-          {
-            startValue: vm.chartZoom.startValue||'2018-05-01',
-            endValue: vm.chartZoom.endValue||'2018-05-01'
-          },
           {type: 'inside'},
           {
-            show:true,                              //是否显示 组件。如果设置为 false，不会显示，但是数据过滤的功能还存在。
+            startValue: vm.chartZoom.startValue||'2018-05-01',
+            endValue: vm.chartZoom.endValue||'2018-05-01',
             backgroundColor:"rgba(47,69,84,0)",  //组件的背景颜色
             dataBackground:{                        //数据阴影的样式。
               lineStyle:'mylineStyle',              //阴影的线条样式
@@ -210,6 +206,9 @@ export default {
             },
             fillerColor:"rgba(167,183,204,0.4)",  //选中范围的填充颜色。
             borderColor:"#48344e",                     //边框颜色。
+            textStyle:{
+              color:'#aa96b1'
+            }
           }
         ],
         series: [{
