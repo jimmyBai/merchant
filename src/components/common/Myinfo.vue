@@ -110,7 +110,7 @@
                     <img src="../../../static/img/tipone.png" alt="">
                   </div>
                   <div class="insideright">
-                    <span v-text="'¥'+statistics.amount" class="apcolor"></span>
+                    <span v-text="$options.filters.viewMoney(statistics.amount,1)" class="apcolor"></span>
                     <span>总小费金额</span>
                   </div>
                 </div>
@@ -133,7 +133,7 @@
                 <el-table stripe :data="reListData">
                   <el-table-column width="120"  prop="username" label="用户名"></el-table-column>
                   <!--<el-table-column prop="phone" label="手机号码"></el-table-column>-->
-                  <el-table-column width="100" prop="amount" label="小费金额"></el-table-column>
+                  <el-table-column width="100" prop="amount" :formatter="formatMoney" label="小费金额"></el-table-column>
                   <el-table-column width="100" prop="payment" label="支付方式"></el-table-column>
                   <el-table-column prop="pay_time" label="支付时间"></el-table-column>
                 </el-table>
@@ -218,11 +218,29 @@ export default {
       };
     }
   },
+  filters: {
+    viewMoney: function (value,way) {
+      if (!value) return '¥0'
+      let date = value.toString()
+      if(way>0){
+        return "¥"+date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }else{
+        return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }
+    }
+  },
   mounted:function(){
     this.getlistData()
     this.gettipData()
   },
   methods:{
+    formatMoney(row, column) {
+      var date = row[column.property];
+      if (date == undefined) {
+        return "";
+      }
+      return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    },
     setQrcode(){
       let vm =this;
       vm.canvasQr=''

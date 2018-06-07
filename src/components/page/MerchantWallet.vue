@@ -8,7 +8,7 @@
         <div class="moneyleft">
           <div class="moneyshow">
             <span class="moneynum">
-              <span>￥<span v-text="ListData.balance"></span></span>
+              <span><span v-text="$options.filters.viewMoney(ListData.balance,1)"></span></span>
             </span>
             <span class="moneytext">
               <span class="wenhaotext">账户余额</span>
@@ -19,7 +19,7 @@
         <div class="moneycontent">
           <div class="moneyshow">
             <span class="moneynum ctmy">
-              <span>￥<span v-text="ListData.frozen_balance"></span></span>
+              <span><span v-text="$options.filters.viewMoney(ListData.frozen_balance,1)"></span></span>
             </span>
             <span class="moneytext">
               <span class="wenhaotext2">不可提现金额</span>
@@ -100,6 +100,17 @@ export default {
   created(){
 
   },
+  filters: {
+    viewMoney: function (value,way) {
+      if (!value) return '¥0'
+      let date = value.toString()
+      if(way>0){
+        return "¥"+date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }else{
+        return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }
+    }
+  },
   mounted:function(){
     if(this.$route.path=='/MerchantWallet'){
       this.activenum='incomelist'
@@ -116,7 +127,6 @@ export default {
       this.activenum=way
       this.$router.push('/'+way)
     },
-
     // 获取余额数据
     getlistData(){
       this.ListData = []

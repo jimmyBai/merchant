@@ -20,8 +20,8 @@
         <!--<el-table-column label="用户名" prop="username"></el-table-column>
         <el-table-column label="手机号" prop="phone"></el-table-column>-->
         <el-table-column label="商品数量" prop="totalnum"></el-table-column>
-        <el-table-column label="配送费" prop="delivery_fee"></el-table-column>
-        <el-table-column label="付款金额" prop="order_paid_price"></el-table-column>
+        <el-table-column label="配送费" prop="delivery_fee"  :formatter="formatMoney"></el-table-column>
+        <el-table-column label="付款金额" prop="order_paid_price" :formatter="formatMoney"></el-table-column>
         <el-table-column label="订单状态">
           <template slot-scope="scope">
             <span v-if="scope.row.order_status!=1" :class="'status-'+scope.row.order_status" v-text="scope.row.order_status_name"></span>
@@ -89,10 +89,21 @@
     created(){
 
     },
+    filters: {
+
+    },
     mounted:function(){
       this.getMemberOrder()
     },
     methods:{
+      //金钱格式化
+      formatMoney(row, column) {
+        var date = row[column.property];
+        if (date == undefined) {
+          return "";
+        }
+        return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      },
       getMemberOrder(){
         let vm =this,url='/api/web/order/list',params={
           "user_id": sessionStorage.getItem('user_id')||"",    //为空表示所有

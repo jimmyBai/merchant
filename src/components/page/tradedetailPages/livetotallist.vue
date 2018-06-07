@@ -13,7 +13,7 @@
               <img class="phoneimg" src="../../../../static/img/tipone.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="'¥'+summary_data.total_price" class="apcolor"></span>
+              <span v-text="$options.filters.viewMoney(summary_data.total_price,1)" class="apcolor"></span>
               <span>总额</span>
             </div>
           </div>
@@ -22,7 +22,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="'¥'+summary_data.package_price" class="apcolor"></span>
+              <span v-text="$options.filters.viewMoney(summary_data.package_price,1)" class="apcolor"></span>
               <span>套餐总额</span>
             </div>
           </div>
@@ -31,7 +31,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="'¥'+summary_data.user_pay_price" class="apcolor"></span>
+              <span v-text="$options.filters.viewMoney(summary_data.user_pay_price,1)" class="apcolor"></span>
               <span>实付金额</span>
             </div>
           </div>
@@ -40,7 +40,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="'¥'+summary_data.platform_price" class="apcolor"></span>
+              <span v-text="$options.filters.viewMoney(summary_data.platform_price,1)" class="apcolor"></span>
               <span>平台服务费</span>
             </div>
           </div>
@@ -83,10 +83,10 @@
             <el-table-column width="140" prop="create_time" label="时间"></el-table-column>
             <el-table-column prop="username" label="用户名"></el-table-column>
             <el-table-column prop="product_name" label="商品套餐"></el-table-column>
-            <el-table-column prop="product_price" label="套餐费用"></el-table-column>
-            <el-table-column prop="order_total_price" label="实付金额"></el-table-column>
-            <el-table-column prop="platform_price" label="平台服务费"></el-table-column>
-            <el-table-column prop="total_price" label="总额"></el-table-column>
+            <el-table-column prop="product_price" label="套餐费用" :formatter="formatMoney"></el-table-column>
+            <el-table-column prop="order_total_price" label="实付金额" :formatter="formatMoney"></el-table-column>
+            <el-table-column prop="platform_price" label="平台服务费" :formatter="formatMoney"></el-table-column>
+            <el-table-column prop="total_price" label="总额" :formatter="formatMoney"></el-table-column>
             <el-table-column prop="pay_name" label="支付方式"></el-table-column>
             <el-table-column prop="pay_status" label="订单状态"></el-table-column>
           </el-table>
@@ -139,7 +139,25 @@ export default {
   mounted:function(){
     this.gettipData()
   },
+  filters: {
+    viewMoney: function (value,way) {
+      if (!value) return '¥0'
+      let date = value.toString()
+      if(way>0){
+        return "¥"+date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }else{
+        return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }
+    }
+  },
   methods:{
+    formatMoney(row, column) {
+      var date = row[column.property];
+      if (date == undefined) {
+        return "";
+      }
+      return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    },
     // 获取小费记录数据
     gettipData(){
       this.ListData = []

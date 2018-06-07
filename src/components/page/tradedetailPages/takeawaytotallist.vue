@@ -13,7 +13,7 @@
               <img class="phoneimg" src="../../../../static/img/tipone.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="'¥'+statistics.total_price" class="apcolor"></span>
+              <span v-text="$options.filters.viewMoney(statistics.total_price,1)" class="apcolor"></span>
               <span>总额</span>
             </div>
           </div>
@@ -22,7 +22,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="'¥'+statistics.product_price" class="apcolor"></span>
+              <span v-text="$options.filters.viewMoney(statistics.product_price,1)" class="apcolor"></span>
               <span>商品总额</span>
             </div>
           </div>
@@ -31,7 +31,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="'¥'+statistics.delivery_price" class="apcolor"></span>
+              <span v-text="$options.filters.viewMoney(statistics.delivery_price,1)" class="apcolor"></span>
               <span>配送费</span>
             </div>
           </div>
@@ -40,7 +40,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="'¥'+statistics.paid_price" class="apcolor"></span>
+              <span v-text="$options.filters.viewMoney(statistics.paid_price,1)" class="apcolor"></span>
               <span>实付金额</span>
             </div>
           </div>
@@ -49,7 +49,7 @@
               <img src="../../../../static/img/tipthree.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="'¥'+statistics.platform_price" class="apcolor"></span>
+              <span v-text="$options.filters.viewMoney(statistics.platform_price,1)" class="apcolor"></span>
               <span>平台服务费</span>
             </div>
           </div>
@@ -95,12 +95,12 @@
             <el-table-column width="120" prop="order_sn" label="订单号"></el-table-column>
             <el-table-column width="140" prop="time" label="收款时间"></el-table-column>
             <el-table-column prop="username" label="用户名"></el-table-column>
-            <el-table-column prop="product_price" label="商品总额"></el-table-column>
-            <el-table-column prop="delivery_price" label="配送费"></el-table-column>
+            <el-table-column prop="product_price" label="商品总额" :formatter="formatMoney"></el-table-column>
+            <el-table-column prop="delivery_price" label="配送费" :formatter="formatMoney"></el-table-column>
             <el-table-column prop="prepaid_card_price" label="充值卡"></el-table-column>
-            <el-table-column prop="paid_price" label="实付金额"></el-table-column>
-            <el-table-column prop="platform_price" label="平台服务费"></el-table-column>
-            <el-table-column prop="total_price" label="总额"></el-table-column>
+            <el-table-column prop="paid_price" label="实付金额" :formatter="formatMoney"></el-table-column>
+            <el-table-column prop="platform_price" label="平台服务费" :formatter="formatMoney"></el-table-column>
+            <el-table-column prop="total_price" label="总额" :formatter="formatMoney"></el-table-column>
             <el-table-column prop="payment" label="支付方式"></el-table-column>
             <el-table-column prop="status" label="状态"></el-table-column>
           </el-table>
@@ -156,10 +156,28 @@ export default {
       return this.$store.state.uid
     }
   },
+  filters: {
+    viewMoney: function (value,way) {
+      if (!value) return '¥0'
+      let date = value.toString()
+      if(way>0){
+        return "¥"+date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }else{
+        return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }
+    }
+  },
   mounted:function(){
     this.gettipData()
   },
   methods:{
+    formatMoney(row, column) {
+      var date = row[column.property];
+      if (date == undefined) {
+        return "";
+      }
+      return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    },
     // 获取外送统计数据
     gettipData(){
       this.ListData = []

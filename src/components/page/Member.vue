@@ -23,7 +23,7 @@
         <el-table-column prop="name" label="用户名"></el-table-column>
         <el-table-column prop="phone" label="手机号码"></el-table-column>
         <el-table-column prop="balance" label="余额" :formatter="dateFormat" ></el-table-column>
-        <el-table-column prop="cash" label="店铺现金"></el-table-column>
+        <el-table-column prop="cash" label="店铺现金" :formatter="dateFormat"></el-table-column>
         <el-table-column prop="create_time" label="加入时间"></el-table-column>
         <el-table-column>
           <template slot-scope="scope">

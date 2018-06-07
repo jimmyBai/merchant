@@ -39,7 +39,7 @@
       <el-table stripe :data="ListData">
         <el-table-column prop="order_sn" label="订单号"></el-table-column>
         <el-table-column prop="type" label="收入类型"></el-table-column>
-        <el-table-column prop="amount" label="收入金额"></el-table-column>
+        <el-table-column prop="amount" label="收入金额" :formatter="formatMoney"></el-table-column>
         <el-table-column prop="receipt_time" label="收款时间"></el-table-column>
         <el-table-column width="100" prop="status" label="结算">
           <template slot-scope="scope">
@@ -95,10 +95,28 @@ import "../../../../static/css/newStyle.css"
 
       }
     },
+    filters: {
+      viewMoney: function (value,way) {
+        if (!value) return '¥0'
+        let date = value.toString()
+        if(way>0){
+          return "¥"+date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        }else{
+          return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        }
+      }
+    },
     mounted:function(){
       this.getlistData();
     },
     methods:{
+      formatMoney(row, column) {
+        var date = row[column.property];
+        if (date == undefined) {
+          return "";
+        }
+        return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      },
       // 获取列表数据
       getlistData(){
         this.ListData = []

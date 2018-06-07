@@ -23,9 +23,9 @@
         <el-table-column label="用户名" prop="username"></el-table-column>
         <el-table-column label="手机号" prop="phone"></el-table-column>
         <el-table-column label="商品数量" prop="totalnum"></el-table-column>
-        <el-table-column label="配送费" prop="delivery_fee"></el-table-column>
-        <el-table-column label="商品金额" prop="product_total_price"></el-table-column>
-        <el-table-column label="付款金额" prop="order_paid_price"></el-table-column>
+        <el-table-column label="配送费" prop="delivery_fee" :formatter="formatMoney"></el-table-column>
+        <el-table-column label="商品金额" prop="product_total_price" :formatter="formatMoney"></el-table-column>
+        <el-table-column label="付款金额" prop="order_paid_price" :formatter="formatMoney"></el-table-column>
         <el-table-column label="订单状态" align="right">
           <template slot-scope="scope">
             <div class="tdbtn-box">
@@ -95,6 +95,14 @@ import searchView from './Seacrhtips'
       //orderstatus:0未付款,1已付款,2待配送，3派送中，4座位使用中，5已完成，6已取消，7超时未付款，8待退款，9已退款
     },
     methods:{
+      //金钱格式化
+      formatMoney(row, column) {
+        var date = row[column.property];
+        if (date == undefined) {
+          return "";
+        }
+        return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      },
       getMemberOrder(){
         let vm =this,url='/api/web/order/list',params={
           user_id: "",    //为空表示所有

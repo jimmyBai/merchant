@@ -118,7 +118,7 @@
             <div class="baseinfo">
               <dl>
                 <dt>订单金额</dt>
-                <dd class="money"><span v-text="'¥'+detailinfo.total_amount"></span></dd>
+                <dd class="money"><span v-text="$options.filters.viewMoney(detailinfo.total_amount,1)"></span></dd>
                 <dd class="reson" v-if="detailinfo.cancel_reason"><span v-text="detailinfo.cancel_reason"></span></dd>
               </dl>
             </div>
@@ -150,8 +150,8 @@
                       <div class="goodstips"><span v-text="item.weight+'KG'"></span></div>
                     </div>
                     <div class="goodtotalm">
-                      <div class="goodsprice"><span v-text="(item.unit_price*item.num).toFixed(2)"></span></div>
-                      <div class="mtotal"><span v-text="item.unit_price"></span><span class="preadd">X</span><span v-text="item.num"></span></div>
+                      <div class="goodsprice"><span v-text="$options.filters.viewMoney((item.unit_price*item.num).toFixed(2))"></span></div>
+                      <div class="mtotal"><span v-text="$options.filters.viewMoney(item.unit_price)"></span><span class="preadd">X</span><span v-text="item.num"></span></div>
                     </div>
                   </li>
                 </ul>
@@ -161,27 +161,27 @@
             <ul>
               <li class="c_w">
                 <div>小计</div>
-                <div><span v-text="detailinfo.subtotal_amount"></span></div>
+                <div><span v-text="$options.filters.viewMoney(detailinfo.subtotal_amount,0)"></span></div>
               </li>
               <li class="c_w">
                 <div>配送</div>
-                <div><span v-text="detailinfo.delivery_fee"></span></div>
+                <div><span v-text="$options.filters.viewMoney(detailinfo.delivery_fee,0)"></span></div>
               </li>
               <li class="s_w">
                 <div>折扣</div>
-                <div><span v-text="detailinfo.discount_amount"></span></div>
+                <div><span v-text="$options.filters.viewMoney(detailinfo.discount_amount,0)"></span></div>
               </li>
               <li class="c_w">
                 <div>支付金额</div>
-                <div class="paycolor"><span v-text="detailinfo.pay_amount"></span></div>
+                <div class="paycolor"><span v-text="$options.filters.viewMoney(detailinfo.pay_amount,0)"></span></div>
               </li>
               <li class="c_w btborder">
                 <div>平台服务费</div>
-                <div><span v-text="detailinfo.service_fee"></span></div>
+                <div><span v-text="$options.filters.viewMoney(detailinfo.service_fee,0)"></span></div>
               </li>
               <li class="c_w">
                 <div>商户实收金额</div>
-                <div class="paycolor"><span v-text="(detailinfo.pay_amount-detailinfo.service_fee).toFixed(2)"></span></div>
+                <div class="paycolor"><span v-text="$options.filters.viewMoney((detailinfo.pay_amount-detailinfo.service_fee).toFixed(2),0)"></span></div>
               </li>
               <li class="c_w btborder">
                 <div>支付方式</div>
@@ -222,6 +222,17 @@ import {fetchPost} from '../../../../static/js/fetch.js';
           STIME:new Date().getTime(),
           SIG:'',
 
+      }
+    },
+    filters: {
+      viewMoney(value,way) {
+        if (!value) return ''
+        let date = value.toString()
+        if(way>0){
+          return "¥"+date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        }else{
+          return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        }
       }
     },
     props: {
