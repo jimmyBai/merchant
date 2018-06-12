@@ -156,7 +156,7 @@ export default {
       if (date == undefined) {
         return "";
       }
-      return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      return date.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     },
     // 获取小费记录数据
     gettipData(){

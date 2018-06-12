@@ -122,7 +122,7 @@ export default {
         sessionStorage.removeItem('user_id')
         vm.$router.push('/order')
       }else if(id==3){
-        vm.$router.push('/takeaway')
+        vm.$router.push('/goodslist')
       }else if(id==4){
         // vm.$router.push('/export')
         if(!vm.isdradeShow&&id==4){

@@ -197,8 +197,8 @@
 </template>
 
 <script>
-import CryptoJS from 'crypto-js'
-import {fetchPost} from '../../../../static/js/fetch.js';
+/*import CryptoJS from 'crypto-js'*/
+// import {fetchPost} from '../../../../static/js/fetch.js';
   export default {
     name: 'addsrole',
     data () {
@@ -220,7 +220,6 @@ import {fetchPost} from '../../../../static/js/fetch.js';
           USER:"sheep@yottaspace.cn",//必填，飞鹅云 www.feieyun.cn后台注册的账号名
           UKEY:"hgfZmCRytUsZPese",//必填，飞鹅云后台注册账号后生成的UKEY
           STIME:new Date().getTime(),
-          SIG:'',
 
       }
     },
@@ -245,7 +244,7 @@ import {fetchPost} from '../../../../static/js/fetch.js';
       this.msgtitle=this.orderinfo.title
       this.geteditInfo()
 
-      this.SIG = CryptoJS.SHA1(this.USER+this.UKEY+this.STIME).toString(CryptoJS.enc.Hex)
+     // this.SIG = CryptoJS.SHA1(this.USER+this.UKEY+this.STIME).toString(CryptoJS.enc.Hex)
     },
     methods:{
       //订单打印

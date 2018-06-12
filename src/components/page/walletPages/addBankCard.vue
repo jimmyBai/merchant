@@ -44,7 +44,7 @@
             <div class="adduser-item">
               <div class="itemline">
                 <div class="itemtitle">预留手机号</div>
-                <div class="itemcontent"><input type="tel" placeholder="请输入手机号" v-model="phone"></div>
+                <div class="itemcontent"><input type="tel" maxlength="11" placeholder="请输入手机号" v-model="phone"></div>
               </div>
             </div>
             <!-- 保存/取消 -->

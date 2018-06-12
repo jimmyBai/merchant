@@ -182,7 +182,7 @@ export default {
     },
     // 获取分类
     selectData(){
-      let vm =this,url='/api/web/product/type_list',params={};
+      let vm =this,url='/api/web/takeout-product/type_list',params={};
       vm.$axios.get(url,{params}).then((res)=>{
         if(res.data.error_code=='0'){
           vm.options=res.data.data

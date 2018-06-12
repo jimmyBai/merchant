@@ -15,16 +15,16 @@ export default new Router({
       meta:{keepAlive:true},
       component:resolve=>require(['../components/Login.vue'],resolve)
     },
-    {
-      path:'/print',
-      meta:{keepAlive:true},
-      component:resolve=>require(['../components/Print.vue'],resolve)
-    },
-/*{
-  path:'/socket',
-    meta:{keepAlive:true},
-  component:resolve=>require(['../components/Socket.vue'],resolve)
-},*/
+  /*   {
+       path:'/print',
+       meta:{keepAlive:true},
+       component:resolve=>require(['../components/Print.vue'],resolve)
+     },
+ {
+   path:'/socket',
+     meta:{keepAlive:true},
+   component:resolve=>require(['../components/Socket.vue'],resolve)
+ },*/
     {
       path:'/changepwd',
       name:'changepwd',
@@ -215,29 +215,39 @@ export default new Router({
             component:resolve=>require(['../components/page/report/Livetotal.vue'],resolve),
           },
           {
-            path:'/takeaway',
+            path:'/goodslist',
             meta:{keepAlive:true},
-            component:resolve=>require(['../components/page/Takeaway.vue'],resolve),
+            component:resolve=>require(['../components/page/goodslist.vue'],resolve),
             children:[
               {
                 path:'/',
                 meta:{keepAlive:true},
-                component:resolve=>require(['../components/page/takeawayPages/takeawayAuditOne.vue'],resolve),
+                component:resolve=>require(['../components/page/goods/goodsonline.vue'],resolve),
               },
               {
-                path:'/takeawayAuditOne',
+                path:'/goodsonline',
                 meta:{keepAlive:true},
-                component:resolve=>require(['../components/page/takeawayPages/takeawayAuditOne.vue'],resolve),
+                component:resolve=>require(['../components/page/goods/goodsonline.vue'],resolve),
               },
               {
-                path:'/takeawayAuditTwo',
+                path:'/goodsindepot',
                 meta:{keepAlive:true},
-                component:resolve=>require(['../components/page/takeawayPages/takeawayAuditTwo.vue'],resolve),
+                component:resolve=>require(['../components/page/goods/goodsindepot.vue'],resolve),
               },
               {
-                path:'/takeawayAuditThree',
+                path:'/goodsuncheck',
                 meta:{keepAlive:true},
-                component:resolve=>require(['../components/page/takeawayPages/takeawayAuditThree.vue'],resolve),
+                component:resolve=>require(['../components/page/goods/goodsuncheck.vue'],resolve),
+              },
+              {
+                path:'/goodsrepulse',
+                  meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/goods/goodsrepulse.vue'],resolve),
+              },
+              {
+                path:'/goodstrash',
+                  meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/goods/goodstrash.vue'],resolve),
               }
             ]
           },

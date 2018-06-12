@@ -89,7 +89,7 @@ export default {
 
     },
     addbankcard(){
-      
+
     },
     // 删除
     removeThis(id){
@@ -115,7 +115,7 @@ export default {
       });
     }
 
-    
+
   }
 }
 </script>

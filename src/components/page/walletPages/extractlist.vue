@@ -11,14 +11,14 @@
             <!-- 可提取金额 -->
             <div class="adduser-item">
               <div class="itemline">
-                <div class="itemtitle itemtitletwo">可提取金额：¥<span v-text="ListData.balance"></span></div>
+                <div class="itemtitle itemtitletwo">可提取金额：<span v-text="$options.filters.viewMoney(ListData.balance,1)"></span></div>
               </div>
             </div>
             <!-- 提取金额 -->
             <div class="adduser-item">
               <div class="itemline itemlinetwo">
                 <div class="itemtitle">提取金额：</div>
-                <div class="itemcontent"><input type="text" v-model="trade_amount" @blur="autoval"></div>
+                <div class="itemcontent"><input type="text" v-model="trade_amount" /></div>
               </div>
             </div>
             <!-- 银行账户 -->
@@ -75,6 +75,20 @@ export default {
     trade_amount(nVal,oVal){
       if(nVal){
         this.trade_amount=nVal.toString().replace(/^\D*([0-9]\d*\.?\d{0,2})?.*$/,'$1');
+        if(parseFloat(this.trade_amount)>parseFloat(this.ListData.balance)){
+          this.trade_amount=this.ListData.balance
+        }
+      }
+    }
+  },
+  filters: {
+    viewMoney(value,way) {
+      if (!value) return ''
+      let date = value.toString()
+      if(way>0){
+        return "¥"+date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }else{
+        return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
       }
     }
   },
@@ -83,10 +97,6 @@ export default {
     this.getlistData();
   },
   methods:{
-    // 控制小数
-    autoval(){
-      this.trade_amount=(this.trade_amount*1).toFixed(2)
-    },
     // 获取银行卡列表
     getclassinfo(){
       let vm =this,url='/api/web/bank',params={};
@@ -127,10 +137,11 @@ export default {
           account_id:vm.account_id.id
         }
         if(!this.account_id){
-          this.$message.error('请选择银行卡！');
+         this.$message.error('请选择银行卡！');
           return false
-        }else if(!this.trade_amount){
-          this.$message.error('提现金额不能为空！');
+        }
+        if(!this.trade_amount||parseFloat(this.trade_amount/1)<=0){
+          this.$message.error('提现金额不能为小于0！');
           return false
         }
         vm.$axios({
@@ -179,47 +190,17 @@ export default {
 }
 </script>
 <style scoped>
-  em{ font-style: normal; margin-right: 5px; color: #ac5397}
-  .itemtitle{ height: 20px; line-height: 20px; margin-bottom: 5px;}
-  .itemcontent input { height: 30px; line-height: 30px; }
-  .el-message-box__wrapper{ z-index: 100}
-  .message-box_header{ position: relative; height: 40px;justify-content: center; -webkit-justify-content: center; line-height: 40px; display: flex; display: -webkit-flex; background: -webkit-gradient(linear, 0 0, 0 bottom, from(#433249), to(#38293d));}
-  .message-box_closebtn{ position: absolute; right: 0; display: inline-block; height: 40px; width: 40px; text-align: center; cursor: pointer}
-  .message-box_title{ font-size: 16px;}
-  .message-box_content{ padding: 20px}
-
-
-
-  .itemtitletwo{
-    margin-bottom: 15px;
-  }
-  .itemlinetwo{
-    margin-bottom: 15px;
-  }
-  .btnbox{
-    height: 30px;
-    margin-top: 40px;
-    padding: 0 10%;
-  }
-  .popsavelt{
-    width: 40%;
-    height: 30px;
-    line-height: 30px;
-    float: left;
-    text-align: center;
-    background: #ac5397;
-    font-size: 12px;
-    color: #fff;
-  }
-  .popsavert{
-    width: 40%;
-    height: 30px;
-    line-height: 30px;
-    float: right;
-    text-align: center;
-    background: #ac5397;
-    font-size: 12px;
-    color: #fff;
-  }
+em{ font-style: normal; margin-right: 5px; color: #ac5397}
+.itemtitle{ height: 20px; line-height: 20px; margin-bottom: 5px;}
+.itemcontent input { height: 30px; line-height: 30px; }
+.el-message-box__wrapper{ z-index: 100}
+.message-box_header{ position: relative; height: 40px;justify-content: center; -webkit-justify-content: center; line-height: 40px; display: flex; display: -webkit-flex; background: -webkit-gradient(linear, 0 0, 0 bottom, from(#433249), to(#38293d));}
+.message-box_closebtn{ position: absolute; right: 0; display: inline-block; height: 40px; width: 40px; text-align: center; cursor: pointer}
+.message-box_title{ font-size: 16px;}
+.message-box_content{ padding: 20px}
+.itemtitletwo{ margin-bottom: 15px;}
+.btnbox{height: 30px; margin-top: 40px; padding: 0 10%; }
+.popsavelt{width: 40%; height: 30px; line-height: 30px; float: left; text-align: center; background: #ac5397; font-size: 12px; color: #fff;}
+.popsavert{width: 40%;height: 30px; line-height: 30px; float: right; text-align: center; background: #ac5397; font-size: 12px;  color: #fff;}
 
 </style>

@@ -120,3 +120,6 @@
 .tb-es .el-select input{
   width: 100px!important;
 }
+
+.el-select .el-input input.el-input__inner{ font-size: 12px;height: 25px;line-height: 25px; border-radius: 1px;padding-left: 10px}
+.el-select:hover .el-input__inner {border:1px solid #3d2b43;}

@@ -54,7 +54,7 @@ export default {
       chartData: '',
       chartZoom: '',
       xAxis: '',
-      tableData: '',
+      tableData:{'click_num':'-','avg_view_time':'-','day_buy_num':'-','month_buy_num':'-','year_buy_num':'-'},
       pickerstar: {
         disabledDate:(time)=> {
           if (this.endTime&&this.endTime != "") {
@@ -83,9 +83,9 @@ export default {
   methods:{
     // 获取余额数据
     getlistData(){
-      this.ListData = []
       let vm = this,url='/api/web/report/summary/live-click-rate',
       params={'start_time':vm.startTime,'end_time':vm.endTime};
+      vm.chartData=''
       vm.$axios({
         method:'post',
         url:url,
@@ -117,9 +117,9 @@ export default {
     setEchart(){
       let vm =this;
       var myChart = echarts.init(document.getElementById('main'));
-          myChart.showLoading({
-            text: "图表数据正在努力加载..."
-          });
+      myChart.showLoading({
+        text: "图表数据正在努力加载..."
+      });
       // 指定图表的配置项和数据
       var option = {
         title: {
