@@ -5,24 +5,27 @@
       <div class="list-search">
         <div class="form-tabel">
           <el-row class="elrow-line">
-            <el-col :span="5">
+            <!--<el-col :span="5">-->
+            <!--</el-col>-->
+            <!--<el-col :span="4">-->
+              <!--<div class="res-input">-->
+                <!--<el-date-picker :editable="false" v-model="start_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>-->
+              <!--</div>-->
+            <!--</el-col>-->
+            <!--<el-col :span="1" class="res-line">至</el-col>-->
+            <!--<el-col :span="4">-->
+              <!--<div class="res-input">-->
+                <!--<el-date-picker :editable="false" v-model="end_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>-->
+              <!--</div>-->
+            <!--</el-col>-->
+            <el-col :span="20" class="elrow-linerow">
               <span class="td-title">回收站商品列表</span>
               <span class="sontitle">删除时间：</span>
-            </el-col>
-            <el-col :span="4">
-              <div class="res-input">
-                <el-date-picker :editable="false" v-model="start_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
-              </div>
-            </el-col>
-            <el-col :span="1" class="res-line">至</el-col>
-            <el-col :span="4">
-              <div class="res-input">
-                <el-date-picker :editable="false" v-model="end_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
-              </div>
-            </el-col>
-            <el-col :span="10" class="elrow-linerow">
+              <el-date-picker class="res-input" :editable="false" v-model="start_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
+              <el-date-picker class="res-input" :editable="false" v-model="end_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
+
               <div  class="line">
-                <input type="text" v-model="product_name" />
+                <input type="text"  placeholder="请输入商品名称" v-model="product_name" />
               </div>
               <div class="search-icon" @click="searchlist"><i class="el-icon-search"></i></div>
             </el-col>
@@ -40,6 +43,7 @@
         <el-table-column type="selection" align="center" width="55"></el-table-column>
         <el-table-column prop="name" label="商品名称"></el-table-column>
         <el-table-column prop="category" label="分类"></el-table-column>
+        <el-table-column prop="original_price" label="原价" :formatter="formatMoney"></el-table-column>
         <el-table-column prop="unit_price" label="单价" :formatter="formatMoney"></el-table-column>
         <el-table-column prop="inventory" label="库存"></el-table-column>
         <el-table-column prop="create_time" label="删除时间"></el-table-column>
@@ -158,11 +162,6 @@
       handleCurrentChange(val){
         this.page=val
         this.getlistData();
-      },
-      //新增产品
-      clickadd(){
-        this.fromParent=''
-        this.isTakeawayShow = true;
       },
       //查看
       vieweditor(id){
@@ -288,6 +287,5 @@
 .form-tabel .td-title{ margin-right: 5px; color: #f8e2ff}
 .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
 .search-icon{ margin-left: 0; cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center;}
-.res-line{ text-align: center}
-.sontitle{ float: right}
+.main .res-input{ max-width: 150px}
 </style>

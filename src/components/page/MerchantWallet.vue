@@ -49,7 +49,7 @@
               <div :class="{'is-active':activenum=='expendlist'}" @click="changetabs('expendlist')" class="tabtar-item">支出</div>
               <!-- <div :class="{'is-active':activenum=='recordslist'}" @click="changetabs('recordslist')" class="tabtar-item">交易记录</div> -->
               <div :class="{'is-active':activenum=='bankCardlist'}" @click="changetabs('bankCardlist')" class="tabtar-item ">银行卡</div>
-              <div class="ls-r-btn" @click="clickadd">
+              <div v-if="false" class="ls-r-btn" @click="clickadd">
                 <i class="el-icon-circle-plus-outline"></i><span>添加</span>
               </div>
             </div>
@@ -179,6 +179,7 @@ export default {
       vm.isexShow = true;
     },
     clickadd(){
+      return
       let vm = this;
       vm.isBankCardShow = true;
       vm.isPromptShow = false;

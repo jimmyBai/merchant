@@ -11,7 +11,7 @@
         <el-table-column prop="" label="每日限额"></el-table-column> -->
         <el-table-column prop="create_time" label="递交时间"></el-table-column>
         <!-- <el-table-column prop="" label="审核时间"></el-table-column> -->
-        <el-table-column label="操作" width="100">
+        <el-table-column label="操作" width="100" v-if="false">
           <template slot-scope="scope">
             <div class="tdBtn-box">
               <div class="tdBtn-view bkpages" @click="removeThis(scope.row.id)">
@@ -93,6 +93,7 @@ export default {
     },
     // 删除
     removeThis(id){
+      return
       let vm = this,
       url='/api/web/bank/del',
       params={'id':id}

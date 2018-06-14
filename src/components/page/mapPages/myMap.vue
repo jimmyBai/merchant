@@ -37,9 +37,7 @@
 </template>
 
 <script>
-// andy
 import '../../../../static/css/newStyle.css'
-import {MP} from '../../../../static/js/newMap.js'
 
   export default {
     name: 'mymap',

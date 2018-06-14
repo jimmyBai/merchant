@@ -11,6 +11,7 @@
           <div :class="{'is-active':activenum=='goodsuncheck'}" @click="changetabs('goodsuncheck')" class="tabtar-item">待审核</div>
           <div :class="{'is-active':activenum=='goodsrepulse'}" @click="changetabs('goodsrepulse')" class="tabtar-item">审核拒绝</div>
           <div :class="{'is-active':activenum=='goodstrash'}" @click="changetabs('goodstrash')" class="tabtar-item">回收站</div>
+          <div :class="{'is-active':activenum=='repertorylist'}" @click="changetabs('repertorylist')" class="tabtar-item">库存修改记录</div>
         </div>
         <div class="ls-r-btn">
           <div @click="clickadd"><i class="el-icon-circle-plus-outline"></i><span>添加商品</span></div>
@@ -61,6 +62,8 @@ export default {
         this.activenum='goodsrepulse'
       }else if(this.$route.path=='/goodstrash'){
         this.activenum='goodstrash'
+      }else if(this.$route.path=='/repertorylist'){
+        this.activenum='repertorylist'
       }
     },
     methods:{

@@ -31,49 +31,29 @@
               <img src="../../../../static/img/tiptwo.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="'¥'+statistics.sales_price" class="apcolor"></span>
+              <span v-text="$options.filters.viewMoney(statistics.sales_price,1)" class="apcolor"></span>
               <span>总销售额</span>
             </div>
           </div>
-
         </div>
-
         <div class="list-search outside">
-
-            <div class="ls-left">
-              <div class="form-tabel">
-                <!-- <el-row>
-                  <el-col :span="24"><div class="td-title">外送商品销售列表</div></el-col>
-                </el-row>
-                <el-row class="res-content-line">
-                  <el-col :span="4"><div class="res-title">分类：</div></el-col>
-                  <el-col :span="20">
-                    <div class="td-content">
-                      <el-select v-model="search.type" placeholder="全部" value-key='id' class="osselect">
-                          <el-option v-for="item in options" :key="item.id" :label="item.name" :value='item'></el-option>
-                      </el-select>
-                      <input type="text" v-model="search.content" placeholder="请输入商品名称" />
-                      <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
-                    </div>
-                  </el-col>
-                </el-row> -->
+            <div class="ls-left form-tabel">
                 <div class="ls_lt_1">
                   <span class="td-title">外送商品销售列表</span>
                 </div>
                 <div class="ls_lt_2">
                   <span class="res-title">分类</span>
                 </div>
-                <div class="td-content">
-                  <el-select v-model="search.type" placeholder="全部" value-key='id' class="osselect">
-                      <el-option :key="''" :label="'全部'" :value="''"></el-option>
-                      <el-option v-for="item in options" :key="item.id" :label="item.name" :value='item'></el-option>
-                  </el-select>
-                  <input type="text" v-model="search.content" placeholder="请输入商品名称" />
-                  <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
+                <el-select v-model="search.type" placeholder="全部" value-key='id' class="osselect">
+                  <el-option :key="''" :label="'全部'" :value="''"></el-option>
+                  <el-option v-for="item in options" :key="item.id" :label="item.name" :value='item'></el-option>
+                </el-select>
+                <input type="text" v-model="search.content" placeholder="请输入商品名称" />
+                <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
+                <div class="headnavBtn">
+                  <div @click.stop="exportList">导出Excel</div>
                 </div>
-              </div>
             </div>
-
         </div>
 
         <div class="tiplist_two">
@@ -82,7 +62,7 @@
             <el-table-column prop="name" label="商品名称"></el-table-column>
             <el-table-column prop="name_en" label="商品英文名称"></el-table-column>
             <el-table-column prop="num" label="数量"></el-table-column>
-            <el-table-column prop="total_price" label="总额"></el-table-column>
+            <el-table-column prop="total_price" label="总额" :formatter="formatMoney"></el-table-column>
           </el-table>
         </div>
 
@@ -134,7 +114,25 @@ export default {
     this.gettipData()
     this.selectData()
   },
+  filters: {
+    viewMoney: function (value,way) {
+      if (!value) return '¥0'
+      let date = value.toString()
+      if(way>0){
+        return "¥"+date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }else{
+        return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }
+    }
+  },
   methods:{
+    formatMoney(row, column) {
+      var date = row[column.property];
+      if (date == undefined) {
+        return "";
+      }
+      return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    },
     // 获取小费记录数据
     gettipData(){
       this.ListData = []
@@ -203,6 +201,37 @@ export default {
     // 搜索
     searchAll(){
       this.gettipData()
+    },
+    exportList(){
+      let vm = this;
+      if(this.ListData&&this.ListData.length>0){
+        let url='/api/web/report/summary/takeout-products-export',
+          params={
+            search: {
+              type: vm.search.type.id,
+              content: vm.search.content
+            },
+          };
+        vm.$axios({
+          method:'post',
+          data:params,
+          url:url,
+          responseType:'arraybuffer'
+        }).then((res)=>{
+          let blob=new Blob([res.data],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+        let elink = document.createElement('a');
+        elink.download = '外送商品统计列表';
+        elink.style.display = 'none';
+        elink.href = URL.createObjectURL(blob);
+        document.body.appendChild(elink);
+        elink.click();
+        document.body.removeChild(elink);
+      }).catch(err => {
+          console.log(err);
+      });
+      }else{
+        vm.$message.error('当前列表暂无信息！');
+      }
     }
 
 
@@ -210,11 +239,10 @@ export default {
 }
 </script>
 <style scoped>
-
-
 .ls-right .ls-r-btn{ color: #fff; font-size: 12px; background: rgb(242,86,86); padding: 3px 8px; border-radius: 2px; cursor: pointer}
 .ls-right .ls-r-btn span{ margin-left: 5px}
-.form-tabel .td-title{ margin-right: 5px; color: #f8e2ff}
+.form-tabel{ display: flex;display: -webkit-flex;align-items: center;-webkit-align-items: center}
+.form-tabel .td-title{ margin-right: 5px; color: #f8e2ff;}
 .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px; margin-left: 15px;}
 .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center;}
 

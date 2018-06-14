@@ -52,25 +52,30 @@
         <div class="ls-left">
           <div class="form-tabel">
             <el-row class="res-content-line">
-            <el-col :span="2"><div class="td-title">小费列表</div></el-col>
-            <el-col :span="3"><div class="res-title">筛选时间：</div></el-col>
-            <el-col :span="5">
-              <div class="res-input">
-                <el-date-picker :editable="false" v-model="search.start_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
-              </div>
-            </el-col>
-            <el-col :span="1"><div class="res-line">至</div></el-col>
-            <el-col :span="5">
-              <div class="res-input">
-                <el-date-picker :editable="false" v-model="search.end_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
-              </div>
-            </el-col>
-            <el-col :span="7">
-              <div class="td-content">
-                <input type="text" v-model="search.content" placeholder="请输入名称/手机号" />
-                <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
-              </div>
-            </el-col>
+              <el-col class="td-content" :span="4">
+                <div class="td-title">小费列表</div>
+                <div class="res-title">筛选时间：</div>
+              </el-col>
+              <el-col :span="4">
+                <div class="res-input">
+                  <el-date-picker :editable="false" v-model="search.start_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
+                </div>
+              </el-col>
+              <el-col :span="1"><div class="res-line">至</div></el-col>
+              <el-col :span="4">
+                <div class="res-input">
+                  <el-date-picker :editable="false" v-model="search.end_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
+                </div>
+              </el-col>
+              <el-col :span="9">
+                <div class="td-content">
+                  <input type="text" v-model="search.content" placeholder="请输入名称/手机号" />
+                  <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
+                  <div class="headnavBtn">
+                    <div @click.stop="exportList">导出Excel</div>
+                  </div>
+                </div>
+              </el-col>
             </el-row>
           </div>
         </div>
@@ -193,6 +198,38 @@ export default {
     // 搜索
     searchAll(){
       this.gettipData()
+    },
+    exportList(){
+      let vm = this;
+      if(this.ListData&&this.ListData.length>0){
+        let url='/api/web/report/summary/tip-export',
+          params={
+            search: {
+              name: vm.search.content,
+              start_time: vm.search.start_time,
+              end_time: vm.search.end_time
+            },
+          };
+        vm.$axios({
+          method:'post',
+          data:params,
+          url:url,
+          responseType:'arraybuffer'
+        }).then((res)=>{
+          let blob=new Blob([res.data],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+          let elink = document.createElement('a');
+          elink.download = '小费统计列表';
+          elink.style.display = 'none';
+          elink.href = URL.createObjectURL(blob);
+          document.body.appendChild(elink);
+          elink.click();
+          document.body.removeChild(elink);
+        }).catch(err => {
+            console.log(err);
+        });
+      }else{
+        vm.$message.error('当前列表暂无信息！');
+      }
     }
 
 

@@ -5,18 +5,16 @@
       <div class="list-search">
           <div class="form-tabel">
             <el-row class="elrow-line">
-              <el-col :span="5">
+              <el-col :span="15" class="elrow-linerow">
                 <span class="td-title">审核拒绝商品列表</span>
                 <span class="sontitle">商品分类：</span>
-              </el-col>
-              <el-col :span="15" class="elrow-linerow">
                 <el-select v-model="typeValue" placeholder="全部" class="osselect">
                   <el-option value="">全部</el-option>
                   <el-option v-for="item in goodsTypeData" :key="item.id" :label="item.name" :value="item.id">
                   </el-option>
                 </el-select>
                 <div  class="line">
-                  <input type="text" v-model="product_name" />
+                  <input type="text" placeholder="请输入商品名称" v-model="product_name" />
                 </div>
                 <div class="search-icon" @click="searchlist"><i class="el-icon-search"></i></div>
               </el-col>
@@ -157,11 +155,6 @@
       handleCurrentChange(val){
         this.page=val
         this.getlistData();
-      },
-      //新增产品
-      clickadd(){
-        this.fromParent=''
-        this.isTakeawayShow = true;
       },
       //查看
       vieweditor(id){

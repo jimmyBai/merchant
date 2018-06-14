@@ -178,6 +178,7 @@ import "../../../../static/css/newStyle.css"
       this.getclassinfo();
       if(this.fromParent){
         this.msgtitle = '查看/编辑商品'
+        this.issvaetext='修改'
         this.getGoodsInfo();
       }else{
 

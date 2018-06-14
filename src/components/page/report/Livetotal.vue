@@ -99,6 +99,19 @@ export default {
             vm.setEchart()
         }else{
             vm.$message.error(res.data.message);
+            vm.chartData=[{
+              "time": "",
+              "num": 0
+            }]
+            vm.chartZoom={
+              "startValue": "",
+              "endValue": ""
+            }
+            vm.xAxis={
+              "min": "",
+              "max": ""
+            }
+            vm.setEchart()
         }
       }).catch(err => {
           console.log(err);

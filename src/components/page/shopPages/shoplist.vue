@@ -139,7 +139,7 @@
             </div>
           </div>
         </div>
-        <div class="line">
+        <div class="line leolistline">
           <div class="title">超过最大距离收费：</div>
           <div class="content"><input type="tel" v-model="ListData.over_distance" /></div>
         </div>
@@ -156,7 +156,7 @@
             </div>
           </div>
         </div>
-        <div class="line">
+        <div class="line leolistline">
           <div class="title">超过最大重量收费：</div>
           <div class="content"><input type="tel" v-model="ListData.over_weight" /></div>
         </div>
@@ -818,7 +818,7 @@ import myMap from '../mapPages/myMap'
 .nav-bar-title{ padding-bottom: 0}
 .shopcontent{ padding: 10px; background:#38213e }
 .formbox{ margin:0 30px}
-.formbox .line{ display: flex; display: -webkit-flex; margin: 15px 0; align-items: center; -webkit-align-items: center }
+.formbox .line{ display: flex; display: -webkit-flex; margin: 10px 0; align-items: center; -webkit-align-items: center }
 .formbox .content{ margin-left: 10px; width:600px}
 .formbox .photobox{ align-items: flex-start;-webkit-align-items:flex-start;}
 .formbox .photobox .title{ margin-top: 10px}
@@ -872,7 +872,7 @@ el-scrollbar__view .disabled{color:#e4e7ed }
 .go-other .btn .neednot{ display: block; width: 30%; height: 35px; line-height: 35px; text-align: center; color: #fff; background: #ac5397; cursor: pointer; float: right;}
 .mask{ position: fixed; top: 0; bottom: 0; left: 0; right: 0; text-align: center; background: #000; opacity: 0.5; z-index: 99;}
 .leobox{ display: -webkit-box; display: -ms-flexbox; display: flex; display: -webkit-flex; margin: 15px 0; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-align-items: center;}
-.leolist{ -webkit-box-align: start; -ms-flex-align: start; align-items: flex-start; -webkit-align-items: flex-start;}
+.leolist{ margin-bottom: 0; -webkit-box-align: start; -ms-flex-align: start; align-items: flex-start; -webkit-align-items: flex-start;}
 .leotitle{ min-width: 120px; height: 33px; line-height: 33px; text-align: right;}
 .leocontent{ margin-left: 10px;}
 .leocontent>div{ margin-bottom: 10px;}
@@ -885,4 +885,5 @@ el-scrollbar__view .disabled{color:#e4e7ed }
 .leobox .el-icon-error{font-size: 21px; color: #ac5397; position: relative; top: 2px; left: 22px;}
 .ml10{ margin-left: 20px}
 .ma10{ margin: 0 10px}
+.formbox .leolistline{ margin-top: 0}
 </style>

@@ -12,6 +12,9 @@
                 </el-option>
               </el-select>
               <span @click="searchFn" class="search-icon"><i class="el-icon-search"></i></span>
+              <div class="headnavBtn">
+                <div @click.stop="exportList">导出Excel</div>
+              </div>
             </div>
           </div>
         </div>
@@ -188,6 +191,43 @@ import searchView from './Seacrhtips'
         vm.search.create_start=data[0].create_start;
         vm.search.create_end=data[0].create_end;
         vm.getMemberOrder()
+      },
+      exportList(){
+        let vm = this;
+        if(this.ListData&&this.ListData.length>0){
+          let url='/api/web/order/export',
+            params={
+              user_id: "",    //为空表示所有
+              type: "1",      //订单类型 1[外卖] 2[订座] 3[店铺消费] 4[直播会员]
+              search: {
+                order_status:vm.order_status=='-1'?'':vm.order_status,
+                content: vm.search.content,
+                min_price:vm.search.min_price,
+                max_price:vm.search.max_price,
+                create_start:vm.search.create_start,
+                create_end:vm.search.create_end
+              },
+            };
+          vm.$axios({
+            method:'post',
+            data:params,
+            url:url,
+            responseType:'arraybuffer'
+          }).then((res)=>{
+            let blob=new Blob([res.data],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+          let elink = document.createElement('a');
+          elink.download = '外卖订单列表';
+          elink.style.display = 'none';
+          elink.href = URL.createObjectURL(blob);
+          document.body.appendChild(elink);
+          elink.click();
+          document.body.removeChild(elink);
+        }).catch(err => {
+            console.log(err);
+        });
+        }else{
+          vm.$message.error('当前列表暂无信息！');
+        }
       }
     }
   }

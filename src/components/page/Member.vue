@@ -11,6 +11,9 @@
             <div class="td-content">
               <input type="text" v-model="search.content" />
               <span class="search-icon" @click="searchlist"><i class="el-icon-search"></i></span>
+              <div class="headnavBtn">
+                <div @click.stop="exportList">导出Excel</div>
+              </div>
             </div>
           </div>
         </div>
@@ -121,7 +124,13 @@ export default {
       vm.search.create_end?(vm.search.create_end).substr(0,10):''
       let url='/api/web/user/list',
         params={
-          "search": vm.search,
+          "search": {
+            "content": vm.search.content,
+            "min_balance": vm.search.min_balance,
+            "max_balance": vm.search.max_balance,
+            "create_start":vm.search.create_start,
+            "create_end":vm.search.create_end
+          },
           "page": vm.page,
           "length":vm.length
         };
@@ -182,6 +191,40 @@ export default {
       this.$router.push({
         name:"mdetail"
       })
+    },
+    exportList(){
+      let vm = this;
+      if(this.ListData&&this.ListData.length>0){
+        let url='/api/web/user/export',
+          params={
+            search: {
+              "content": vm.search.content,
+              "min_balance": vm.search.min_balance,
+              "max_balance": vm.search.max_balance,
+              "create_start":vm.search.create_start,
+              "create_end":vm.search.create_end
+            },
+          };
+        vm.$axios({
+          method:'post',
+          data:params,
+          url:url,
+          responseType:'arraybuffer'
+        }).then((res)=>{
+          let blob=new Blob([res.data],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+        let elink = document.createElement('a');
+          elink.download = '会员列表';
+          elink.style.display = 'none';
+          elink.href = URL.createObjectURL(blob);
+          document.body.appendChild(elink);
+          elink.click();
+          document.body.removeChild(elink);
+        }).catch(err => {
+            console.log(err);
+        });
+      }else{
+        vm.$message.error('当前列表暂无信息！');
+      }
     }
   }
 }

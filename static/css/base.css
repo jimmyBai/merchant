@@ -266,3 +266,6 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .tablebtnBox .tablebtnline{ display: flex;display: -webkit-flex}
 .tablebtnBox .tablebtnline>div{ margin-right: 10px}
 .tablebtnBox .tablebtnline>div>span{ cursor: pointer; display: inline-block;border: 1px solid #48344d; border-radius: 2px; padding:2px 10px;}
+/**导出相关操作按钮**/
+.headnavBtn{ margin-left: 5px; display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
+.headnavBtn>div{ cursor: pointer; min-width: 80px; height: 24px; line-height: 24px; border-radius: 2px; border:1px solid #48344e; text-align: center }

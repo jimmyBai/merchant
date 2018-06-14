@@ -9,23 +9,33 @@
         <div class="head">
           <div  class="line">
             <span>商品排序列表</span>
-            <input type="text" v-model="name" />
+            <input type="text" placeholder="请输入商品名称" v-model="name" />
           </div>
           <div class="search-icon" @click="searchlist"><i class="el-icon-search"></i></div>
+        </div>
+        <div class="tablelist fixheader">
+          <ul>
+            <li class="ul_header">
+              <div class="lisn">排序</div>
+              <div class="text">商品名称</div>
+              <div class="type">分类</div>
+            </li>
+          </ul>
         </div>
         <div class="message-box_content">
             <div class="tablelist">
               <ul>
-                <li class="ul_header">
-                  <div class="lisn">排序</div>
-                  <div class="text">商品名称</div>
-                  <div class="type">分类</div>
-                </li>
-                <li v-for="(item,index) in ListData">
-                  <div class="lisn"><input class="snnumber" type="tel" v-model="item.sort" /></div>
-                  <div class="text"><span v-text="item.name"></span></div>
-                  <div class="type"><span v-text="item.category"></span></div>
-                </li>
+                <draggable v-model="ListData" :move="getdata" @update="datadragEnd" :options="{animation: 300,handle:'.sortli'}">
+                  <transition-group name="list-complete" >
+                    <li v-for="(item,index) in ListData" :key="index" class="sortli">
+                      <!--<div class="lisn"><input class="snnumber" type="tel" @input="inputVal($event,item,index)" @change="setSortli($event,item,index)" v-model="ListData[index].sort=parseInt(index)+1" /></div>-->
+                      <div class="lisn">
+                        <input class="snnumber" type="tel" @input="inputVal($event,item,index)" @change="setSortli($event,item,index)" :value="item.sort=parseInt(index)+1" /></div>
+                      <div class="text"><span v-text="item.name"></span></div>
+                      <div class="type"><span v-text="item.category"></span></div>
+                    </li>
+                  </transition-group>
+                </draggable>
               </ul>
             </div>
         </div>
@@ -41,8 +51,9 @@
 </template>
 
 <script>
-  // andy
   import "../../../../static/css/newStyle.css"
+  import draggable from 'vuedraggable'
+  import Sortable  from 'sortablejs'
   export default {
     name: 'viewGoods',
     data () {
@@ -51,19 +62,58 @@
         ListData:[]
       }
     },
+    components: {
+      draggable,Sortable
+    },
     mounted:function(){
       this.getGoodsInfo();
     },
+    watch:{
+    },
     methods:{
+      inputVal(e,item,index){
+        if(e.target.value){
+          e.target.value=e.target.value.replace(/[^0-9\-]/,'')
+        }
+      },
+      setVal(item){
+        return item.sort=parseInt(index)+1
+      },
+      setSortli(e,item){
+        let vm =this;
+        if(!e.target.value){e.target.value=item.sort}
+        if(parseInt(e.target.value)>=1){
+          item.sort=e.target.value-1
+        }else{
+          item.sort=e.target.value
+        }
+        function compare(str) {
+          return function (obj1, obj2) {
+            var value1 = obj1[str];
+            var value2 = obj2[str]
+            return value1 - value2;
+          }
+        }
+        setTimeout(x=>{
+          this.ListData.sort(compare('sort'));
+      },200)
+      },
+      getdata(evt){
+        //console.log(evt.draggedContext.element.id);
+      },
+      datadragEnd(evt){
+        let vm=this;
+        // console.log('拖动前的索引：'+evt.oldIndex);
+        // console.log('拖动后的索引：'+evt.newIndex);
+
+      },
       //获取需要排序商品
       getGoodsInfo(){
         this.ListData=[];
-        let vm =this,
-          url='/api/web/takeout-product/sort-list',
-          params={'search':{'name':vm.name}};
+        let vm =this, url='/api/web/takeout-product/sort-list';
         vm.$axios({
-          method:'post',
-          data:params,
+          method:'POST',
+          data:{search:{name:vm.name}},
           url:url
         }).then((res)=>{
           if(res.data.error_code=='0'){
@@ -144,4 +194,5 @@
 .tablelist ul li .type{width: 100px}
 .snnumber{ font-size: 12px; text-align:center;border: 1px solid #48344e; width: 40px; height: 20px; line-height: 20px}
 .tablelist ul li:not(.ul_header){ margin: 5px 0; border-bottom:1px solid #48344e; padding: 5px 0;}
+.fixheader{ padding: 0 20px}
 </style>

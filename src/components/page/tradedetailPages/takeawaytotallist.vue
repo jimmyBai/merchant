@@ -53,36 +53,33 @@
               <span>平台服务费</span>
             </div>
           </div>
-
-
         </div>
-
         <div class="list-search">
-
           <div class="ls-left">
             <div class="form-tabel">
               <el-row class="res-content-line">
-                <el-col :span="5"><div class="td-title">外送商品销售列表</div></el-col>
-                <el-col :span="4"><div class="res-title">筛选时间：</div></el-col>
-                <el-col :span="6">
+                <el-col :span="12" class="td-content">
+                  <div class="td-title">外送商品销售列表</div>
+                  <div class="res-title">筛选时间：</div>
                   <div class="res-input">
                     <el-date-picker :editable="false" v-model="search.start_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
                   </div>
-                </el-col>
-                <el-col :span="1"><div class="res-line">至</div></el-col>
-                <el-col :span="6">
+                  <div class="res-line">至</div>
                   <div class="res-input">
                     <el-date-picker :editable="false" v-model="search.end_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
                   </div>
                 </el-col>
-                <el-col :span="3"><div class="res-title">状态：</div></el-col>
-                <el-col :span="13">
+                <el-col :span="12">
                   <div class="td-content tb-es">
+                    <div class="res-title textname">状态：</div>
                     <el-select v-model="search.status" placeholder="全部" class="osselect">
                       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
                     </el-select>
                     <input type="text" v-model="search.content" placeholder="请输入名称/手机号" />
                     <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
+                    <div class="headnavBtn">
+                      <div @click.stop="exportList">导出Excel</div>
+                    </div>
                   </div>
                 </el-col>
               </el-row>
@@ -92,8 +89,8 @@
         </div>
         <div class="tiplist_two">
           <el-table stripe :data="ListData">
-            <el-table-column width="120" prop="order_sn" label="订单号"></el-table-column>
-            <el-table-column width="140" prop="time" label="收款时间"></el-table-column>
+            <el-table-column prop="order_sn" label="订单号"></el-table-column>
+            <el-table-column prop="time" label="收款时间"></el-table-column>
             <el-table-column prop="username" label="用户名"></el-table-column>
             <el-table-column prop="product_price" label="商品总额" :formatter="formatMoney"></el-table-column>
             <el-table-column prop="delivery_price" label="配送费" :formatter="formatMoney"></el-table-column>
@@ -234,6 +231,39 @@ export default {
     // 搜索
     searchAll(){
       this.gettipData()
+    },
+    exportList(){
+      let vm = this;
+      if(this.ListData&&this.ListData.length>0){
+        let url='/api/web/report/summary/takeout-export',
+          params={
+            search: {
+              content: vm.search.content,
+              start_time: vm.search.start_time,
+              end_time: vm.search.end_time,
+              status: vm.search.status
+            },
+          };
+        vm.$axios({
+          method:'post',
+          data:params,
+          url:url,
+          responseType:'arraybuffer'
+        }).then((res)=>{
+          let blob=new Blob([res.data],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+          let elink = document.createElement('a');
+          elink.download = '外送统计列表';
+          elink.style.display = 'none';
+          elink.href = URL.createObjectURL(blob);
+          document.body.appendChild(elink);
+          elink.click();
+          document.body.removeChild(elink);
+        }).catch(err => {
+            console.log(err);
+        });
+      }else{
+        vm.$message.error('当前列表暂无信息！');
+      }
     }
 
   }
@@ -249,7 +279,7 @@ export default {
 .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px; margin-left: 15px;}
 .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center;}
 .td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
-
+.textname{display: inline-block}
 .databox{
   width: 100%;
   height: auto;

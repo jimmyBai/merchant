@@ -48,28 +48,32 @@
         </div>
 
         <div class="list-search">
-
           <div class="ls-left">
             <div class="form-tabel">
               <el-row class="res-content-line">
-              <el-col :span="4"><div class="td-title">直播列表</div></el-col>
-              <el-col :span="3"><div class="res-title">筛选时间：</div></el-col>
-              <el-col :span="5">
+              <el-col :span="4" class="td-content">
+                <div class="td-title">直播列表</div>
+                <div class="res-title">筛选时间：</div>
+              </el-col>
+              <el-col :span="4">
                 <div class="res-input">
                   <el-date-picker :editable="false" v-model="search.start_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
                 </div>
               </el-col>
               <el-col :span="1"><div class="res-line">至</div></el-col>
-              <el-col :span="5">
+              <el-col :span="4">
                 <div class="res-input">
                   <el-date-picker :editable="false" v-model="search.end_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
                 </div>
               </el-col>
               <!-- <el-col :span="3"><div class="res-title">状态：</div></el-col> -->
-              <el-col :span="7">
+              <el-col :span="9">
                 <div class="td-content">
                   <input type="text" v-model="search.name" placeholder="请输入名称/手机号" />
                   <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
+                  <div class="headnavBtn">
+                    <div @click.stop="exportList">导出Excel</div>
+                  </div>
                 </div>
               </el-col>
               </el-row>
@@ -79,8 +83,8 @@
         </div>
         <div class="tiplist_two">
           <el-table stripe :data="ListData">
-            <el-table-column width="120" prop="order_sn" label="订单号"></el-table-column>
-            <el-table-column width="140" prop="create_time" label="时间"></el-table-column>
+            <el-table-column prop="order_sn" label="订单号"></el-table-column>
+            <el-table-column prop="create_time" label="时间"></el-table-column>
             <el-table-column prop="username" label="用户名"></el-table-column>
             <el-table-column prop="product_name" label="商品套餐"></el-table-column>
             <el-table-column prop="product_price" label="套餐费用" :formatter="formatMoney"></el-table-column>
@@ -204,6 +208,38 @@ export default {
     // 搜索
     searchAll(){
       this.gettipData()
+    },
+    exportList(){
+      let vm = this;
+      if(this.ListData&&this.ListData.length>0){
+        let url='/api/web/report/summary/live-export',
+          params={
+            search: {
+              name: vm.search.content,
+              start_time: vm.search.start_time,
+              end_time: vm.search.end_time
+            },
+          };
+        vm.$axios({
+          method:'post',
+          data:params,
+          url:url,
+          responseType:'arraybuffer'
+        }).then((res)=>{
+          let blob=new Blob([res.data],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+        let elink = document.createElement('a');
+        elink.download = '直播统计列表';
+        elink.style.display = 'none';
+        elink.href = URL.createObjectURL(blob);
+        document.body.appendChild(elink);
+        elink.click();
+        document.body.removeChild(elink);
+      }).catch(err => {
+          console.log(err);
+      });
+      }else{
+        vm.$message.error('当前列表暂无信息！');
+      }
     }
 
 

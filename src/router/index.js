@@ -248,6 +248,11 @@ export default new Router({
                 path:'/goodstrash',
                   meta:{keepAlive:true},
                 component:resolve=>require(['../components/page/goods/goodstrash.vue'],resolve),
+              },
+              {
+                path:'/repertorylist',
+                  meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/goods/repertorylist.vue'],resolve),
               }
             ]
           },

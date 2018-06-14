@@ -16,8 +16,10 @@
     "jquery": "^3.3.1",
     "js-md5": "^0.7.3",
     "qrcodejs2": "0.0.2",
+    "sortablejs": "^1.7.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
+    "vuedraggable": "^2.16.0",
     "vuex": "^2.3.1",
     "xlsx": "^0.13.0"
   },
