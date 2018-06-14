@@ -46,10 +46,7 @@
     </div>
     <div class="v-modal" style="z-index: 99;"></div>
   </div>
-
-
 </template>
-
 <script>
   import "../../../../static/css/newStyle.css"
   import draggable from 'vuedraggable'
@@ -80,13 +77,17 @@
         return item.sort=parseInt(index)+1
       },
       setSortli(e,item){
-        let vm =this;
+        let vm =this;        
         if(!e.target.value){e.target.value=item.sort}
         if(parseInt(e.target.value)>=1){
           item.sort=e.target.value-1
         }else{
           item.sort=e.target.value
         }
+        if(e.target.value-item.sort>0){
+          item.sort=e.target.value
+        }
+        item.sort=e.target.value
         function compare(str) {
           return function (obj1, obj2) {
             var value1 = obj1[str];
