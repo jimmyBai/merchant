@@ -33,7 +33,7 @@
             <el-switch v-model="status" active-color="rgb(96,58,108)" inactive-color="#7e7c7c" class="el_switch"></el-switch>
           </div>
         </div>
-
+        
         <div class="savebtn" @click="savetipdata">
           <input type="button" value="保存">
         </div>
