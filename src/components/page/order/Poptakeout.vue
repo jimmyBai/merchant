@@ -440,6 +440,7 @@
       },
       //接单取消订单操作
       orderFn(way){
+        console.log(way)
         let vm =this,url,params={'order_sn':vm.orderinfo.orderid};
         if(way>0){
           url='/api/web/order/accept'

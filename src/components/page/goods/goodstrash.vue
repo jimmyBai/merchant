@@ -22,8 +22,8 @@
               <span class="td-title">回收站商品列表</span>
               <span class="sontitle">删除时间：</span>
               <el-date-picker class="res-input" :editable="false" v-model="start_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
+              <div>至</div>
               <el-date-picker class="res-input" :editable="false" v-model="end_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
-
               <div  class="line">
                 <input type="text"  placeholder="请输入商品名称" v-model="product_name" />
               </div>

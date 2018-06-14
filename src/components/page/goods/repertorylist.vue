@@ -9,6 +9,7 @@
               <span class="td-title">库存修改记录列表</span>
               <span class="sontitle">修改时间：</span>
               <el-date-picker class="res-input" :editable="false" v-model="start_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
+              <div>至</div>
               <el-date-picker class="res-input" :editable="false" v-model="end_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
               <span class="sontitle">商品分类：</span>
               <el-select v-model="typeValue" placeholder="全部" class="osselect">
