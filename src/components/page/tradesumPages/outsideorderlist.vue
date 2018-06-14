@@ -65,12 +65,12 @@
                 </div>
                 <div class="td-content">
                   <el-select v-model="search.type" placeholder="全部" value-key='id' class="osselect">
+                      <el-option :key="''" :label="'全部'" :value="''"></el-option>
                       <el-option v-for="item in options" :key="item.id" :label="item.name" :value='item'></el-option>
                   </el-select>
                   <input type="text" v-model="search.content" placeholder="请输入商品名称" />
                   <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
                 </div>
-
               </div>
             </div>
 
@@ -138,7 +138,7 @@ export default {
     // 获取小费记录数据
     gettipData(){
       this.ListData = []
-      this.statistics = []
+      this.statistics = {'product_num':0,'sales_num':0,'sales_price':0}
       let vm=this,url='/api/web/report/summary/takeout-products',params={
         page: vm.page,
         length: vm.length,
@@ -182,7 +182,7 @@ export default {
     },
     // 获取分类
     selectData(){
-      let vm =this,url='/api/web/product/type_list',params={};
+      let vm =this,url='/api/web/takeout-product/type_list',params={};
       vm.$axios.get(url,{params}).then((res)=>{
         if(res.data.error_code=='0'){
           vm.options=res.data.data

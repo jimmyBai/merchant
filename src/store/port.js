@@ -13,6 +13,7 @@ const state=new Vuex.Store({
     uid:localStorage.getItem("uid") || "",
     menuIndex:sessionStorage.getItem("INDEXNUM") || 0,
     userInfo:JSON.parse(localStorage.getItem("USERINFO"))||{},
+    isLaoding:false
 	},
 	mutations:{
     setToken(state,apptoken){
@@ -26,6 +27,9 @@ const state=new Vuex.Store({
     },
     setLoginUser(state,data){
       state.userInfo=data
+    },
+    setLoading(state,data){
+      state.isLaoding=data
     }
 	},
 	actions:{
@@ -40,7 +44,10 @@ const state=new Vuex.Store({
     },
     addLoginInfo({commit},obj){
       commit("setLoginUser",obj)
-    }
+    },
+    changeLoading({commit},status){
+      commit("setLoading",status)
+    },
 	}
 })
 

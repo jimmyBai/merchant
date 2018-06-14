@@ -22,7 +22,7 @@
                   <span v-text="item.address"></span>
                 </li>
               </ul>
-              
+
             </div>
 
             <div class="mapbottom"></div>
@@ -253,7 +253,6 @@ import {MP} from '../../../../static/js/newMap.js'
       closepop(){
         //执行父组件关闭方法
         let data = this.pcityMap;
-        console.log(data)
         //执行父组件方法
         this.$emit('viewMap',data,'');
       },

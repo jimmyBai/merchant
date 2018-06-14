@@ -24,7 +24,7 @@
         <div class="blessing">
           <div class="title"><em>*&nbsp;&nbsp;</em>默认祝福语</div>
           <div class="content greetbox">
-            <textarea v-model="greetings" placeholder="您的满意，是我们最大的动力！"></textarea>
+            <textarea v-model="greetings" maxlength="20" placeholder="您的满意，是我们最大的动力！"></textarea>
           </div>
         </div>
         <div class="charge">

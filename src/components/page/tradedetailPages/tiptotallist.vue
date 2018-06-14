@@ -13,7 +13,7 @@
               <img class="phoneimg" src="../../../../static/img/tipone.png" alt="">
             </div>
             <div class="insideright">
-              <span v-text="'¥'+statistics.total_price" class="apcolor"></span>
+              <span v-text="$options.filters.viewMoney(statistics.total_price,1)" class="apcolor"></span>
               <span>总小费金额</span>
             </div>
           </div>
@@ -26,7 +26,7 @@
               <span>支付人次</span>
             </div>
           </div>
-          <div class="imgright">
+          <div class="imgcontent">
             <div class="insideleft">
               <img src="../../../../static/img/tiptwo.png" alt="">
             </div>
@@ -35,7 +35,15 @@
               <span>收取店员人数</span>
             </div>
           </div>
-
+          <div class="imgright">
+            <div class="insideleft">
+              <img src="../../../../static/img/tipthree.png" alt="">
+            </div>
+            <div class="insideright">
+              <span v-text="$options.filters.viewMoney(statistics.platform_price,1)" class="apcolor"></span>
+              <span>平台服务费</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -70,27 +78,19 @@
       </div>
 
       <div class="tiplist_two">
-        <!-- <div class="tiptitle">
-          <span class="tipspan">我的小费</span>
-          <input type="text" v-model="search.content" />
-          <span class="search-icon" @click="searchAll"><i class="el-icon-search"></i></span>
-        </div> -->
         <el-table stripe :data="ListData">
-          <el-table-column width="120" prop="username" label="用户名"></el-table-column>
+          <el-table-column prop="username" label="用户名"></el-table-column>
          <!-- <el-table-column prop="phone" label="手机号码"></el-table-column>-->
-          <el-table-column width="120" prop="manager" label="管理员"></el-table-column>
-          <el-table-column width="120" prop="store_user_role" label="角色"></el-table-column>
-          <el-table-column width="120" prop="amount" label="小费金额"></el-table-column>
-          <el-table-column width="120" prop="pay_type" label="支付方式"></el-table-column>
+          <el-table-column prop="manager" label="管理员"></el-table-column>
+          <el-table-column prop="store_user_role" label="角色"></el-table-column>
+          <el-table-column prop="amount" label="小费金额" :formatter="formatMoney"></el-table-column>
+          <el-table-column prop="pay_type" label="支付方式"></el-table-column>
+          <el-table-column prop="platform_price" label="平台服务费" :formatter="formatMoney"></el-table-column>
           <el-table-column prop="create_time" label="支付时间"></el-table-column>
           <el-table-column prop="status" label="状态"></el-table-column>
         </el-table>
       </div>
-
-
-
     </div>
-
     <!-- 分页 -->
     <div class="pagination">
       <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
@@ -107,7 +107,7 @@ export default {
     return {
       ishowSearch: false,
       ListData:[],
-      statistics:'',
+      statistics:{},
       page: "1", //页码，默认为1
       length: "10", //每页记录数，默认为10
       page:0,
@@ -127,14 +127,32 @@ export default {
       return this.$store.state.uid
     }
   },
+  filters: {
+    viewMoney: function (value,way) {
+      if (!value) return '¥0'
+      let date = value.toString()
+      if(way>0){
+        return "¥"+date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }else{
+        return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }
+    }
+  },
   mounted:function(){
     this.gettipData()
   },
   methods:{
+    formatMoney(row, column) {
+      var date = row[column.property];
+      if (date == undefined) {
+        return "";
+      }
+      return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    },
     // 获取小费记录数据
     gettipData(){
       this.ListData = []
-      this.statistics = {'total_price':0,'pay_times':0,'to_member_times':0}
+      this.statistics = {'total_price':0,'pay_times':0,'to_member_times':0,'platform_price':0}
       let vm=this,url='/api/web/report/summary/tip-sales',params={
         page: vm.page,
         length: vm.length,

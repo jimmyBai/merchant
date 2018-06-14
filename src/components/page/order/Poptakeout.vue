@@ -96,11 +96,20 @@
                       </div>
                     </li>
                     <li class="savebtn">
-                      <div @click="orderFn(0)">
+                      <div @click="showReason=!showReason">
                         <span>取消订单</span>
                       </div>
                     </li>
+                    <li class="reasonli" v-if="showReason">
+                      <textarea v-model="reason" placeholder="请输入取消原因" maxlength="30"></textarea>
+                    </li>
+                    <li class="savebtn" v-if="showReason">
+                      <div @click="orderFn(0)">
+                        <span>提交</span>
+                      </div>
+                    </li>
                   </ul>
+
                 </div>
               </div>
 
@@ -109,7 +118,7 @@
             <div class="baseinfo">
               <dl>
                 <dt>订单金额</dt>
-                <dd class="money"><span v-text="'¥'+detailinfo.total_amount"></span></dd>
+                <dd class="money"><span v-text="$options.filters.viewMoney(detailinfo.total_amount,1)"></span></dd>
                 <dd class="reson" v-if="detailinfo.cancel_reason"><span v-text="detailinfo.cancel_reason"></span></dd>
               </dl>
             </div>
@@ -141,8 +150,8 @@
                       <div class="goodstips"><span v-text="item.weight+'KG'"></span></div>
                     </div>
                     <div class="goodtotalm">
-                      <div class="goodsprice"><span v-text="(item.unit_price*item.num).toFixed(2)"></span></div>
-                      <div class="mtotal"><span v-text="item.unit_price"></span><span class="preadd">X</span><span v-text="item.num"></span></div>
+                      <div class="goodsprice"><span v-text="$options.filters.viewMoney((item.unit_price*item.num).toFixed(2))"></span></div>
+                      <div class="mtotal"><span v-text="$options.filters.viewMoney(item.unit_price)"></span><span class="preadd">X</span><span v-text="item.num"></span></div>
                     </div>
                   </li>
                 </ul>
@@ -152,27 +161,27 @@
             <ul>
               <li class="c_w">
                 <div>小计</div>
-                <div><span v-text="detailinfo.subtotal_amount"></span></div>
+                <div><span v-text="$options.filters.viewMoney(detailinfo.subtotal_amount,0)"></span></div>
               </li>
               <li class="c_w">
                 <div>配送</div>
-                <div><span v-text="detailinfo.delivery_fee"></span></div>
+                <div><span v-text="$options.filters.viewMoney(detailinfo.delivery_fee,0)"></span></div>
               </li>
               <li class="s_w">
                 <div>折扣</div>
-                <div><span v-text="detailinfo.discount_amount"></span></div>
+                <div><span v-text="$options.filters.viewMoney(detailinfo.discount_amount,0)"></span></div>
               </li>
               <li class="c_w">
                 <div>支付金额</div>
-                <div class="paycolor"><span v-text="detailinfo.pay_amount"></span></div>
+                <div class="paycolor"><span v-text="$options.filters.viewMoney(detailinfo.pay_amount,0)"></span></div>
               </li>
               <li class="c_w btborder">
                 <div>平台服务费</div>
-                <div><span v-text="detailinfo.service_fee"></span></div>
+                <div><span v-text="$options.filters.viewMoney(detailinfo.service_fee,0)"></span></div>
               </li>
               <li class="c_w">
                 <div>商户实收金额</div>
-                <div class="paycolor"><span v-text="(detailinfo.pay_amount-detailinfo.service_fee).toFixed(2)"></span></div>
+                <div class="paycolor"><span v-text="$options.filters.viewMoney((detailinfo.pay_amount-detailinfo.service_fee).toFixed(2),0)"></span></div>
               </li>
               <li class="c_w btborder">
                 <div>支付方式</div>
@@ -188,14 +197,14 @@
 </template>
 
 <script>
-import CryptoJS from 'crypto-js'
-import {fetchPost} from '../../../../static/js/fetch.js';
+/*import CryptoJS from 'crypto-js'*/
+// import {fetchPost} from '../../../../static/js/fetch.js';
   export default {
     name: 'addsrole',
     data () {
       return {
         msgtitle:"",
-        detailinfo:"",
+        detailinfo:{'total_amount':0.00},
         productList:'',
         estimated_time:'',
         deliver_man:'',
@@ -205,12 +214,24 @@ import {fetchPost} from '../../../../static/js/fetch.js';
         printvalue:'',
         printList:[],
         candotime:true,
+        reason:'',
+        showReason:false,
         code:'',
           USER:"sheep@yottaspace.cn",//必填，飞鹅云 www.feieyun.cn后台注册的账号名
           UKEY:"hgfZmCRytUsZPese",//必填，飞鹅云后台注册账号后生成的UKEY
           STIME:new Date().getTime(),
-          SIG:'',
 
+      }
+    },
+    filters: {
+      viewMoney(value,way) {
+        if (!value) return ''
+        let date = value.toString()
+        if(way>0){
+          return "¥"+date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        }else{
+          return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        }
       }
     },
     props: {
@@ -223,7 +244,7 @@ import {fetchPost} from '../../../../static/js/fetch.js';
       this.msgtitle=this.orderinfo.title
       this.geteditInfo()
 
-      this.SIG = CryptoJS.SHA1(this.USER+this.UKEY+this.STIME).toString(CryptoJS.enc.Hex)
+     // this.SIG = CryptoJS.SHA1(this.USER+this.UKEY+this.STIME).toString(CryptoJS.enc.Hex)
     },
     methods:{
       //订单打印
@@ -273,9 +294,9 @@ import {fetchPost} from '../../../../static/js/fetch.js';
             type: 'success'
           });
           vm.timeCut(60)
-          if(window.location.href.indexOf('uat.')<0||window.location.href.indexOf('dev.')<0){
+          /*if(window.location.href.indexOf('dev.')<0){
             vm.code='123456'
-          }
+          }*/
           }else{
             vm.$message.error(res.data.message);
             vm.candotime=true;
@@ -424,6 +445,11 @@ import {fetchPost} from '../../../../static/js/fetch.js';
           url='/api/web/order/accept'
         }else{
           url='/api/web/order/cancel'
+          params.reason=vm.reason
+          if(!vm.reason.replace(/\s/g,'')){
+            vm.$message.error('取消订单必须填写原因！');
+            return
+          }
         }
         vm.$axios({
           method:'post',
@@ -517,4 +543,8 @@ em{ font-style: normal; margin-right: 5px; color: #ac5397}
 .printcheckbox{ display: flex;display:-webkit-flex; align-items: center;-webkit-align-items: center}
 .checkIcon{ height: 12px;width: 12px; font-size: 12px; display: inline-block;content: ''; border-radius: 2px; border: 1px solid #fff; background: #b95e15}
 .printcheckbox>span{ margin-left: 5px}
+/**取消原因**/
+.deliverItem ul li.reasonli{background: #8e680c; height: 40px; padding: 5px 10px}
+ul li.reasonli textarea{width: 100%; font-size: 12px; color: #fff; width: 100%; -webkit-appearance: none; resize: none; border: none; background: none; }
+ul li.reasonli textarea::placeholder{ color: #fff}
 </style>

@@ -38,7 +38,7 @@
       <el-table stripe :data="ListData">
         <el-table-column prop="sn" label="订单号/账户号码"></el-table-column>
         <el-table-column prop="type" label="支出类型"></el-table-column>
-        <el-table-column prop="amount" label="支出金额"></el-table-column>
+        <el-table-column prop="amount" label="支出金额" :formatter="formatMoney"></el-table-column>
         <el-table-column prop="expense_time" label="支出时间"></el-table-column>
         <el-table-column prop="status" label="结算状态"></el-table-column>
       </el-table>
@@ -75,9 +75,9 @@ import "../../../../static/css/newStyle.css"
         total_page:0,
         options:[
           {value: '',label: '全部'},
-          {value: 'withdraw_reject',label: '提现驳回'},
-          {value: 'withdraw',label: '提现成功'},
-          {value: 'user_refund',label: '用户退款'}
+         /* {value: 'withdraw_reject',label: '提现驳回'},*/
+          {value: 'user_refund',label: '退款'},
+          {value: 'withdraw',label: '提现'}
         ]
       }
     },
@@ -85,6 +85,13 @@ import "../../../../static/css/newStyle.css"
       this.getlistData();
     },
     methods:{
+      formatMoney(row, column) {
+        var date = row[column.property];
+        if (date == undefined) {
+          return "";
+        }
+        return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      },
       // 获取列表数据
       getlistData(){
         this.ListData = []

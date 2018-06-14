@@ -35,7 +35,7 @@ export default {
       ischeck:false,
       phone:'',
       password:'',
-      canLogin:false,
+      canLogin:false
     }
   },
   watch:{
@@ -44,10 +44,6 @@ export default {
     if(localStorage.getItem('LOGININFO')){
       this.phone=JSON.parse(localStorage.getItem('LOGININFO')).phone
       this.password=JSON.parse(localStorage.getItem('LOGININFO')).password
-    }
-    //如果是DEV或者UAT环境默认一个登录账号
-    if(window.location.href.indexOf('uat.')<0||window.location.href.indexOf('dev.')<0){
-      this.phone='13800138222'
     }
   },
   methods:{
@@ -75,6 +71,7 @@ export default {
         url:url,
         data: params
       }).then((res)=>{
+        this.loading=false
         if(res.data.error_code=='0'){
           //吧获取到的Token缓存到状态管理器
           if(res.data.data){
@@ -90,7 +87,6 @@ export default {
         }else{
           vm.$message.error(res.data.message);
         }
-
       }).catch(err => {
         console.log(err);
       });

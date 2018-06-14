@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-  
+
     <div class="listtable">
       <div class="list-search">
 
@@ -39,7 +39,7 @@
       <el-table stripe :data="ListData">
         <el-table-column prop="order_sn" label="订单号"></el-table-column>
         <el-table-column prop="type" label="收入类型"></el-table-column>
-        <el-table-column prop="amount" label="收入金额"></el-table-column>
+        <el-table-column prop="amount" label="收入金额" :formatter="formatMoney"></el-table-column>
         <el-table-column prop="receipt_time" label="收款时间"></el-table-column>
         <el-table-column width="100" prop="status" label="结算">
           <template slot-scope="scope">
@@ -62,7 +62,7 @@
     </div>
 
   </div>
-    
+
 </template>
 <script>
 // andy
@@ -90,15 +90,33 @@ import "../../../../static/css/newStyle.css"
           {value: 'seat',label: '订座'},
           {value: 'vip_member',label: '直播会员'},
           {value: 'prepaid_card',label: '充值卡'},
-          {value: 'tip',label: '消费'}
+          {value: 'tip',label: '小费'}
         ]
 
+      }
+    },
+    filters: {
+      viewMoney: function (value,way) {
+        if (!value) return '¥0'
+        let date = value.toString()
+        if(way>0){
+          return "¥"+date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        }else{
+          return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        }
       }
     },
     mounted:function(){
       this.getlistData();
     },
     methods:{
+      formatMoney(row, column) {
+        var date = row[column.property];
+        if (date == undefined) {
+          return "";
+        }
+        return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      },
       // 获取列表数据
       getlistData(){
         this.ListData = []
@@ -158,7 +176,7 @@ import "../../../../static/css/newStyle.css"
   .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
   .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center;}
   .td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
-  
+
   .orstatus{
     float: left;
   }

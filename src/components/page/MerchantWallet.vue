@@ -8,7 +8,7 @@
         <div class="moneyleft">
           <div class="moneyshow">
             <span class="moneynum">
-              <span>￥<span v-text="ListData.balance"></span></span>
+              <span><span v-text="$options.filters.viewMoney(ListData.balance,1)"></span></span>
             </span>
             <span class="moneytext">
               <span class="wenhaotext">账户余额</span>
@@ -19,16 +19,16 @@
         <div class="moneycontent">
           <div class="moneyshow">
             <span class="moneynum ctmy">
-              <span>￥<span v-text="ListData.frozen_balance"></span></span>
+              <span><span v-text="$options.filters.viewMoney(ListData.frozen_balance,1)"></span></span>
             </span>
             <span class="moneytext">
               <span class="wenhaotext2">不可提现金额</span>
               <img class="wenhaoimg" style="cursor:pointer;" src="../../../static/img/wenhao.png" @click="showwenhao" />
             </span>
           </div>
-          <span class="wenhaopt" v-if="iswenhaoHide">这是不可提现的金额</span>
+          <span class="wenhaopt" v-if="iswenhaoHide">每笔收入金额需要七天时间解冻，解冻后转到账户余额即可提现</span>
         </div>
-        
+
         <!-- <div class="moneyright">
           <div class="moneyshow">
             <span class="moneynum rtmy">
@@ -61,12 +61,12 @@
 
       </div>
     </div>
-    
+
     <!-- 添加银行卡 -->
     <add-bank-card v-if="isBankCardShow" :fromParent="fromParent" @pviewbankcard="viewbankcard"></add-bank-card>
     <!-- 银行卡递交提示 -->
     <info-prompt v-if="isPromptShow" @pviewprompt="viewprompt"></info-prompt>
-    
+
     <!-- 提现 -->
     <extractlist v-if="isexShow" @pviewex="viewex"></extractlist>
 
@@ -100,6 +100,17 @@ export default {
   created(){
 
   },
+  filters: {
+    viewMoney: function (value,way) {
+      if (!value) return '¥0'
+      let date = value.toString()
+      if(way>0){
+        return "¥"+date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }else{
+        return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }
+    }
+  },
   mounted:function(){
     if(this.$route.path=='/MerchantWallet'){
       this.activenum='incomelist'
@@ -116,7 +127,6 @@ export default {
       this.activenum=way
       this.$router.push('/'+way)
     },
-
     // 获取余额数据
     getlistData(){
       this.ListData = []
@@ -140,7 +150,7 @@ export default {
       vm.isBankCardShow=data[0].isBankCardStatus;
       if(data[0].status&&data[0].status=='refresh'){
         vm.isPromptShow=!vm.isBankCardShow
-        
+
         if(!this.$router.push('/bankCardlist')){
           this.$router.push('/bankCardlist');
           this.activenum='bankCardlist'
@@ -150,7 +160,7 @@ export default {
           this.$router.push(NewPage);
           this.$router.go(-1);
         }
-        
+
         setTimeout(function(){
           vm.isPromptShow = false;
         },2000);
@@ -274,29 +284,10 @@ export default {
     border-color: #724480;
     -webkit-appearance:none;
   }
-  
-  .wenhaoimg{
-    width: 20px;
-    height: 20px;
-  }
-  .wenhaotext{
-    position: relative;
-    top: -2px;
-  }
-  .wenhaotext2{
-    position: relative;
-    top: -4px;
-  }
-  .wenhaopt{
-    display: block;
-    position: absolute;
-    bottom: 30px;
-    color: #fff;
-    width: 140px;
-    height: 20px;
-    line-height: 20px;
-    border: 1px solid #706375;
-    text-align: center;
-    border-radius: 0.5rem;
-  }
+
+  .wenhaoimg{ width: 20px;  height: 20px; }
+  .wenhaotext{ position: relative;  top: -2px; }
+  .wenhaotext2{  position: relative; top: -4px; }
+  .wenhaopt{ display: block;  position: absolute;   bottom: 30px;   color: #fff;   height: 20px;   line-height: 20px;    border: 1px solid #706375;
+    text-align: center; padding:0 10px;border-radius: 0.5rem;  }
 </style>

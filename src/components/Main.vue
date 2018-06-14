@@ -45,12 +45,13 @@
               <span v-text="item.name"></span>
               <img src="../../static/img/leftarrow.png" v-if="!isdradeShow&&item.userid==4" class="ltimg" >
               <img src="../../static/img/downarrow.png" v-if="isdradeShow&&item.userid==4" class="dnimg">
-              
+
               <div class="newmenu" v-if="isdradeShow&&item.userid==4">
-                <span :class="{'isselect':!isA}" @click="traderoom('1')">交易明细</span>
-                <span :class="{'isselect':isA}" @click="traderoom('2')">交易汇总</span>
+                <span :class="{'isselect':navIndex==1}" @click="traderoom('1')">交易明细</span>
+                <span :class="{'isselect':navIndex==2}" @click="traderoom('2')">交易汇总</span>
+                <span :class="{'isselect':navIndex==3}" @click="traderoom('3')">直播总汇报表</span>
               </div>
-              
+
             </div>
           </li>
         </ul>
@@ -80,7 +81,7 @@ export default {
         {'name':'信息','userid':8,'icon':'08'},
       ],
       isdradeShow:false,
-      isA: true,
+      navIndex: '',
     }
   },
   mounted:function(){
@@ -121,7 +122,7 @@ export default {
         sessionStorage.removeItem('user_id')
         vm.$router.push('/order')
       }else if(id==3){
-        vm.$router.push('/takeaway')
+        vm.$router.push('/goodslist')
       }else if(id==4){
         // vm.$router.push('/export')
         if(!vm.isdradeShow&&id==4){
@@ -187,12 +188,16 @@ export default {
     },
     traderoom(way){
       let vm = this;
+      vm.navIndex=way
       if(way == 1){
         vm.isA = true;
         vm.$router.push('/tradedetail');
+      }else if(way == 2){
+        vm.isA = true;
+        vm.$router.push('/tradesum');
       }else{
         vm.isA = false;
-        vm.$router.push('/tradesum');
+        vm.$router.push('/livereport');
       }
 
     }
@@ -213,7 +218,7 @@ export default {
 .phoneli{ background:#2e1c34}
 .menuul{}
 .menuul li span{ display: block}
-.menuul li .icon-menu00{background-position: 0px -175px;width: 25px; height: 25px; background-size: cover;}
+.menuul li .icon-menu00{background-position: 0px -176px;width: 25px; height: 25px; background-size: cover;}
 .menuul li .icon-menu01{background-position: 0px 0px;width: 25px; height: 25px; background-size: cover;}
 .menuul li .icon-menu02{background-position: 0px -25px;width: 25px; height: 25px; background-size: cover;}
 .menuul li .icon-menu03{background-position: 0px -50px;width: 25px; height: 25px; background-size: cover;}
@@ -221,7 +226,7 @@ export default {
 .menuul li .icon-menu05{background-position: 0px -100px;width: 25px; height: 25px; background-size: cover;}
 .menuul li .icon-menu06{background-position: 0px -125px;width: 25px; height: 25px; background-size: cover;}
 .menuul li .icon-menu07{background-position: 0px -150px;width: 25px; height: 25px; background-size: cover;}
-.menuul li .icon-menu08{background-position: 0px -200px;width: 25px; height: 25px; background-size: cover;}
+.menuul li .icon-menu08{background-position: 0px -201px;width: 25px; height: 25px; background-size: cover;}
 .popmyinfo{background: #38213e; z-index: 99; min-width: 90px; border: 1px solid #48344d; position: absolute; top: 62px;right: 0}
 .popmyinfo ul {display: flex; display: -webkit-flex; flex-direction: column; -webkit-flex-direction: column}
 .popmyinfo ul li{ width:auto; cursor: pointer; display: block; padding: 0px; border-bottom: 1px solid #48344d; height: 24px; line-height: 24px;font-size: 12px; color: #9f8ba6}
@@ -237,8 +242,8 @@ export default {
 .popmyinfo ul.iconul li{ text-align: left; padding: 3px 10px; padding-left: 15px}
 
 .newmenu{ margin-top: 20px;}
-.newmenu span{ margin-top: 10px;}
+.leftmenubar ul li.active .newmenu span{ margin-top: 10px; color: #aa96b1}
 .pmenu .ltimg{ width: 6px;  position: absolute; top: 26px; right: 10px;}
 .pmenu .dnimg{ width: 12px; position: absolute; top: 32px; right: 8px;}
-.leftmenubar ul li .isselect{ color: #aa96b1;}
+.leftmenubar ul li.active .newmenu .isselect{ color: #f6e2fd;}
 </style>

@@ -56,6 +56,7 @@
             <!-- 显示二维码 -->
             <div class="response" v-show="isqrcodeShow">
               <div id="qrcode" class="qrcode"></div>
+              <img v-if="qrurl" style="height: 160px; width: 160px; border:2px solid #fff" :src="qrurl"/>
             </div>
             <input type="button" v-if="!isqrcodeShow" value="点击生成二维码" @click="commontwocode('1')">
             <input type="button" v-if="isqrcodeShow" value="点击下载" @click="commontwocode('2')">
@@ -109,7 +110,7 @@
                     <img src="../../../static/img/tipone.png" alt="">
                   </div>
                   <div class="insideright">
-                    <span v-text="'¥'+statistics.amount" class="apcolor"></span>
+                    <span v-text="$options.filters.viewMoney(statistics.amount,1)" class="apcolor"></span>
                     <span>总小费金额</span>
                   </div>
                 </div>
@@ -130,10 +131,10 @@
                   <span class="search-icon" @click="searchlist"><i class="el-icon-search"></i></span>
                 </div>
                 <el-table stripe :data="reListData">
-                  <el-table-column width="60" prop="username" label="用户名"></el-table-column>
+                  <el-table-column width="120"  prop="username" label="用户名"></el-table-column>
                   <!--<el-table-column prop="phone" label="手机号码"></el-table-column>-->
-                  <el-table-column prop="amount" label="小费金额"></el-table-column>
-                  <el-table-column width="80" prop="payment" label="支付方式"></el-table-column>
+                  <el-table-column width="100" prop="amount" :formatter="formatMoney" label="小费金额"></el-table-column>
+                  <el-table-column width="100" prop="payment" label="支付方式"></el-table-column>
                   <el-table-column prop="pay_time" label="支付时间"></el-table-column>
                 </el-table>
               </div>
@@ -169,228 +170,264 @@
 
 <script>
 import "../../../static/css/newStyle.css"
-// import QRCode from 'qrcodejs2'
-// import "../../../static/js/qrcode.js"
-
 import $ from 'jquery'
 import "../../../static/js/jquery.qrcode.js"
+export default {
+  name: 'myinfo',
+  data () {
+    return {
+      ListData:[],
+      reListData:[],
+      isdialogShow: false,
+      isqrcodeShow: false,
+      page: "1", //页码，默认为1
+      length: "10", //每页记录数，默认为10
+      page:0,
+      per_page:0,
+      total:0,
+      total_page:0,
+      search:{
+        uid: "",
+        content: "",
+        amount_max: "", //最大值
+        amount_min: "", //最小值
+        start_time: "", //开始时间
+        end_time: "" //结束时间
+      },
+      statistics: '',
+      canvasQr:'',
+      qrurl:''
+    }
+  },
+  created(){
 
-
-  export default {
-    name: 'myinfo',
-    data () {
+  },
+  computed:{
+    userName(){
+      return this.$store.state.username
+    },
+    browser(){
+      var u = navigator.userAgent, app = navigator.appVersion;
       return {
-        ListData:[],
-        reListData:[],
-        isdialogShow: false,
-        isqrcodeShow: false,
-        page: "1", //页码，默认为1
-        length: "10", //每页记录数，默认为10
-        page:0,
-        per_page:0,
-        total:0,
-        total_page:0,
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), /*是否为移动终端*/
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), /*ios终端*/
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, /*android终端或者uc浏览器*/
+        iPhone: u.indexOf('iPhone') > -1 , /*是否为iPhone或者QQHD浏览器*/
+        iPad: u.indexOf('iPad') > -1, /*是否iPad*/
+        weixin: u.toLowerCase().indexOf('micromessenger') > -1 /*是否是微信*/
+      };
+    }
+  },
+  filters: {
+    viewMoney: function (value,way) {
+      if (!value) return '¥0'
+      let date = value.toString()
+      if(way>0){
+        return "¥"+date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }else{
+        return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }
+    }
+  },
+  mounted:function(){
+    this.getlistData()
+    this.gettipData()
+  },
+  methods:{
+    formatMoney(row, column) {
+      var date = row[column.property];
+      if (date == undefined) {
+        return "";
+      }
+      return date.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    },
+    setQrcode(){
+      let vm =this;
+      vm.canvasQr=''
+      vm.canvasQr=$('#qrcode').qrcode({
+        render: "canvas",
+        text: vm.$store.state.uid.toString(),
+        width: "500", //二维码的宽度
+        height: "500", //二维码的高度
+        background: "#ffffff", //二维码的后景色
+        foreground: "#4c3d7b", //二维码的前景色
+        correctLevel: 3, //纠错等级
+        src: '../../../static/img/018Logo.png', //二维码中间的图片
+      }).hide();
+      setTimeout(function(){
+        vm.canvasToImage()
+      },200)
+    },
+    // 获取小费记录数据
+    gettipData(){
+      this.reListData = []
+      this.statistics = {'amount':0,'paid':0}
+      let vm=this,url='/api/web/tip/list',params={
+        page: vm.page,
+        length: vm.length,
         search:{
-          uid: "",
-          content: "",
-          amount_max: "", //最大值
-          amount_min: "", //最小值
-          start_time: "", //开始时间
-          end_time: "" //结束时间
-        },
-        statistics: '',
-        canvasQr:'',
-        userImg:'../../../static/img/membericon.png'
-      }
-    },
-    created(){
-
-    },
-    computed:{
-      userName(){
-        return this.$store.state.username
-      },
-      userToken(){
-        return this.$store.state.token
-      }
-
-    },
-    mounted:function(){
-      this.getlistData()
-      this.gettipData()
-    },
-    methods:{
-      setQrcode(){
-        let vm =this;
-        vm.canvasQr=''
-        vm.canvasQr=$('#qrcode').qrcode({
-          render: "canvas",
-          text: vm.$store.state.uid.toString(),
-          width: "160", //二维码的宽度
-          height: "160", //二维码的高度
-          background: "#ffffff", //二维码的后景色
-          foreground: "#4c3d7b", //二维码的前景色
-          correctLevel: 3, //纠错等级
-          src: '../../../static/img/018Logo.png', //二维码中间的图片
-        });
-      },
-      // 获取小费记录数据
-      gettipData(){
-        this.reListData = []
-        this.statistics = {'amount':0,'paid':0}
-        let vm=this,url='/api/web/tip/list',params={
-          page: vm.page,
-          length: vm.length,
-          search:{
-            uid: vm.$store.state.uid,
-            content: vm.search.content
-          }
-        };
-        vm.$axios({
-          method:'post',
-          url:url,
-          data:params
-        }).then((res)=>{
-          if(res.data.error_code=='0'){
-            if(res.data.data.list){
-              vm.reListData=res.data.data.list
-              vm.statistics=res.data.data.statistics
-            }
-            vm.total=Number(res.data.data.total);
-            vm.pages=Number(res.data.data.pages);
-            vm.page=Number(res.data.data.page);
-            vm.per_page=Number(res.data.data.per_page);
-            vm.total_page=Number(res.data.data.total_page);
-          }else{
-            vm.$message.error(res.data.message);
-          }
-        }).catch(err => {
-          console.log(err);
-        });
-
-      },
-      //选择头像图片
-      changeImg(){
-        let vm=this,imgobj=event.target.files[0], maxSize=1024*300, maxWidth=200,maxHeight=200;
-        if(imgobj.size>maxSize){
-          vm.$message.error('请上传小于300kb的图片');
-          return
+          uid: vm.$store.state.uid,
+          content: vm.search.content
         }
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          //加载图片获取图片真实宽度和高度
-          var image = new Image()
-          image.src = e.target.result;
-          image.onload=function(){
-            if((image.width/image.height).toFixed(2)==(maxWidth/maxHeight).toFixed(2)){
-              imgobj={img:e.target.result}
-              vm.ListData.head_portrait=imgobj.img
-              vm.imgupload(imgobj.img)
-            }else{
-              vm.$message.error('图片尺寸不对');
-            }
-          };
-        };
-        reader.readAsDataURL(imgobj);
-      },
-      //上传图片
-      imgupload(img){
-        let vm =this,imgarray=[img],url='/api/web/setting/upload',params={type:5,files:imgarray};
-        vm.$axios({
-          method:'post',
-          url:url,
-          data: params
-        }).then((res)=>{
-          if(res.data.error_code=='0'){
-            if(res.data.data&&res.data.data.length>0){
-              vm.ListData.head_portrait=res.data.data[0]
-              vm.setImg(vm.ListData.head_portrait)
-            }
-          }else{
-            vm.$message.error(res.data.message);
+      };
+      vm.$axios({
+        method:'post',
+        url:url,
+        data:params
+      }).then((res)=>{
+        if(res.data.error_code=='0'){
+          if(res.data.data.list){
+            vm.reListData=res.data.data.list
+            vm.statistics=res.data.data.statistics
+          }
+          vm.total=Number(res.data.data.total);
+          vm.pages=Number(res.data.data.pages);
+          vm.page=Number(res.data.data.page);
+          vm.per_page=Number(res.data.data.per_page);
+          vm.total_page=Number(res.data.data.total_page);
+        }else{
+          vm.$message.error(res.data.message);
+        }
+      }).catch(err => {
+        console.log(err);
+      });
 
-          }
-        }).catch(err => {
-            console.log(err);
-        });
-      },
-      //更改图片
-      setImg(img){
-        let vm =this,url='/api/web/my/change-head-portrait',params={head_portrait:img};
-        vm.$axios({
-          method:'post',
-          url:url,
-          data: params
-        }).then((res)=>{
-          if(res.data.error_code=='0'){
-            vm.$message({
-              message: '头像修改成功！',
-              type: 'success'
-            });
+    },
+    //选择头像图片
+    changeImg(){
+      let vm=this,imgobj=event.target.files[0], maxSize=1024*300, maxWidth=200,maxHeight=200;
+      if(imgobj.size>maxSize){
+        vm.$message.error('请上传小于300kb的图片');
+        return
+      }
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        //加载图片获取图片真实宽度和高度
+        var image = new Image()
+        image.src = e.target.result;
+        image.onload=function(){
+          if((image.width/image.height).toFixed(2)==(maxWidth/maxHeight).toFixed(2)){
+            imgobj={img:e.target.result}
+            vm.ListData.head_portrait=imgobj.img
+            vm.imgupload(imgobj.img)
           }else{
-              vm.$message.error(res.data.message);
+            vm.$message.error('请上传200*200像素或等比图片！');
           }
-        }).catch(err => {
-            console.log(err);
-        });
-      },
-      getlistData(){
-        let vm =this,url='/api/web/authority/user/info',params={'id':''};
-        vm.$axios.get(url,{params}).then((res)=>{
-          if(res.data.error_code=='0'){
-            vm.ListData=res.data.data
-            if(vm.ListData.tip_status){
-              vm.setQrcode()
-            }
-          }else{
+        };
+      };
+      reader.readAsDataURL(imgobj);
+    },
+    //上传图片
+    imgupload(img){
+      let vm =this,imgarray=[img],url='/api/web/setting/upload',params={type:5,files:imgarray};
+      vm.$axios({
+        method:'post',
+        url:url,
+        data: params
+      }).then((res)=>{
+        if(res.data.error_code=='0'){
+          if(res.data.data&&res.data.data.length>0){
+            vm.ListData.head_portrait=res.data.data[0]
+            vm.setImg(vm.ListData.head_portrait)
+          }
+        }else{
+          vm.$message.error(res.data.message);
+
+        }
+      }).catch(err => {
+          console.log(err);
+      });
+    },
+    //更改图片
+    setImg(img){
+      let vm =this,url='/api/web/my/change-head-portrait',params={head_portrait:img};
+      vm.$axios({
+        method:'post',
+        url:url,
+        data: params
+      }).then((res)=>{
+        if(res.data.error_code=='0'){
+          vm.$message({
+            message: '头像修改成功！',
+            type: 'success'
+          });
+        }else{
             vm.$message.error(res.data.message);
-          }
-        }).catch(err => {
-          vm.$message.error(err);
+        }
+      }).catch(err => {
+          console.log(err);
+      });
+    },
+    getlistData(){
+      let vm =this,url='/api/web/authority/user/info',params={'id':''};
+      vm.$axios.get(url,{params}).then((res)=>{
+        if(res.data.error_code=='0'){
+          vm.ListData=res.data.data
+          /*if(vm.ListData.tip_status){
+            vm.setQrcode()
+          }*/
+        }else{
+          vm.$message.error(res.data.message);
+        }
+      }).catch(err => {
+        vm.$message.error(err);
+      });
+    },
+    //二维码生成图片
+    canvasToImage(){
+     let vm=this;
+      vm.qrurl=this.canvasQr.find('canvas').get(0).toDataURL("image/png")
+    },
+    //下载二维码
+    downQr(){
+      let vm=this;
+      if(vm.browser.mobile){
+        this.$message({
+          message: '请长按二维码下载',
+          type: 'success'
         });
-      },
-      //二维码生成图片
-      canvasToImage(){
-        var qrsrc = this.canvasQr.find('canvas').get(0).toDataURL("image/png");
+      }else{
         var a = document.createElement('a')
         var event = new MouseEvent('click')
         a.download =this.ListData.username||this.ListData.phone
         // 将生成的URL设置为a.href属性
-        a.href = qrsrc
+        a.href = vm.qrurl
         // 触发a的单击事件
         a.dispatchEvent(event)
         this.$message({
           message: '二维码已保存',
           type: 'success'
         });
-      },
-      // 生成二维码
-      commontwocode(way){
-        let vm = this;
-        //如果 tip_status==0 不能生成二维码
-        if(vm.ListData.tip_status&&vm.ListData.tip_status==1){
-          if(way==1){
-            vm.isqrcodeShow = true
-          }else if(way==2){
-            this.canvasToImage()
-          }else{
-            vm.isqrcodeShow = false
-          }
-        }else{
-          vm.$message.error('您还没有设置小费，请先设置小费');
-        }
-      },
-      // 分页
-      handleCurrentChange(val){
-        this.page=val
-        this.gettipData();
-      },
-      // 搜索
-      searchlist(){
-        this.gettipData()
       }
+    },
+    // 生成二维码
+    commontwocode(way){
+      let vm = this;
+      //如果 tip_status==0 不能生成二维码
+      if(vm.ListData.tip_status&&vm.ListData.tip_status==1){
+        if(way==1){
+          vm.setQrcode()
+          vm.isqrcodeShow = true
+        }else if(way==2){
+          this.downQr()
+        }else{
+          vm.isqrcodeShow = false
+        }
+      }else{
+        vm.$message.error('您还没有设置小费，请先设置小费');
+      }
+    },
+    // 分页
+    handleCurrentChange(val){
+      this.page=val
+      this.gettipData();
+    },
+    // 搜索
+    searchlist(){
+      this.gettipData()
     }
   }
+}
 </script>
 <style scoped>
 input.myfile{ z-index: 8; opacity: 0; width: 100%; height: 100%; margin: 0;padding: 0; position: absolute; left: 0; top: 0; border: none}

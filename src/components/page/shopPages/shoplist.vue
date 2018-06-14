@@ -48,24 +48,19 @@
             </dl>
           </div>
         </div>
-
         <div class="line notSame">
           <div class="title">店铺地址：</div>
-          <div class="content"><input type="text" v-model="ListData.address" /></div>
-          <!-- andy -->
-          <div class="baidumap">
-            <input type="button" class="baidubtn" value="打开地图" @click="openMap">
-          </div>
-        </div>
-        <div class="line dzhome">
-          <input type="text" v-model="ListData.address_detail" style="width: 400px">
-        </div>
+          <div class="content"><input type="text" v-model="ListData.address" /> <input type="button" class="baidubtn" value="打开地图" @click="openMap"></div>
 
+        </div>
+        <div class="line">
+          <div class="title"></div>
+          <div class="content"><input type="text" v-model="ListData.address_detail" style="width: 400px"></div>
+        </div>
         <div class="line">
           <div class="title">店铺座机：</div>
-          <div class="content"><input type="tel" v-model="ListData.telephone"/></div>
+          <div class="content"><input type="tel" maxlength="20" v-model="ListData.telephone"/></div>
         </div>
-
         <div class="line">
           <div class="title">最低人均消费：</div>
           <div class="content">
@@ -78,7 +73,6 @@
             <input type="text" v-model="ListData.consumption_max" @focus="selectval($event)" @blur="autoval(2)" />
           </div>
         </div>
-
         <div class="line photobox">
           <div class="title">推荐图片：</div>
           <div class="content">
@@ -114,13 +108,17 @@
         </div>
         <div class="line">
           <div class="title">配送范围：</div>
-          <div class="content"><input type="tel" v-model="ListData.delivery_range" placeholder="请输入最大配送范围" />&nbsp;&nbsp;km</div>
+          <div class="content"><input type="tel" v-model="ListData.delivery_range" placeholder="请输入最大配送范围" />&nbsp;&nbsp;米</div>
         </div>
         <div class="line">
-          <div class="title"><em>*&nbsp;&nbsp;</em>配送时间：</div>
+          <div class="title">配送起步价：</div>
+          <div class="content"><input type="tel" v-model="ListData.delivery_start_price" placeholder="请输入配送最低起步价" />&nbsp;&nbsp;元</div>
+        </div>
+        <div class="line">
+          <div class="title">配送时间：</div>
           <div class="content">  <!-- style="width: 222px" -->
             <el-time-select v-model="estimated_time" style="width: 222px;" :editable="false" :picker-options="{ start: '00:00',step: '00:05',end: '01:30'}" placeholder="选择时间">
-            </el-time-select>&nbsp;&nbsp;<span>分钟</span>
+            </el-time-select><span>&nbsp;&nbsp;分钟</span>
           </div>
         </div>
         <div class="line">
@@ -129,35 +127,39 @@
         </div>
 
         <!-- 新增运费设置 -->
-        <div class="leobox leolist" v-if="false">
+        <div class="leobox leolist">
           <div class="leotitle">距离运费设置：</div>
-          <div>
-            <div class="leocontent" v-for="(item,index) in distancelist" :key="index">
+          <div class="leocontent">
+            <div v-for="(item,index) in distance" :key="index">
               <div class="first">
-                <input type="text" v-model="item.one" class="inputkm"><span class="smallkm">km</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>-</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="text" v-model="item.two" class="inputkm"><span class="smallkm">km</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="smallrmb">￥</span><input v-model="item.three" type="text" class="inputmy">
-                <i class="el-icon-circle-plus" v-if="index==0" @click="savekm(item,index)"></i>
-                <i class="el-icon-error" v-if="distancelist.length>1&&index>0" @click="cancelkm(item,index)"></i>
+                <input type="text" v-model="item.min" class="inputkm"><span class="smallkm">km</span><span  class="ma10">-</span><input type="text" v-model="item.max" class="inputkm"><span class="smallkm">km</span><span class="smallrmb ml10">￥</span><input v-model="item.price" type="text" class="inputmy">
+                <i class="el-icon-circle-plus" v-if="index==0" @click="addset('km',item)"></i>
+                <i class="el-icon-error" v-if="index>0" @click="delset('km',item,index)"></i>
               </div>
             </div>
           </div>
+        </div>
+        <div class="line">
+          <div class="title">超过最大距离收费：</div>
+          <div class="content"><input type="tel" v-model="ListData.over_distance" /></div>
         </div>
         <!-- 新增重量设置 -->
-        <div class="leobox leolist" v-if="false">
+        <div class="leobox leolist">
           <div class="leotitle">重量运费设置：</div>
-          <div>
-            <div class="leocontent" v-for="(item,index) in weightlist" :key="index">
+          <div class="leocontent">
+            <div v-for="(item,index) in weight" :key="index">
               <div class="first">
-                <input type="text" v-model="item.one" class="inputkm"><span class="smallkm smallkg">kg</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>-</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="text" v-model="item.two" class="inputkm"><span class="smallkm smallkg">kg</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="smallrmb smallkg">￥</span><input v-model="item.three" type="text" class="inputmy">
-                <i class="el-icon-circle-plus" v-if="index==0" @click="savekg(item,index)"></i>
-                <i class="el-icon-error" v-if="weightlist.length>1&&index>0" @click="cancelkg(item,index)"></i>
+                <input type="text" v-model="item.min" class="inputkm"><span class="smallkm smallkg">kg</span><span class="ma10">-</span><input type="text" v-model="item.max" class="inputkm"><span class="smallkm smallkg">kg</span><span class="smallrmb smallkg ml10">￥</span><input v-model="item.price" type="text" class="inputmy">
+                <i class="el-icon-circle-plus" v-if="index==0" @click="addset('kg',item)"></i>
+                <i class="el-icon-error" v-if="index>0" @click="delset('kg',item,index)"></i>
               </div>
             </div>
           </div>
         </div>
-
-
+        <div class="line">
+          <div class="title">超过最大重量收费：</div>
+          <div class="content"><input type="tel" v-model="ListData.over_weight" /></div>
+        </div>
         <div class="line shopline">
           <div class="title">营业时间：</div>
           <div class="content timetep">
@@ -227,7 +229,7 @@
 </template>
 
 <script>
-// andy
+
 import '../../../../static/css/newStyle.css'
 import myMap from '../mapPages/myMap'
 
@@ -273,12 +275,8 @@ import myMap from '../mapPages/myMap'
         estimated_time:'',
         isgoother: false,
         ismaskShow: false,
-        distancelist: [
-          {one: '', two: '', three: ''}
-        ],
-        weightlist: [
-          {one: '', two: '', three: ''}
-        ]
+        distance: [],
+        weight: []
       }
     },
     created(){
@@ -287,7 +285,7 @@ import myMap from '../mapPages/myMap'
     watch:{
       'ListData.telephone'(cVal,oVal){
         if(cVal){
-          return this.ListData.telephone=cVal.replace(/\D/,'')
+          return this.ListData.telephone=cVal.replace(/[^0-9\-]/,'')
         }
       },
       'ListData.consumption_max'(cVal,oVal){
@@ -295,7 +293,7 @@ import myMap from '../mapPages/myMap'
           if(/^\d+(\.\d+)?$/.test(cVal)){
 
           }else{
-            return this.ListData.consumption_max=cVal.replace(/^\D*([1-9]\d|0?\.?\d{0,2})?.*$/,'$1')
+            return this.ListData.consumption_max=cVal.replace(/^\D*([0-9]\d\.?\d{0,2})?.*$/,'$1')
           }
         }
       },
@@ -304,9 +302,14 @@ import myMap from '../mapPages/myMap'
           if(/^\d+(\.\d+)?$/.test(cVal)){
 
           }else{
-            return this.ListData.consumption_min=cVal.replace(/^\D*([1-9]\d*|0?\.?\d{0,2})?.*$/,'$1')
+            return this.ListData.consumption_min=cVal.replace(/^\D*([0-9]\d*\d{0,2})?.*$/,'$1')
           }
 
+        }
+      },
+      'ListData.delivery_start_price'(cVal,oVal){
+        if(cVal){
+          return this.ListData.delivery_start_price=cVal.replace(/^\D*([0-9]\d*\.?\d{0,2})?.*$/,'$1')
         }
       }
     },
@@ -314,17 +317,25 @@ import myMap from '../mapPages/myMap'
       this.getlistData();
     },
     methods:{
-      savekg(){
-        this.weightlist.push({one: '', two: '',three: ''})
+      addset(way,item){
+        let vm =this;
+        if(!item.min||!item.max||!item.price){
+          vm.$message.error('请完善相应设置')
+          return
+        }
+        if(way=='km'){
+          vm.distance.unshift({min:'',max:'',price:''})
+        }else{
+          vm.weight.unshift({min:'',max:'',price:''})
+        }
       },
-      cancelkg(item,index){
-        this.weightlist.splice(index,1)
-      },
-      savekm(){
-        this.distancelist.push({one: '', two: '',three: ''})
-      },
-      cancelkm(item,index){
-        this.distancelist.splice(index,1)
+      delset(way,item,index){
+        let vm =this;
+        if(way=='km'){
+          vm.distance.splice(index,1)
+        }else{
+          vm.weight.splice(index,1)
+        }
       },
       downdialog(){
         let vm = this;
@@ -416,8 +427,8 @@ import myMap from '../mapPages/myMap'
           imgobj=event.target.files[0],
           // maxSize=1024*1024*2,
           maxSize=1024*300*1,
-          maxWidth=400,
-          maxHeight=300;
+          maxWidth=750,
+          maxHeight=330;
         if(way!=3){
           //判断图片张数
           if(!item){
@@ -586,6 +597,8 @@ import myMap from '../mapPages/myMap'
             vm.imgVO=vm.ListData.banner
             vm.recommend=vm.ListData.recommend
             vm.business_time=vm.ListData.business_time
+            vm.distance=vm.ListData.distance
+            vm.weight=vm.ListData.weight
             vm.ListData.delivery_range?vm.ListData.delivery_range:vm.ListData.delivery_range=10
             if(vm.business_time.length>0){
               vm.business_time.forEach(item=>{
@@ -709,22 +722,43 @@ import myMap from '../mapPages/myMap'
               if(timelineobj.interval.begin&&timelineobj.interval.end){
                 if((item.am_begin&&item.am_end)||(item.pm_begin&&item.pm_end)){
                   business.push(timelineobj)
-                }else{
                   flag=true
                 }
-              }else{
-                flag=true
               }
             }
           })
         }
-        if(flag){
+        if(!flag){
           vm.$message.error('店铺时间必须设置！');
           return false
         }
         if(parseFloat(vm.ListData.consumption_max)<parseFloat(vm.ListData.consumption_min)){
           vm.$message.error('最高消费不能小于最低消费！');
           return false
+        }
+        if(parseFloat(vm.ListData.delivery_start_price)<=0){
+          vm.$message.error('配送最低起步价必须大于0！');
+          return false
+        }
+        let flagkg=false,flagkm=false;
+        //获取配送距离费用
+        if(vm.ListData.weight&&vm.ListData.weight.length>0){
+          vm.ListData.weight.forEach(item=>{
+              if(item.min&&item.max&&item.price){
+                flagkg=true
+              }
+          })
+        }
+        if(vm.ListData.distance&&vm.ListData.distance.length>0){
+          vm.ListData.distance.forEach(item=>{
+            if(item.min&&item.max&&item.price){
+                flagkm=true
+            }
+          })
+        }
+        if(!flagkg||!flagkm){
+          vm.$message.error('请完善配送费设置！');
+          return
         }
         params={
           'name':vm.ListData.name,
@@ -742,7 +776,12 @@ import myMap from '../mapPages/myMap'
           'lng':vm.ListData.lng,
           'delivery_range':vm.ListData.delivery_range,
           'delivery_time':timesStr,
-          'address_detail':vm.ListData.address_detail
+          'address_detail':vm.ListData.address_detail,
+          'delivery_start_price':parseFloat(vm.ListData.delivery_start_price).toFixed(2),
+          'over_distance':vm.ListData.over_distance,
+          'over_weight':vm.ListData.over_weight,
+          'weight':vm.ListData.weight,
+          'distance':vm.ListData.distance
         }
 
         vm.$axios({
@@ -816,188 +855,34 @@ import myMap from '../mapPages/myMap'
 .logobox{ width: 135px;height: 100px; background: #462d4d}
 .logobox i{ font-size: 24px;}
 .logobox>div{ position: relative; height: 100%; display: flex; display: -webkit-flex; align-items: center; -webkit-align-items: center;justify-content: center;-webkit-justify-content: center}
-.line .title{ min-width: 80px; text-align: right}
+.line .title{ min-width: 120px; text-align: right}
 .logobox>div img{width: 100%;min-width:135px; height: 100%}
 .time-select-item{ color:#e4e7ed }
 el-scrollbar__view .disabled{color:#e4e7ed }
 
 .baidubtn{  width: 74px!important;}
-.title em{
-  font-style: normal;
-  /* margin-right: 5px; */
-  color: #ac5397;
-}
-.go-other{
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  width: 400px;
-  height: 160px;
-  background: #34203a;
-  z-index: 100;
-}
-.go-other .title{
-  width: 100%;
-  height: 40px;
-  line-height: 40px;
-  font-size: 14px;
-  text-align: center;
-  background: -webkit-gradient(linear, 0 0, 0 bottom, from(#433249), to(#38293d));
-}
-.go-other .icon{
-  position: absolute;
-  right: 20px;
-  font-size: 20px;
-}
-.go-other .content .text{
-  display: block;
-  height: 20px;
-  text-align: center;
-  font-size: 14px;
-  color: #fff;
-  padding: 20px 40px;
-}
-.go-other .content .btn{
-  display: block;
-  height: 35px;
-  padding: 0 40px;
-}
-.go-other .btn .printer{
-  display: block;
-  width: 30%;
-  height: 35px;
-  line-height: 35px;
-  text-align: center;
-  color: #fff;
-  background: #ac5397;
-  cursor: pointer;
-  float: left;
-  margin-right: 16px;
-}
-.go-other .btn .tip{
-  display: block;
-  width: 30%;
-  height: 35px;
-  line-height: 35px;
-  text-align: center;
-  color: #fff;
-  background: #ac5397;
-  cursor: pointer;
-  float: left;
-  margin-right: 10px;
-}
-.go-other .btn .neednot{
-  display: block;
-  width: 30%;
-  height: 35px;
-  line-height: 35px;
-  text-align: center;
-  color: #fff;
-  background: #ac5397;
-  cursor: pointer;
-  float: right;
-}
-
-.mask{
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  text-align: center;
-  background: #000;
-  opacity: 0.5;
-  z-index: 99;
-}
-
-
-.leobox{
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  display: -webkit-flex;
-  margin: 15px 0;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-align-items: center;
-}
-.leolist{
-  -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  -webkit-align-items: flex-start;
-}
-
-.leotitle{
-  min-width: 90px;
-  height: 33px;
-  line-height: 33px;
-  text-align: left;
-}
-.leocontent{
-  margin-bottom: 10px;
-}
-.leobox .inputkm{
-  border: 1px solid #706375;
-  background: none;
-  outline: none;
-  height: 30px;
-  line-height: 30px;
-  width: 80px;
-  padding: 0 10px;
-  color: #fff;
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
-.leobox .inputmy{
-  border: 1px solid #706375;
-  background: none;
-  outline: none;
-  height: 30px;
-  line-height: 30px;
-  width: 80px;
-  padding: 0 10px;
-  color: #fff;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
-.leobox .smallkm{
-  padding: 8px 5px;
-  background: #ac5397;
-  color: #ffffff;
-  position: relative;
-  top: 1px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
-.leobox .smallkg{
-  padding: 8px 7px;
-}
-.leobox .smallrmb{
-  padding: 8px 8px;
-  background: #ac5397;
-  color: #ffffff;
-  position: relative;
-  top: 1px;
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
-.leobox .el-icon-circle-plus{
-  font-size: 24px;
-  color: #ac5397;
-  position: relative;
-  top: 4px;
-  left: 20px;
-}
-.leobox .el-icon-error{
-  font-size: 21px;
-  color: #ac5397;
-  position: relative;
-  top: 2px;
-  left: 22px;
-}
+.title em{ font-style: normal; color: #ac5397;}
+.go-other{  position: fixed;  top: 0;  left: 0; right: 0; bottom: 0;  margin: auto; width: 400px;  height: 160px;  background: #34203a;  z-index: 100;}
+.go-other .title{  width: 100%; height: 40px; line-height: 40px; font-size: 14px; text-align: center;  background: -webkit-gradient(linear, 0 0, 0 bottom, from(#433249), to(#38293d));}
+.go-other .icon{ position: absolute; right: 20px; font-size: 20px;}
+.go-other .content .text{ display: block;  height: 20px; text-align: center; font-size: 14px; color: #fff; padding: 20px 40px;}
+.go-other .content .btn{ display: block; height: 35px; padding: 0 40px;}
+.go-other .btn .printer{ display: block; width: 30%; height: 35px; line-height: 35px; text-align: center; color: #fff; background: #ac5397; cursor: pointer; float: left; margin-right: 16px;}
+.go-other .btn .tip{ display: block; width: 30%; height: 35px; line-height: 35px; text-align: center; color: #fff; background: #ac5397; cursor: pointer; float: left; margin-right: 10px;}
+.go-other .btn .neednot{ display: block; width: 30%; height: 35px; line-height: 35px; text-align: center; color: #fff; background: #ac5397; cursor: pointer; float: right;}
+.mask{ position: fixed; top: 0; bottom: 0; left: 0; right: 0; text-align: center; background: #000; opacity: 0.5; z-index: 99;}
+.leobox{ display: -webkit-box; display: -ms-flexbox; display: flex; display: -webkit-flex; margin: 15px 0; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-align-items: center;}
+.leolist{ -webkit-box-align: start; -ms-flex-align: start; align-items: flex-start; -webkit-align-items: flex-start;}
+.leotitle{ min-width: 120px; height: 33px; line-height: 33px; text-align: right;}
+.leocontent{ margin-left: 10px;}
+.leocontent>div{ margin-bottom: 10px;}
+.leobox .inputkm{ border: 1px solid #706375; background: none; outline: none; height: 30px; line-height: 30px; width: 80px; padding: 0 10px; color: #fff; border-top-left-radius: 3px; border-bottom-left-radius: 3px;}
+.leobox .inputmy{ border: 1px solid #706375; background: none; outline: none; height: 30px; line-height: 30px; width: 80px; padding: 0 10px; color: #fff; border-top-right-radius: 3px; border-bottom-right-radius: 3px;}
+.leobox .smallkm{ padding: 8px 5px; background: #ac5397; color: #ffffff; position: relative; top: 1px; border-radius: 0 3px 3px 0;}
+.leobox .smallkg{ padding: 8px 7px;}
+.leobox .smallrmb{ padding: 8px 8px; background: #ac5397; color: #ffffff; position: relative; top: 1px; border-radius: 3px 0 0 3px;}
+.leobox .el-icon-circle-plus{ font-size: 24px; color: #ac5397; position: relative; top: 4px; left: 20px;}
+.leobox .el-icon-error{font-size: 21px; color: #ac5397; position: relative; top: 2px; left: 22px;}
+.ml10{ margin-left: 20px}
+.ma10{ margin: 0 10px}
 </style>
