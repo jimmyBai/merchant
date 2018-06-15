@@ -26,6 +26,7 @@
           <div><span @click.stop="outsale">下架</span></div>
           <div><span @click.stop="delgoods">删除</span></div>
           <div><span @click.stop="sortlistFn">商品排序</span></div>
+          <div><span @click.stop="inventoryshow=!inventoryshow">库存修改</span></div>
           <div><span @click.stop="exportList">导出Excel</span></div>
         </div>
       </div>
@@ -39,9 +40,10 @@
         <el-table-column prop="unit_price" label="单价" :formatter="formatMoney"></el-table-column>
         <el-table-column width="120" align='center' label="库存">
            <template slot-scope="scope">
-            <div class="tableEditline">
-              <input type="tel" maxlength='4' v-model="scope.row.inventory" @input="checkVal(scope.row)" />
-              <div class="saveline" @click="svaeinventory(scope.row)">保存</div>
+             <div v-show="!inventoryshow"><span v-text="scope.row.inventory"></span></div>
+            <div class="tableEditline" v-show="inventoryshow">
+              <input type="tel" maxlength='4' :value="scope.row.inventory" @change="changeEdit($event,scope.row)" @input="checkVal($event,scope.row)" />
+              <div v-show="scope.row.ischange" class="saveline" @click="svaeinventory(scope.row)">保存</div>
             </div>
           </template>
         </el-table-column>
@@ -93,7 +95,8 @@ export default {
       goodsTypeData:'',
       typeValue:'',
       multipleSelection:[],
-      showSort:false
+      showSort:false,
+      inventoryshow:false
     }
   },
   mounted:function(){
@@ -101,8 +104,18 @@ export default {
     this.getlistData()
   },
   methods:{
-    checkVal(item){
-      return item.inventory=item.inventory.replace(/[^0-9]*/g,'');
+    checkVal($event,item){
+      let nowVal=$event.target.value
+      return nowVal=nowVal.replace(/[^0-9]*/g,'');
+    },
+    changeEdit($event,item){
+      let nowVal=$event.target.value
+      if(nowVal){
+        item.inventory=nowVal
+        this.$set(item,'ischange',true)
+      }else{
+        $event.target.value=item.inventory
+      }
     },
     //金钱格式化
     formatMoney(row, column) {
@@ -144,6 +157,7 @@ export default {
     },
     // 获取数据
     getlistData(){
+      this.inventoryshow=false
       this.ListData = []
       let vm = this,url='/api/web/takeout-product/list',
       params={
@@ -180,7 +194,7 @@ export default {
     svaeinventory(item){
       let vm = this,url='/api/web/takeout-product/inventory/operate',ids=[],numbers=[];
         ids.push(item.id);
-      let inventoryNum= item.inventory.replace(/[^0-9]*/g,'')
+      let inventoryNum= item.inventory
         if(!inventoryNum||inventoryNum<1){
           vm.$message.error('库存数量不能为0');  
           return
@@ -365,5 +379,10 @@ export default {
 .sontitle{ float: right}
 .tableEditline{ display: flex; display: -webkit-flex; align-items: center; -webkit-align-items:center}
 .tableEditline input {width: 50px; text-align: center;border: 1px solid #48344d;margin-right: 3px; height: 21px; line-height: 21px}
-.saveline{ background-color: #409eff; border-color: #409eff; width: 50px; font-size: 11px; border-radius: 2px }
+.saveline{ background-color: #AC5396; border-color: #AC5396; width: 50px; font-size: 11px; border-radius: 2px }
+.filebox{ margin: 10px 0; font-size: 12px; display: flex;display: -webkit-flex; align-items: center;-webkit-align-items: center}
+.filebox em{font-style: normal;color: #ac5397; margin-right: 5px;}
+.filebox .content { position: relative; margin-left: 10px; border-radius: 2px; border: 1px solid #aa96b1; flex: 1.5;-webkit-flex: 1.5; height: 24px; line-height: 24px}
+input.myfile{ cursor: pointer; z-index: 8; opacity: 0; width:100%; height:26px; margin: 0;padding: 0; position: absolute; left: 0; top: 0; border: none}
+.filebox .content span{ margin-left: 10px}
 </style>

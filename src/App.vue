@@ -13,14 +13,7 @@ export default {
     isLaoding(){
       return this.$store.state.isLaoding
     }
-  },
-  sockets:{
-    connect: function(){  //这里是监听connect事件
-    },
-    customEmit: function(val){
-      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
-    }
-  },
+  }
 
 }
 </script>

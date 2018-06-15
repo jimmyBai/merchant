@@ -25,6 +25,7 @@
         <div class="tablebtnline">
           <div><span @click.stop="outsale">上架</span></div>
           <div><span @click.stop="delgoods">删除</span></div>
+          <div><span @click.stop="inventoryshow=!inventoryshow">库存修改</span></div>
           <div><span @click.stop="exportList">导出Excel</span></div>
         </div>
       </div>
@@ -37,7 +38,15 @@
         <el-table-column prop="capacity" label="容量(ml)"></el-table-column>
         <el-table-column prop="original_price" label="原价" :formatter="formatMoney"></el-table-column>
         <el-table-column prop="unit_price" label="单价" :formatter="formatMoney"></el-table-column>
-        <el-table-column prop="inventory" label="库存"></el-table-column>
+        <el-table-column width="120" align='center' label="库存">
+           <template slot-scope="scope">
+             <div v-show="!inventoryshow"><span v-text="scope.row.inventory"></span></div>
+            <div class="tableEditline" v-show="inventoryshow">
+              <input type="tel" maxlength='4' :value="scope.row.inventory" @change="changeEdit($event,scope.row)" @input="checkVal($event,scope.row)" />
+              <div v-show="scope.row.ischange" class="saveline" @click="svaeinventory(scope.row)">保存</div>
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column width="100" align="right" label="操作">
           <template slot-scope="scope">
             <div class="tdBtn-box">
@@ -84,7 +93,8 @@ export default {
       fromParent:'',
       goodsTypeData:'',
       typeValue:'',
-      multipleSelection:[]
+      multipleSelection:[],
+      inventoryshow:false
     }
   },
   mounted:function(){
@@ -92,6 +102,19 @@ export default {
     this.getlistData()
   },
   methods:{
+    checkVal($event,item){
+      let nowVal=$event.target.value
+      return nowVal=nowVal.replace(/[^0-9]*/g,'');
+    },
+    changeEdit($event,item){
+      let nowVal=$event.target.value
+      if(nowVal){
+        item.inventory=nowVal
+        this.$set(item,'ischange',true)
+      }else{
+        $event.target.value=item.inventory
+      }
+    },
     //金钱格式化
     formatMoney(row, column) {
       var date = row[column.property];
@@ -122,8 +145,43 @@ export default {
           console.log(err);
       });
     },
+    //修改库存
+    svaeinventory(item){
+      let vm = this,url='/api/web/takeout-product/inventory/operate',ids=[],numbers=[];
+        ids.push(item.id);
+      let inventoryNum= item.inventory
+        if(!inventoryNum||inventoryNum<1){
+          vm.$message.error('库存数量不能为0');  
+          return
+        }
+        numbers.push(Number(inventoryNum))
+      let params={
+        "ids": ids,
+        "numbers":numbers
+      };
+      vm.$axios({
+        method:'post',
+        data:params,
+        url:url
+      }).then((res)=>{
+        if(res.data.error_code=='0'){
+          vm.$message({
+            message: '库存修改成功!',
+            type: 'success'
+          });
+          setTimeout(x=>{
+            vm.getlistData()
+          },200)
+        }else{
+          vm.$message.error(res.data.message);
+        }
+      }).catch(err => {
+          console.log(err);
+      });
+    },
     // 获取数据
     getlistData(){
+      this.inventoryshow=false
       this.ListData = []
       let vm = this,url='/api/web/takeout-product/list',
         params={
@@ -300,4 +358,7 @@ export default {
 .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
 .search-icon{ margin-left: 0; cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center;}
 .sontitle{ float: right}
+.tableEditline{ display: flex; display: -webkit-flex; align-items: center; -webkit-align-items:center}
+.tableEditline input {width: 50px; text-align: center;border: 1px solid #48344d;margin-right: 3px; height: 21px; line-height: 21px}
+.saveline{ background-color: #AC5396; border-color: #AC5396; width: 50px; font-size: 11px; border-radius: 2px }
 </style>

@@ -84,7 +84,7 @@
         <div class="tiplist_two">
           <el-table stripe :data="ListData">
             <el-table-column prop="order_sn" label="订单号"></el-table-column>
-            <el-table-column prop="create_time" label="时间"></el-table-column>
+            <el-table-column prop="create_time" label="收款时间"></el-table-column>
             <el-table-column prop="username" label="用户名"></el-table-column>
             <el-table-column prop="product_name" label="商品套餐"></el-table-column>
             <el-table-column prop="product_price" label="套餐费用" :formatter="formatMoney"></el-table-column>

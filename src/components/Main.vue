@@ -84,6 +84,13 @@ export default {
       navIndex: '',
     }
   },
+  sockets:{
+    connect: function(){  //这里是监听connect事件
+    },
+    customEmit: function(val){
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
   mounted:function(){
       //如果非管理员进来不展示权限
       if(this.isAdmin!=1){
