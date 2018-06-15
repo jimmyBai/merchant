@@ -26,12 +26,12 @@
         </div>
       </div>
       <el-table stripe :data="ListData">
-        <el-table-column prop="name" label="修改时间"></el-table-column>
-        <el-table-column prop="category" label="商品名称"></el-table-column>
-        <el-table-column prop="original_price" label="分类"></el-table-column>
-        <el-table-column prop="unit_price" label="原库存数"></el-table-column>
-        <el-table-column prop="inventory" label="新库存数"></el-table-column>
-        <el-table-column prop="create_time" label="操作人"></el-table-column>
+        <el-table-column prop="time" label="修改时间"></el-table-column>
+        <el-table-column prop="product_name" label="商品名称"></el-table-column>
+        <el-table-column prop="type" label="分类"></el-table-column>
+        <el-table-column prop="before" label="修改前库存数"></el-table-column>
+        <el-table-column prop="after" label="修改后库存数"></el-table-column>
+        <el-table-column prop="handler" label="操作人"></el-table-column>
       </el-table>
       <div class="list-bottom"></div>
     </div>
@@ -99,12 +99,13 @@
       // 获取数据
       getlistData(){
         this.ListData = []
-        let vm = this,url='/api/web/takeout-product/list',
+        let vm = this,url='/api/web/takeout-product/inventory/logs',
           params={
             "search": {
-              "name": vm.product_name,
-              "start_time":vm.start_time,
-              "end_time":vm.end_time
+              "product_name": vm.product_name,
+              "begin_time":vm.start_time,
+              "end_time":vm.end_time,
+              "category_id":vm.typeValue
             },
             "page": vm.page,
             "length":vm.length,

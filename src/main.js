@@ -22,19 +22,25 @@ Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
 
+//socket.io
+import VueSocketio from 'vue-socket.io';
 
 //配置全局axios
 Vue.prototype.$axios = axios;
 // 基础url前缀
 if (process.env.NODE_ENV === 'development') {
- axios.defaults.baseURL  = '/api/'
+ axios.defaults.baseURL  = '/api/'   
+ Vue.use(VueSocketio, '47.94.14.12:6001');
 } else {
   if(window.location.host.indexOf('dev.')>=0){
-    axios.defaults.baseURL  = 'http://dev.merchant.api.018eighteen.com/'
+    axios.defaults.baseURL  = 'http://dev.merchant.api.018eighteen.com/'    
+    Vue.use(VueSocketio, '47.94.14.12:6001');    
   }else if(window.location.host.indexOf('uat.')>=0){
-    axios.defaults.baseURL = 'http://uat.merchant.api.018eighteen.com/'
+    axios.defaults.baseURL = 'http://uat.merchant.api.018eighteen.com/'  
+    Vue.use(VueSocketio, '47.94.89.100:6001');
   }else if(window.location.host.indexOf('pro.')>=0){
-    axios.defaults.baseURL = 'http://pro.merchant.api.018eighteen.com/'
+    axios.defaults.baseURL = 'http://pro.merchant.api.018eighteen.com/'  
+    Vue.use(VueSocketio, '39.107.90.17:6001');
   }
 
 }

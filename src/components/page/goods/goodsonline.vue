@@ -37,8 +37,15 @@
         <el-table-column prop="capacity" label="容量(ml)"></el-table-column>
         <el-table-column prop="original_price" label="原价" :formatter="formatMoney"></el-table-column>
         <el-table-column prop="unit_price" label="单价" :formatter="formatMoney"></el-table-column>
-        <el-table-column prop="inventory" label="库存"></el-table-column>
-        <el-table-column width="100" align="right" label="操作">
+        <el-table-column width="120" align='center' label="库存">
+           <template slot-scope="scope">
+            <div class="tableEditline">
+              <input type="tel" maxlength='4' v-model="scope.row.inventory" @input="checkVal(scope.row)" />
+              <div class="saveline" @click="svaeinventory(scope.row)">保存</div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column width="100" align="center" label="操作">
           <template slot-scope="scope">
             <div class="tdBtn-box">
               <div class="tdbtn-view newView" @click="vieweditor(scope.row.id)">
@@ -94,6 +101,9 @@ export default {
     this.getlistData()
   },
   methods:{
+    checkVal(item){
+      return item.inventory=item.inventory.replace(/[^0-9]*/g,'');
+    },
     //金钱格式化
     formatMoney(row, column) {
       var date = row[column.property];
@@ -159,6 +169,40 @@ export default {
           vm.page=Number(res.data.data.page);
           vm.per_page=Number(res.data.data.per_page);
           vm.total_page=Number(res.data.data.total_page);
+        }else{
+          vm.$message.error(res.data.message);
+        }
+      }).catch(err => {
+          console.log(err);
+      });
+    },
+    //修改库存
+    svaeinventory(item){
+      let vm = this,url='/api/web/takeout-product/inventory/operate',ids=[],numbers=[];
+        ids.push(item.id);
+      let inventoryNum= item.inventory.replace(/[^0-9]*/g,'')
+        if(!inventoryNum||inventoryNum<1){
+          vm.$message.error('库存数量不能为0');  
+          return
+        }
+        numbers.push(Number(inventoryNum))
+      let params={
+        "ids": ids,
+        "numbers":numbers
+      };
+      vm.$axios({
+        method:'post',
+        data:params,
+        url:url
+      }).then((res)=>{
+        if(res.data.error_code=='0'){
+          vm.$message({
+            message: '库存修改成功!',
+            type: 'success'
+          });
+          setTimeout(x=>{
+            vm.getlistData()
+          },200)
         }else{
           vm.$message.error(res.data.message);
         }
@@ -319,4 +363,7 @@ export default {
 .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
 .search-icon{ margin-left: 0; cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center;}
 .sontitle{ float: right}
+.tableEditline{ display: flex; display: -webkit-flex; align-items: center; -webkit-align-items:center}
+.tableEditline input {width: 50px; text-align: center;border: 1px solid #48344d;margin-right: 3px; height: 21px; line-height: 21px}
+.saveline{ background-color: #409eff; border-color: #409eff; width: 50px; font-size: 11px; border-radius: 2px }
 </style>
