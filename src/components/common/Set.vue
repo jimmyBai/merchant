@@ -1,12 +1,27 @@
 <template>
-  <div>设置</div>
+  <div class="ws-content">
+    <div class="navbar">
+      <h1 class="nav-bar-title">设置<small></small></h1>
+    </div>
+    <div class="tabslist">
+      <div class="lineflex">
+        <div class="tabslist-head">
+          <div :class="{'is-active':activenum=='voiceItem'}" @click="changetabs('voiceItem')" class="tabtar-item ">消息声音设置</div>
+        </div>
+      </div>
+      <div class="tabslist-content">
+        <router-view></router-view>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
   export default {
-    name: 'myinfo',
+    name: 'order',
     data () {
       return {
+        activenum:'voiceItem',
         ListData:[]
       }
     },
@@ -14,36 +29,18 @@
 
     },
     mounted:function(){
+      if(this.$route.path=='/set'||this.$route.path=='/voiceItem'){
+        this.activenum='voiceItem'
+      }
     },
     methods:{
-      getlistData(){
-        let vm =this,url='/api/api/member/list',params={};
-        vm.$axios({
-          method:'post',
-          url:url,
-          data: params
-        }).then((res)=>{
-          if(res.data.error_code=='10000'||res.data.error_code=='200'){
-            vm.ListData=res.data.data
-          }else{
-            vm.$message.error(res.data.message);
-            console.log(res.data.message)
-          }
-        }).catch(err => {
-          console.log(err);
-        });
+      changetabs(way){
+        this.activenum=way
+        this.$router.push('/'+way)
       },
-      viewMore(scope){
-        this.$router.push({
-          name:"mdetail",
-          params:{
-            user_id:scope.id
-          }
-        })
-      }
     }
   }
 </script>
 <style scoped>
-
+.tabslist{ margin-top: 0}
 </style>

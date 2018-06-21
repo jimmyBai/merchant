@@ -13,7 +13,7 @@ export default {
     isLaoding(){
       return this.$store.state.isLaoding
     }
-  }
+  },
 
 }
 </script>

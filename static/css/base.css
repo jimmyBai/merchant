@@ -269,3 +269,5 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 /**导出相关操作按钮**/
 .headnavBtn{ margin-left: 5px; display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
 .headnavBtn>div{ cursor: pointer; min-width: 80px; height: 24px; line-height: 24px; border-radius: 2px; border:1px solid #48344e; text-align: center }
+.el-badge__content{border: none;background-color:#f00; padding: 0;width: 20px;height: 20px; border-radius: 100%; text-align: center;line-height: 20px }
+.el-badge__content.is-fixed{transform:scale(0.8); top: -8px; right: -8px;}

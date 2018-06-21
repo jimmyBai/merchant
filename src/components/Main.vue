@@ -6,6 +6,28 @@
       </div>
       <div class="rightinfo">
         <ul>
+          <li class="bellli">
+              <div class="bellicon">
+                <el-badge :value="3" class="item">
+                  <i class="el-icon-bell icon-animated-bell"></i> 
+                </el-badge>
+              </div>
+              <div class="notifyList">
+                <div class="popperarrow"><i></i></div>
+                <ul>
+                  <li>
+                    <div class="statusline">
+                      <span>新订单</span>
+                      <span>2018-6-15 18:46:31</span>
+                    </div>
+                    <div class="infoline">
+                      <span>新订单</span>
+                      <span>2342412132424242</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+          </li>
           <li class="myinfoli">
             <div class="userbar" @click.stop="showpop">
               <div>
@@ -39,13 +61,12 @@
     <div class="contentbar">
       <div class="leftmenubar">
         <ul class="menuul">
-          <li v-for='(item,index) in menuArray' :class="{active:index==num}" @click="gopage(item.userid,index)">
+          <li v-for='(item,index) in menuArray' :key="index" :class="{active:index==num}" @click="gopage(item.userid,index)">
             <div class="pmenu">
               <i :class="'icon-menu'+item.icon"></i>
               <span v-text="item.name"></span>
               <img src="../../static/img/leftarrow.png" v-if="!isdradeShow&&item.userid==4" class="ltimg" >
               <img src="../../static/img/downarrow.png" v-if="isdradeShow&&item.userid==4" class="dnimg">
-
               <div class="newmenu" v-if="isdradeShow&&item.userid==4">
                 <span :class="{'isselect':navIndex==1}" @click="traderoom('1')">交易明细</span>
                 <span :class="{'isselect':navIndex==2}" @click="traderoom('2')">交易汇总</span>
@@ -247,10 +268,28 @@ export default {
 .popmyinfo ul li i.i-loginout{ background-position: 0 -39px; background-size: cover;}
 .popmyinfo ul li i.i-wallet{ background: url("../../static/img/wallet.png") no-repeat; display: inline-block; background-size: cover;}
 .popmyinfo ul.iconul li{ text-align: left; padding: 3px 10px; padding-left: 15px}
-
 .newmenu{ margin-top: 20px;}
 .leftmenubar ul li.active .newmenu span{ margin-top: 10px; color: #aa96b1}
 .pmenu .ltimg{ width: 6px;  position: absolute; top: 26px; right: 10px;}
 .pmenu .dnimg{ width: 12px; position: absolute; top: 32px; right: 8px;}
 .leftmenubar ul li.active .newmenu .isselect{ color: #f6e2fd;}
+.bellli>div.bellicon{ height: 100%; display: flex; display: -webkit-flex; align-items: center; justify-content: center; -webkit-align-items: center; -webkit-justify-content: center}
+.bellli i{ font-size: 24px;}
+.icon-animated-bell { display: inline-block;  -moz-animation: ringing 2.0s 5 ease 1.0s;  -webkit-animation: ringing 2.0s 5 ease 1.0s;  -o-animation: ringing 2.0s 5 ease 1.0s;   -ms-animation: ringing 2.0s 5 ease 1.0s;  animation: ringing 2.0s 5 ease 1.0s;   -moz-transform-origin: 50% 0; -webkit-transform-origin: 50% 0;   -o-transform-origin: 50% 0;  -ms-transform-origin: 50% 0;   transform-origin: 50% 0;}
+ul li.bellli{ position: relative}
+.notifyList{ position: absolute; top:70px }
+@keyframes ringing {  
+  0% {transform: rotate(-15deg);}
+  2% {transform: rotate(15deg);}
+  4% {transform: rotate(-18deg);}
+  6% {transform: rotate(18deg);}
+  8% {transform: rotate(-22deg);}
+  10% {transform: rotate(22deg);}
+  12% {transform: rotate(-18deg);}
+  14% {transform: rotate(18deg);}
+  16% {transform: rotate(-12deg);}
+  18% {transform: rotate(12deg);}
+  20% { transform: rotate(0deg);}
+}
+
 </style>

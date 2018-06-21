@@ -15,16 +15,6 @@ export default new Router({
       meta:{keepAlive:true},
       component:resolve=>require(['../components/Login.vue'],resolve)
     },
-  /*   {
-       path:'/print',
-       meta:{keepAlive:true},
-       component:resolve=>require(['../components/Print.vue'],resolve)
-     },
- {
-   path:'/socket',
-     meta:{keepAlive:true},
-   component:resolve=>require(['../components/Socket.vue'],resolve)
- },*/
     {
       path:'/changepwd',
       name:'changepwd',
@@ -53,7 +43,19 @@ export default new Router({
           {
             path:'/set',
             meta:{keepAlive:true},
-            component:resolve=>require(['../components/common/Set.vue'],resolve)
+            component:resolve=>require(['../components/common/Set.vue'],resolve),
+            children:[
+              {
+                path:'/',
+                meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/sysset/voiceItem.vue'],resolve),
+              },
+              {
+                path:'/voiceItem',
+                meta:{keepAlive:true},
+                component:resolve=>require(['../components/page/sysset/voiceItem.vue'],resolve),
+              }
+            ]  
           },
           {
             path:'/lock',
