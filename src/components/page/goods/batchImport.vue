@@ -34,8 +34,6 @@
     </div>
     <div class="v-modal" style="z-index: 99;"></div>
   </div>
-
-
 </template>
 
 <script>
@@ -66,18 +64,18 @@
         let vm = this,
           url='/api/web/takeout-product/import-template',
           params={};
-        vm.$axios.get(url,{params:params,responseType:'arraybuffer'}).then((res)=>{
-          let blob=new Blob([res.data],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-          let elink = document.createElement('a');
-          elink.download = '产品批量导入模板';
-          elink.style.display = 'none';
-          elink.href = URL.createObjectURL(blob);
-          document.body.appendChild(elink);
-          elink.click();
-          document.body.removeChild(elink);
-        }).catch(err => {
-            console.log(err);
-        });
+          vm.$axios.get(url,{params:params,responseType:'arraybuffer'}).then((res)=>{
+            let blob=new Blob([res.data],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+            let elink = document.createElement('a');
+            elink.download = '产品批量导入模板';
+            elink.style.display = 'none';
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            document.body.removeChild(elink);
+          }).catch(err => {
+              console.log(err);
+          });
       },
       //导入
       importExcel(){

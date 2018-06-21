@@ -482,7 +482,7 @@
 </script>
 <style scoped>
 em{ font-style: normal; margin-right: 5px; color: #ac5397}
-.el-message-box__wrapper{ z-index: 100}
+.el-message-box__wrapper{ z-index: 100;color: #aa96b1;}
 .message-box_header{ position: relative; height: 40px;justify-content: center; -webkit-justify-content: center; line-height: 40px; display: flex; display: -webkit-flex; background: -webkit-gradient(linear, 0 0, 0 bottom, from(#433249), to(#38293d));}
 .message-box_closebtn{ position: absolute; right: 0; display: inline-block; height: 40px; width: 40px; text-align: center; cursor: pointer}
 .message-box_title{ font-size: 16px;}

@@ -7,25 +7,27 @@
       <div class="rightinfo">
         <ul>
           <li class="bellli">
-              <div class="bellicon">
-                <el-badge :value="3" class="item">
+              <div class="bellicon" @click.stop="showunread">
+                <el-badge :value="noticeNum" :max="99" class="item">
                   <i class="el-icon-bell icon-animated-bell"></i> 
                 </el-badge>
               </div>
-              <div class="notifyList">
+              <div class="notifyList hide" :class="{'isshow':notifystatus}">
                 <div class="popperarrow"><i></i></div>
                 <ul>
-                  <li>
+                  <li v-for="(item,index) in notifydata" :key='index' @click.stop="viewDeatail(item)">
                     <div class="statusline">
-                      <span>新订单</span>
-                      <span>2018-6-15 18:46:31</span>
+                      <span class="title" v-text="item.title"></span>
+                      <span class="time" v-text="item.create_time"></span>
                     </div>
                     <div class="infoline">
-                      <span>新订单</span>
-                      <span>2342412132424242</span>
+                      <span class="infoname"  v-text="item.content"></span>
                     </div>
                   </li>
                 </ul>
+                <div class="notify-more">
+                  <span @click.stop="viewMoreOrder"> 查看更多</span>
+                </div>
               </div>
           </li>
           <li class="myinfoli">
@@ -81,11 +83,23 @@
         <router-view></router-view>
       </div>
     </div>
+    <!--audio-->
+    <audio ref="paidAudio" src="http://dx.sc.chinaz.com/Files/DownLoad/sound1/201403/4182.mp3" style="display:none">
+      您的浏览器不支持 audio 标签。
+    </audio>
+    <audio ref="cancelAudio" src="http://dx.sc.chinaz.com/Files/DownLoad/sound1/201602/6915.mp3" style="display:none">
+      您的浏览器不支持 audio 标签。
+    </audio>
+     <!--详情-->
+    <pop-view  v-if="popdiv" :orderinfo="orderinfo" @sievent = "frompop"></pop-view>
   </div>
 </template>
 <script>
+
+import popView from '../components/page/order/Poptakeout'
 export default {
   name: 'home',
+  components:{popView},
   data () {
     return {
       showinfoBox:false,
@@ -103,39 +117,200 @@ export default {
       ],
       isdradeShow:false,
       navIndex: '',
+      notifystatus:false,
+      notifydata:[],
+      popdiv:false,
+      orderinfo:{},
+      noticeNum:'',
+      paidaudioObj:'',
+      cancelaudioObj:''
     }
   },
-  sockets:{
-    connect: function(){  //这里是监听connect事件
-    },
-    customEmit: function(val){
-      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
-    }
+  created(){
+    
   },
-  mounted:function(){
-      //如果非管理员进来不展示权限
-      if(this.isAdmin!=1){
-         this.menuArray.forEach((item,index)=>{
-           if(item.userid==6){
-              this.menuArray.splice(index,1)
-            }
-         })
-      }
+  destroyed(){
+    //this.$socket.close();  
+    clearInterval(this.paidaudioObj)
+    clearInterval(this.cancelaudioObj)
   },
   watch: {
     $route(){
       this.num=this.$store.state.menuIndex
     },
+    'paiVoice.switch'(cVal){
+      if(cVal<1){
+        clearInterval(this.paidaudioObj)
+      }else{
+        this.palypaidNotify()
+      }
+    },
+    'cancelVicoe.switch'(cVal){
+      if(cVal<1){
+       clearInterval(this.cancelaudioObj)
+      }else{
+        this.palycancelNotify()
+      }
+    }
   },
   computed:{
+    uid(){
+      return this.$store.state.uid
+    },
     username(){
       return this.$store.state.userInfo.name
     },
     isAdmin(){
       return this.$store.state.userInfo.is_admin
+    },
+    paiVoice(){
+      return this.$store.state.voiceDate.paid_order_voice
+    },
+    cancelVicoe(){
+      return this.$store.state.voiceDate.cancel_order_voice
     }
   },
+  mounted:function(){
+    //如果非管理员进来不展示权限
+    if(this.isAdmin!=1){
+        this.menuArray.forEach((item,index)=>{
+          if(item.userid==6){
+            this.menuArray.splice(index,1)
+          }
+        })
+    }
+    //初始化获取未读消息  
+    this.getNotify()
+  },
   methods:{
+    //SOCKET连接
+    contentIO(){
+      let vm =this;
+      let id=this.$store.state.uid,flagpaid=false,falgcancel=false
+      vm.$socket.on('018-merchant:person.'+id,function(data) {
+          clearInterval(vm.paidaudioObj)        
+          clearInterval(vm.cancelaudioObj)
+          let socketdata=JSON.parse(data)
+          vm.noticeNum=socketdata.list.length
+          vm.notifydata=socketdata.list
+          //播放音乐
+          vm.notifydata.forEach(item=>{
+            if(item.params.voice_type=='paid_order'){
+              //新订单音乐
+              flagpaid=true
+            }
+            if(item.params.voice_type=='cancel_order'){
+              //取消订单音乐
+              falgcancel=true
+            }
+          })
+          if(flagpaid){
+            vm.palypaidNotify()
+          }
+          if(falgcancel){
+            vm.palycancelNotify()
+          }
+      })
+    },
+    //显示未读
+    showunread(){
+      if(this.notifydata.length>0){
+        this.notifystatus=!this.notifystatus
+      }
+    },
+    //播放提示音
+    palypaidNotify(){
+      let vm=this;
+      if(vm.paiVoice.switch>0){
+        vm.$refs.paidAudio.play();
+        vm.paidaudioObj=setInterval(x=>{ 
+        if(vm.paiVoice.switch>0){  
+          vm.$refs.paidAudio.play();
+        }else{
+          clearInterval(vm.paidaudioObj)
+        }           
+      //},10000)
+        },vm.paiVoice.interval*60*1000)
+      }      
+    }, 
+    palycancelNotify(){
+      let vm=this;
+      if(vm.cancelVicoe.switch>0){ 
+        vm.$refs.cancelAudio.play();
+        vm.cancelaudioObj=setInterval(x=>{ 
+          if(vm.cancelVicoe.switch>0){  
+            vm.$refs.cancelAudio.play();
+          }else{
+            clearInterval(vm.cancelaudioObj)
+          }           
+      // },10000)
+        },vm.cancelVicoe.interval*60*1000)
+      }
+    },   
+    //订单详情
+    viewDeatail(item){
+      this.notifystatus=!this.notifystatus
+      this.orderinfo={
+        orderid:item.params.order_sn.toString(),
+        title:item.title,
+      }
+      this.isreadNotify(item.id)
+      this.popdiv=!this.popdiv
+    },
+    frompop(...data){
+      let vm = this;
+      vm.popdiv=data[0].popstatus
+      if(data[0].status&&data[0].status=='refresh'){
+        vm.getNotify()
+      }
+    },
+    //查看更多
+    viewMoreOrder(){
+      this.notifystatus=!this.notifystatus
+      this.$router.push('/order') 
+    },
+    //消息已读
+    isreadNotify(id){
+      let vm = this,
+      url='/api/web/notification/read',
+      params={'id':id}
+      vm.$axios({
+        method:'post',
+        data:params,
+        url:url
+      }).then((res)=>{
+        if(res.data.error_code=='0'){
+        }else{
+          vm.$message.error(res.data.message);
+        }
+      }).catch(err => {
+        console.log(err);
+      });  
+    },
+    //初始化获取未读消息
+    getNotify(){
+      let vm = this,
+      url='/api/web/notification/unread-list',
+      params={'page':'1','length':10}
+      vm.$axios({
+        method:'post',
+        data:params,
+        url:url
+      }).then((res)=>{
+        if(res.data.error_code=='0'){
+          vm.notifydata=res.data.data.list
+          vm.noticeNum=res.data.data.list.length
+          //缓存播放声音权限          
+          localStorage.setItem('voiceDate',JSON.stringify(res.data.data.settings))
+          this.$store.dispatch('addVoice',res.data.data.settings||{});
+          vm.contentIO()
+        }else{
+          vm.$message.error(res.data.message);
+        }
+      }).catch(err => {
+        console.log(err);
+      });
+    },
     gopage(id,index){
       let vm =this;
       vm.num=index
@@ -244,7 +419,6 @@ export default {
 .userimg{ background-position: 0px 0px;width: 25px; height: 25px; background-size: cover}
 .photoimg{ background-position: -25px 0;width: 25px; height: 25px;background-size: cover}
 .phoneli{ background:#2e1c34}
-.menuul{}
 .menuul li span{ display: block}
 .menuul li .icon-menu00{background-position: 0px -176px;width: 25px; height: 25px; background-size: cover;}
 .menuul li .icon-menu01{background-position: 0px 0px;width: 25px; height: 25px; background-size: cover;}
@@ -277,7 +451,21 @@ export default {
 .bellli i{ font-size: 24px;}
 .icon-animated-bell { display: inline-block;  -moz-animation: ringing 2.0s 5 ease 1.0s;  -webkit-animation: ringing 2.0s 5 ease 1.0s;  -o-animation: ringing 2.0s 5 ease 1.0s;   -ms-animation: ringing 2.0s 5 ease 1.0s;  animation: ringing 2.0s 5 ease 1.0s;   -moz-transform-origin: 50% 0; -webkit-transform-origin: 50% 0;   -o-transform-origin: 50% 0;  -ms-transform-origin: 50% 0;   transform-origin: 50% 0;}
 ul li.bellli{ position: relative}
-.notifyList{ position: absolute; top:70px }
+.notifyList{ position: absolute; top:60px;width: 240px;z-index: 99; left: -50px;}
+.notifyList ul{color: #8d8790; margin: 0; padding:0 10px; background: #f8e2ff;border-radius:3px 3px 0 0; max-height: 240px; overflow-y: auto; overflow-x: hidden }
+.notifyList ul li{ border-bottom: 1px solid #bdbdbd;width: 100%; margin: 0;padding: 0;padding: 10px 0}
+.notifyList ul li:last-child{ border-bottom:none;}
+.statusline { margin:0 5px 5px 5px; display: flex;display: -webkit-flex; display: flex;align-items: center;-webkit-align-items: center; justify-content:space-between;-webkit-justify-content:space-between}
+.statusline .title{ color:#1b0627; font-size: 14px;}
+.statusline .time{ font-size: 12px; transform: scale(0.8);-webkit-transform: scale(0.8);}
+.infoline{margin:0 5px;display: flex;display: -webkit-flex; display: flex;align-items: center;-webkit-align-items: center;}
+.notifyList .popperarrow{ border-color:transparent transparent #f8e2ff transparent; margin-left: -40px }
+.notifyList .popperarrow>i{ border-color:transparent transparent #f8e2ff transparent; }
+.notify-more{height: 30px; line-height: 30px; background:#e0c4e8; border-radius: 0 0 3px 3px}
+.notify-more>span{display: block; color:#1b0627 }
+.hide{ display: none}
+.isshow{ display: block}
+
 @keyframes ringing {  
   0% {transform: rotate(-15deg);}
   2% {transform: rotate(15deg);}

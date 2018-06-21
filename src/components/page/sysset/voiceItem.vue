@@ -8,18 +8,18 @@
         <ul>
           <li><em>*</em><span>外送订单付款声音通知</span></li>
           <li class="content">
-            <el-switch v-model="is_custom" active-color="rgb(96,58,108)" inactive-color="#7e7c7c" class="el_switch"></el-switch>
+            <el-switch v-model="payvolice.switch" active-color="rgb(96,58,108)" inactive-color="#7e7c7c" class="el_switch"></el-switch>
             <div class="textBox">
               <span>当付款订单一直未处理</span>
-              <input type="tel" />分钟提示一次
+              <input maxlength="2" v-model="payvolice.interval" type="tel" />分钟提示一次
             </div>
           </li>
           <li class="line"><em>*</em><span>外送取消订单声音通知</span></li>
           <li class="content">
-            <el-switch v-model="is_custom" active-color="rgb(96,58,108)" inactive-color="#7e7c7c" class="el_switch"></el-switch>
+            <el-switch v-model="cancelvolice.switch" active-color="rgb(96,58,108)" inactive-color="#7e7c7c" class="el_switch"></el-switch>
             <div class="textBox">
               <span>当取消订单一直未查看</span>
-              <input type="tel" />分钟提示一次
+              <input maxlength="2" v-model="cancelvolice.interval" type="tel" />分钟提示一次
             </div> 
           </li>
         </ul>
@@ -35,23 +35,41 @@
   name: 'voiceSet',
   data () {
     return {  
-      is_custom:""    
+      payvolice:{'switch':false,'interval':''},   
+      cancelvolice:{'switch':false,'interval':''}    
+    }
+  },
+  watch:{
+    'payvolice.interval'(cVal,oVal){
+      if(cVal){
+        return this.payvolice.interval=cVal.toString().replace(/[^0-9\-]/,'')
+      }
+    },
+    'cancelvolice.interval'(cVal,oVal){
+      if(cVal){
+        return this.cancelvolice.interval=cVal.toString().replace(/[^0-9\-]/,'')
+      }
     }
   },
   mounted(){
+    this.getData()
   },
   methods:{
     saveVoiceSet(){
-
-    },
-    //下架
-    outsale(){
       let vm=this;
-      let url='/api/web/takeout-product/shelf-operate',
-        params={
-          products:productsID,
-          operate:'2'//1上架,2下架
+      let url='/api/web/notification/save-setting';
+      if((vm.payvolice.switch&&!vm.payvolice.interval)||(vm.cancelvolice.switch&&!vm.cancelvolice.interval)){
+        vm.$message.error('请设置提醒时间！');
+        return
+      }  
+      vm.payvolice.switch?vm.payvolice.switch=1:vm.payvolice.switch=0
+      vm.cancelvolice.switch?vm.cancelvolice.switch=1:vm.cancelvolice.switch=0    
+      let params={
+        "data": {
+            "paid_order_voice": vm.payvolice,
+            "cancel_order_voice":vm.cancelvolice
         }
+      }
       vm.$axios({
           method:'post',
           data:params,
@@ -59,19 +77,39 @@
         }).then((res)=>{
           if(res.data.error_code=='0'){
             vm.$message({
-              message: '商品下架操作成功!',
+              message: '声音提示设置成功!',
               type: 'success'
-            });
-            setTimeout(x=>{
-              this.getlistData()
-            },500)
+            });                        
+            localStorage.setItem('voiceDate',JSON.stringify(params.data))
+            vm.$store.dispatch('addVoice',params.data);           
+            //缓存播放声音权限          
+            vm.getData()
           }else{
             vm.$message.error(res.data.message);
           }
       }).catch(err => {
           console.log(err);
-      });      
-    }
+      }); 
+    },
+    getData(){
+      this.ListData = []
+      let vm = this,url='/api/web/notification/get-setting',
+      params={};
+      vm.$axios.get(url,{params}).then((res)=>{
+        if(res.data.error_code=='0'){
+          if(res.data.data&&res.data.data.cancel_order_voice&&res.data.data.paid_order_voice){ 
+            vm.payvolice=res.data.data.paid_order_voice
+            vm.cancelvolice=res.data.data.cancel_order_voice
+            vm.payvolice.switch?vm.payvolice.switch=true:vm.payvolice.switch=false
+            vm.cancelvolice.switch?vm.cancelvolice.switch=true:vm.cancelvolice.switch=false
+          }
+        }else{
+          vm.$message.error(res.data.message);
+        }
+      }).catch(err => {
+        console.log(err);
+      });
+    },
   }
 }
 </script>

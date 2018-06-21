@@ -13,7 +13,8 @@ const state=new Vuex.Store({
     uid:localStorage.getItem("uid") || "",
     menuIndex:sessionStorage.getItem("INDEXNUM") || 0,
     userInfo:JSON.parse(localStorage.getItem("USERINFO"))||{},
-    isLaoding:false
+    isLaoding:false,
+    voiceDate:JSON.parse(localStorage.getItem("VOICEDATA"))||{},
 	},
 	mutations:{
     setToken(state,apptoken){
@@ -30,6 +31,9 @@ const state=new Vuex.Store({
     },
     setLoading(state,data){
       state.isLaoding=data
+    },
+    setVoice(state,data){
+      state.voiceDate=data
     }
 	},
 	actions:{
@@ -47,6 +51,9 @@ const state=new Vuex.Store({
     },
     changeLoading({commit},status){
       commit("setLoading",status)
+    },
+    addVoice({commit},voice){
+      commit("setVoice",voice)
     },
 	}
 })

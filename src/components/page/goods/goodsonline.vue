@@ -380,9 +380,4 @@ export default {
 .tableEditline{ display: flex; display: -webkit-flex; align-items: center; -webkit-align-items:center}
 .tableEditline input {width: 50px; text-align: center;border: 1px solid #48344d;margin-right: 3px; height: 21px; line-height: 21px}
 .saveline{ background-color: #AC5396; border-color: #AC5396; width: 50px; font-size: 11px; border-radius: 2px }
-.filebox{ margin: 10px 0; font-size: 12px; display: flex;display: -webkit-flex; align-items: center;-webkit-align-items: center}
-.filebox em{font-style: normal;color: #ac5397; margin-right: 5px;}
-.filebox .content { position: relative; margin-left: 10px; border-radius: 2px; border: 1px solid #aa96b1; flex: 1.5;-webkit-flex: 1.5; height: 24px; line-height: 24px}
-input.myfile{ cursor: pointer; z-index: 8; opacity: 0; width:100%; height:26px; margin: 0;padding: 0; position: absolute; left: 0; top: 0; border: none}
-.filebox .content span{ margin-left: 10px}
 </style>

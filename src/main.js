@@ -95,7 +95,6 @@ router.beforeEach(({meta,path},from,next)=>{
 	next();
 })
 
-
 new Vue({
   router,
   store,
