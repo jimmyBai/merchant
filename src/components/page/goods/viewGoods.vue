@@ -25,7 +25,7 @@
             <!-- 商品描述 -->
             <div class="adduser-item">
               <div class="itemline">
-                <div class="itemtitle"><em>*</em>商品描述</div>
+                <div class="itemtitle">商品描述</div>
                 <div class="itemcontent"><input type="text" placeholder="请输入商品描述" v-model="describe"></div>
               </div>
             </div>
@@ -278,9 +278,6 @@ import "../../../../static/css/newStyle.css"
           return false
         }else if(!this.inventory){
           this.$message.error("商品库存不能为空!");
-          return false
-        }else if(!this.describe){
-          this.$message.error("商品描述不能为空!");
           return false
         }
         params.data={

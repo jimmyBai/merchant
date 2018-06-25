@@ -11,7 +11,7 @@
   border: 1px solid #3d2b43;
   margin-right: 10px;
   color: #fff;
-  margin: 0;
+  margin: 0; font-size: 12px;
 }
 .tdBtn-box>div{
   cursor: pointer;

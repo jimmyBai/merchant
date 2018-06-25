@@ -130,7 +130,7 @@ export default {
     
   },
   destroyed(){
-    //this.$socket.close();  
+    this.$socket.close();  
     clearInterval(this.paidaudioObj)
     clearInterval(this.cancelaudioObj)
   },
@@ -186,7 +186,7 @@ export default {
     //SOCKET连接
     contentIO(){
       let vm =this;
-      let id=this.$store.state.uid,flagpaid=false,falgcancel=false
+      let id=this.$store.state.uid,flagpaid=false,falgcancel=false;
       vm.$socket.on('018-merchant:person.'+id,function(data) {
           clearInterval(vm.paidaudioObj)        
           clearInterval(vm.cancelaudioObj)
@@ -221,7 +221,7 @@ export default {
     //播放提示音
     palypaidNotify(){
       let vm=this;
-      if(vm.paiVoice.switch>0){
+      if(vm.paiVoice.switch>0&&vm.noticeNum>0){
         vm.$refs.paidAudio.play();
         vm.paidaudioObj=setInterval(x=>{ 
         if(vm.paiVoice.switch>0){  
@@ -235,7 +235,7 @@ export default {
     }, 
     palycancelNotify(){
       let vm=this;
-      if(vm.cancelVicoe.switch>0){ 
+      if(vm.cancelVicoe.switch>0&&vm.noticeNum>0){ 
         vm.$refs.cancelAudio.play();
         vm.cancelaudioObj=setInterval(x=>{ 
           if(vm.cancelVicoe.switch>0){  
@@ -289,7 +289,7 @@ export default {
     },
     //初始化获取未读消息
     getNotify(){
-      let vm = this,
+      let vm = this,flagpaid=false,falgcancel=false,
       url='/api/web/notification/unread-list',
       params={'page':'1','length':10}
       vm.$axios({
@@ -303,6 +303,25 @@ export default {
           //缓存播放声音权限          
           localStorage.setItem('voiceDate',JSON.stringify(res.data.data.settings))
           this.$store.dispatch('addVoice',res.data.data.settings||{});
+
+          vm.notifydata.forEach(item=>{
+            if(item.params.voice_type=='paid_order'){
+              //新订单音乐
+              flagpaid=true
+            }
+            if(item.params.voice_type=='cancel_order'){
+              //取消订单音乐
+              falgcancel=true
+            }
+          })
+          if(flagpaid){
+            vm.palypaidNotify()
+          }
+          if(falgcancel){
+            vm.palycancelNotify()
+          }
+
+
           vm.contentIO()
         }else{
           vm.$message.error(res.data.message);

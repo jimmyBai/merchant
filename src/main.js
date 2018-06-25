@@ -38,11 +38,13 @@ if (process.env.NODE_ENV === 'development') {
   }else if(window.location.host.indexOf('uat.')>=0){
     axios.defaults.baseURL = 'http://uat.merchant.api.018eighteen.com/'  
     Vue.use(VueSocketio, '47.94.89.100:6001');
+  }else if(window.location.host.indexOf('pre.')>=0){
+    axios.defaults.baseURL = 'http://pre.merchant.api.018eighteen.com/' 
+    Vue.use(VueSocketio, '39.107.82.161:6001');
   }else if(window.location.host.indexOf('pro.')>=0){
-    axios.defaults.baseURL = 'http://pro.merchant.api.018eighteen.com/'  
+    axios.defaults.baseURL = 'https://pro.merchant.api.018eighteen.com/' 
     Vue.use(VueSocketio, '39.107.90.17:6001');
   }
-
 }
 
 

@@ -141,7 +141,7 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .adduser-item{ display: flex; display: -webkit-flex; margin-left: 10px; margin-bottom: 10px; font-size: 12px;}
 .adduser-item>div{ flex: 1;-webkit-flex: 1; text-align: left;}
 .adduser-item>div input,.adduser-item>div textarea{ outline: none; background:#2e1c34; border: 1px solid #3d2b43; margin-right:10px;color: #fff; margin: 0}
-.adduser-item>div input{ height: 23px; line-height: 23px; width: 100%; text-indent: 8px}
+.adduser-item>div input{ font-size: 12px; height: 23px; line-height: 23px; width: 100%; text-indent: 8px}
 .adduser-item .itemcontent input.el-input__inner{ padding-left: 0px; font-size: 12px; border-radius: 0; height: 30px; line-height: 30px; width: 100%; text-indent: 8px}
 .adduser-item .itemcontent{ padding-right: 20px}
 .mytextarea{ border:1px solid #3d2b43;background:#2e1c34; padding: 10px }
