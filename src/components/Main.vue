@@ -32,7 +32,7 @@
           </li>
           <li class="myinfoli">
             <div class="userbar" @click.stop="showpop">
-              <div>
+              <div class="userbarline">
                 <div class="topimg userimg"></div>
                 <p v-text="username"></p>
               </div>
@@ -430,10 +430,10 @@ export default {
 <style scoped>
 .topbar{ display: flex;display: -webkit-flex; justify-content:space-between; -webkit-justify-content:space-between}
 .topbar .leftlogo img{ height: 60px}
-.rightinfo{}
 .rightinfo>ul{display: flex;display: -webkit-flex; height: 100%; color:#f8e2ff;}
 .rightinfo>ul li{ width: 60px; padding:10px 5px;text-align: center; position: relative; cursor: pointer;right: 0;top:0}
-.rightinfo>ul li p{ font-size: 12px; transform: scale(0.9); letter-spacing: 1px}
+.rightinfo>ul li.myinfoli{width: 80px;}
+.rightinfo>ul li p{max-width:60px;overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size: 12px; transform: scale(0.9); letter-spacing: 1px}
 .topimg{ background: url("../../static/img/topinfo.png") no-repeat; margin: 0 auto}
 .userimg{ background-position: 0px 0px;width: 25px; height: 25px; background-size: cover}
 .photoimg{ background-position: -25px 0;width: 25px; height: 25px;background-size: cover}
@@ -484,7 +484,7 @@ ul li.bellli{ position: relative}
 .notify-more>span{display: block; color:#1b0627 }
 .hide{ display: none}
 .isshow{ display: block}
-
+.userbarline{ width: 100%;}
 @keyframes ringing {  
   0% {transform: rotate(-15deg);}
   2% {transform: rotate(15deg);}

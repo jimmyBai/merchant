@@ -47,7 +47,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column width="100" align="right" label="操作">
+        <el-table-column  width="100" align="center" label="操作">
           <template slot-scope="scope">
             <div class="tdBtn-box">
               <div class="tdbtn-view newView" @click="vieweditor(scope.row.id)">

@@ -72,7 +72,7 @@
 
     },
     mounted:function(){
-        if(window.location.href.indexOf('pro.')>=0){
+        if(window.location.href.indexOf('pro.')>=0||window.location.href.indexOf('pre.')>=0){
           this.sn_num=''
           this.key=''
         }
