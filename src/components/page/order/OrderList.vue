@@ -6,7 +6,7 @@
           <div class="form-tabel">
             <div class="td-title">订单信息表</div>
             <div class="td-content">
-              <input type="text" v-model="search.content" />
+              <input type="text" placeholder="请输入订单号/手机号" v-model="search.content" />
               <el-select v-model="order_status" placeholder="全部" class="osselect">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
@@ -82,7 +82,7 @@ import searchView from './Seacrhtips'
           value: '0',label: '未付款'}, {
           value: '1',label: '待接单'}, {
           value: '2',label: '待配送'}, {
-          value: '3',label: '派送中'}, {
+          value: '3',label: '配送中'}, {
           value: '5',label: '已完成'}, {
           value: '6',label: '已取消'}
           ],

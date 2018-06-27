@@ -6,7 +6,7 @@
           <div class="form-tabel">
             <div class="td-title">打印机列表</div>
             <div class="td-content">
-              <input type="text" v-model="name" />
+              <input type="text" placeholder="请输入打印机编号" v-model="name" />
               <span @click="searchFn" class="search-icon"><i class="el-icon-search"></i></span>
             </div>
           </div>

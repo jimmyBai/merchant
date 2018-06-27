@@ -10,7 +10,7 @@
           <!--重置密码-->
             <h2 class="log-title">重置密码</h2>
             <div class="loginput log-userName">
-              <input type="password" v-model="newpwd1" maxlength="15" placeholder="请设置6-15位的数字和和字母的混合密码">
+              <input type="password" v-model="newpwd1" maxlength="15" placeholder="请设置6-15位的数字和字母的混合密码">
             </div>
             <div class="errortips"></div>
             <div class="loginput log-userName">

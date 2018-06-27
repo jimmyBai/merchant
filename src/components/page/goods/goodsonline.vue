@@ -26,7 +26,7 @@
           <div><span @click.stop="outsale">下架</span></div>
           <div><span @click.stop="delgoods">删除</span></div>
           <div><span @click.stop="sortlistFn">商品排序</span></div>
-          <div><span @click.stop="inventoryshow=!inventoryshow">库存修改</span></div>
+          <div><span @click.stop="editinventory">库存修改</span></div>
           <div><span @click.stop="exportList">导出Excel</span></div>
         </div>
       </div>
@@ -42,15 +42,15 @@
            <template slot-scope="scope">
              <div v-show="!inventoryshow"><span v-text="scope.row.inventory"></span></div>
             <div class="tableEditline" v-show="inventoryshow">
-              <input type="tel" maxlength='4' :value="scope.row.inventory" @change="changeEdit($event,scope.row)" @input="checkVal($event,scope.row)" />
+              <input type="tel" maxlength='6' :value="scope.row.inventory"  @input="checkVal($event,scope.row)" />
               <div v-show="scope.row.ischange" class="saveline" @click="svaeinventory(scope.row)">保存</div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column width="100" align="center" label="操作">
+        <el-table-column width="120" align="center" label="操作">
           <template slot-scope="scope">
             <div class="tdBtn-box">
-              <div class="tdbtn-view newView" @click="vieweditor(scope.row.id)">
+              <div class="tdbtn-view" @click="vieweditor(scope.row.id)">
                 <i class="el-icon-view"></i><span>查看/编辑</span>
               </div>
             </div>
@@ -105,17 +105,23 @@ export default {
   },
   methods:{
     checkVal($event,item){
-      let nowVal=$event.target.value
-      return nowVal=nowVal.replace(/[^0-9]*/g,'');
+      $event.target.value=$event.target.value.replace(/[^0-9]*/g,'');
+      this.changeEdit($event,item)
+      return $event.target.value
     },
     changeEdit($event,item){
       let nowVal=$event.target.value
-      if(nowVal){
-        item.inventory=nowVal
-        this.$set(item,'ischange',true)
-      }else{
-        $event.target.value=item.inventory
+      item.inventory=nowVal
+      this.$set(item,'ischange',true)
+    },
+    //修改库存按钮
+    editinventory(){
+      let vm =this;      
+      this.inventoryshow=!this.inventoryshow
+      if(!this.inventoryshow){
+        this.getlistData()
       }
+      
     },
     //金钱格式化
     formatMoney(row, column) {

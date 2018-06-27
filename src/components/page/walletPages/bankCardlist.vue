@@ -6,7 +6,7 @@
         <el-table-column width="100" prop="id" label="ID"></el-table-column>
         <el-table-column prop="name" label="银行名称"></el-table-column>
         <el-table-column prop="account_sn" label="账户号码"></el-table-column>
-        <el-table-column prop="account_name" label="支行"></el-table-column>
+        <el-table-column prop="account_bank" label="支行"></el-table-column>
         <!-- <el-table-column prop="" label="单笔限额"></el-table-column>
         <el-table-column prop="" label="每日限额"></el-table-column> -->
         <el-table-column prop="create_time" label="递交时间"></el-table-column>
@@ -26,7 +26,7 @@
 
     <!-- 分页 -->
     <div class="pagination">
-      <el-pagination v-if="total_page"  @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
+      <el-pagination v-if="total_page"  @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
 
   </div>

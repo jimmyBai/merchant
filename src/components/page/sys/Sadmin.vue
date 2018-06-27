@@ -6,7 +6,7 @@
           <div class="form-tabel">
             <div class="td-title">管理员列表</div>
             <div class="td-content">
-              <input type="text" v-model="name" />
+              <input type="text" placeholder="请输入姓名/手机号" v-model="name" />
               <span class="search-icon" @click="searchfn"><i class="el-icon-search"></i></span>
             </div>
           </div>

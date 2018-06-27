@@ -82,7 +82,7 @@
             <div class="adduser-itemBox">
               <div class="adduser-class">
                 <div class="producertitle"><em>*</em>库存数量</div>
-                <div class="producercontent"><input type="tel" placeholder="请输入库存数量" v-model="inventory"></div>
+                <div class="producercontent"><input type="tel" :readonly="isReadOnly" placeholder="请输入库存数量" maxlength="6" v-model="inventory"></div>
               </div>
               <div class="adduser-producer lineflex">
                   <div class="title"><em>*</em>是否上架</div>
@@ -130,7 +130,8 @@ import "../../../../static/css/newStyle.css"
         original_price: '',
         track: false,
         inventory: '',
-        listdata:''
+        listdata:'',
+        isReadOnly:false
       }
     },
     props: {
@@ -179,6 +180,7 @@ import "../../../../static/css/newStyle.css"
       if(this.fromParent){
         this.msgtitle = '查看/编辑商品'
         this.issvaetext='修改'
+        this.isReadOnly=true
         this.getGoodsInfo();
       }else{
 
@@ -254,7 +256,7 @@ import "../../../../static/css/newStyle.css"
       },
       // 修改保存
       clickSaveInfo(){
-        let vm =this,url,params={};
+        let vm =this,url,params={},flag=false;
         if(!this.typelist){
           this.$message.error('请选择分类');
           return false
@@ -298,9 +300,25 @@ import "../../../../static/css/newStyle.css"
         if(this.fromParent){
           url='/api/web/takeout-product/edit';
           params.data.id=vm.fromParent;
+          //提示是否提交
+          vm.$confirm('确定修改当前商品, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            center: true
+          }).then(() => {
+            vm.postsave(url,params)
+          }).catch(() => {
+          });
         }else{
           url='/api/web/takeout-product/add';
+          vm.postsave(url,params)
         }
+        
+        
+      },
+      //提交保存
+      postsave(url,params){
+        let vm = this;
         vm.$axios({
           method:'post',
           url:url,
@@ -333,7 +351,6 @@ import "../../../../static/css/newStyle.css"
           console.log(err);
         });
       }
-
     }
   }
 

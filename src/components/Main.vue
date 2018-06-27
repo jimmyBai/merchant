@@ -194,21 +194,23 @@ export default {
           vm.noticeNum=socketdata.list.length
           vm.notifydata=socketdata.list
           //播放音乐
-          vm.notifydata.forEach(item=>{
-            if(item.params.voice_type=='paid_order'){
-              //新订单音乐
-              flagpaid=true
+          if(vm.noticeNum>0){
+            vm.notifydata.forEach(item=>{
+              if(item.params.voice_type=='paid_order'){
+                //新订单音乐
+                flagpaid=true
+              }
+              if(item.params.voice_type=='cancel_order'){
+                //取消订单音乐
+                falgcancel=true
+              }
+            })
+            if(flagpaid){
+              vm.palypaidNotify()
             }
-            if(item.params.voice_type=='cancel_order'){
-              //取消订单音乐
-              falgcancel=true
-            }
-          })
-          if(flagpaid){
-            vm.palypaidNotify()
-          }
-          if(falgcancel){
-            vm.palycancelNotify()
+            if(falgcancel){
+              vm.palycancelNotify()
+            }  
           }
       })
     },

@@ -7,12 +7,10 @@
         <div class="line">
           <div class="title"><em>*&nbsp;&nbsp;</em>默认小费金额</div>
           <div class="content">
-            <input type="tel" class="firstIp" v-model="amount_setting[0]" placeholder="0.00" /><span>元</span>
-            <input type="tel" v-model="amount_setting[1]" placeholder="0.00" /><span>元</span>
-            <input type="tel" v-model="amount_setting[2]" placeholder="0.00" /><span>元</span>
-            <input type="tel" v-model="amount_setting[3]" placeholder="0.00" /><span>元</span>
-            <input type="text" v-model="amount_setting[4]" placeholder="0.00" /><span>元</span>
-            <span class="tipprompt">请输入5个默认可选小费金额</span>
+            <input type="tel" maxlength="4" class="firstIp" v-model="amount_setting[0]" placeholder="0.00" /><span>元</span>
+            <input type="tel" maxlength="4" v-model="amount_setting[1]" placeholder="0.00" /><span>元</span>
+            <input type="tel" maxlength="4" v-model="amount_setting[2]" placeholder="0.00" /><span>元</span>
+            <span class="tipprompt">请输入3个默认可选小费金额</span>
           </div>
         </div>
         <div class="switch">
@@ -100,7 +98,7 @@ export default {
         is_custom:vm.is_custom?1:0,
         status:vm.status?1:0
       }
-      if(parseFloat(vm.amount_setting[0])>0&&parseFloat(vm.amount_setting[1])>0&&parseFloat(vm.amount_setting[3])>0&&parseFloat(vm.amount_setting[3])>0&&parseFloat(vm.amount_setting[4])>0){
+      if(parseFloat(vm.amount_setting[0])>0&&parseFloat(vm.amount_setting[1])>0&&parseFloat(vm.amount_setting[2])>0){
 
       }else{
         vm.$message.error('小费金额必须设置，并且不能为0');

@@ -29,7 +29,7 @@ import VueSocketio from 'vue-socket.io';
 Vue.prototype.$axios = axios;
 // 基础url前缀
 if (process.env.NODE_ENV === 'development') {
- axios.defaults.baseURL  = '/api/'   
+ axios.defaults.baseURL  = '/api/'      
  Vue.use(VueSocketio, '47.94.14.12:6001');
 } else {
   if(window.location.host.indexOf('dev.')>=0){
@@ -39,18 +39,10 @@ if (process.env.NODE_ENV === 'development') {
     axios.defaults.baseURL = 'http://uat.merchant.api.018eighteen.com/'  
     Vue.use(VueSocketio, '47.94.89.100:6001');
   }else if(window.location.host.indexOf('pre.')>=0){
-    if(window.location.href.indexOf('https')>=0){
-      axios.defaults.baseURL = 'https://pre.merchant.api.018eighteen.com/' 
-    }else{
-      axios.defaults.baseURL = 'http://pre.merchant.api.018eighteen.com/' 
-    }
+    axios.defaults.baseURL = 'https://pre.merchant.api.018eighteen.com/'
     Vue.use(VueSocketio, '39.107.82.161:6001');
   }else if(window.location.host.indexOf('pro.')>=0){
-    if(window.location.href.indexOf('https')>=0){
-      axios.defaults.baseURL = 'https://pro.merchant.api.018eighteen.com/' 
-    }else{
-      axios.defaults.baseURL = 'http://pro.merchant.api.018eighteen.com/' 
-    }   
+    axios.defaults.baseURL = 'https://pro.merchant.api.018eighteen.com/'   
     Vue.use(VueSocketio, '39.107.90.17:6001');
   }
 }

@@ -271,3 +271,10 @@ body{ font-size: 12px;/* font-family: Helvetica Neue,Helvetica,PingFang SC,Hirag
 .headnavBtn>div{ cursor: pointer; min-width: 80px; height: 24px; line-height: 24px; border-radius: 2px; border:1px solid #48344e; text-align: center }
 .el-badge__content{border: none;background-color:#f00; padding: 0;width: 20px;height: 20px; border-radius: 100%; text-align: center;line-height: 20px }
 .el-badge__content.is-fixed{transform:scale(0.8); top: -8px; right: -8px;}
+
+/**confirm**/
+.el-message-box{ padding-bottom: 20px}
+.el-message-box__content{ padding: 20px 15px}
+.el-message-box__btns{text-align: center}
+.el-message-box__message p{ color: #aa96b1;font-size: 14px}
+.el-message-box .el-button--primary{background:#ac5397 ;border-color:#ac5397 }

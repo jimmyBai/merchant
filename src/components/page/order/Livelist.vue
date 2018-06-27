@@ -6,7 +6,7 @@
           <div class="form-tabel">
             <div class="td-title">订单信息表</div>
             <div class="td-content">
-              <input type="text" v-model="content" />
+              <input type="text" placeholder="请输入订单号/手机号" v-model="content" />
               <span @click="searchFn" class="search-icon"><i class="el-icon-search"></i></span>
               <div class="headnavBtn">
                 <div @click.stop="exportList">导出Excel</div>
@@ -37,7 +37,7 @@
       <div class="list-bottm"></div>
     </div>
     <div class="pagination">
-      <el-pagination v-if="total_page" @size-change="" @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
+      <el-pagination v-if="total_page"  @current-change="handleCurrentChange" :page-size="per_page" background small layout="prev, pager, next" :total="total"> </el-pagination>
     </div>
   </div>
 </template>

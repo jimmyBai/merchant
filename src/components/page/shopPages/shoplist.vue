@@ -322,6 +322,11 @@ import myMap from '../mapPages/myMap'
         if(!item.min||!item.max||!item.price){
           vm.$message.error('请完善相应设置')
           return
+        }else{
+          if(parseFloat(item.min)>parseFloat(item.max)){
+            vm.$message.error('最小值不能大于最大值')
+            return
+          }
         }
         if(way=='km'){
           vm.distance.unshift({min:'',max:'',price:''})
@@ -598,7 +603,13 @@ import myMap from '../mapPages/myMap'
             vm.recommend=vm.ListData.recommend
             vm.business_time=vm.ListData.business_time
             vm.distance=vm.ListData.distance
+            if(vm.distance.length<1){
+              vm.distance=[{min:'',max:'',price:''}]
+            }
             vm.weight=vm.ListData.weight
+            if(vm.weight.length<1){
+              vm.weight=[{min:'',max:'',price:''}]
+            }
             vm.ListData.delivery_range?vm.ListData.delivery_range:vm.ListData.delivery_range=10
             if(vm.business_time.length>0){
               vm.business_time.forEach(item=>{

@@ -6,7 +6,7 @@
           <div class="form-tabel">
             <div class="td-title">权限列表</div>
             <div class="td-content">
-              <input type="text" v-model="name" />
+              <input type="text" placeholder="请输入职务名称" v-model="name" />
               <span class="search-icon" @click="searchfn"><i class="el-icon-search"></i></span></div>
           </div>
         </div>

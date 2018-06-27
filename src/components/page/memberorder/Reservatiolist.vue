@@ -6,7 +6,7 @@
           <div class="form-tabel">
             <div class="td-title">订单信息表</div>
             <div class="td-content">
-              <input type="text" />
+              <input type="text" placeholder="请输入订单号" />
               <span class="search-icon"><i class="el-icon-search"></i></span>
             </div>
           </div>

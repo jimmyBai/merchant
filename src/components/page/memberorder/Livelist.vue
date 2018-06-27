@@ -6,7 +6,7 @@
           <div class="form-tabel">
             <div class="td-title">订单信息表</div>
             <div class="td-content">
-              <input type="text" v-model="content" />
+              <input type="text" placeholder="请输入订单号" v-model="content" />
               <span class="search-icon" @click="searchfn"><i class="el-icon-search"></i></span></div>
           </div>
         </div>

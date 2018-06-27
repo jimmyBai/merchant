@@ -76,7 +76,7 @@
       <div class="tabslist">
         <div class="tabslist-head">
           <div :class="{'is-active':activenum=='orderlist'}" @click="changetabs('orderlist')" class="tabtar-item ">外送订单</div>
-          <div :class="{'is-active':activenum=='reservatiolist'}" @click="changetabs('reservatiolist')" class="tabtar-item">订座订单</div>
+          <!-- <div :class="{'is-active':activenum=='reservatiolist'}" @click="changetabs('reservatiolist')" class="tabtar-item">订座订单</div> -->
           <div :class="{'is-active':activenum=='livelist'}" @click="changetabs('livelist')" class="tabtar-item">直播订单</div>
           <!--<div :class="{'is-active':activenum=='paylist'}" @click="changetabs('paylist')" class="tabtar-item">出入金记录订单</div>-->
         </div>

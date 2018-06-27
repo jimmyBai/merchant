@@ -9,7 +9,7 @@
           <div class="form-tabel">
             <div class="td-title">会员信息表</div>
             <div class="td-content">
-              <input type="text" v-model="search.content" />
+              <input type="text" placeholder="请输入用户名/手机号" v-model="search.content" />
               <span class="search-icon" @click="searchlist"><i class="el-icon-search"></i></span>
               <div class="headnavBtn">
                 <div @click.stop="exportList">导出Excel</div>
