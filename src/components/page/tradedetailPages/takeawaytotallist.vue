@@ -59,7 +59,7 @@
             <div class="form-tabel">
               <el-row class="res-content-line">
                 <el-col :span="12" class="td-content">
-                  <div class="td-title">外送商品销售列表</div>
+                  <div class="td-title">外送列表</div>
                   <div class="res-title">筛选时间：</div>
                   <div class="res-input">
                     <el-date-picker :editable="false" v-model="search.start_time" clear-icon value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>

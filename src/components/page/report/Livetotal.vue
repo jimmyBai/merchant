@@ -27,7 +27,7 @@
           <span class="title">平均观看时长</span>
           <span class="content"  v-text="tableData.avg_view_time"></span>
         </li>
-        <li>
+        <li v-if="false">
           <span class="title">日包购买数</span>
           <span class="content"  v-text="tableData.day_buy_num"></span>
         </li>

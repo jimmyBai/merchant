@@ -27,7 +27,7 @@
             <div class="tdbtn-box">
               <div class="tdbtn-view" @click="viewMore(scope.row)"><i class="el-icon-view"></i> <span>查看</span></div>
               <!--1-超级管理员 0-普通用户-->
-              <div v-if="scope.row.administrator!=1" class="tdbtn-del" @click="del(scope.row)"><i class="el-icon-delete"></i> <span>删除</span></div>
+              <div class="tdbtn-del" :class="{'isadmin':scope.row.administrator==1}" @click="scope.row.administrator!=1&&del(scope.row)"><i class="el-icon-delete"></i> <span>删除</span></div>
             </div>
           </template>
         </el-table-column>
@@ -132,13 +132,13 @@
   }
 </script>
 <style scoped>
-  .list-search{ padding:0 10px; display: flex;display: -webkit-flex; justify-content: space-between;-webkit-justify-content: space-between}
-  .ls-right .ls-r-btn{ color: #fff; font-size: 12px; background:#22baa0; padding: 3px 8px; border-radius: 2px; cursor: pointer}
-  .ls-right .ls-r-btn span{ margin-left: 5px}
-  .ls-left .form-tabel{ display: flex;display: -webkit-flex; align-items: center; -webkit-align-items: center; padding-bottom: 10px}
-  .form-tabel .td-title{ margin-right: 5px; color: #f8e2ff}
-  .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
-  .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px;text-align: center; }
-  .td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
-
+.list-search{ padding:0 10px; display: flex;display: -webkit-flex; justify-content: space-between;-webkit-justify-content: space-between}
+.ls-right .ls-r-btn{ color: #fff; font-size: 12px; background:#22baa0; padding: 3px 8px; border-radius: 2px; cursor: pointer}
+.ls-right .ls-r-btn span{ margin-left: 5px}
+.ls-left .form-tabel{ display: flex;display: -webkit-flex; align-items: center; -webkit-align-items: center; padding-bottom: 10px}
+.form-tabel .td-title{ margin-right: 5px; color: #f8e2ff}
+.form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
+.search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px;text-align: center; }
+.td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
+.el-table td div.isadmin{cursor: not-allowed; background: #948484; color: #c8b8b8;}
 </style>
