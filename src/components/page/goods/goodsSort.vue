@@ -70,24 +70,33 @@
     methods:{
       inputVal(e,item,index){
         if(e.target.value){
-          e.target.value=e.target.value.replace(/[^0-9\-]/,'')
+          e.target.value=e.target.value.replace(/[^0-9]/,'')
+          return e.target.value
         }
       },
       setVal(item){
         return item.sort=parseInt(index)+1
       },
       setSortli(e,item){
-        let vm =this;        
+        let vm =this,maxSort=this.ListData.length  
         if(!e.target.value){e.target.value=item.sort}
-        if(parseInt(e.target.value)>=1){
-          item.sort=e.target.value-1
+        //判断输入值比当前排序大还是小
+
+        if(parseInt(e.target.value)>=parseInt(item.sort)){
+            if(parseInt(e.target.value)>parseInt(maxSort)){
+              item.sort=e.target.value
+            }else{
+              item.sort=parseInt(e.target.value)+1
+            }
         }else{
-          item.sort=e.target.value
+          item.sort=e.target.value-1
         }
-        if(e.target.value-item.sort>0){
-          item.sort=e.target.value
-        }
-        item.sort=e.target.value
+        
+        // if(parseInt(e.target.value)>1&&parseInt(e.target.value)<parseInt(maxSort)){
+        //   item.sort=e.target.value-1
+        // }else{
+        //   item.sort=e.target.value
+        // }
         function compare(str) {
           return function (obj1, obj2) {
             var value1 = obj1[str];

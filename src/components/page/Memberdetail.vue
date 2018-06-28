@@ -57,12 +57,12 @@
               <el-col :span="8">
                 <el-progress type="circle" class="memberbar" :show-text="false" :stroke-width="10" :width="100" :percentage="preOrder"></el-progress>
                 <div class="num" v-text="totalObj.takeout"></div>
-                <div class="numname">本月外卖订单数</div>
+                <div class="numname">本月外送订单数</div>
               </el-col>
               <el-col :span="8">
                 <el-progress type="circle" class="memberbar" :show-text="false" :stroke-width="10" :width="100" :percentage="preSeat"></el-progress>
                 <div class="num" v-text="totalObj.seat"></div>
-                <div class="numname">本月订座订单数</div>
+                <div class="numname">本月订台订单数</div>
               </el-col>
               <el-col :span="8">
                 <el-progress type="circle" class="memberbar" :show-text="false" :stroke-width="10" :width="100" :percentage="preLive"></el-progress>

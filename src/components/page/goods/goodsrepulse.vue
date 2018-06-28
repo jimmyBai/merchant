@@ -33,10 +33,10 @@
         <el-table-column prop="category" label="分类"></el-table-column>
         <el-table-column prop="create_time" label="审核时间"></el-table-column>
         <el-table-column prop="reason" label="拒绝原因"></el-table-column>
-        <el-table-column width="100" align="right" label="操作">
+        <el-table-column width="120" align="right" label="操作">
           <template slot-scope="scope">
             <div class="tdBtn-box">
-              <div class="tdbtn-view newView" @click="vieweditor(scope.row.id)">
+              <div class="tdbtn-view" @click="vieweditor(scope.row.id)">
                 <i class="el-icon-view"></i><span>查看/编辑</span>
               </div>
             </div>

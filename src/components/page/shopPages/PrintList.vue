@@ -12,6 +12,10 @@
           </div>
         </div>
         <div class="ls-right">
+          <div class="aboutprint" @click="showprintinfo=!showprintinfo">
+            <i class="el-icon-question"></i>
+            <span>打印机教程</span>
+          </div>
         </div>
       </div>
       <el-table stripe :data="ListData">
@@ -28,9 +32,15 @@
       </el-table>
       <div class="list-bottm"></div>
     </div>
+    <!--打印机教程-->
+    <div class="el-printshow" v-show="showprintinfo">
+      <div class="el-print-box">
+         <img :src="imgurl" />
+      </div>
+      <div class="v-modal" tabindex="0" @click="showprintinfo=!showprintinfo" style="z-index: 99;"></div>
+    </div>
   </div>
 </template>
-
 <script>
   export default {
     name: 'Member',
@@ -38,6 +48,8 @@
       return {
         ListData:[],
         name:'',
+        showprintinfo:false,
+        imgurl:'../../../../static/img/aboutPrint.png'
       }
     },
     created(){
@@ -102,13 +114,16 @@
   }
 </script>
 <style scoped>
-  .list-search{ padding:0 10px; display: flex;display: -webkit-flex; justify-content: space-between;-webkit-justify-content: space-between}
-  .ls-right .ls-r-btn{ color: #fff; font-size: 12px; background:#22baa0; padding: 3px 8px; border-radius: 2px; cursor: pointer}
-  .ls-right .ls-r-btn span{ margin-left: 5px}
-  .ls-left .form-tabel{ display: flex;display: -webkit-flex; align-items: center; -webkit-align-items: center; padding-bottom: 10px}
-  .form-tabel .td-title{ margin-right: 5px; color: #f8e2ff}
-  .form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
-  .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center; }
-  .td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
-
+.list-search{ padding:0 10px; display: flex;display: -webkit-flex; justify-content: space-between;-webkit-justify-content: space-between}
+.ls-right .ls-r-btn{ color: #fff; font-size: 12px; background:#22baa0; padding: 3px 8px; border-radius: 2px; cursor: pointer}
+.ls-right .ls-r-btn span{ margin-left: 5px}
+.ls-left .form-tabel{ display: flex;display: -webkit-flex; align-items: center; -webkit-align-items: center; padding-bottom: 10px}
+.form-tabel .td-title{ margin-right: 5px; color: #f8e2ff}
+.form-tabel input {border-radius:1px;background: #2e1c34; padding: 3px; border: 1px solid #48344e; height: 18px; line-height: 18px; text-indent: 5px; color:#f8e2ff; width: 150px}
+.search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center; }
+.td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
+.aboutprint i{ font-size: 14px;}
+.el-print-box{width: 500px;position:fixed; z-index: 100; margin-left: -250px;left:50%; top:50%;margin-top: -300px; height:600px;overflow-y:auto}
+.el-print-box img {width: 100%;}
+.el-printshow{position: absolute;width: 100%;height: 100%;top:0;left: 0; }
 </style>

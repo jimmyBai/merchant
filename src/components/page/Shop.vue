@@ -46,19 +46,20 @@ export default {
 
   },
   mounted:function(){
-    // if(this.$route.path=='/Shop'){
-    //   localStorage.setItem('shopTabs','shoplist')
-    // }else if(this.$route.path=='/printlist'){
-    //     localStorage.setItem('shopTabs','printlist')
-    // }else if(this.$route.path=='/tiplist'){
-    //     localStorage.setItem('shopTabs','tiplist')
-    // }
+    if(this.$route.path=='/Shop'){
+      localStorage.setItem('shopTabs','shoplist')
+    }else if(this.$route.path=='/printlist'){
+        localStorage.setItem('shopTabs','printlist')
+    }else if(this.$route.path=='/tiplist'){
+        localStorage.setItem('shopTabs','tiplist')
+    }
   },
   methods:{
     setFn(){
       this.activenum=localStorage.getItem('shopTabs')
     },
     changetabs(way){
+      this.activenum=way
       localStorage.setItem('shopTabs',way)
       this.$router.push('/'+way)
     },

@@ -1,7 +1,7 @@
 <template>
   <div class="ws-content">
     <div class="navbar">
-      <h1 class="nav-bar-title">外卖<small> | 外卖商品信息设置</small></h1>
+      <h1 class="nav-bar-title">外送<small> | 外送商品信息设置</small></h1>
     </div>
     <div class="tabslist">
       <div class="lineflex">

@@ -35,12 +35,10 @@
                         <el-checkbox v-model="scope.row.delete" :checked="scope.row.delete==1"></el-checkbox>
                       </template>
                     </el-table-column>
-                    </el-table-column>
                     <el-table-column label="添加"  width="65" align="center" header-align="center">
                       <template slot-scope="scope">
                         <el-checkbox v-model="scope.row.create" :checked="scope.row.create==1"></el-checkbox>
                       </template>
-                    </el-table-column>
                     </el-table-column>
                   </el-table>
                 </div>
@@ -131,17 +129,17 @@
       addroleFn(){
         let vm =this,roleArray=[],url,params;
         //区分是保存还是新增权限
-        vm.ListData.forEach(item=>{
-          let roleData={}
-          if(item.create||item.update||item.read||item.delete){
+        
+
+        if(vm.fromParent){
+          vm.ListData.forEach((item,index)=>{
+            let roleData={}
             roleData={
               id:item.id,
               permissions:[item.read?1:0,item.update?1:0,item.delete?1:0,item.create?1:0]
             }
             roleArray.push(roleData)
-          }
-        })
-        if(vm.fromParent){
+          })
           params={
             role_id:vm.fromParent.roleid,
             role_name:vm.role_name,
@@ -149,6 +147,16 @@
           }
           url='/api/web/authority/role/save';
         }else{
+          vm.ListData.forEach((item,index)=>{
+            let roleData={}
+            if(item.create||item.update||item.read||item.delete){
+              roleData={
+                id:item.id,
+                permissions:[item.read?1:0,item.update?1:0,item.delete?1:0,item.create?1:0]
+              }
+              roleArray.push(roleData)
+            }
+          })
           params={
             role_name:vm.role_name,
             data:roleArray

@@ -52,8 +52,10 @@
     data () {
       return {
         msgtitle:'添加打印设备',
-        sn_num:'918503233',
-        key:'fcah7zdm',
+        // sn_num:'918503233',
+        // key:'fcah7zdm',
+        sn_num:'',
+        key:'',
         remark:'',
         phone:''
       }
@@ -72,10 +74,7 @@
 
     },
     mounted:function(){
-        if(window.location.href.indexOf('pro.')>=0||window.location.href.indexOf('pre.')>=0){
-          this.sn_num=''
-          this.key=''
-        }
+       
     },
     methods:{
       closepop(){

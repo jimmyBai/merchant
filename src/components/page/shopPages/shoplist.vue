@@ -79,7 +79,7 @@
             <dl>
               <dd class="imglist">
                 <ul>
-                  <li v-for="(item,index) in recommend">
+                  <li v-for="(item,index) in recommend" :key="index" >
                     <div class="imgbox">
                       <div>
                         <img :src="item.img"/>
@@ -108,7 +108,7 @@
         </div>
         <div class="line">
           <div class="title">配送范围：</div>
-          <div class="content"><input type="tel" v-model="ListData.delivery_range" placeholder="请输入最大配送范围" />&nbsp;&nbsp;米</div>
+          <div class="content"><input type="tel" v-model="ListData.delivery_range" placeholder="请输入最大配送范围" />&nbsp;&nbsp;千米</div>
         </div>
         <div class="line">
           <div class="title">配送起步价：</div>
@@ -746,16 +746,13 @@ import myMap from '../mapPages/myMap'
         if(parseFloat(vm.ListData.consumption_max)<parseFloat(vm.ListData.consumption_min)){
           vm.$message.error('最高消费不能小于最低消费！');
           return false
-        }
-        if(parseFloat(vm.ListData.delivery_start_price)<=0){
-          vm.$message.error('配送最低起步价必须大于0！');
-          return false
-        }
-        let flagkg=false,flagkm=false;
+        }        
+        let flagkg=false,flagkm=false,delivery_start_price,weight=[],distance=[];
         //获取配送距离费用
         if(vm.ListData.weight&&vm.ListData.weight.length>0){
           vm.ListData.weight.forEach(item=>{
               if(item.min&&item.max&&item.price){
+                weight.push(item)
                 flagkg=true
               }
           })
@@ -763,6 +760,7 @@ import myMap from '../mapPages/myMap'
         if(vm.ListData.distance&&vm.ListData.distance.length>0){
           vm.ListData.distance.forEach(item=>{
             if(item.min&&item.max&&item.price){
+                distance.push(item)
                 flagkm=true
             }
           })
@@ -771,6 +769,7 @@ import myMap from '../mapPages/myMap'
           vm.$message.error('请完善配送费设置！');
           return
         }
+        if(!vm.ListData.delivery_start_price){delivery_start_price='0.00'}else{delivery_start_price=parseFloat(vm.ListData.delivery_start_price).toFixed(2)}
         params={
           'name':vm.ListData.name,
           'address':vm.ListData.address,
@@ -788,11 +787,11 @@ import myMap from '../mapPages/myMap'
           'delivery_range':vm.ListData.delivery_range,
           'delivery_time':timesStr,
           'address_detail':vm.ListData.address_detail,
-          'delivery_start_price':parseFloat(vm.ListData.delivery_start_price).toFixed(2),
+          'delivery_start_price':delivery_start_price,
           'over_distance':vm.ListData.over_distance,
           'over_weight':vm.ListData.over_weight,
-          'weight':vm.ListData.weight,
-          'distance':vm.ListData.distance
+          'weight':weight,
+          'distance':distance
         }
 
         vm.$axios({

@@ -9,7 +9,7 @@
           <div class="form-tabel">
             <div class="td-title">信息列表</div>
             <div class="td-content">
-              <input type="text" v-model="search.content" />
+              <input type="text" placeholder="请输入用户名手机号" v-model="search.content" />
               <span class="search-icon" @click="searchlist"><i class="el-icon-search"></i></span>
             </div>
           </div>

@@ -87,7 +87,7 @@
     <audio ref="paidAudio" src="http://dx.sc.chinaz.com/Files/DownLoad/sound1/201403/4182.mp3" style="display:none">
       您的浏览器不支持 audio 标签。
     </audio>
-    <audio ref="cancelAudio" src="http://dx.sc.chinaz.com/Files/DownLoad/sound1/201602/6915.mp3" style="display:none">
+    <audio ref="cancelAudio" src="http://dx.sc.chinaz.com/Files/DownLoad/sound1/201403/4182.mp3" style="display:none">
       您的浏览器不支持 audio 标签。
     </audio>
      <!--详情-->
@@ -218,7 +218,8 @@ export default {
     showunread(){
       if(this.notifydata.length>0){
         this.notifystatus=!this.notifystatus
-      }
+      }      
+      if(this.showinfoBox){this.showinfoBox=false}
     },
     //播放提示音
     palypaidNotify(){
@@ -365,7 +366,8 @@ export default {
     },
     showpop(){
       let vm =this;
-      vm.showinfoBox=!vm.showinfoBox
+      vm.showinfoBox=!vm.showinfoBox      
+      if(vm.notifystatus){vm.notifystatus=false}
     },
     goview(way){
       let vm =this;
@@ -384,20 +386,19 @@ export default {
     },
     closeWindow(){
       let vm =this;
-      if(vm.showinfoBox){
-        vm.showinfoBox=!vm.showinfoBox
-      }
+      if(vm.showinfoBox){vm.showinfoBox=false}
+      if(vm.notifystatus){vm.notifystatus=false}
     },
     //联系客服
     servicephone(){
       let phonepop=`<div class="phonepop">
           <div class="phonepopline">
             <div class="p-title">客服电话</div>
-            <div class="p-content">400-888-8888</div>
+            <div class="p-content">400-861-8228</div>
           </div>
           <div class="phonepopline">
             <div class="p-title">客服邮箱</div>
-            <div class="p-content">admin@018.com</div>
+            <div class="p-content">contact@linearplusbj.com</div>
           </div>
         </div>`
       this.$alert(phonepop,'联系客服', {
