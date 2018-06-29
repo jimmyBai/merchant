@@ -46,7 +46,7 @@
                 <li @click.stop="goview('myinfo')"><i class="i-user"></i>我的信息</li>
                 <li @click.stop="goview('set')"><i class="i-set"></i>设置</li>
                 <li @click.stop="goview('MerchantWallet')"><i class="i-wallet"></i>钱包</li>
-                <li @click.stop="goview('lock')"><i class="i-lock"></i>锁屏</li>
+                <li v-if="false" @click.stop="goview('lock')"><i class="i-lock"></i>锁屏</li>
                 <li @click.stop="goview('login')"><i class="i-loginout"></i>登出</li>
               </ul>
             </div>
