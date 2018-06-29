@@ -15,8 +15,8 @@
             </dl>
             <dl>
               <dt>使用方法：</dt>
-              <dd>1，下载Excel模板文件并录入信息</dd>
-              <dd>2，上传编辑好的Excel导入</dd>
+              <dd>1.下载Excel模板文件并录入信息</dd>
+              <dd>2.上传编辑好的Excel导入</dd>
             </dl>
             <div class="filebox">
               <div class="name"><em>*</em>Excel文件:</div>

@@ -56,7 +56,6 @@
 
     },
     mounted:function(){
-
       this.getlistData()
     },
     methods:{
@@ -123,7 +122,7 @@
 .search-icon{ cursor: pointer; border-radius:1px;border: 1px solid #48344e; padding: 3px; height: 18px; display: inline-block; width: 18px; text-align: center; }
 .td-content{ display: flex; display: -webkit-flex;align-items: center;-webkit-align-items: center}
 .aboutprint i{ font-size: 14px;}
-.el-print-box{width: 500px;position:fixed; z-index: 100; margin-left: -250px;left:50%; top:50%;margin-top: -300px; height:600px;overflow-y:auto}
+.el-print-box{width: 500px;position:fixed; z-index: 100; margin-left: -250px;left:50%; top:50%;margin-top: -300px; height:600px;overflow:none}
 .el-print-box img {width: 100%;}
 .el-printshow{position: absolute;width: 100%;height: 100%;top:0;left: 0; }
 </style>

@@ -46,13 +46,14 @@ export default {
 
   },
   mounted:function(){
-    if(this.$route.path=='/Shop'){
+    if(this.$route.path=='/shop'||this.$route.path=='/shoplist'){
       localStorage.setItem('shopTabs','shoplist')
     }else if(this.$route.path=='/printlist'){
         localStorage.setItem('shopTabs','printlist')
     }else if(this.$route.path=='/tiplist'){
         localStorage.setItem('shopTabs','tiplist')
     }
+    this.activenum=localStorage.getItem('shopTabs')
   },
   methods:{
     setFn(){

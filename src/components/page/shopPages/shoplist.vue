@@ -25,7 +25,7 @@
             <dl>
               <dd class="imglist">
                 <ul>
-                  <li v-for="(item,index) in imgVO">
+                  <li v-for="(item,index) in imgVO" :key="index">
                     <div class="imgbox">
                       <div>
                         <img :src="item.img"/>
@@ -232,7 +232,6 @@
 
 import '../../../../static/css/newStyle.css'
 import myMap from '../mapPages/myMap'
-
   export default {
     name: 'order',
     components:{
@@ -605,10 +604,14 @@ import myMap from '../mapPages/myMap'
             vm.distance=vm.ListData.distance
             if(vm.distance.length<1){
               vm.distance=[{min:'',max:'',price:''}]
+            }else{
+              vm.distance.unshift({min:'',max:'',price:''})
             }
             vm.weight=vm.ListData.weight
             if(vm.weight.length<1){
               vm.weight=[{min:'',max:'',price:''}]
+            }else{
+              vm.weight.unshift({min:'',max:'',price:''})
             }
             vm.ListData.delivery_range?vm.ListData.delivery_range:vm.ListData.delivery_range=10
             if(vm.business_time.length>0){
@@ -665,7 +668,7 @@ import myMap from '../mapPages/myMap'
           'pm_begin':'',
           'pm_end':'',
         }
-        this.business_time.push(dataformat)
+        this.business_time.unshift(dataformat)
       },
       //删除营业时间
       delweekline(item,index){
